@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Square Roots & Cube Roots Quiz — Grade 7</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, sans-serif; }
+  body { min-height:100vh; background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); display:flex; align-items:center; justify-content:center; padding:20px; }
+  .card { background:#fff; border-radius:20px; box-shadow:0 20px 60px rgba(0,0,0,.3); width:100%; max-width:640px; padding:36px; }
+  h1 { color:#4a3f8f; font-size:1.5rem; text-align:center; }
+  .sub { text-align:center; color:#888; margin:6px 0 20px; font-size:.9rem; }
+  .progress-wrap { background:#eee; border-radius:99px; height:10px; margin-bottom:8px; overflow:hidden; }
+  .progress { height:100%; width:0; background:linear-gradient(90deg,#667eea,#764ba2); border-radius:99px; transition:width .4s; }
+  .meta { display:flex; justify-content:space-between; color:#999; font-size:.85rem; margin-bottom:18px; }
+  .question { font-size:1.35rem; color:#222; font-weight:600; margin-bottom:20px; line-height:1.5; }
+  .question sup { font-size:.7em; }
+  .opts { display:grid; gap:12px; }
+  .opt { padding:14px 18px; border:2px solid #e0e0e8; border-radius:12px; background:#fafafe; font-size:1.05rem; cursor:pointer; text-align:left; transition:all .15s; }
+  .opt:hover:not(:disabled) { border-color:#667eea; background:#f0f0ff; transform:translateX(4px); }
+  .opt.correct { border-color:#2eaf6b; background:#e6f9ee; font-weight:700; }
+  .opt.wrong { border-color:#e05555; background:#fdeaea; }
+  .opt:disabled { cursor:default; }
+  .explain { margin-top:16px; padding:14px 16px; border-radius:12px; font-size:.98rem; line-height:1.55; display:none; }
+  .explain.good { background:#e6f9ee; color:#1c6b42; border-left:5px solid #2eaf6b; }
+  .explain.bad  { background:#fdeaea; color:#93312f; border-left:5px solid #e05555; }
+  .next { margin-top:20px; width:100%; padding:14px; border:none; border-radius:12px; background:linear-gradient(90deg,#667eea,#764ba2); color:#fff; font-size:1.05rem; font-weight:700; cursor:pointer; display:none; }
+  .next:hover { opacity:.92; }
+  .result { text-align:center; display:none; }
+  .result .emoji { font-size:4rem; }
+  .result h2 { color:#4a3f8f; margin:12px 0 6px; }
+  .score-big { font-size:3rem; font-weight:800; color:#667eea; }
+  .msg { color:#666; margin:10px 0 22px; }
+  .streak { color:#f39c12; font-weight:700; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>🔢 Square Roots &amp; Cube Roots Quiz</h1>
+  <div class="sub">Grade 7 • Unit 1.6 • 12 questions</div>
+
+  <div id="quiz">
+    <div class="progress-wrap"><div class="progress" id="bar"></div></div>
+    <div class="meta"><span id="qnum">Question 1 of 12</span><span id="scorelive">Score: 0</span> <span class="streak" id="streak"></span></div>
+    <div class="question" id="qtext"></div>
+    <div class="opts" id="opts"></div>
+    <div class="explain" id="explain"></div>
+    <button class="next" id="nextBtn">Next Question →</button>
+  </div>
+
+  <div class="result" id="result">
+    <div class="emoji" id="remoji"></div>
+    <h2>Quiz Complete!</h2>
+    <div class="score-big"><span id="finalScore"></span>/12</div>
+    <div class="msg" id="rmsg"></div>
+    <button class="next" id="restart" style="display:block">🔄 Try Again</button>
+  </div>
+</div>
+
+<script>
+const Q = [
+ {q:"What is 6<sup>2</sup>?", opts:["12","36","62","26"], a:1,
+  ex:"6² means 6 × 6 = 36. Squaring means multiplying a number by itself."},
+ {q:"What is √64?", opts:["32","6","8","16"], a:2,
+  ex:"√64 asks: which number times itself gives 64? 8 × 8 = 64, so √64 = 8."},
+ {q:"What is 3<sup>3</sup>?", opts:["9","6","33","27"], a:3,
+  ex:"3³ means 3 × 3 × 3 = 27. Cubing uses the number three times."},
+ {q:"What is ∛125?", opts:["5","25","11.2","15"], a:0,
+  ex:"∛125 asks: which number cubed gives 125? 5 × 5 × 5 = 125, so ∛125 = 5."},
+ {q:"Which of these is a square number?", opts:["120","121","122","123"], a:1,
+  ex:"121 = 11 × 11 = 11², so it is a square number. The others are not products of an integer with itself."},
+ {q:"Which of these is a cube number?", opts:["100","200","216","300"], a:2,
+  ex:"216 = 6 × 6 × 6 = 6³, so it is a cube number."},
+ {q:"√81 + √49 = ?", opts:["130","16","11.4","65"], a:1,
+  ex:"√81 = 9 and √49 = 7, so 9 + 7 = 16. Find each root first, then add."},
+ {q:"√45 lies between which two consecutive whole numbers?", opts:["5 and 6","6 and 7","7 and 8","4 and 5"], a:1,
+  ex:"6² = 36 and 7² = 49. Since 36 < 45 < 49, √45 is between 6 and 7."},
+ {q:"2<sup>3</sup> + 4<sup>2</sup> = ?", opts:["24","14","20","24 . . . or is it?"], a:0,
+  ex:"2³ = 8 and 4² = 16, so 8 + 16 = 24."},
+ {q:"∛200 lies between which two consecutive whole numbers?", opts:["4 and 5","5 and 6","6 and 7","14 and 15"], a:1,
+  ex:"5³ = 125 and 6³ = 216. Since 125 < 200 < 216, ∛200 is between 5 and 6."},
+ {q:"∛1000 − √100 = ?", opts:["900","0","90","10"], a:1,
+  ex:"∛1000 = 10 (10³ = 1000) and √100 = 10 (10² = 100), so 10 − 10 = 0."},
+ {q:"Which number is BOTH a square number and a cube number?", opts:["16","27","64","100"], a:2,
+  ex:"64 = 8² and 64 = 4³, so it is both! (Numbers like this are sixth powers: 64 = 2⁶.)"},
+];
+
+let i = 0, score = 0, streak = 0;
+const $ = id => document.getElementById(id);
+
+function show(){
+  const d = Q[i];
+  $('bar').style.width = (i/Q.length*100)+'%';
+  $('qnum').textContent = `Question ${i+1} of ${Q.length}`;
+  $('scorelive').textContent = `Score: ${score}`;
+  $('qtext').innerHTML = d.q;
+  $('explain').style.display='none';
+  $('nextBtn').style.display='none';
+  const box = $('opts'); box.innerHTML='';
+  d.opts.forEach((o,idx)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.innerHTML=o;
+    b.onclick=()=>pick(idx,b);
+    box.appendChild(b);
+  });
+}
+
+function pick(idx, btn){
+  const d=Q[i];
+  document.querySelectorAll('.opt').forEach((b,j)=>{
+    b.disabled=true;
+    if(j===d.a) b.classList.add('correct');
+  });
+  const ex=$('explain');
+  if(idx===d.a){ score++; streak++; ex.className='explain good';
+    ex.innerHTML='✅ <b>Correct!</b> '+d.ex + (streak>=3?` 🔥 ${streak} in a row!`:'');
+  } else { streak=0; btn.classList.add('wrong'); ex.className='explain bad';
+    ex.innerHTML='❌ <b>Not quite.</b> '+d.ex;
+  }
+  $('streak').textContent = streak>=3 ? '🔥×'+streak : '';
+  $('scorelive').textContent=`Score: ${score}`;
+  ex.style.display='block';
+  $('nextBtn').style.display='block';
+  $('nextBtn').textContent = i===Q.length-1 ? 'See My Results 🏁' : 'Next Question →';
+}
+
+$('nextBtn').onclick=()=>{
+  i++;
+  if(i<Q.length){ show(); }
+  else{
+    $('quiz').style.display='none';
+    $('result').style.display='block';
+    $('finalScore').textContent=score;
+    const pct=score/Q.length;
+    $('remoji').textContent = pct===1?'🏆':pct>=.75?'🌟':pct>=.5?'💪':'📚';
+    $('rmsg').textContent = pct===1?'Perfect score! You are a roots master!':
+      pct>=.75?'Excellent work! Almost perfect!':
+      pct>=.5?'Good effort! Review the explanations and try again.':
+      'Keep practising — remember: squares use a number twice, cubes use it three times!';
+  }
+};
+$('restart').onclick=()=>{ i=0; score=0; streak=0; $('result').style.display='none'; $('quiz').style.display='block'; show(); };
+show();
+</script>
+</body>
+</html>

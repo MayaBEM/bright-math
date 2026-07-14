@@ -1,23 +1,1088 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#0e9bb5">
-  <meta name="description" content="Bright EngMath Word Quest — learn, listen, read and spell English vocabulary through a fun adventure quiz for primary students.">
-  <title>Bright EngMath Word Quest</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700;800&family=Noto+Sans+Thai:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌟</text></svg>">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#ff8a3d" />
+<title>Expression Lab | Bright EngMath</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#f7f7f5;
+  --surface:#ffffff;
+  --surface-soft:#f1f2ef;
+  --text:#222522;
+  --muted:#6f746f;
+  --line:#dedfda;
+  --accent:#d97732;
+  --accent-2:#3f7fd1;
+  --accent-3:#8a5fc9;
+  --accent-soft:#f6e6d8;
+  --success:#2f8f67;
+  --danger:#c75454;
+  --shadow:0 10px 30px rgba(28,32,28,.07);
+  --shadow-lg:0 20px 46px rgba(28,32,28,.14);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+  font-size:15px;
+  line-height:1.6;
+  color:var(--text);
+  background:var(--bg);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+::selection{background:var(--accent);color:#fff}
+::-webkit-scrollbar{width:11px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:#d7d3cb;border-radius:99px;border:3px solid var(--bg)}
+::-webkit-scrollbar-thumb:hover{background:var(--accent)}
+button,input{font:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,h3{font-family:'Fredoka','Inter',sans-serif}
+.app{min-height:100vh}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-14px) rotate(6deg)}}
+@keyframes floatSlow{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-20px) rotate(4deg)}}
+@keyframes drift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes pulseSoft{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes popIn{0%{opacity:0;transform:scale(.85)}70%{transform:scale(1.04)}100%{opacity:1;transform:scale(1)}}
+@keyframes shake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}30%,50%,70%{transform:translateX(-7px)}40%,60%{transform:translateX(7px)}}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 0 0 rgba(47,143,103,.35)}50%{box-shadow:0 0 0 10px rgba(47,143,103,0)}}
+@keyframes shimmer{0%{background-position:-120px 0}100%{background-position:120px 0}}
+@keyframes bounceIn{0%{opacity:0;transform:translateY(14px) scale(.8)}60%{opacity:1;transform:translateY(-4px) scale(1.05)}100%{transform:translateY(0) scale(1)}}
+@keyframes spinSlow{to{transform:rotate(360deg)}}
+@keyframes confettiFall{0%{transform:translateY(-10vh) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(540deg);opacity:.9}}
+
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease, transform .6s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+.topbar{
+  position:sticky;top:0;z-index:20;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px clamp(18px,4vw,40px);
+  background:rgba(247,247,245,.94);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+  transition:box-shadow .25s ease, padding .25s ease;
+}
+.topbar.scrolled{box-shadow:0 6px 22px rgba(28,32,28,.08)}
+.brand{
+  display:flex;align-items:center;gap:10px;
+  font-weight:600;
+  font-size:16px;
+  letter-spacing:-.01em;
+  font-family:'Fredoka',sans-serif;
+}
+.logo{
+  width:34px;height:34px;border-radius:10px;
+  background:linear-gradient(135deg,var(--text),#3c4238);
+  display:grid;place-items:center;
+  transition:transform .35s ease;
+}
+.brand:hover .logo{transform:rotate(-10deg) scale(1.08)}
+.logo svg{width:20px}
+.nav-actions{display:flex;gap:8px}
+.icon-btn,.ghost-btn,.primary-btn{
+  border-radius:10px;
+  padding:9px 12px;
+  font-weight:500;
+  font-size:13px;
+  transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.icon-btn,.ghost-btn{
+  background:var(--surface);
+  border:1px solid var(--line);
+  color:var(--text);
+}
+.icon-btn:hover,.ghost-btn:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.primary-btn{
+  border:1px solid var(--text);
+  background:var(--text);
+  color:#fff;
+}
+.primary-btn:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+main{
+  width:min(1100px,calc(100% - 32px));
+  margin:0 auto;
+  padding:32px 0 72px;
+}
+.hero{
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:18px;
+  align-items:stretch;
+}
+.hero-copy,.hero-visual{
+  border-radius:22px;
+  overflow:hidden;
+  position:relative;
+}
+.hero-copy{
+  background:linear-gradient(120deg,#20241f,#2b2f38,#3a2f45,#262a27);
+  background-size:300% 300%;
+  animation:drift 14s ease infinite;
+  color:#fff;
+  padding:clamp(30px,5vw,54px);
+  position:relative;
+  animation-fill-mode:forwards;
+}
+.hero-copy .floaters{position:absolute;inset:0;pointer-events:none;z-index:0}
+.hero-copy .floaters span{
+  position:absolute;font-family:'Fredoka',sans-serif;font-weight:600;
+  color:rgba(255,255,255,.09);font-size:64px;
+  animation:floatSlow 9s ease-in-out infinite;
+}
+.hero-copy .floaters span:nth-child(1){top:6%;left:6%;font-size:80px;animation-duration:10s}
+.hero-copy .floaters span:nth-child(2){top:60%;left:2%;animation-duration:8s;animation-delay:.6s}
+.hero-copy .floaters span:nth-child(3){top:12%;right:6%;animation-duration:11s;animation-delay:1.2s}
+.hero-copy .floaters span:nth-child(4){bottom:8%;right:14%;font-size:54px;animation-duration:7.5s;animation-delay:.3s}
+.hero-copy>*{position:relative;z-index:1}
+.pill{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:6px 10px;
+  border-radius:999px;
+  background:rgba(255,255,255,.12);
+  font-size:12px;
+  font-weight:500;
+  color:#e9ece9;
+  opacity:0;
+  animation:fadeUp .6s ease .05s forwards;
+}
+.pill .dot{display:inline-block;width:7px;height:7px;border-radius:99px;background:var(--accent);animation:pulseSoft 1.6s ease-in-out infinite}
+.hero h1{
+  margin:20px 0 14px;
+  max-width:720px;
+  font-size:clamp(36px,5.6vw,64px);
+  line-height:1.03;
+  letter-spacing:-.03em;
+  font-weight:600;
+  opacity:0;
+  animation:fadeUp .7s ease .15s forwards;
+}
+.hero h1 .accent-word{
+  background:linear-gradient(90deg,#f2a45f,#f6c98a,#f2a45f);
+  background-size:200% auto;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:drift 4s linear infinite;
+}
+.hero p{
+  max-width:640px;
+  margin:0;
+  color:#d9ddd9;
+  font-size:clamp(15px,1.7vw,18px);
+  line-height:1.7;
+  font-weight:400;
+  opacity:0;
+  animation:fadeUp .7s ease .28s forwards;
+}
+.hero-buttons{
+  display:flex;flex-wrap:wrap;gap:9px;
+  margin-top:24px;
+  opacity:0;
+  animation:fadeUp .7s ease .4s forwards;
+}
+.hero-buttons button{
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:10px;
+  padding:11px 16px;
+  font-size:13px;
+  font-weight:600;
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+.hero-buttons button:hover{transform:translateY(-3px) scale(1.02)}
+.hero-buttons button:first-child{
+  background:#fff;
+  color:var(--text);
+  box-shadow:0 8px 22px rgba(0,0,0,.25);
+}
+.hero-buttons button:last-child{
+  background:transparent;
+  color:#fff;
+}
+.hero-visual{
+  background:radial-gradient(circle at 20% 15%,#f2e5d6,#e7ddd3 60%);
+  padding:24px;
+  min-height:360px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  box-shadow:none;
+}
+.hero-visual .shape{position:absolute;border-radius:50%;opacity:.5;filter:blur(1px);pointer-events:none}
+.expression-card{
+  background:var(--surface);
+  border:1px solid rgba(34,37,34,.08);
+  border-radius:18px;
+  padding:24px;
+  box-shadow:var(--shadow-lg);
+  animation:floatSlow 6s ease-in-out infinite, popIn .6s ease .3s backwards;
+  transition:transform .3s ease;
+}
+.expression-card:hover{transform:scale(1.02) rotate(-.5deg)}
+.expression-card .big{
+  font-size:clamp(42px,6vw,68px);
+  font-weight:600;
+  letter-spacing:-.04em;
+  background:linear-gradient(100deg,var(--text),var(--accent));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.expression-card .meaning{
+  margin-top:10px;
+  padding-top:10px;
+  border-top:1px solid var(--line);
+  color:#60655f;
+  font-size:14px;
+  font-weight:400;
+  line-height:1.55;
+}
+.mini-objects{
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  gap:12px;
+  padding:16px 0 4px;
+}
+.cube{
+  width:54px;height:54px;
+  border-radius:14px;
+  background:rgba(255,255,255,.92);
+  border:1px solid rgba(34,37,34,.08);
+  box-shadow:0 8px 18px rgba(28,32,28,.1);
+  display:grid;place-items:center;
+  font-size:20px;
+  font-weight:600;
+  opacity:0;
+  animation:bounceIn .6s ease forwards, float 4s ease-in-out 1s infinite;
+  transition:transform .2s ease;
+}
+.cube:hover{transform:scale(1.12) rotate(-6deg)}
+.cube:nth-child(1){animation-delay:.5s,1.5s}
+.cube:nth-child(2){animation-delay:.65s,1.65s}
+.cube:nth-child(3){animation-delay:.8s,1.8s}
+.section{margin-top:28px}
+.section-head{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:16px;
+  margin:38px 2px 14px;
+}
+.section-head h2{
+  margin:0;
+  font-size:clamp(24px,3.2vw,34px);
+  line-height:1.2;
+  letter-spacing:-.02em;
+  font-weight:600;
+}
+.section-head p{
+  margin:4px 0 0;
+  color:var(--muted);
+  font-size:14px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+.lesson-card,.mode-card,.quiz-shell,.result-card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  box-shadow:none;
+}
+.lesson-card{
+  border-radius:18px;
+  padding:20px;
+  position:relative;
+  overflow:hidden;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.lesson-card:before{
+  content:"";position:absolute;top:0;left:0;right:0;height:4px;
+  background:var(--accent);
+  transform:scaleX(0);transform-origin:left;transition:transform .35s ease;
+}
+.lesson-card:nth-child(1):before{background:var(--accent)}
+.lesson-card:nth-child(2):before{background:var(--accent-2)}
+.lesson-card:nth-child(3):before{background:var(--accent-3)}
+.lesson-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
+.lesson-card:hover:before{transform:scaleX(1)}
+.lesson-card .num{
+  width:32px;height:32px;
+  border-radius:9px;
+  background:var(--surface-soft);
+  color:var(--accent);
+  display:grid;place-items:center;
+  font-size:13px;
+  font-weight:700;
+  transition:transform .3s ease;
+}
+.lesson-card:nth-child(2) .num{color:var(--accent-2)}
+.lesson-card:nth-child(3) .num{color:var(--accent-3)}
+.lesson-card:hover .num{transform:rotate(-8deg) scale(1.1)}
+.lesson-card h3{
+  margin:15px 0 8px;
+  font-size:18px;
+  line-height:1.35;
+  font-weight:600;
+  letter-spacing:-.01em;
+}
+.lesson-card p{
+  margin:0;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.65;
+}
+.example{
+  margin-top:14px;
+  padding:12px 13px;
+  border-radius:10px;
+  background:var(--surface-soft);
+  color:#424642;
+  font-size:14px;
+  font-weight:500;
+  transition:background .25s ease;
+}
+.lesson-card:hover .example{background:var(--accent-soft)}
+.rule-strip{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-top:14px!important;
+  padding:12px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#2b2f2b,#33392f);
+  color:#fff;
+}
+.rule{
+  padding:12px 10px;
+  border-radius:12px;
+  background:rgba(255,255,255,.06);
+  text-align:center;
+  transition:transform .22s ease, background .22s ease;
+}
+.rule:hover{transform:translateY(-4px) scale(1.04);background:rgba(255,255,255,.12)}
+.rule b{
+  display:block;
+  margin-bottom:2px;
+  color:#e7b58e;
+  font-size:22px;
+  font-weight:600;
+}
+.rule small{
+  color:#ced2ce;
+  font-size:12px;
+  font-weight:400;
+}
+.mode-card{
+  border-radius:18px;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  gap:11px;
+  transition:.22s ease;
+  position:relative;
+  overflow:hidden;
+}
+.mode-card:after{
+  content:"";position:absolute;top:-40%;right:-30%;width:180px;height:180px;border-radius:50%;
+  background:radial-gradient(circle,var(--accent-soft),transparent 70%);opacity:0;transition:opacity .3s ease;
+}
+.mode-card:hover{
+  transform:translateY(-5px);
+  box-shadow:var(--shadow-lg);
+}
+.mode-card:hover:after{opacity:1}
+.mode-card .mode-icon{font-size:26px;line-height:1;animation:float 5s ease-in-out infinite}
+.mode-tag{
+  font-size:11px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color:var(--accent);
+  position:relative;z-index:1;
+}
+.mode-card:nth-child(2) .mode-tag{color:var(--accent-2)}
+.mode-card:nth-child(3) .mode-tag{color:var(--accent-3)}
+.mode-card h3{
+  margin:0;
+  font-size:21px;
+  line-height:1.3;
+  letter-spacing:-.02em;
+  font-weight:600;
+  position:relative;z-index:1;
+}
+.mode-card p{
+  margin:0;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.6;
+  position:relative;z-index:1;
+}
+.progress-line{
+  height:7px;
+  border-radius:999px;
+  background:#e7e8e4;
+  overflow:hidden;
+  position:relative;z-index:1;
+}
+.progress-line span{
+  display:block;
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--accent),#f2a45f);
+  transition:width 1s cubic-bezier(.2,.8,.2,1);
+  position:relative;
+}
+.mode-card:nth-child(2) .progress-line span{background:linear-gradient(90deg,var(--accent-2),#6fa8f0)}
+.mode-card:nth-child(3) .progress-line span{background:linear-gradient(90deg,var(--accent-3),#b28ce0)}
+.mode-card button{
+  margin-top:auto;
+  border:1px solid var(--text);
+  border-radius:10px;
+  padding:11px 12px;
+  background:var(--text);
+  color:#fff;
+  font-size:13px;
+  font-weight:600;
+  position:relative;z-index:1;
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+.mode-card button:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.teacher-panel{
+  display:none;
+  margin-top:16px;
+  padding:22px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#2b2f2b,#343a2f);
+  color:#fff;
+}
+.teacher-panel.active{display:block;animation:fadeUp .4s ease}
+.teacher-panel h3{
+  margin:0 0 8px;
+  font-size:20px;
+  font-weight:600;
+}
+.teacher-panel p{color:#d4d8d4}
+.teacher-tools{display:flex;flex-wrap:wrap;gap:8px}
+.teacher-tools button{
+  padding:9px 11px;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:9px;
+  background:rgba(255,255,255,.05);
+  color:#fff;
+  font-size:13px;
+  font-weight:500;
+  transition:transform .18s ease, background .18s ease;
+}
+.teacher-tools button:hover{transform:translateY(-2px);background:rgba(255,255,255,.14)}
+.quiz-shell{
+  display:none;
+  margin-top:22px;
+  padding:clamp(20px,3vw,30px);
+  border-radius:20px;
+  box-shadow:var(--shadow);
+}
+.quiz-shell.active{display:block;animation:fadeUp .5s ease}
+.quiz-top{
+  display:flex;
+  gap:16px;
+  align-items:center;
+  justify-content:space-between;
+}
+.quiz-meta{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.badge{
+  padding:6px 10px;
+  border-radius:999px;
+  background:var(--accent-soft);
+  color:#9a5728;
+  font-size:12px;
+  font-weight:600;
+}
+.question-count{
+  font-size:13px;
+  font-weight:500;
+  color:var(--muted);
+}
+.quiz-progress{
+  height:8px;
+  margin:18px 0;
+  border-radius:999px;
+  background:#e8e9e6;
+  overflow:hidden;
+}
+.quiz-progress span{
+  display:block;
+  height:100%;
+  background:linear-gradient(90deg,var(--accent),#f2a45f);
+  transition:width .45s cubic-bezier(.2,.8,.2,1);
+}
+.question{
+  margin:14px 0 18px;
+  font-size:clamp(20px,2.5vw,28px);
+  line-height:1.45;
+  letter-spacing:-.02em;
+  font-weight:500;
+  animation:fadeUp .4s ease;
+}
+.context-card{
+  margin-bottom:16px;
+  padding:13px 14px;
+  border:1px solid #e8d9ca;
+  border-radius:12px;
+  background:#fbf6f1;
+  color:#695746;
+  font-size:14px;
+  font-weight:400;
+}
+.options{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.option{
+  min-height:54px;
+  padding:13px 14px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#fff;
+  color:var(--text);
+  text-align:left;
+  font-size:14px;
+  line-height:1.5;
+  font-weight:400;
+  transition:.16s ease;
+  animation:fadeUp .35s ease backwards;
+}
+.options .option:nth-child(1){animation-delay:.02s}
+.options .option:nth-child(2){animation-delay:.08s}
+.options .option:nth-child(3){animation-delay:.14s}
+.options .option:nth-child(4){animation-delay:.2s}
+.option:hover{
+  border-color:var(--accent);
+  transform:translateY(-2px);
+  background:#fafaf8;
+  box-shadow:var(--shadow);
+}
+.option.selected{
+  border-color:var(--accent);
+  background:#fcf4ed;
+  transform:scale(1.01);
+}
+.option.correct{
+  border-color:var(--success);
+  background:#eef8f3;
+  animation:glowPulse 1s ease 2;
+}
+.option.wrong{
+  border-color:var(--danger);
+  background:#fcf0f0;
+  animation:shake .45s ease;
+}
+.text-answer{
+  width:100%;
+  padding:14px 15px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  outline:none;
+  font-size:15px;
+  font-weight:400;
+  transition:border-color .2s ease, box-shadow .2s ease;
+}
+.text-answer:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.feedback{
+  display:none;
+  margin-top:16px;
+  padding:14px 15px;
+  border-radius:12px;
+  font-size:14px;
+  line-height:1.65;
+}
+.feedback.show{display:block;animation:fadeUp .3s ease}
+.feedback.correct{
+  background:#eef8f3;
+  color:#28684f;
+}
+.feedback.wrong{
+  background:#fcf0f0;
+  color:#8d4040;
+}
+.quiz-actions{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:18px;
+}
+.quiz-actions button{
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:10px 13px;
+  font-size:13px;
+  font-weight:600;
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.quiz-actions button:hover{transform:translateY(-2px)}
+.secondary{background:#f2f3f0}
+.check-btn{background:var(--accent);color:#fff;border-color:var(--accent)!important}
+.check-btn:hover{box-shadow:0 10px 22px rgba(217,119,50,.3)}
+.next-btn{background:var(--text);color:#fff;border-color:var(--text)!important}
+.next-btn:hover{box-shadow:var(--shadow-lg)}
+.result-card{
+  display:none;
+  margin-top:22px;
+  padding:34px;
+  border-radius:20px;
+  text-align:center;
+  box-shadow:var(--shadow);
+}
+.result-card.active{display:block;animation:popIn .5s ease}
+.score-ring{
+  width:150px;height:150px;
+  margin:8px auto 18px;
+  border-radius:50%;
+  display:grid;place-items:center;
+  background:conic-gradient(var(--accent) 0%,#e9e9e6 0);
+  position:relative;
+  transition:background 1s ease;
+}
+.score-ring:after{
+  content:"";
+  position:absolute;
+  width:116px;height:116px;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.03);
+}
+.score-ring strong{
+  position:relative;
+  z-index:1;
+  font-size:30px;
+  font-weight:600;
+}
+.result-card h2{
+  font-size:28px;
+  font-weight:600;
+  letter-spacing:-.02em;
+}
+.result-card p{color:var(--muted)}
+.result-actions{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:9px;
+}
+.result-actions button{
+  border-radius:10px;
+  padding:11px 15px;
+  font-size:13px;
+  font-weight:600;
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.result-actions button:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+footer{
+  padding:28px 14px 38px;
+  text-align:center;
+  color:#858a84;
+  font-size:13px;
+  font-weight:400;
+}
+.modal{
+  position:fixed;inset:0;z-index:50;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:rgba(24,27,24,.62);
+}
+.modal.show{display:flex;animation:fadeIn .25s ease}
+.modal-box{
+  width:min(720px,100%);
+  max-height:86vh;
+  overflow:auto;
+  padding:24px;
+  border-radius:18px;
+  background:#fff;
+  animation:popIn .3s ease;
+}
+.modal-box h3{
+  margin-top:0;
+  font-size:24px;
+  font-weight:600;
+}
+.close{
+  float:right;
+  width:36px;height:36px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  background:#f4f4f1;
+  font-size:18px;
+  transition:transform .18s ease, background .18s ease;
+}
+.close:hover{transform:rotate(90deg);background:var(--accent-soft)}
+.word-map{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.word-row{
+  padding:12px;
+  border-radius:10px;
+  background:#f5f5f2;
+  font-size:14px;
+  transition:transform .18s ease, background .18s ease;
+}
+.word-row:hover{transform:translateX(3px);background:var(--accent-soft)}
+.word-row b{
+  display:block;
+  margin-bottom:2px;
+  font-weight:600;
+}
+.hidden{display:none!important}
+.confetti-piece{
+  position:fixed;top:-12px;z-index:80;border-radius:2px;pointer-events:none;
+  animation:confettiFall linear forwards;
+}
+@media(max-width:860px){
+  .hero{grid-template-columns:1fr}
+  .hero-visual{min-height:300px}
+  .grid{grid-template-columns:1fr}
+  .rule-strip{grid-template-columns:1fr 1fr}
+  .options{grid-template-columns:1fr}
+  .nav-actions .label{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}
+@media print{
+  .topbar,.hero,.section:not(#quizArea),footer,.quiz-actions{display:none!important}
+  .quiz-shell{display:block!important;box-shadow:none;border:none}
+  .feedback{display:block!important}
+}
+</style>
+
 </head>
-<body data-theme="island">
-  <div class="bg-decor" id="bgDecor" aria-hidden="true"></div>
-  <div class="shell" id="app">
-    <noscript><p style="text-align:center;padding:40px 20px">Please enable JavaScript to play Bright EngMath Word Quest.</p></noscript>
+<body>
+<div class="app">
+<header class="topbar" id="topbar">
+  <div class="brand"><span class="logo"><svg viewBox="0 0 24 24" fill="none"><path d="M4 18 9.5 6l3.2 7L15 8l5 10H4Z" fill="#fff"/></svg></span>Expression Lab</div>
+  <div class="nav-actions">
+    <button class="icon-btn" onclick="toggleTeacher()">🧑‍🏫 <span class="label">Teacher Mode</span></button>
+    <button class="icon-btn" onclick="openGlossary()">Aa <span class="label">Word Bank</span></button>
   </div>
-  <script src="js/data.js"></script>
-  <script src="js/app.js"></script>
+</header>
+
+<main>
+<section class="hero">
+  <div class="hero-copy">
+    <div class="floaters"><span>+</span><span>×</span><span>÷</span><span>−</span></div>
+    <span class="pill"><span class="dot"></span> Interactive Algebra Starter</span>
+    <h1>Turn words into <span class="accent-word">expressions</span>.</h1>
+    <p>Learn how numbers, letters and operations work together. Designed for live online teaching, self-practice and test preparation.</p>
+    <div class="hero-buttons">
+      <button onclick="document.getElementById('modes').scrollIntoView()">Start learning</button>
+      <button onclick="startQuiz('easy')">Quick practice</button>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="expression-card">
+      <div class="big">4x + 3</div>
+      <div class="meaning">four times a number, then add three</div>
+    </div>
+    <div class="mini-objects"><div class="cube">x</div><div class="cube">×4</div><div class="cube">+3</div></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head reveal"><div><h2>Mini lesson</h2><p>A fast, teacher-friendly overview before practice.</p></div></div>
+  <div class="grid">
+    <article class="lesson-card reveal"><div class="num">1</div><h3>A letter can stand for a number</h3><p>When the exact value is unknown, choose a letter such as <b>n</b>, <b>x</b> or <b>p</b>.</p><div class="example">A box has n pencils.</div></article>
+    <article class="lesson-card reveal"><div class="num">2</div><h3>Translate operation words</h3><p>Words such as “more than”, “times” and “half” tell us which operation to use.</p><div class="example">7 more than x → x + 7</div></article>
+    <article class="lesson-card reveal"><div class="num">3</div><h3>Order matters</h3><p>“Subtract 4 from x” means the starting value is x. The expression is not 4 − x.</p><div class="example">subtract 4 from x → x − 4</div></article>
+  </div>
+  <div class="rule-strip reveal" style="margin-top:16px">
+    <div class="rule"><b>+</b><small>sum, more, add</small></div>
+    <div class="rule"><b>−</b><small>difference, less, subtract</small></div>
+    <div class="rule"><b>×</b><small>times, product, double</small></div>
+    <div class="rule"><b>÷</b><small>quotient, half, share</small></div>
+  </div>
+</section>
+
+<section class="section" id="modes">
+  <div class="section-head reveal"><div><h2>Choose a practice set</h2><p>Original questions with instant explanations.</p></div></div>
+  <div class="grid">
+    <article class="mode-card reveal"><span class="mode-icon">🧩</span><span class="mode-tag">Level 1 · Foundation</span><h3>Build the expression</h3><p>Identify variables and translate simple one-step phrases.</p><div class="progress-line"><span id="prog-easy"></span></div><button onclick="startQuiz('easy')">Start 15 questions</button></article>
+    <article class="mode-card reveal"><span class="mode-icon">🧠</span><span class="mode-tag">Level 2 · Core</span><h3>Words to algebra</h3><p>Work with two-step operations and real-life situations.</p><div class="progress-line"><span id="prog-medium"></span></div><button onclick="startQuiz('medium')">Start 15 questions</button></article>
+    <article class="mode-card reveal"><span class="mode-icon">🚀</span><span class="mode-tag">Level 3 · Challenge</span><h3>Think like an algebraist</h3><p>Distinguish tricky wording and interpret combined expressions.</p><div class="progress-line"><span id="prog-hard"></span></div><button onclick="startQuiz('hard')">Start 15 questions</button></article>
+  </div>
+  <div class="teacher-panel" id="teacherPanel">
+    <h3>Teacher controls</h3>
+    <p>Use these tools while screen-sharing during an online lesson.</p>
+    <div class="teacher-tools">
+      <button onclick="startQuiz('easy')">Open foundation set</button>
+      <button onclick="startQuiz('medium')">Open core set</button>
+      <button onclick="startQuiz('hard')">Open challenge set</button>
+      <button onclick="toggleAnswers()">Show / hide answer cues</button>
+      <button onclick="window.print()">Print current page</button>
+      <button onclick="resetProgress()">Reset learner progress</button>
+    </div>
+  </div>
+</section>
+
+<section id="quizArea">
+  <div class="quiz-shell" id="quizShell">
+    <div class="quiz-top">
+      <div class="quiz-meta"><span class="badge" id="levelBadge">Level</span><span class="question-count" id="questionCount">1 / 15</span></div>
+      <button class="ghost-btn" onclick="exitQuiz()">Exit</button>
+    </div>
+    <div class="quiz-progress"><span id="quizProgress"></span></div>
+    <div class="context-card hidden" id="contextCard"></div>
+    <div class="question" id="questionText"></div>
+    <div class="options" id="options"></div>
+    <div id="inputWrap" class="hidden"><input class="text-answer" id="textAnswer" placeholder="Type your expression, for example 3x + 2" /></div>
+    <div class="feedback" id="feedback"></div>
+    <div class="quiz-actions">
+      <button class="secondary" onclick="showHint()">💡 Hint</button>
+      <div>
+        <button class="check-btn" id="checkBtn" onclick="checkAnswer()">Check answer</button>
+        <button class="next-btn hidden" id="nextBtn" onclick="nextQuestion()">Next →</button>
+      </div>
+    </div>
+  </div>
+  <div class="result-card" id="resultCard">
+    <div class="score-ring" id="scoreRing"><strong id="scoreText">0%</strong></div>
+    <h2 id="resultTitle">Great work!</h2>
+    <p id="resultMessage"></p>
+    <div class="result-actions"><button class="primary-btn" onclick="retryQuiz()">Try this level again</button><button class="ghost-btn" onclick="backToModes()">Choose another level</button></div>
+  </div>
+</section>
+</main>
+
+<footer>Cr. Bright EngMath · Original interactive learning material</footer>
+</div>
+
+<div class="modal" id="glossaryModal">
+  <div class="modal-box"><button class="close" onclick="closeGlossary()">×</button><h3>Expression Word Bank</h3>
+    <div class="word-map">
+      <div class="word-row"><b>sum / total / more than</b>Use addition (+)</div>
+      <div class="word-row"><b>difference / less than</b>Use subtraction (−)</div>
+      <div class="word-row"><b>product / times / double</b>Use multiplication (×)</div>
+      <div class="word-row"><b>quotient / divided by / half</b>Use division (÷)</div>
+      <div class="word-row"><b>increased by</b>Add the second amount</div>
+      <div class="word-row"><b>decreased by</b>Subtract the second amount</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const bank = {
+easy:[
+{q:"A jar contains an unknown number of buttons. Which letter could represent that number?",o:["b","7","+","="],a:0,e:"A variable is a letter used to represent an unknown number. Here, b is a suitable variable.",h:"Choose a letter, not a number or operation sign."},
+{q:"Which expression means “5 more than n”?",o:["5n","n + 5","5 − n","n ÷ 5"],a:1,e:"“More than” signals addition. Start with n and add 5.",h:"Look for an addition sign."},
+{q:"Which expression means “three times x”?",o:["x + 3","3x","x − 3","x ÷ 3"],a:1,e:"Three times x means 3 multiplied by x, written compactly as 3x.",h:"The word “times” means multiply."},
+{q:"Ava has p stickers and receives 4 more. How many stickers does she have now?",o:["4p","p + 4","p − 4","4 − p"],a:1,e:"She starts with p and gains 4, so the total is p + 4.",h:"Receiving more increases the amount."},
+{q:"Which expression means “m decreased by 6”?",o:["m − 6","6 − m","6m","m + 6"],a:0,e:"“m decreased by 6” starts with m and subtracts 6.",h:"The starting quantity comes first."},
+{q:"Which expression represents double y?",o:["y + 2","2 + y","2y","y ÷ 2"],a:2,e:"Double means multiply by 2, so double y is 2y.",h:"Double is the same as ×2."},
+{q:"Which expression represents half of k?",o:["2k","k + 2","k ÷ 2","2 ÷ k"],a:2,e:"Half of a quantity is found by dividing it by 2.",h:"Half means split into two equal parts."},
+{q:"A box has c crayons. Two are removed. Which expression shows how many remain?",o:["c + 2","2c","c − 2","2 − c"],a:2,e:"The box starts with c crayons and loses 2, giving c − 2.",h:"Removing makes the amount smaller."},
+{q:"What does 7a mean?",o:["7 + a","7 − a","7 × a","a ÷ 7"],a:2,e:"A number written next to a variable means multiplication.",h:"No symbol between a number and letter means multiplication."},
+{q:"Which phrase matches t + 9?",o:["nine times t","nine less than t","t increased by nine","t divided by nine"],a:2,e:"t + 9 means start with t and increase it by 9.",h:"Focus on the plus sign."},
+{q:"Leo has q toy cars. His friend gives him one more. Which expression is correct?",o:["q + 1","q − 1","q","1 − q"],a:0,e:"One more than q is q + 1.",h:"One more means add 1."},
+{q:"Which expression means “8 less than r”?",o:["8 − r","r − 8","8r","r + 8"],a:1,e:"“8 less than r” means take 8 away from r: r − 8.",h:"Ask: eight less than what starting amount?"},
+{q:"A game score is s. The score is tripled. Which expression represents the new score?",o:["s + 3","3s","s ÷ 3","3 − s"],a:1,e:"Tripled means multiplied by 3, so the new score is 3s.",h:"Triple = ×3."},
+{q:"Which expression is a sum?",o:["4x","x − 4","x + 4","x ÷ 4"],a:2,e:"A sum is the result of addition, so x + 4 is a sum.",h:"A sum uses +."},
+{q:"Which expression represents the number of books after adding 10 books to b books?",o:["10b","10 − b","b + 10","b ÷ 10"],a:2,e:"Start with b books, then add 10: b + 10.",h:"Follow the story in time order."}
+],
+medium:[
+{q:"Mia has x beads. She buys 6 more and then gives away 2. Which expression represents the final number?",o:["x + 8","x + 6 − 2","6x − 2","x − 8"],a:1,e:"Start with x, add 6, then subtract 2: x + 6 − 2.",h:"Translate each action in order."},
+{q:"Which expression means “multiply n by 4, then add 7”?",o:["4(n + 7)","4n + 7","n + 28","7n + 4"],a:1,e:"First multiply n by 4 to get 4n, then add 7.",h:"Do not put the +7 inside brackets unless it is also multiplied."},
+{q:"A cinema ticket costs t baht. What is the cost of 5 tickets and a 20-baht booking fee?",o:["5(t + 20)","5t + 20","t + 25","20t + 5"],a:1,e:"Five tickets cost 5t. Add one booking fee of 20, giving 5t + 20.",h:"The fee is added once."},
+{q:"Which phrase matches 12 − 3x?",o:["three times x subtracted from twelve","twelve less than three times x","three times the difference of twelve and x","twelve multiplied by three x"],a:0,e:"“3x subtracted from 12” gives 12 − 3x. The order is important.",h:"The amount after “from” usually comes first."},
+{q:"Nora has y notebooks. Her teacher doubles the number and adds 3. Which expression is correct?",o:["2(y + 3)","2y + 3","y + 6","3y + 2"],a:1,e:"Double y gives 2y, then add 3 to get 2y + 3.",h:"Perform the operations in the stated order."},
+{q:"Which expression represents one quarter of p, then increased by 5?",o:["p ÷ 4 + 5","p ÷ 9","4p + 5","p ÷ (4 + 5)"],a:0,e:"One quarter of p is p ÷ 4. Increasing by 5 gives p ÷ 4 + 5.",h:"Quarter means divide by 4."},
+{q:"A rectangle has length l and width 4. Which expression gives its perimeter?",o:["4l","l + 4","2l + 8","l + 8"],a:2,e:"Perimeter is 2(length + width) = 2(l + 4) = 2l + 8.",h:"A rectangle has two lengths and two widths."},
+{q:"A snack costs c baht. Which expression is the cost of 3 snacks after a 10-baht discount?",o:["3(c − 10)","3c − 10","c − 30","10 − 3c"],a:1,e:"Three snacks cost 3c, and one total discount of 10 gives 3c − 10.",h:"The discount applies once to the total."},
+{q:"Which expression means “five fewer than twice m”?",o:["5 − 2m","2(m − 5)","2m − 5","5m − 2"],a:2,e:"Twice m is 2m. Five fewer than that is 2m − 5.",h:"Build “twice m” first."},
+{q:"A phone plan includes f free messages. Lina sends 9 more than the free allowance. How many messages does she send?",o:["9f","f + 9","f − 9","9 − f"],a:1,e:"Nine more than f is f + 9.",h:"More than means addition, but order still matters."},
+{q:"Which expression represents the total age of Sam, aged a, and his sister, who is 4 years older?",o:["2a + 4","a + 4","2a − 4","4a"],a:0,e:"The sister is a + 4. Their total is a + (a + 4) = 2a + 4.",h:"Add both ages, not just the sister's age."},
+{q:"A box contains 6 rows of x markers, plus 2 extra markers. Which expression gives the total?",o:["6 + x + 2","6x + 2","8x","6(x + 2)"],a:1,e:"Six equal rows of x give 6x, plus 2 extras gives 6x + 2.",h:"Rows of x indicate multiplication."},
+{q:"Which description matches 3(q − 2)?",o:["three times q, then subtract two","three times the difference between q and two","q minus six","two less than three q"],a:1,e:"The brackets show that q − 2 is calculated first, then the result is multiplied by 3.",h:"Brackets group the difference."},
+{q:"Ben earns e baht each day for 4 days and spends 30 baht. Which expression shows what remains?",o:["4(e − 30)","4e − 30","e − 120","30 − 4e"],a:1,e:"Four days of earnings give 4e. Spending 30 leaves 4e − 30.",h:"Multiply the daily amount first."},
+{q:"Which expression represents the average of x and 10?",o:["x + 5","(x + 10) ÷ 2","x ÷ 2 + 10","10x ÷ 2"],a:1,e:"To find the average of two numbers, add them and divide the total by 2.",h:"Average = sum ÷ number of values."}
+],
+hard:[
+{q:"Which expression means “4 is subtracted from five times x”?",o:["4 − 5x","5(x − 4)","5x − 4","4x − 5"],a:2,e:"Five times x is 5x. Subtracting 4 from it gives 5x − 4.",h:"Build the phrase before “is subtracted” first."},
+{q:"Which expression means “subtract five times x from 4”?",o:["4 − 5x","5x − 4","4(x − 5)","5(4 − x)"],a:0,e:"The word “from” reverses the order: take 5x away from 4, giving 4 − 5x.",h:"The quantity after “from” comes first."},
+{q:"A taxi charges a fixed fee of 35 baht plus r baht per kilometre. What is the cost of k kilometres?",o:["35rk","35 + rk","r(35 + k)","35k + r"],a:1,e:"The distance charge is r × k = rk. Add the one-time fixed fee: 35 + rk.",h:"Separate the fixed fee from the per-kilometre charge."},
+{q:"Which description matches 8 − 2y?",o:["two times y minus eight","two times y subtracted from eight","eight less than twice y","double the difference of eight and y"],a:1,e:"8 − 2y means 2y is subtracted from 8.",h:"Read the expression from the subtraction structure."},
+{q:"A number n is divided by 3, then the result is subtracted from 10. Which expression is correct?",o:["n ÷ 3 − 10","10 − n ÷ 3","(10 − n) ÷ 3","10 ÷ n − 3"],a:1,e:"First n becomes n ÷ 3. That result is then subtracted from 10: 10 − n ÷ 3.",h:"“Subtracted from 10” places 10 first."},
+{q:"A square has side length s + 2. Which expression represents its perimeter?",o:["4s + 2","s + 8","4(s + 2)","(s + 2)²"],a:2,e:"A square has four equal sides, each s + 2, so perimeter = 4(s + 2).",h:"Perimeter of a square is 4 × side."},
+{q:"Which expression represents “seven less than the product of 3 and p”?",o:["7 − 3p","3(p − 7)","3p − 7","7p − 3"],a:2,e:"The product of 3 and p is 3p. Seven less than that is 3p − 7.",h:"Find the product first."},
+{q:"A club has b beginners and twice as many advanced members. What is the total membership?",o:["2b","3b","b + 2","b²"],a:1,e:"Advanced members = 2b. Total = b + 2b = 3b.",h:"Add both groups together."},
+{q:"A rope of length L is cut into 5 equal pieces, then 2 metres is removed from each piece. Which expression gives one final piece length?",o:["L ÷ 5 − 2","(L − 2) ÷ 5","L ÷ 3","5L − 2"],a:0,e:"First divide the whole rope into 5 equal pieces, then subtract 2 from each piece: L ÷ 5 − 2.",h:"Follow the action order exactly."},
+{q:"Which expression means “the difference between 6x and the sum of x and 4”?",o:["6x − x + 4","6x − (x + 4)","(6x − x) + 4","6(x − x + 4)"],a:1,e:"The sum of x and 4 must stay grouped: 6x − (x + 4).",h:"Use brackets around the entire sum."},
+{q:"A store increases a price p by 20 baht and then doubles the new price. Which expression is correct?",o:["2p + 20","2(p + 20)","p + 40","20(p + 2)"],a:1,e:"The new price after the increase is p + 20. Doubling that whole amount gives 2(p + 20).",h:"The doubling happens after the increase."},
+{q:"Which expression is equivalent to “three more than half of x”?",o:["(x + 3) ÷ 2","x ÷ 2 + 3","3x ÷ 2","x ÷ 5"],a:1,e:"Half of x is x ÷ 2, and three more gives x ÷ 2 + 3.",h:"Find half first, then add."},
+{q:"Two consecutive integers start with n. What is their total?",o:["2n","n + 1","2n + 1","n² + 1"],a:2,e:"The integers are n and n + 1. Their total is n + (n + 1) = 2n + 1.",h:"Write the second integer as one more than n."},
+{q:"A length is 3 cm shorter than twice w. Which expression represents the length?",o:["3 − 2w","2(w − 3)","2w − 3","w − 6"],a:2,e:"Twice w is 2w. Three shorter than that gives 2w − 3.",h:"“Shorter than” indicates subtraction from the comparison amount."},
+{q:"Which expression represents the cost of a adult tickets at t baht each and c child tickets at 60 baht each?",o:["at + 60c","a + t + 60 + c","60atc","t(a + c)"],a:0,e:"Adult ticket cost is at. Child ticket cost is 60c. Add them: at + 60c.",h:"Calculate each group cost separately, then add."}
+]};
+
+let level='easy', index=0, score=0, selected=null, checked=false, cueMode=false;
+
+/* ---------- confetti ---------- */
+const CONFETTI_COLORS=['#d97732','#3f7fd1','#8a5fc9','#2f8f67','#f2a45f'];
+function confettiBurst(x,y,count){
+  count=count||18;
+  for(let i=0;i<count;i++){
+    const p=document.createElement('div');
+    p.className='confetti-piece';
+    const size=6+Math.random()*6;
+    p.style.width=size+'px';
+    p.style.height=(size*.4+4)+'px';
+    p.style.left=(x+(Math.random()-.5)*120)+'px';
+    p.style.top=y+'px';
+    p.style.background=CONFETTI_COLORS[Math.floor(Math.random()*CONFETTI_COLORS.length)];
+    const dur=1+Math.random()*.8;
+    p.style.animationDuration=dur+'s';
+    p.style.transform=`rotate(${Math.random()*360}deg)`;
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),dur*1000+100);
+  }
+}
+function celebrationConfetti(){
+  const w=window.innerWidth;
+  for(let i=0;i<70;i++){
+    setTimeout(()=>confettiBurst(Math.random()*w,-20,1),i*18);
+  }
+}
+
+/* ---------- reveal on scroll ---------- */
+const revealObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); revealObserver.unobserve(e.target);} });
+},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+
+window.addEventListener('scroll',()=>{
+  document.getElementById('topbar').classList.toggle('scrolled',window.scrollY>6);
+});
+
+function startQuiz(l){
+  level=l; index=0; score=0; selected=null; checked=false;
+  document.getElementById('quizShell').classList.add('active');
+  document.getElementById('resultCard').classList.remove('active');
+  renderQuestion();
+  document.getElementById('quizArea').scrollIntoView({behavior:'smooth'});
+}
+function renderQuestion(){
+  const item=bank[level][index];
+  selected=null; checked=false;
+  document.getElementById('levelBadge').textContent={easy:'Foundation',medium:'Core',hard:'Challenge'}[level];
+  document.getElementById('questionCount').textContent=`${index+1} / ${bank[level].length}`;
+  document.getElementById('quizProgress').style.width=`${(index/bank[level].length)*100}%`;
+  const qEl=document.getElementById('questionText');
+  qEl.style.animation='none'; void qEl.offsetWidth; qEl.style.animation='';
+  qEl.textContent=item.q;
+  document.getElementById('contextCard').classList.add('hidden');
+  const opts=document.getElementById('options'); opts.innerHTML='';
+  item.o.forEach((txt,i)=>{
+    const b=document.createElement('button'); b.className='option'; b.textContent=txt;
+    b.onclick=(ev)=>selectOption(i,b); opts.appendChild(b);
+  });
+  document.getElementById('feedback').className='feedback';
+  document.getElementById('feedback').innerHTML='';
+  document.getElementById('checkBtn').classList.remove('hidden');
+  document.getElementById('nextBtn').classList.add('hidden');
+  if(cueMode) showHint();
+}
+function selectOption(i,el){
+  if(checked)return;
+  selected=i;
+  [...document.querySelectorAll('.option')].forEach(x=>x.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function checkAnswer(){
+  if(selected===null){showFeedback(false,'Please choose an answer first.');return}
+  checked=true;
+  const item=bank[level][index];
+  const buttons=[...document.querySelectorAll('.option')];
+  buttons[item.a].classList.add('correct');
+  if(selected===item.a){
+    score++;
+    showFeedback(true,'Correct! '+item.e);
+    const r=buttons[item.a].getBoundingClientRect();
+    confettiBurst(r.left+r.width/2, r.top+window.scrollY);
+  }
+  else{buttons[selected].classList.add('wrong');showFeedback(false,'Not quite. '+item.e)}
+  document.getElementById('checkBtn').classList.add('hidden');
+  document.getElementById('nextBtn').classList.remove('hidden');
+}
+function showFeedback(ok,text){
+  const f=document.getElementById('feedback'); f.className='feedback show '+(ok?'correct':'wrong'); f.textContent=text;
+}
+function showHint(){
+  const item=bank[level][index];
+  const f=document.getElementById('feedback'); f.className='feedback show'; f.style.background='#fff7dc'; f.style.color='#74530f'; f.textContent='Hint: '+item.h;
+}
+function nextQuestion(){
+  index++;
+  if(index>=bank[level].length){finishQuiz()} else renderQuestion();
+}
+function animateScoreRing(pct){
+  const ring=document.getElementById('scoreRing');
+  const text=document.getElementById('scoreText');
+  let current=0;
+  const start=performance.now();
+  const dur=900;
+  function step(now){
+    const t=Math.min(1,(now-start)/dur);
+    const eased=1-Math.pow(1-t,3);
+    current=Math.round(eased*pct);
+    ring.style.background=`conic-gradient(var(--accent) ${current}%,#e9e9e6 0)`;
+    text.textContent=current+'%';
+    if(t<1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+function finishQuiz(){
+  document.getElementById('quizShell').classList.remove('active');
+  const total=bank[level].length,pct=Math.round(score/total*100);
+  const card=document.getElementById('resultCard');card.classList.add('active');
+  animateScoreRing(pct);
+  document.getElementById('resultTitle').textContent=pct>=85?'Expression Expert!':pct>=60?'Solid progress!':'Keep building the skill';
+  document.getElementById('resultMessage').textContent=`You answered ${score} out of ${total} questions correctly. ${pct>=85?'You are ready for the next level.':pct>=60?'Review the wording of subtraction and multi-step phrases.':'Revisit the mini lesson and try again slowly.'}`;
+  localStorage.setItem('expr-'+level,pct);
+  loadProgress();
+  card.scrollIntoView({behavior:'smooth'});
+  if(pct>=85) setTimeout(celebrationConfetti,300);
+}
+function retryQuiz(){startQuiz(level)}
+function backToModes(){document.getElementById('resultCard').classList.remove('active');document.getElementById('modes').scrollIntoView({behavior:'smooth'})}
+function exitQuiz(){document.getElementById('quizShell').classList.remove('active');document.getElementById('modes').scrollIntoView({behavior:'smooth'})}
+function toggleTeacher(){document.getElementById('teacherPanel').classList.toggle('active');document.getElementById('teacherPanel').scrollIntoView({behavior:'smooth'})}
+function toggleAnswers(){cueMode=!cueMode;alert(cueMode?'Answer cues are ON. Hints will appear automatically.':'Answer cues are OFF.')}
+function resetProgress(){['easy','medium','hard'].forEach(l=>localStorage.removeItem('expr-'+l));loadProgress();alert('Learner progress has been reset.')}
+function loadProgress(){['easy','medium','hard'].forEach(l=>{const v=localStorage.getItem('expr-'+l)||0;document.getElementById('prog-'+l).style.width=v+'%'})}
+function openGlossary(){document.getElementById('glossaryModal').classList.add('show')}
+function closeGlossary(){document.getElementById('glossaryModal').classList.remove('show')}
+document.getElementById('glossaryModal').addEventListener('click',e=>{if(e.target.id==='glossaryModal')closeGlossary()});
+loadProgress();
+</script>
 </body>
 </html>

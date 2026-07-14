@@ -3,11 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="theme-color" content="#ff8f5a" />
 <title>Fraction Mastery Quest | Grade 6</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#fffaf3;
@@ -22,10 +18,8 @@
   --danger:#dc5b5b;
   --line:#ece6dc;
   --shadow:0 18px 45px rgba(42,48,76,.10);
-  --shadow-lg:0 26px 60px rgba(42,48,76,.16);
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
 body{
   margin:0;
   font-family:Inter, ui-rounded, "SF Pro Rounded", "Segoe UI", sans-serif;
@@ -34,166 +28,102 @@ body{
     radial-gradient(circle at top right, rgba(109,120,231,.14), transparent 25%),
     var(--bg);
   color:var(--ink);
-  overflow-x:hidden;
 }
-h1,h2,h3,.brand,.part-num,.level,.badge,.btn{font-family:'Baloo 2','Inter',sans-serif}
 button,input{font:inherit}
-::selection{background:var(--primary);color:#fff}
-::-webkit-scrollbar{width:11px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:#ecd9c6;border-radius:99px;border:3px solid var(--bg)}
-::-webkit-scrollbar-thumb:hover{background:var(--primary)}
-:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
-
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-12px) rotate(4deg)}}
-@keyframes floatSlow{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-16px) rotate(3deg)}}
-@keyframes drift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-@keyframes pulseSoft{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
-@keyframes popIn{0%{opacity:0;transform:scale(.86)}70%{transform:scale(1.03)}100%{opacity:1;transform:scale(1)}}
-@keyframes shake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}30%,50%,70%{transform:translateX(-7px)}40%,60%{transform:translateX(7px)}}
-@keyframes glowPulse{0%,100%{box-shadow:0 0 0 0 rgba(44,166,120,.35)}50%{box-shadow:0 0 0 10px rgba(44,166,120,0)}}
-@keyframes bounceIn{0%{opacity:0;transform:translateY(14px) scale(.8)}60%{opacity:1;transform:translateY(-4px) scale(1.05)}100%{transform:translateY(0) scale(1)}}
-@keyframes confettiFall{0%{transform:translateY(-10vh) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(540deg);opacity:.9}}
-@keyframes sparkle{0%,100%{opacity:.25}50%{opacity:.9}}
-
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease, transform .6s ease}
-.reveal.in{opacity:1;transform:translateY(0)}
-
 .app{max-width:1180px;margin:auto;padding:22px}
 .hero{
   display:grid;grid-template-columns:1.4fr .8fr;gap:24px;
   background:linear-gradient(135deg,#fff 0%,#fff7ee 100%);
   border:1px solid var(--line);border-radius:30px;padding:34px;box-shadow:var(--shadow);
-  position:relative;overflow:hidden;
 }
-.hero .sparkle{position:absolute;font-size:22px;color:var(--accent);animation:sparkle 2.4s ease-in-out infinite;pointer-events:none}
-.hero .sparkle:nth-child(1){top:20px;left:44%;animation-delay:.2s}
-.hero .sparkle:nth-child(2){bottom:30px;left:30%;animation-delay:1s;font-size:16px}
-.brand{
-  font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:var(--primary-dark);font-weight:800;
-  display:flex;align-items:center;gap:8px;opacity:0;animation:fadeUp .6s ease .05s forwards;
-}
-.brand .dot{width:8px;height:8px;border-radius:99px;background:var(--primary);animation:pulseSoft 1.6s ease-in-out infinite}
-h1{font-size:clamp(34px,6vw,62px);line-height:1.02;margin:12px 0 14px;letter-spacing:-.03em;font-weight:700;
-  opacity:0;animation:fadeUp .7s ease .15s forwards}
-h1 .accent-word{
-  background:linear-gradient(90deg,var(--primary-dark),var(--primary),#ffb27a,var(--primary-dark));
-  background-size:250% auto;-webkit-background-clip:text;background-clip:text;color:transparent;
-  animation:drift 5s linear infinite;
-}
-.hero p{font-size:17px;line-height:1.75;color:var(--muted);max-width:720px;
-  opacity:0;animation:fadeUp .7s ease .26s forwards}
+.brand{font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:var(--primary-dark);font-weight:800}
+h1{font-size:clamp(34px,6vw,62px);line-height:1.02;margin:12px 0 14px;letter-spacing:-.045em}
+.hero p{font-size:17px;line-height:1.75;color:var(--muted);max-width:720px}
 .hero-art{
   min-height:260px;border-radius:24px;
-  background:linear-gradient(145deg,#6d78e7,#8f7bef,#9299ef);
-  background-size:220% 220%;animation:drift 10s ease infinite;
+  background:linear-gradient(145deg,#6d78e7,#9299ef);
   display:flex;align-items:center;justify-content:center;
   position:relative;overflow:hidden;color:white;
-  opacity:0;animation:fadeUp .8s ease .3s forwards, drift 10s ease infinite 1.1s;
 }
 .hero-art:before,.hero-art:after{
   content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.15)
 }
-.hero-art:before{width:180px;height:180px;right:-50px;top:-40px;animation:float 7s ease-in-out infinite}
-.hero-art:after{width:130px;height:130px;left:-30px;bottom:-40px;animation:float 8s ease-in-out infinite 1s}
+.hero-art:before{width:180px;height:180px;right:-50px;top:-40px}
+.hero-art:after{width:130px;height:130px;left:-30px;bottom:-40px}
 .fraction-stack{text-align:center;z-index:1}
-.big-frac{font-size:72px;font-weight:900;line-height:.9;animation:floatSlow 5s ease-in-out infinite}
+.big-frac{font-size:72px;font-weight:900;line-height:.9}
 .big-frac .bar{height:6px;background:white;border-radius:8px;width:92px;margin:8px auto}
-.badge-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;opacity:0;animation:fadeUp .7s ease .4s forwards}
-.badge{padding:10px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:14px;font-weight:700;color:var(--muted);transition:transform .2s ease, box-shadow .2s ease}
-.badge:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.badge-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.badge{padding:10px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:14px;font-weight:700;color:var(--muted)}
 .section{margin-top:28px}
 .section-head{display:flex;align-items:end;justify-content:space-between;gap:15px;margin-bottom:15px}
-.section h2{font-size:26px;margin:0;font-weight:700}
+.section h2{font-size:26px;margin:0}
 .section p{color:var(--muted)}
 .dashboard{
   display:grid;grid-template-columns:repeat(4,1fr);gap:14px
 }
-.stat{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 10px 25px rgba(42,48,76,.06);transition:transform .2s ease, box-shadow .2s ease}
-.stat:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
-.stat strong{display:block;font-size:28px;margin-top:6px;font-family:'Baloo 2',sans-serif}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 10px 25px rgba(42,48,76,.06)}
+.stat strong{display:block;font-size:28px;margin-top:6px}
 .parts{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
 .part-card{
   background:var(--card);border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 12px 30px rgba(42,48,76,.07);
-  transition:.22s transform,.22s box-shadow;position:relative;overflow:hidden;
+  transition:.2s transform,.2s box-shadow;
 }
-.part-card:before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--primary),var(--accent));transform:scaleX(0);transform-origin:left;transition:transform .35s ease}
-.part-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
-.part-card:hover:before{transform:scaleX(1)}
+.part-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
 .part-top{display:flex;justify-content:space-between;gap:12px}
-.part-num{width:46px;height:46px;border-radius:15px;background:#fff0e8;color:var(--primary-dark);font-weight:900;display:grid;place-items:center;transition:transform .3s ease}
-.part-card:hover .part-num{transform:rotate(-8deg) scale(1.1)}
+.part-num{width:46px;height:46px;border-radius:15px;background:#fff0e8;color:var(--primary-dark);font-weight:900;display:grid;place-items:center}
 .level{font-size:12px;font-weight:800;padding:8px 10px;border-radius:999px;background:#eef0ff;color:#5965d1;height:max-content}
-.part-card h3{margin:15px 0 8px;font-size:21px;font-weight:700}
+.part-card h3{margin:15px 0 8px;font-size:21px}
 .part-card p{margin:0 0 18px;line-height:1.65}
 .progress-bar{height:9px;border-radius:999px;background:#f0ece5;overflow:hidden}
-.progress-bar span{display:block;height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));width:0;transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.progress-bar span{display:block;height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));width:0}
 .btn{
   border:0;border-radius:14px;padding:12px 16px;font-weight:800;cursor:pointer;
-  transition:.2s transform,.2s opacity,.2s box-shadow;
+  transition:.2s transform,.2s opacity;
 }
-.btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(42,48,76,.15)}
-.btn-primary{background:linear-gradient(120deg,var(--primary),var(--primary-dark));color:#fff}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--primary);color:#fff}
 .btn-secondary{background:#eef0ff;color:#4f5bcc}
 .btn-ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}
 .note{
-  background:#fff7db;border:1px solid #f0df9e;border-radius:18px;padding:16px;line-height:1.65;
-  position:relative;
+  background:#fff7db;border:1px solid #f0df9e;border-radius:18px;padding:16px;line-height:1.65
 }
 .quiz-shell{display:none;margin-top:26px}
-.quiz-shell.active{display:block;animation:fadeUp .5s ease}
+.quiz-shell.active{display:block}
 .quiz-card{
   background:#fff;border:1px solid var(--line);border-radius:28px;padding:26px;box-shadow:var(--shadow)
 }
 .quiz-top{display:flex;justify-content:space-between;gap:15px;align-items:center;flex-wrap:wrap}
-.quiz-title h2{margin:0 0 5px;font-weight:700}
+.quiz-title h2{margin:0 0 5px}
 .question-count{font-weight:800;color:var(--secondary)}
-.question{font-size:24px;font-weight:800;line-height:1.5;margin:25px 0;animation:fadeUp .4s ease}
+.question{font-size:24px;font-weight:800;line-height:1.5;margin:25px 0}
 .fraction{display:inline-grid;grid-template-rows:auto 2px auto;text-align:center;vertical-align:middle;line-height:1.05;margin:0 4px;min-width:30px}
 .fraction .line{background:currentColor}
 .options{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .option{
-  text-align:left;background:#fff;border:2px solid var(--line);border-radius:16px;padding:15px 16px;font-weight:700;cursor:pointer;min-height:56px;
-  transition:.16s ease;animation:fadeUp .35s ease backwards;
+  text-align:left;background:#fff;border:2px solid var(--line);border-radius:16px;padding:15px 16px;font-weight:700;cursor:pointer;min-height:56px
 }
-.options .option:nth-child(1){animation-delay:.02s}
-.options .option:nth-child(2){animation-delay:.08s}
-.options .option:nth-child(3){animation-delay:.14s}
-.options .option:nth-child(4){animation-delay:.2s}
-.option:hover{border-color:#b9bff7;background:#fafaff;transform:translateY(-2px);box-shadow:var(--shadow)}
-.option.correct{border-color:var(--success);background:#eaf8f2;animation:glowPulse .9s ease 2}
-.option.wrong{border-color:var(--danger);background:#fff0f0;animation:shake .45s ease}
+.option:hover{border-color:#b9bff7;background:#fafaff}
+.option.correct{border-color:var(--success);background:#eaf8f2}
+.option.wrong{border-color:var(--danger);background:#fff0f0}
 .feedback{display:none;margin-top:18px;border-radius:18px;padding:17px;line-height:1.65}
-.feedback.show{display:block;animation:fadeUp .3s ease}
+.feedback.show{display:block}
 .feedback.good{background:#eaf8f2;border:1px solid #bce7d6}
 .feedback.bad{background:#fff0f0;border:1px solid #f0c2c2}
-.feedback .why{
-  margin-top:10px;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.65);
-  border:1px dashed rgba(37,48,71,.18);font-weight:500;
-}
-.feedback .why b{color:var(--primary-dark)}
-.feedback .correct-line{margin-top:8px;font-weight:700;color:var(--success)}
 .quiz-actions{display:flex;justify-content:space-between;gap:12px;margin-top:20px}
 .result{display:none;text-align:center;padding:20px 0}
-.result.show{display:block;animation:popIn .5s ease}
-.result h2{font-weight:800}
+.result.show{display:block}
 .score-circle{
   width:150px;height:150px;border-radius:50%;margin:18px auto;display:grid;place-items:center;
-  background:conic-gradient(var(--primary) 0deg,#f0ece5 0deg);position:relative;transition:background .3s ease;
+  background:conic-gradient(var(--primary) 0deg,#f0ece5 0deg);position:relative
 }
 .score-circle:after{content:"";position:absolute;inset:12px;background:#fff;border-radius:50%}
-.score-circle strong{position:relative;z-index:1;font-size:34px;font-family:'Baloo 2',sans-serif}
+.score-circle strong{position:relative;z-index:1;font-size:34px}
 .review-list{text-align:left;margin-top:22px;display:grid;gap:12px}
-.review-item{border:1px solid var(--line);border-radius:16px;padding:15px;opacity:0;animation:fadeUp .45s ease forwards}
+.review-item{border:1px solid var(--line);border-radius:16px;padding:15px}
 .review-item.ok{border-left:6px solid var(--success)}
 .review-item.no{border-left:6px solid var(--danger)}
 .footer{text-align:center;color:var(--muted);padding:32px 10px 10px;font-size:14px}
-.confetti-piece{position:fixed;top:-12px;z-index:80;border-radius:2px;pointer-events:none;animation:confettiFall linear forwards}
-@media(prefers-reduced-motion:reduce){
-  *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
-}
 @media(max-width:800px){
   .hero{grid-template-columns:1fr;padding:24px}
   .hero-art{min-height:190px}
@@ -206,16 +136,15 @@ h1 .accent-word{
 <body>
 <div class="app">
   <section class="hero">
-    <span class="sparkle">✦</span><span class="sparkle">✦</span>
     <div>
-      <div class="brand"><span class="dot"></span>Bright EngMath • Unit 3</div>
-      <h1>Fraction Mastery <span class="accent-word">Quest</span></h1>
+      <div class="brand">Bright EngMath • Unit 3</div>
+      <h1>Fraction Mastery Quest</h1>
       <p>ข้อสอบฝึกคิดระดับกลางถึงยากสำหรับนักเรียนชั้นประถมศึกษาปีที่ 6 ครอบคลุมการเปรียบเทียบ การเรียงลำดับ การบวก การลบ การคำนวณหลายขั้นตอน และโจทย์ปัญหา</p>
       <div class="badge-row">
-        <span class="badge">📘 60 Questions</span>
-        <span class="badge">⚡ Instant Feedback</span>
-        <span class="badge">🧭 Step-by-step Explanations</span>
-        <span class="badge">⏱️ No Timer</span>
+        <span class="badge">60 Questions</span>
+        <span class="badge">Instant Feedback</span>
+        <span class="badge">Step-by-step Explanations</span>
+        <span class="badge">No Timer</span>
       </div>
     </div>
     <div class="hero-art">
@@ -231,20 +160,20 @@ h1 .accent-word{
       <div><h2>Learning Dashboard</h2><p>ระบบบันทึกความคืบหน้าอัตโนมัติบนอุปกรณ์นี้</p></div>
       <button class="btn btn-ghost" onclick="resetAll()">Reset Progress</button>
     </div>
-    <div class="dashboard reveal">
+    <div class="dashboard">
       <div class="stat">Completed<strong id="completedStat">0/5</strong></div>
       <div class="stat">Best Score<strong id="bestStat">0%</strong></div>
-      <div class="stat">Questions<strong id="questionsStat">0</strong></div>
+      <div class="stat">Questions<strong>60</strong></div>
       <div class="stat">Difficulty<strong>Mid–Hard</strong></div>
     </div>
   </section>
 
   <section class="section">
-    <div class="note reveal"><strong>แนวทางการฝึก:</strong> แนะนำให้ทำเรียงจาก Part 1 ถึง Part 5 โดยเขียนวิธีทำลงกระดาษทุกข้อ โดยเฉพาะข้อที่มีตัวส่วนต่างกันและโจทย์หลายขั้นตอน</div>
+    <div class="note"><strong>แนวทางการฝึก:</strong> แนะนำให้ทำเรียงจาก Part 1 ถึง Part 5 โดยเขียนวิธีทำลงกระดาษทุกข้อ โดยเฉพาะข้อที่มีตัวส่วนต่างกันและโจทย์หลายขั้นตอน</div>
   </section>
 
   <section class="section" id="partsSection">
-    <div class="section-head reveal"><div><h2>Choose a Part</h2><p>แต่ละพาร์ตมี 12 ข้อ พร้อมเฉลยอธิบาย</p></div></div>
+    <div class="section-head"><div><h2>Choose a Part</h2><p>แต่ละพาร์ตมี 12 ข้อ พร้อมเฉลยอธิบาย</p></div></div>
     <div class="parts" id="partsGrid"></div>
   </section>
 
@@ -315,7 +244,7 @@ const parts=[
  desc:"เปรียบเทียบเศษส่วน เรียงจากน้อยไปมากและมากไปน้อย รวมจำนวนคละ",
  level:"Intermediate",
  questions:[
- q(`Which fraction is the greatest?`,[F(7,12),F(5,8),F(11,18),F(13,20)],3,`ใช้ตัวส่วนร่วม หรือแปลงเป็นทศนิยม: 7/12≈0.583, 5/8=0.625, 11/18≈0.611, 13/20=0.65 ดังนั้น 13/20 มากที่สุด`),
+ q(`Which fraction is the greatest?`,[F(7,12),F(5,8),F(11,18),F(13,20)],1,`ใช้ตัวส่วนร่วม หรือแปลงเป็นทศนิยม: 7/12≈0.583, 5/8=0.625, 11/18≈0.611, 13/20=0.65 ดังนั้น 13/20 มากที่สุด`),
  q(`Which fraction is the smallest?`,[F(9,14),F(5,7),F(13,21),F(17,28)],3,`17/28≈0.607 ซึ่งน้อยกว่า 13/21≈0.619, 9/14≈0.643 และ 5/7≈0.714`),
  q(`Choose the correct order from least to greatest.`,[
   "3/5, 7/10, 11/15, 4/5","7/10, 3/5, 11/15, 4/5","3/5, 11/15, 7/10, 4/5","4/5, 11/15, 7/10, 3/5"
@@ -423,66 +352,17 @@ function displayChoice(c){
 }
 let currentPart=0,currentQ=0,answers=[],locked=false;
 
-/* ---------- confetti ---------- */
-const CONFETTI_COLORS=['#ff8f5a','#6d78e7','#ffd166','#2ca678','#e86f38'];
-function confettiBurst(x,y,count){
-  count=count||16;
-  for(let i=0;i<count;i++){
-    const p=document.createElement('div');
-    p.className='confetti-piece';
-    const size=6+Math.random()*6;
-    p.style.width=size+'px';
-    p.style.height=(size*.4+4)+'px';
-    p.style.left=(x+(Math.random()-.5)*120)+'px';
-    p.style.top=y+'px';
-    p.style.background=CONFETTI_COLORS[Math.floor(Math.random()*CONFETTI_COLORS.length)];
-    const dur=1+Math.random()*.8;
-    p.style.animationDuration=dur+'s';
-    p.style.transform=`rotate(${Math.random()*360}deg)`;
-    document.body.appendChild(p);
-    setTimeout(()=>p.remove(),dur*1000+100);
-  }
-}
-function celebrationConfetti(){
-  const w=window.innerWidth;
-  for(let i=0;i<70;i++){
-    setTimeout(()=>confettiBurst(Math.random()*w,-20,1),i*18);
-  }
-}
-
-/* ---------- count-up helper ---------- */
-function countUp(el,target,suffix){
-  suffix=suffix||'';
-  const start=performance.now(),dur=800,from=0;
-  function step(now){
-    const t=Math.min(1,(now-start)/dur);
-    const eased=1-Math.pow(1-t,3);
-    el.textContent=Math.round(from+(target-from)*eased)+suffix;
-    if(t<1) requestAnimationFrame(step);
-  }
-  requestAnimationFrame(step);
-}
-
-/* ---------- reveal on scroll ---------- */
-function initReveal(){
-  const revealObserver=new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); revealObserver.unobserve(e.target);} });
-  },{threshold:.12});
-  document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
-}
-
 function renderParts(){
  const grid=document.getElementById("partsGrid");grid.innerHTML="";
  let completed=0,best=0;
  parts.forEach((p,i)=>{
    const saved=JSON.parse(localStorage.getItem("fractionPart"+i)||"null");
    if(saved){completed++;best=Math.max(best,saved.percent)}
-   const card=document.createElement("div");card.className="part-card reveal";
-   card.style.transitionDelay=(i*0.05)+'s';
+   const card=document.createElement("div");card.className="part-card";
    card.innerHTML=`
     <div class="part-top"><div class="part-num">${i+1}</div><div class="level">${p.level}</div></div>
     <h3>${p.short}</h3><p>${p.desc}</p>
-    <div class="progress-bar"><span style="width:0%" data-target="${saved?saved.percent:0}"></span></div>
+    <div class="progress-bar"><span style="width:${saved?saved.percent:0}%"></span></div>
     <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px">
       <small style="color:var(--muted)">${saved?`Best ${saved.percent}%`:"Not started"}</small>
       <button class="btn btn-primary" onclick="startPart(${i})">${saved?"Practice Again":"Start Part"}</button>
@@ -490,14 +370,7 @@ function renderParts(){
    grid.appendChild(card);
  });
  document.getElementById("completedStat").textContent=`${completed}/5`;
- countUp(document.getElementById("bestStat"),best,'%');
- countUp(document.getElementById("questionsStat"),60,'');
- initReveal();
- requestAnimationFrame(()=>{
-   document.querySelectorAll('.progress-bar span[data-target]').forEach(span=>{
-     span.style.width=span.dataset.target+'%';
-   });
- });
+ document.getElementById("bestStat").textContent=`${best}%`;
 }
 function startPart(i){
  currentPart=i;currentQ=0;answers=Array(parts[i].questions.length).fill(null);locked=false;
@@ -512,9 +385,7 @@ function renderQuestion(){
  document.getElementById("quizTitle").textContent=p.short;
  document.getElementById("questionCount").textContent=`Question ${currentQ+1} of ${p.questions.length}`;
  document.getElementById("quizProgress").style.width=`${((currentQ+1)/p.questions.length)*100}%`;
- const qEl=document.getElementById("questionText");
- qEl.style.animation='none'; void qEl.offsetWidth; qEl.style.animation='';
- qEl.innerHTML=question.text;
+ document.getElementById("questionText").innerHTML=question.text;
  const box=document.getElementById("options");box.innerHTML="";
  question.choices.forEach((choice,idx)=>{
    const btn=document.createElement("button");btn.className="option";btn.innerHTML=displayChoice(choice);
@@ -533,8 +404,7 @@ function selectAnswer(idx){
 function showSavedAnswer(){
  locked=true;
  const question=parts[currentPart].questions[currentQ],chosen=answers[currentQ];
- const buttons=[...document.querySelectorAll('.option')];
- buttons.forEach((btn,idx)=>{
+ document.querySelectorAll(".option").forEach((btn,idx)=>{
    btn.disabled=true;
    if(idx===question.answer)btn.classList.add("correct");
    if(idx===chosen&&idx!==question.answer)btn.classList.add("wrong");
@@ -542,34 +412,14 @@ function showSavedAnswer(){
  const good=chosen===question.answer;
  const fb=document.getElementById("feedback");
  fb.className=`feedback show ${good?"good":"bad"}`;
- fb.innerHTML=`<strong>${good?"ถูกต้อง! ✅ Correct!":"ยังไม่ถูกนะ ❌ Not quite"}</strong>
-   <div class="why"><b>วิธีคิด:</b> ${question.explanation}</div>
-   ${good?"":`<div class="correct-line">✅ คำตอบที่ถูกต้องคือ: ${displayChoice(question.choices[question.answer])}</div>`}`;
+ fb.innerHTML=`<strong>${good?"Correct! ✅":"Not quite ❌"}</strong><br>${question.explanation}`;
  document.getElementById("nextBtn").disabled=false;
- if(good){
-   const r=buttons[question.answer].getBoundingClientRect();
-   confettiBurst(r.left+r.width/2, r.top+window.scrollY);
- }
 }
 function nextQuestion(){
  if(answers[currentQ]===null)return;
  if(currentQ<parts[currentPart].questions.length-1){currentQ++;renderQuestion()}else finishPart();
 }
 function prevQuestion(){if(currentQ>0){currentQ--;renderQuestion()}}
-function animateScoreCircle(percent){
-  const circle=document.getElementById("scoreCircle");
-  const text=document.getElementById("scoreText");
-  let current=0;const start=performance.now(),dur=900;
-  function step(now){
-    const t=Math.min(1,(now-start)/dur);
-    const eased=1-Math.pow(1-t,3);
-    current=Math.round(eased*percent);
-    circle.style.background=`conic-gradient(var(--primary) ${current*3.6}deg,#f0ece5 0deg)`;
-    text.textContent=`${current}%`;
-    if(t<1) requestAnimationFrame(step);
-  }
-  requestAnimationFrame(step);
-}
 function finishPart(){
  const p=parts[currentPart];let score=0;
  answers.forEach((a,i)=>{if(a===p.questions[i].answer)score++});
@@ -578,18 +428,17 @@ function finishPart(){
  if(!old||percent>old.percent)localStorage.setItem("fractionPart"+currentPart,JSON.stringify({percent,score}));
  document.getElementById("quizContent").style.display="none";
  document.getElementById("result").classList.add("show");
- animateScoreCircle(percent);
+ document.getElementById("scoreText").textContent=`${percent}%`;
+ document.getElementById("scoreCircle").style.background=`conic-gradient(var(--primary) ${percent*3.6}deg,#f0ece5 0deg)`;
  document.getElementById("resultMessage").textContent=percent>=85?"Excellent work — you are ready for challenging fraction problems.":percent>=70?"Good progress — review the incorrect questions and try again.":"Keep practising — focus on finding common denominators and showing each step.";
  const list=document.getElementById("reviewList");list.innerHTML="<h3>Answer Review</h3>";
  p.questions.forEach((qq,i)=>{
    const ok=answers[i]===qq.answer;const div=document.createElement("div");div.className=`review-item ${ok?"ok":"no"}`;
-   div.style.animationDelay=(i*0.04)+'s';
-   div.innerHTML=`<strong>${i+1}. ${ok?"Correct ✅":"Incorrect ❌"}</strong><br>
+   div.innerHTML=`<strong>${i+1}. ${ok?"Correct":"Incorrect"}</strong><br>
    <span style="color:var(--muted)">Correct answer: ${displayChoice(qq.choices[qq.answer])}</span><br>
    <small>${qq.explanation}</small>`;
    list.appendChild(div);
  });
- if(percent>=85) setTimeout(celebrationConfetti,300);
  renderParts();window.scrollTo({top:document.getElementById("quizShell").offsetTop-15,behavior:"smooth"});
 }
 function retryPart(){startPart(currentPart)}
@@ -604,7 +453,6 @@ function resetAll(){
  }
 }
 renderParts();
-initReveal();
 </script>
 </body>
 </html>

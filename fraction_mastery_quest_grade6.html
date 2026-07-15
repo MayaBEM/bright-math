@@ -3,213 +3,603 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Fraction Mastery Quest | Grade 6</title>
+<title>Fraction Mastery Quest | Grade 6 | Bright EngMath</title>
+<meta name="description" content="A premium Grade 6 fraction practice system by Bright EngMath — comparing, ordering, addition, subtraction, mixed operations and word problems." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Noto+Sans+Thai:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
+/* ============ DESIGN TOKENS ============ */
 :root{
-  --bg:#fffaf3;
-  --card:#ffffff;
-  --ink:#253047;
-  --muted:#6f7890;
-  --primary:#ff8f5a;
-  --primary-dark:#e86f38;
-  --secondary:#6d78e7;
-  --accent:#ffd166;
-  --success:#2ca678;
-  --danger:#dc5b5b;
-  --line:#ece6dc;
-  --shadow:0 18px 45px rgba(42,48,76,.10);
+  --cream:#FFFBF2;
+  --paper:#FFFFFF;
+  --ink:#2B2A3D;
+  --muted:#6E7280;
+  --line:#F0E7D6;
+
+  --coral:#FF6B4A;
+  --coral-dark:#E5502F;
+  --coral-light:#FFE7DD;
+
+  --purple:#8B6BF2;
+  --purple-dark:#6E4CD6;
+  --purple-light:#EFE8FF;
+
+  --blue:#3DA5DE;
+  --blue-dark:#2683B8;
+  --blue-light:#E3F4FC;
+
+  --p3:#FF8163;
+  --p3-dark:#E5624A;
+  --p3-light:#FFE8E0;
+
+  --orange:#FBA23A;
+  --orange-dark:#DD8114;
+  --orange-light:#FFF1DC;
+
+  --green:#2FB673;
+  --green-dark:#1F9459;
+  --green-light:#E1F8ED;
+
+  --mint:#33C99A;
+  --mint-bg:#E4FAF1;
+  --red:#EF6F6C;
+  --red-bg:#FFEDEC;
+  --gold:#FFC94A;
+  --gold-dark:#DE9F00;
+  --gold-light:#FFF6DE;
+
+  --shadow-sm:0 6px 18px rgba(43,42,61,.06);
+  --shadow-md:0 16px 38px rgba(43,42,61,.10);
+  --shadow-lg:0 26px 60px rgba(43,42,61,.14);
+  --r-lg:28px;
+  --r-md:20px;
+  --r-sm:14px;
+  --accent: var(--coral);
+  --accent-dark: var(--coral-dark);
+  --accent-light: var(--coral-light);
 }
 *{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important}
+}
 body{
   margin:0;
-  font-family:Inter, ui-rounded, "SF Pro Rounded", "Segoe UI", sans-serif;
+  font-family:"Nunito",-apple-system,"Noto Sans Thai","Segoe UI",sans-serif;
   background:
-    radial-gradient(circle at top left, rgba(255,209,102,.24), transparent 30%),
-    radial-gradient(circle at top right, rgba(109,120,231,.14), transparent 25%),
-    var(--bg);
+    radial-gradient(circle at 8% 6%, rgba(255,201,74,.20), transparent 32%),
+    radial-gradient(circle at 92% 10%, rgba(139,107,242,.14), transparent 28%),
+    radial-gradient(circle at 85% 85%, rgba(61,165,222,.12), transparent 30%),
+    var(--cream);
   color:var(--ink);
+  line-height:1.6;
 }
-button,input{font:inherit}
-.app{max-width:1180px;margin:auto;padding:22px}
+h1,h2,h3,.font-head{font-family:"Fredoka","Noto Sans Thai",sans-serif;font-weight:600;letter-spacing:-.01em}
+button,input{font-family:inherit}
+a{color:inherit}
+img,svg{display:block}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.skip-link{position:absolute;left:12px;top:-60px;background:var(--ink);color:#fff;padding:10px 16px;border-radius:10px;z-index:999;transition:top .2s}
+.skip-link:focus{top:12px}
+
+:focus-visible{outline:3px solid var(--purple);outline-offset:3px;border-radius:8px}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+
+/* ============ TOP NAV ============ */
+.topnav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(255,251,242,.86);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.topnav-inner{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 22px;max-width:1180px;margin:0 auto}
+.brandmark{display:flex;align-items:center;gap:10px;font-family:"Fredoka",sans-serif;font-weight:600;font-size:17px;cursor:pointer;background:none;border:0}
+.brandmark .logo-badge{
+  width:38px;height:38px;border-radius:12px;background:linear-gradient(145deg,var(--coral),var(--gold));
+  display:grid;place-items:center;color:#fff;font-weight:700;font-size:15px;box-shadow:var(--shadow-sm);
+}
+.nav-links{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.nav-btn{background:none;border:1px solid transparent;padding:9px 14px;border-radius:999px;font-weight:700;color:var(--muted);cursor:pointer;font-size:14px}
+.nav-btn:hover{background:#fff;border-color:var(--line);color:var(--ink)}
+.nav-btn.reset{color:var(--coral-dark)}
+.nav-btn.thai-btn{color:var(--purple-dark)}
+
+/* ============ THAI TRANSLATION TOGGLE ============ */
+body.thai-hidden .thai-text{display:none}
+
+/* ============ REUSABLE MATH FRACTION RENDERING SYSTEM ============
+   Every fraction and mixed number on this site is produced by
+   renderFraction() / renderMixedNumber() (see the script block) and always
+   uses this same markup + styling — never plain "3/4" slash text. */
+.math-fraction{
+  display:inline-grid;grid-template-rows:auto auto auto;justify-items:center;align-items:center;
+  vertical-align:middle;line-height:1.12;margin:0 3px;font-weight:800;font-size:0.92em;
+}
+.math-fraction .numerator,.math-fraction .denominator{padding:0 3px;white-space:nowrap}
+.math-fraction .fraction-bar{width:100%;height:2px;min-width:12px;background:currentColor;border-radius:2px;margin:2px 0}
+.mixed-number{display:inline-flex;align-items:center;gap:4px;vertical-align:middle;white-space:nowrap}
+.mixed-number .whole-number{font-weight:800}
+.math-op{display:inline-block;vertical-align:middle;margin:0 5px;font-weight:800;color:inherit}
+@media(max-width:520px){
+  .math-fraction{font-size:0.84em;margin:0 2px}
+  .math-op{margin:0 3px}
+}
+
+/* ============ VIEWS ============ */
+.view{display:none}
+.view.active{display:block;animation:viewIn .45s ease both}
+@keyframes viewIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+main{padding-bottom:60px}
+.section{margin-top:44px}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+.section-head h2{font-size:26px;margin:0 0 4px}
+.section-head p{color:var(--muted);margin:0}
+.eyebrow{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--coral-dark)}
+
+/* ============ HERO ============ */
 .hero{
-  display:grid;grid-template-columns:1.4fr .8fr;gap:24px;
-  background:linear-gradient(135deg,#fff 0%,#fff7ee 100%);
-  border:1px solid var(--line);border-radius:30px;padding:34px;box-shadow:var(--shadow);
+  margin-top:26px;position:relative;overflow:hidden;
+  display:grid;grid-template-columns:1.35fr .9fr;gap:30px;align-items:center;
+  background:linear-gradient(160deg,#fff 0%,#fff8ee 60%,#fff2e0 100%);
+  border:1px solid var(--line);border-radius:34px;padding:44px;box-shadow:var(--shadow-lg);
 }
-.brand{font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:var(--primary-dark);font-weight:800}
-h1{font-size:clamp(34px,6vw,62px);line-height:1.02;margin:12px 0 14px;letter-spacing:-.045em}
-.hero p{font-size:17px;line-height:1.75;color:var(--muted);max-width:720px}
-.hero-art{
-  min-height:260px;border-radius:24px;
-  background:linear-gradient(145deg,#6d78e7,#9299ef);
-  display:flex;align-items:center;justify-content:center;
-  position:relative;overflow:hidden;color:white;
-}
-.hero-art:before,.hero-art:after{
-  content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.15)
-}
-.hero-art:before{width:180px;height:180px;right:-50px;top:-40px}
-.hero-art:after{width:130px;height:130px;left:-30px;bottom:-40px}
-.fraction-stack{text-align:center;z-index:1}
-.big-frac{font-size:72px;font-weight:900;line-height:.9}
-.big-frac .bar{height:6px;background:white;border-radius:8px;width:92px;margin:8px auto}
-.badge-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
-.badge{padding:10px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:14px;font-weight:700;color:var(--muted)}
-.section{margin-top:28px}
-.section-head{display:flex;align-items:end;justify-content:space-between;gap:15px;margin-bottom:15px}
-.section h2{font-size:26px;margin:0}
-.section p{color:var(--muted)}
-.dashboard{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:14px
-}
-.stat{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 10px 25px rgba(42,48,76,.06)}
-.stat strong{display:block;font-size:28px;margin-top:6px}
-.parts{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-.part-card{
-  background:var(--card);border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 12px 30px rgba(42,48,76,.07);
-  transition:.2s transform,.2s box-shadow;
-}
-.part-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
-.part-top{display:flex;justify-content:space-between;gap:12px}
-.part-num{width:46px;height:46px;border-radius:15px;background:#fff0e8;color:var(--primary-dark);font-weight:900;display:grid;place-items:center}
-.level{font-size:12px;font-weight:800;padding:8px 10px;border-radius:999px;background:#eef0ff;color:#5965d1;height:max-content}
-.part-card h3{margin:15px 0 8px;font-size:21px}
-.part-card p{margin:0 0 18px;line-height:1.65}
-.progress-bar{height:9px;border-radius:999px;background:#f0ece5;overflow:hidden}
-.progress-bar span{display:block;height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));width:0}
+.hero-decor{position:absolute;inset:0;pointer-events:none;overflow:hidden;border-radius:34px}
+.float-shape{position:absolute;opacity:.5;animation:floaty 7s ease-in-out infinite}
+.float-shape.s2{animation-delay:1.4s}
+.float-shape.s3{animation-delay:2.6s}
+.float-shape.s4{animation-delay:.8s}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-16px) rotate(6deg)}}
+.hero-copy .brand-line{display:flex;align-items:center;gap:8px}
+.badge-pill{padding:9px 13px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:13px;font-weight:800;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+h1.hero-title{font-size:clamp(32px,5.6vw,58px);line-height:1.04;margin:14px 0 12px}
+h1.hero-title .hl{color:var(--coral)}
+.hero-copy p.lead{font-size:16.5px;line-height:1.8;color:var(--muted);max-width:640px;margin:0 0 20px}
+.badge-row{display:flex;gap:9px;flex-wrap:wrap;margin:6px 0 24px}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap}
 .btn{
-  border:0;border-radius:14px;padding:12px 16px;font-weight:800;cursor:pointer;
-  transition:.2s transform,.2s opacity;
+  border:0;border-radius:15px;padding:14px 20px;font-weight:800;cursor:pointer;font-size:15px;
+  transition:transform .18s ease, box-shadow .18s ease, opacity .18s ease;display:inline-flex;align-items:center;gap:8px;
 }
-.btn:hover{transform:translateY(-1px)}
-.btn-primary{background:var(--primary);color:#fff}
-.btn-secondary{background:#eef0ff;color:#4f5bcc}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(0)}
+.btn-primary{background:linear-gradient(135deg,var(--coral),var(--coral-dark));color:#fff;box-shadow:0 12px 26px rgba(255,107,74,.35)}
+.btn-secondary{background:var(--purple-light);color:var(--purple-dark)}
 .btn-ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}
-.note{
-  background:#fff7db;border:1px solid #f0df9e;border-radius:18px;padding:16px;line-height:1.65
+.btn-sm{padding:9px 14px;font-size:13.5px;border-radius:12px}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+
+.hero-art{
+  position:relative;min-height:300px;border-radius:26px;overflow:hidden;
+  background:linear-gradient(150deg,var(--purple) 0%,#a78bf7 55%,var(--blue) 100%);
+  display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:var(--shadow-md);
 }
-.quiz-shell{display:none;margin-top:26px}
-.quiz-shell.active{display:block}
+.hero-art .orb{position:absolute;border-radius:50%;background:rgba(255,255,255,.16)}
+.hero-art .orb.o1{width:190px;height:190px;right:-55px;top:-45px}
+.hero-art .orb.o2{width:140px;height:140px;left:-35px;bottom:-45px}
+.hero-art .orb.o3{width:60px;height:60px;left:20px;top:24px;background:rgba(255,201,74,.35)}
+.frac-stack{text-align:center;z-index:1}
+.frac-stack .math-fraction.hero-frac{font-size:56px;font-family:"Fredoka",sans-serif;margin:0}
+.hero-frac .fraction-bar{height:6px;border-radius:8px;margin:8px 0}
+.frac-stack .tag{margin-top:16px;font-weight:800;letter-spacing:.02em}
+.mini-cards{position:absolute;inset:0;pointer-events:none}
+.mini-card{position:absolute;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);border-radius:12px;padding:6px 10px;font-weight:800;font-size:13px;color:#fff;backdrop-filter:blur(2px);animation:floaty 6s ease-in-out infinite}
+.mini-card .math-fraction{font-size:0.95em}
+.mini-card .math-op{margin:0 3px}
+.mini-card:nth-child(2){animation-delay:1.2s}
+.mini-card:nth-child(3){animation-delay:2.4s}
+.hero-art .orb.o3{animation:floaty 5s ease-in-out infinite}
+
+/* ============ DASHBOARD ============ */
+.dashboard{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.stat{
+  background:var(--paper);border:1px solid var(--line);border-radius:var(--r-md);padding:20px;box-shadow:var(--shadow-sm);
+  position:relative;overflow:hidden;
+}
+.stat .stat-label{color:var(--muted);font-weight:700;font-size:13.5px}
+.stat strong{display:block;font-family:"Fredoka",sans-serif;font-size:30px;margin-top:6px;font-weight:600}
+.stat.accent-gold{background:linear-gradient(160deg,#fff,var(--gold-light))}
+
+/* ============ OBJECTIVES / HOW TO ============ */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.info-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-md);padding:22px;box-shadow:var(--shadow-sm)}
+.info-card h3{margin:0 0 12px;font-size:19px}
+.obj-list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.obj-list li{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;line-height:1.6}
+.obj-dot{flex:none;width:24px;height:24px;border-radius:8px;display:grid;place-items:center;font-size:12px;font-weight:800;color:#fff;margin-top:1px}
+.how-steps{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.how-steps li{display:flex;gap:12px;align-items:flex-start}
+.how-num{flex:none;width:30px;height:30px;border-radius:10px;background:var(--blue-light);color:var(--blue-dark);display:grid;place-items:center;font-weight:800;font-family:"Fredoka",sans-serif}
+.how-steps p{margin:2px 0 0;font-size:14.5px;color:var(--muted)}
+.how-steps strong{display:block;font-size:15px;color:var(--ink)}
+
+/* ============ QUICK REVIEW ============ */
+.review-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.concept-card{
+  background:var(--paper);border:1px solid var(--line);border-radius:var(--r-md);padding:18px;box-shadow:var(--shadow-sm);
+  display:flex;flex-direction:column;gap:8px;animation:cardIn .5s ease both;
+}
+.concept-card h4{margin:0;font-size:15.5px;display:flex;align-items:center;gap:8px}
+.concept-card .num-chip{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:12.5px;flex:none}
+.concept-card p{margin:0;font-size:13.5px;color:var(--muted);line-height:1.6}
+.concept-example{background:var(--cream);border:1px dashed var(--line);border-radius:12px;padding:10px 12px;font-weight:800;font-size:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.concept-th{font-size:12.5px;color:var(--purple-dark);background:var(--purple-light);border-radius:10px;padding:7px 10px;line-height:1.55}
+
+/* ============ PART CARDS ============ */
+.parts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.part-card{
+  position:relative;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px;
+  box-shadow:var(--shadow-sm); transition:transform .22s ease, box-shadow .22s ease; overflow:hidden;
+  animation:cardIn .5s ease both;
+}
+@keyframes cardIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.part-card::before{
+  content:"";position:absolute;inset:0 0 auto 0;height:6px;background:var(--pc-grad);
+}
+.part-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.part-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.part-icon{
+  width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:var(--pc-light);color:var(--pc-dark);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.03);
+}
+.level-chip{font-size:11.5px;font-weight:800;padding:7px 10px;border-radius:999px;background:var(--pc-light);color:var(--pc-dark);height:max-content;white-space:nowrap}
+.part-card h3{margin:16px 0 6px;font-size:20px}
+.part-card .part-desc{margin:0 0 16px;color:var(--muted);font-size:14px;line-height:1.65;min-height:44px}
+.part-meta-row{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--muted);font-weight:700;margin-bottom:8px}
+.progress-bar{height:10px;border-radius:999px;background:#F1ECE0;overflow:hidden}
+.progress-bar span{display:block;height:100%;width:0;background:var(--pc-grad);border-radius:999px;transition:width 1s cubic-bezier(.22,1,.36,1)}
+.part-foot{display:flex;justify-content:space-between;align-items:center;margin-top:16px;gap:10px}
+.part-foot small{color:var(--muted);font-weight:700}
+.complete-chip{display:inline-flex;align-items:center;gap:5px;background:var(--mint-bg);color:var(--green-dark);font-size:12px;font-weight:800;padding:6px 10px;border-radius:999px}
+
+/* per-part theme via data-color */
+.part-card[data-color="purple"]{--pc:var(--purple);--pc-dark:var(--purple-dark);--pc-light:var(--purple-light);--pc-grad:linear-gradient(90deg,var(--purple),#b39dfb)}
+.part-card[data-color="blue"]{--pc:var(--blue);--pc-dark:var(--blue-dark);--pc-light:var(--blue-light);--pc-grad:linear-gradient(90deg,var(--blue),#7cc4ec)}
+.part-card[data-color="p3"]{--pc:var(--p3);--pc-dark:var(--p3-dark);--pc-light:var(--p3-light);--pc-grad:linear-gradient(90deg,var(--p3),#ffab93)}
+.part-card[data-color="orange"]{--pc:var(--orange);--pc-dark:var(--orange-dark);--pc-light:var(--orange-light);--pc-grad:linear-gradient(90deg,var(--orange),#ffc36e)}
+.part-card[data-color="green"]{--pc:var(--green);--pc-dark:var(--green-dark);--pc-light:var(--green-light);--pc-grad:linear-gradient(90deg,var(--green),#6fd39e)}
+
+/* ============ ACHIEVEMENTS ============ */
+.badge-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.ach-card{
+  background:var(--paper);border:1px solid var(--line);border-radius:var(--r-md);padding:18px;text-align:center;
+  box-shadow:var(--shadow-sm);opacity:.55;filter:grayscale(.6);transition:.3s;
+}
+.ach-card.unlocked{opacity:1;filter:none;box-shadow:0 0 0 2px var(--gold) inset, var(--shadow-md);animation:glow 2.6s ease-in-out infinite}
+@keyframes glow{0%,100%{box-shadow:0 0 0 2px var(--gold) inset,0 0 18px rgba(255,201,74,.25)}50%{box-shadow:0 0 0 2px var(--gold) inset,0 0 30px rgba(255,201,74,.5)}}
+.ach-icon{width:56px;height:56px;margin:0 auto 10px;border-radius:16px;background:var(--gold-light);color:var(--gold-dark);display:grid;place-items:center}
+.ach-card h4{margin:0 0 4px;font-size:14px}
+.ach-card p{margin:0;font-size:12px;color:var(--muted);line-height:1.5}
+
+/* ============ QUIZ SHELL ============ */
+.quiz-shell{margin-top:6px}
 .quiz-card{
-  background:#fff;border:1px solid var(--line);border-radius:28px;padding:26px;box-shadow:var(--shadow)
+  background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:0;box-shadow:var(--shadow-lg);overflow:hidden;
 }
-.quiz-top{display:flex;justify-content:space-between;gap:15px;align-items:center;flex-wrap:wrap}
-.quiz-title h2{margin:0 0 5px}
-.question-count{font-weight:800;color:var(--secondary)}
-.question{font-size:24px;font-weight:800;line-height:1.5;margin:25px 0}
-.fraction{display:inline-grid;grid-template-rows:auto 2px auto;text-align:center;vertical-align:middle;line-height:1.05;margin:0 4px;min-width:30px}
-.fraction .line{background:currentColor}
+.quiz-header{padding:22px 26px 0;background:var(--pc-light,var(--coral-light))}
+.quiz-topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.quiz-nav-btns{display:flex;gap:8px}
+.quiz-title-row{display:flex;align-items:center;gap:10px;margin-top:6px}
+.quiz-title-row h2{margin:0;font-size:21px}
+.part-tag{font-size:12px;font-weight:800;padding:5px 10px;border-radius:999px;background:#fff;color:var(--pc-dark,var(--coral-dark))}
+.quiz-stats-row{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:14px 0 16px;flex-wrap:wrap}
+.q-count{font-weight:800;color:var(--pc-dark,var(--coral-dark))}
+.score-indicator{font-weight:800;font-size:13.5px;background:#fff;border-radius:999px;padding:7px 12px;color:var(--ink)}
+.quiz-progress-track{height:10px;border-radius:999px;background:rgba(0,0,0,.06);overflow:hidden;margin-bottom:18px}
+.quiz-progress-track span{display:block;height:100%;background:var(--pc-grad,linear-gradient(90deg,var(--coral),var(--gold)));width:0;transition:width .5s cubic-bezier(.22,1,.36,1)}
+
+.quiz-body{padding:24px 26px 28px}
+.scratchpad-note{
+  display:flex;gap:9px;align-items:center;background:var(--gold-light);border:1px solid #f4dfa0;border-radius:14px;padding:11px 14px;
+  font-size:13px;font-weight:700;color:#8a6a00;margin-bottom:18px;
+}
+.wp-icon-badge{width:44px;height:44px;border-radius:14px;background:var(--green-light);color:var(--green-dark);display:grid;place-items:center;margin-bottom:14px}
+.question-card{background:var(--cream);border:1px solid var(--line);border-radius:18px;padding:20px 22px;margin-bottom:20px}
+.question-card.word-card .math-fraction{background:var(--gold-light);border-radius:8px;padding:3px 7px 2px}
+.question-card.word-card .mixed-number .math-fraction{background:var(--gold-light);border-radius:8px;padding:3px 7px 2px}
+.question-text{font-size:21px;font-weight:800;line-height:1.6;margin:0}
+.hint-row{margin-top:14px}
+.hint-btn{background:none;border:1px dashed var(--purple);color:var(--purple-dark);border-radius:999px;padding:8px 14px;font-weight:800;font-size:13px;cursor:pointer}
+.hint-panel{display:none;margin-top:10px;background:var(--purple-light);border-radius:12px;padding:12px 14px;font-size:13.5px;color:var(--purple-dark);line-height:1.6}
+.hint-panel.show{display:block;animation:cardIn .3s ease both}
+
 .options{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .option{
-  text-align:left;background:#fff;border:2px solid var(--line);border-radius:16px;padding:15px 16px;font-weight:700;cursor:pointer;min-height:56px
+  text-align:left;background:#fff;border:2px solid var(--line);border-radius:16px;padding:16px 18px;font-weight:700;cursor:pointer;
+  min-height:58px;font-size:15px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;transition:.15s border-color,.15s background,.15s transform;
 }
-.option:hover{border-color:#b9bff7;background:#fafaff}
-.option.correct{border-color:var(--success);background:#eaf8f2}
-.option.wrong{border-color:var(--danger);background:#fff0f0}
-.feedback{display:none;margin-top:18px;border-radius:18px;padding:17px;line-height:1.65}
-.feedback.show{display:block}
-.feedback.good{background:#eaf8f2;border:1px solid #bce7d6}
-.feedback.bad{background:#fff0f0;border:1px solid #f0c2c2}
-.quiz-actions{display:flex;justify-content:space-between;gap:12px;margin-top:20px}
-.result{display:none;text-align:center;padding:20px 0}
-.result.show{display:block}
+.option:hover:not(:disabled){border-color:var(--pc,var(--purple));background:var(--pc-light,var(--purple-light));transform:translateY(-2px)}
+.option .opt-letter{
+  flex:none;width:28px;height:28px;border-radius:9px;background:var(--cream);display:grid;place-items:center;font-size:13px;font-weight:800;color:var(--muted);
+}
+.option.correct{border-color:var(--mint);background:var(--mint-bg);animation:pop .4s ease}
+.option.correct .opt-letter{background:var(--mint);color:#fff}
+.option.wrong{border-color:var(--red);background:var(--red-bg);animation:shake .4s ease}
+.option.wrong .opt-letter{background:var(--red);color:#fff}
+.option:disabled{cursor:default}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.03)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+
+.feedback{display:none;margin-top:20px;border-radius:18px;padding:18px 20px;line-height:1.75;font-size:14.5px}
+.feedback.show{display:block;animation:cardIn .35s ease both}
+.feedback.good{background:var(--mint-bg);border:1px solid #b7ecd9}
+.feedback.bad{background:var(--red-bg);border:1px solid #f6cccb}
+.feedback-head{display:flex;align-items:center;gap:10px;font-family:"Fredoka",sans-serif;font-size:16.5px;margin-bottom:8px}
+.feedback-icon{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;flex:none;color:#fff}
+.feedback.good .feedback-icon{background:var(--mint)}
+.feedback.bad .feedback-icon{background:var(--red)}
+.check-draw{stroke-dasharray:24;stroke-dashoffset:24;animation:draw .45s ease forwards .05s}
+@keyframes draw{to{stroke-dashoffset:0}}
+.explain-steps{margin-top:6px;color:var(--ink)}
+
+.quiz-actions{display:flex;justify-content:space-between;gap:12px;margin-top:22px}
+
+/* ============ RESULTS ============ */
+.result-wrap{padding:30px 26px 30px;text-align:center}
+.result-wrap h2{font-size:26px;margin:0 0 6px}
+.result-wrap .result-sub{color:var(--muted);margin:0 0 8px}
 .score-circle{
-  width:150px;height:150px;border-radius:50%;margin:18px auto;display:grid;place-items:center;
-  background:conic-gradient(var(--primary) 0deg,#f0ece5 0deg);position:relative
+  width:172px;height:172px;border-radius:50%;margin:22px auto 10px;display:grid;place-items:center;position:relative;
+  background:conic-gradient(var(--coral) 0deg,#F1ECE0 0deg);transition:background 1.2s cubic-bezier(.22,1,.36,1);
 }
-.score-circle:after{content:"";position:absolute;inset:12px;background:#fff;border-radius:50%}
-.score-circle strong{position:relative;z-index:1;font-size:34px}
-.review-list{text-align:left;margin-top:22px;display:grid;gap:12px}
-.review-item{border:1px solid var(--line);border-radius:16px;padding:15px}
-.review-item.ok{border-left:6px solid var(--success)}
-.review-item.no{border-left:6px solid var(--danger)}
-.footer{text-align:center;color:var(--muted);padding:32px 10px 10px;font-size:14px}
-@media(max-width:800px){
-  .hero{grid-template-columns:1fr;padding:24px}
-  .hero-art{min-height:190px}
+.score-circle:after{content:"";position:absolute;inset:14px;background:#fff;border-radius:50%;box-shadow:inset 0 2px 8px rgba(0,0,0,.05)}
+.score-circle strong{position:relative;z-index:1;font-family:"Fredoka",sans-serif;font-size:38px}
+.score-circle span.small{position:relative;z-index:1;font-size:12px;font-weight:800;color:var(--muted);display:block;margin-top:2px}
+.score-sub-stats{display:flex;justify-content:center;gap:24px;margin:14px 0 6px;flex-wrap:wrap}
+.score-sub-stats div{text-align:center}
+.score-sub-stats strong{display:block;font-size:20px;font-family:"Fredoka",sans-serif}
+.score-sub-stats .ok strong{color:var(--green-dark)}
+.score-sub-stats .no strong{color:var(--red)}
+.badge-earned{
+  display:inline-flex;align-items:center;gap:10px;background:var(--gold-light);border:1px solid #f4dfa0;border-radius:999px;
+  padding:10px 18px;font-weight:800;color:#8a6a00;margin:14px 0 6px;animation:badgePop .6s cubic-bezier(.22,1.4,.36,1) both;
+}
+@keyframes badgePop{0%{transform:scale(.5);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+.result-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:18px}
+.review-list{text-align:left;margin-top:30px;display:grid;gap:12px}
+.review-list h3{font-size:18px}
+.review-item{border:1px solid var(--line);border-radius:16px;padding:16px 18px;background:#fff}
+.review-item.ok{border-left:6px solid var(--mint)}
+.review-item.no{border-left:6px solid var(--red)}
+.review-item .ri-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.review-item .ri-status{font-weight:800;font-size:13px}
+.review-item.ok .ri-status{color:var(--green-dark)}
+.review-item.no .ri-status{color:var(--red)}
+.review-item .skill-tag{font-size:11.5px;font-weight:800;background:var(--cream);border-radius:999px;padding:4px 9px;color:var(--muted)}
+.review-item .ri-q{font-weight:700;margin:8px 0}
+.review-item .ri-ans{font-size:13.5px;color:var(--muted);margin:2px 0}
+.review-item .ri-explain{font-size:13px;margin-top:6px;line-height:1.6}
+
+/* confetti */
+.confetti-piece{position:fixed;top:-10px;width:9px;height:14px;z-index:200;pointer-events:none;border-radius:2px}
+
+/* toast */
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;
+  padding:12px 20px;border-radius:999px;font-weight:700;font-size:14px;opacity:0;transition:.3s;z-index:300;box-shadow:var(--shadow-md);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ============ FOOTER ============ */
+.site-footer{text-align:center;color:var(--muted);padding:38px 10px 18px;font-size:13.5px;border-top:1px solid var(--line);margin-top:50px}
+.site-footer strong{color:var(--ink)}
+
+/* ============ RESPONSIVE ============ */
+@media(max-width:960px){
   .dashboard{grid-template-columns:repeat(2,1fr)}
-  .parts{grid-template-columns:1fr}
+  .two-col{grid-template-columns:1fr}
+  .review-grid{grid-template-columns:repeat(2,1fr)}
+  .badge-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:800px){
+  .hero{grid-template-columns:1fr;padding:26px}
+  .hero-art{min-height:200px}
+  .parts-grid{grid-template-columns:1fr}
   .options{grid-template-columns:1fr}
+  .nav-links{display:none}
+}
+@media(max-width:520px){
+  .dashboard{grid-template-columns:1fr 1fr}
+  .review-grid{grid-template-columns:1fr}
+  .badge-grid{grid-template-columns:1fr 1fr}
+  .quiz-header{padding:18px 16px 0}
+  .quiz-body{padding:18px 16px 22px}
+  h1.hero-title{font-size:34px}
 }
 </style>
 </head>
 <body>
-<div class="app">
-  <section class="hero">
-    <div>
-      <div class="brand">Bright EngMath • Unit 3</div>
-      <h1>Fraction Mastery Quest</h1>
-      <p>ข้อสอบฝึกคิดระดับกลางถึงยากสำหรับนักเรียนชั้นประถมศึกษาปีที่ 6 ครอบคลุมการเปรียบเทียบ การเรียงลำดับ การบวก การลบ การคำนวณหลายขั้นตอน และโจทย์ปัญหา</p>
-      <div class="badge-row">
-        <span class="badge">60 Questions</span>
-        <span class="badge">Instant Feedback</span>
-        <span class="badge">Step-by-step Explanations</span>
-        <span class="badge">No Timer</span>
+<a href="#mainContent" class="skip-link">Skip to main content</a>
+
+<header class="topnav">
+  <div class="topnav-inner">
+    <button class="brandmark" onclick="goHome()" aria-label="Fraction Mastery Quest home">
+      <span class="logo-badge">FM</span> Fraction Mastery Quest
+    </button>
+    <nav class="nav-links" aria-label="Primary">
+      <button class="nav-btn" onclick="goHome()">Home</button>
+      <button class="nav-btn" onclick="goReview()">Quick Review</button>
+      <button class="nav-btn" onclick="goHome(true)">Choose a Part</button>
+      <button class="nav-btn thai-btn" id="thaiToggleBtn" onclick="toggleThai()" aria-label="Show or hide Thai translation">🇹🇭 ซ่อนคำแปลไทย</button>
+      <button class="nav-btn reset" onclick="resetAll()" aria-label="Reset saved progress">Reset Progress</button>
+    </nav>
+  </div>
+</header>
+
+<main id="mainContent" class="wrap">
+
+  <!-- ================= HOME VIEW ================= -->
+  <section class="view active" id="view-home">
+
+    <section class="hero">
+      <div class="hero-decor" aria-hidden="true">
+        <svg class="float-shape s2" style="left:6%;bottom:8%" width="46" height="46" viewBox="0 0 46 46"><circle cx="23" cy="23" r="21" fill="none" stroke="#FFC94A" stroke-width="4"/></svg>
       </div>
-    </div>
-    <div class="hero-art">
-      <div class="fraction-stack">
-        <div class="big-frac"><div>7</div><div class="bar"></div><div>12</div></div>
-        <div style="margin-top:18px;font-weight:800">Think • Solve • Master</div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-head">
-      <div><h2>Learning Dashboard</h2><p>ระบบบันทึกความคืบหน้าอัตโนมัติบนอุปกรณ์นี้</p></div>
-      <button class="btn btn-ghost" onclick="resetAll()">Reset Progress</button>
-    </div>
-    <div class="dashboard">
-      <div class="stat">Completed<strong id="completedStat">0/5</strong></div>
-      <div class="stat">Best Score<strong id="bestStat">0%</strong></div>
-      <div class="stat">Questions<strong>60</strong></div>
-      <div class="stat">Difficulty<strong>Mid–Hard</strong></div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="note"><strong>แนวทางการฝึก:</strong> แนะนำให้ทำเรียงจาก Part 1 ถึง Part 5 โดยเขียนวิธีทำลงกระดาษทุกข้อ โดยเฉพาะข้อที่มีตัวส่วนต่างกันและโจทย์หลายขั้นตอน</div>
-  </section>
-
-  <section class="section" id="partsSection">
-    <div class="section-head"><div><h2>Choose a Part</h2><p>แต่ละพาร์ตมี 12 ข้อ พร้อมเฉลยอธิบาย</p></div></div>
-    <div class="parts" id="partsGrid"></div>
-  </section>
-
-  <section class="quiz-shell" id="quizShell">
-    <div class="quiz-card">
-      <div id="quizContent">
-        <div class="quiz-top">
-          <div class="quiz-title"><h2 id="quizTitle"></h2><div class="question-count" id="questionCount"></div></div>
-          <button class="btn btn-ghost" onclick="backHome()">Back to Parts</button>
+      <div class="hero-copy">
+        <div class="brand-line"><span class="eyebrow">Bright EngMath &nbsp;•&nbsp; Unit 3</span></div>
+        <h1 class="hero-title">Fraction Mastery <span class="hl">Quest</span></h1>
+        <p class="lead">A complete fraction practice system for Grade 6 — not just a worksheet. Compare, order, add, subtract, and solve multi-step word problems with instant feedback and step-by-step explanations built for EP/International curriculum learners.<br><span class="thai-text" style="display:inline-block;margin-top:8px">ระบบฝึกฝนเศษส่วนแบบครบวงจรสำหรับนักเรียนชั้นประถมศึกษาปีที่ 6 พร้อมคำอธิบายทีละขั้นตอน</span></p>
+        <div class="badge-row" id="heroBadges" aria-label="Course highlights">
+          <span class="badge-pill">🎓 Grade 6</span>
+          <span class="badge-pill">60 Questions</span>
+          <span class="badge-pill">Mid–Hard Difficulty</span>
+          <span class="badge-pill">⏱ No Timer</span>
+          <span class="badge-pill">⚡ Instant Feedback</span>
         </div>
-        <div class="progress-bar" style="margin-top:18px"><span id="quizProgress"></span></div>
-        <div class="question" id="questionText"></div>
-        <div class="options" id="options"></div>
-        <div class="feedback" id="feedback"></div>
-        <div class="quiz-actions">
-          <button class="btn btn-ghost" onclick="prevQuestion()">Previous</button>
-          <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next Question</button>
+        <div class="cta-row">
+          <button class="btn btn-primary" onclick="goReview()">Start Learning</button>
+          <button class="btn btn-secondary" onclick="scrollToParts()">Choose a Part</button>
         </div>
       </div>
-      <div class="result" id="result">
-        <h2>Part Complete 🎉</h2>
-        <p id="resultMessage"></p>
-        <div class="score-circle" id="scoreCircle"><strong id="scoreText"></strong></div>
-        <div>
-          <button class="btn btn-primary" onclick="retryPart()">Try Again</button>
-          <button class="btn btn-secondary" onclick="backHome()">Choose Another Part</button>
+      <div class="hero-art" aria-hidden="true">
+        <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+        <div class="mini-cards">
+          <div class="mini-card" style="top:12%;left:8%"><span class="math-fraction"><span class="numerator">3</span><span class="fraction-bar"></span><span class="denominator">4</span></span></div>
+          <div class="mini-card" style="bottom:16%;right:10%"><span class="math-op">+</span><span class="math-fraction"><span class="numerator">1</span><span class="fraction-bar"></span><span class="denominator">2</span></span></div>
+          <div class="mini-card" style="bottom:10%;left:14%"><span class="math-fraction"><span class="numerator">5</span><span class="fraction-bar"></span><span class="denominator">6</span></span></div>
         </div>
-        <div class="review-list" id="reviewList"></div>
+        <div class="frac-stack">
+          <span class="math-fraction hero-frac"><span class="numerator">7</span><span class="fraction-bar"></span><span class="denominator">12</span></span>
+          <div class="tag">Think • Solve • Master</div>
+        </div>
       </div>
-    </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div><h2>Your Learning Dashboard</h2><p>Progress saves automatically on this device — no account needed. <span class="thai-text">ระบบบันทึกความคืบหน้าอัตโนมัติบนอุปกรณ์นี้ — ไม่ต้องเข้าสู่ระบบ</span></p></div>
+      </div>
+      <div class="dashboard">
+        <div class="stat"><span class="stat-label">Parts Completed</span><strong id="completedStat">0/5</strong></div>
+        <div class="stat"><span class="stat-label">Best Score</span><strong id="bestStat">0%</strong></div>
+        <div class="stat"><span class="stat-label">Total Questions</span><strong>60</strong></div>
+        <div class="stat accent-gold"><span class="stat-label">Badges Earned</span><strong id="badgeStat">0/7</strong></div>
+      </div>
+    </section>
+
+    <section class="section two-col">
+      <div class="info-card">
+        <h3>Learning Objectives</h3>
+        <ul class="obj-list" id="objList"></ul>
+      </div>
+      <div class="info-card">
+        <h3>How to Use Fraction Mastery Quest</h3>
+        <ul class="how-steps">
+          <li><span class="how-num">1</span><div><strong>Review the concepts</strong><p>Skim the Fraction Quick Review for a refresher on key methods.</p></div></li>
+          <li><span class="how-num">2</span><div><strong>Choose a part</strong><p>Work through Parts 1–5 in order, or pick the skill you need most.</p></div></li>
+          <li><span class="how-num">3</span><div><strong>Answer at your pace</strong><p>No timer. Read each explanation before moving to the next question.</p></div></li>
+          <li><span class="how-num">4</span><div><strong>Track your progress</strong><p>Review your results, retry for mastery, and unlock badges.</p></div></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="partsSection">
+      <div class="section-head">
+        <div><h2>Choose a Part</h2><p>Each part has 12 questions with step-by-step explanations. <span class="thai-text">แต่ละพาร์ตมี 12 ข้อ พร้อมเฉลยอธิบายทีละขั้นตอน</span></p></div>
+      </div>
+      <div class="parts-grid" id="partsGrid"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div><h2>Achievements</h2><p id="achSub">Complete a part to earn your first badge.</p></div>
+      </div>
+      <div class="badge-grid" id="badgeGrid"></div>
+    </section>
+
   </section>
 
-  <footer class="footer">Cr. Bright EngMath • Designed for Grade 6 Fraction Practice</footer>
-</div>
+  <!-- ================= QUICK REVIEW VIEW ================= -->
+  <section class="view" id="view-review">
+    <section class="section" style="margin-top:26px">
+      <div class="section-head">
+        <div><h2>Fraction Quick Review</h2><p>Review the key methods before you start practising — short worked examples for fast understanding. <span class="thai-text">ทบทวนหลักการสำคัญก่อนเริ่มทำแบบฝึกหัด — ใช้ตัวอย่างสั้น ๆ เพื่อความเข้าใจที่รวดเร็ว</span></p></div>
+        <button class="btn btn-ghost btn-sm" onclick="goHome()">← Back to Home</button>
+      </div>
+      <div class="review-grid" id="reviewGrid"></div>
+      <div class="cta-row" style="margin-top:24px;justify-content:center">
+        <button class="btn btn-primary" onclick="scrollToParts(true)">I'm Ready — Choose a Part</button>
+      </div>
+    </section>
+  </section>
+
+  <!-- ================= QUIZ VIEW ================= -->
+  <section class="view" id="view-quiz">
+    <section class="quiz-shell" id="quizShell">
+      <div class="quiz-card">
+        <div id="quizContent">
+          <div class="quiz-header">
+            <div class="quiz-topbar">
+              <div class="quiz-title-row">
+                <h2 id="quizTitle"></h2>
+                <span class="part-tag" id="partTag"></span>
+              </div>
+              <div class="quiz-nav-btns">
+                <button class="btn btn-ghost btn-sm" onclick="goHome()" aria-label="Go to home page">🏠 Home</button>
+                <button class="btn btn-ghost btn-sm" onclick="backHome()" aria-label="Back to choose a part">← Back</button>
+              </div>
+            </div>
+            <div class="quiz-stats-row">
+              <div class="q-count" id="questionCount"></div>
+              <div class="score-indicator" id="scoreIndicator">Score: 0/0 so far</div>
+            </div>
+            <div class="quiz-progress-track"><span id="quizProgress"></span></div>
+          </div>
+          <div class="quiz-body">
+            <div class="scratchpad-note">📝 Grab paper and pencil — show your working for every step.</div>
+            <div id="wpIconSlot"></div>
+            <div class="question-card" id="questionCardEl">
+              <p class="question-text" id="questionText"></p>
+            </div>
+            <div class="hint-row">
+              <button class="hint-btn" id="hintBtn" onclick="toggleHint()">💡 Show Hint</button>
+              <div class="hint-panel" id="hintPanel"></div>
+            </div>
+            <div class="options" id="options" role="group" aria-label="Answer choices" style="margin-top:18px"></div>
+            <div class="feedback" id="feedback" aria-live="polite"></div>
+            <div class="quiz-actions">
+              <button class="btn btn-ghost" onclick="prevQuestion()">Previous</button>
+              <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next Question</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="result" id="result" style="display:none">
+          <div class="result-wrap">
+            <h2>Part Complete 🎉</h2>
+            <p class="result-sub" id="resultMessage"></p>
+            <div class="score-circle" id="scoreCircle"><strong id="scoreText">0%</strong><span class="small" id="scoreTextSmall"></span></div>
+            <div class="score-sub-stats">
+              <div class="ok"><strong id="correctCount">0</strong><span>Correct</span></div>
+              <div class="no"><strong id="incorrectCount">0</strong><span>Incorrect</span></div>
+            </div>
+            <div id="badgeEarnedSlot"></div>
+            <div class="result-actions">
+              <button class="btn btn-primary" onclick="retryPart()">Try Again</button>
+              <button class="btn btn-secondary" id="nextPartBtn" onclick="nextPart()">Continue to Next Part</button>
+              <button class="btn btn-ghost" onclick="goHome()">Return to Home</button>
+            </div>
+            <div class="review-list" id="reviewList"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div>Cr. <strong>Bright EngMath</strong> • Fraction Mastery Quest — Unit 3 Grade 6 Fraction Practice System</div>
+</footer>
+
+<div class="toast" id="toast" role="status"></div>
 
 <script>
+/* ======================================================================
+   FRACTION MATH HELPERS — preserved exactly from the original build
+   ====================================================================== */
 const F=(n,d)=>({n,d});
 const gcd=(a,b)=>b?gcd(b,a%b):Math.abs(a);
 function norm(f){
@@ -220,23 +610,70 @@ function add(a,b){return norm(F(a.n*b.d+b.n*a.d,a.d*b.d))}
 function sub(a,b){return norm(F(a.n*b.d-b.n*a.d,a.d*b.d))}
 function mul(a,b){return norm(F(a.n*b.n,a.d*b.d))}
 function value(a){return a.n/a.d}
-function fracText(f){
-  f=norm(f);
-  if(f.d===1)return `${f.n}`;
-  const sign=f.n<0?"-":"";
-  return `${sign}<span class="fraction"><span>${Math.abs(f.n)}</span><span class="line"></span><span>${f.d}</span></span>`;
-}
-function mixedText(f){
-  f=norm(f);
-  const sign=f.n<0?"-":"";
-  let n=Math.abs(f.n);
-  if(n<f.d)return fracText(f);
-  const whole=Math.floor(n/f.d),rem=n%f.d;
-  return rem===0?`${sign}${whole}`:`${sign}${whole} ${fracText(F(rem,f.d))}`;
-}
 function eq(a,b){a=norm(a);b=norm(b);return a.n===b.n&&a.d===b.d}
 function q(text,choices,answer,explanation){return {text,choices,answer,explanation}}
 
+/* ======================================================================
+   REUSABLE MATH-FRACTION RENDERING SYSTEM
+   Every fraction / mixed number / operator on this site — in questions,
+   choices, hints, feedback, explanations, results and word problems —
+   is produced by these three functions. Nothing renders "3/4" as plain
+   slash text anywhere in the student-facing UI; everything goes through
+   this single pipeline so the notation is always a real stacked fraction.
+   ====================================================================== */
+function renderFraction(numerator,denominator){
+  const neg=(numerator<0)!==(denominator<0);
+  const n=Math.abs(numerator),d=Math.abs(denominator);
+  if(d===1)return `${neg?"−":""}${n}`;
+  return `<span class="math-fraction">${neg?'<span class="math-op">−</span>':""}<span class="numerator">${n}</span><span class="fraction-bar"></span><span class="denominator">${d}</span></span>`;
+}
+function renderMixedNumber(wholeNumber,numerator,denominator){
+  const neg=wholeNumber<0;
+  const w=Math.abs(wholeNumber),n=Math.abs(numerator),d=Math.abs(denominator);
+  if(n===0)return `${neg?"−":""}${w}`;
+  return `<span class="mixed-number"><span class="whole-number">${neg?"−":""}${w}</span>${renderFraction(n,d)}</span>`;
+}
+function renderOperator(sym){
+  const map={"<":"&lt;",">":"&gt;","<=":"≤",">=":"≥"};
+  return `<span class="math-op">${map[sym]!==undefined?map[sym]:sym}</span>`;
+}
+
+/* fracText/mixedText: render a structured Fraction object {n,d} — used
+   for answer-choice values, where the fraction is always normalised to
+   lowest terms first (that IS the correct displayed value for a choice). */
+function fracText(f){
+  f=norm(f);
+  return renderFraction(f.n,f.d);
+}
+function mixedText(f){
+  f=norm(f);
+  const n=Math.abs(f.n);
+  if(n<f.d)return fracText(f);
+  const whole=Math.floor(n/f.d)*(f.n<0?-1:1),rem=n%f.d;
+  return rem===0?renderMixedNumber(whole,0,1):renderMixedNumber(whole,rem,f.d);
+}
+
+/* formatMathText: single-pass tokenizer for PLAIN math text (question
+   wording, explanations, word problems, hints, choice-equations). It
+   never touches already-generated HTML — it scans the original plain
+   string once and swaps every mixed number, fraction, and operator/
+   comparison symbol for the matching renderFraction/renderMixedNumber/
+   renderOperator markup, leaving ordinary words and Thai text untouched. */
+const MATH_TOKEN_RE=/(\d+)\s(\d+)\/(\d+)(?!\d)|(\d+)\/(\d+)(?!\d)|(<=|>=)|([+\-−=<>()×÷≈→])/g;
+function formatMathText(str){
+  if(typeof str!=="string")return str;
+  return str.replace(MATH_TOKEN_RE,(m,mw,mn,md,sn,sd,cmp2,op1)=>{
+    if(mw!==undefined)return renderMixedNumber(+mw,+mn,+md);
+    if(sn!==undefined)return renderFraction(+sn,+sd);
+    if(cmp2!==undefined)return renderOperator(cmp2);
+    return renderOperator(op1);
+  });
+}
+
+/* ======================================================================
+   QUESTION DATA — all 60 questions, choices, correct answers and
+   explanations preserved verbatim from the original quiz.
+   ====================================================================== */
 const parts=[
 {
  title:"Part 1: Comparing & Ordering Fractions",
@@ -270,18 +707,18 @@ const parts=[
  desc:"บวกเศษส่วน ตัวส่วนต่างกัน จำนวนคละ และโจทย์หลายจำนวน",
  level:"Intermediate–Hard",
  questions:[
- q(`Calculate: ${fracText(F(7,12))} + ${fracText(F(5,18))}`,[F(31,36),F(29,36),F(1,2),F(17,30)],0,`ค.ร.น. ของ 12 และ 18 คือ 36: 7/12=21/36 และ 5/18=10/36 รวมเป็น 31/36`),
- q(`Calculate: ${fracText(F(11,15))} + ${fracText(F(7,20))}`,[F(13,12),F(1,12),F(17,20),F(29,30)],0,`ค.ร.น.=60: 44/60+21/60=65/60=13/12 = 1 1/12`),
- q(`Calculate: 2 ${fracText(F(3,8))} + 1 ${fracText(F(5,12))}`,[F(91,24),F(83,24),F(3,20),F(4,1)],0,`3+ (3/8+5/12). ค.ร.น.=24 ได้ 9/24+10/24=19/24 รวมเป็น 3 19/24 = 91/24`),
- q(`Calculate: ${fracText(F(5,14))}+${fracText(F(3,7))}+${fracText(F(11,21))}`,[F(55,42),F(19,21),F(25,42),F(4,3)],0,`ค.ร.น. ของ 14,7,21 คือ 42: 15/42+18/42+22/42=55/42`),
- q(`What must be added to ${fracText(F(7,10))} to make 1 ${fracText(F(1,4))}?`,[F(11,20),F(9,20),F(13,20),F(3,5)],0,`1 1/4=5/4. 5/4-7/10=25/20-14/20=11/20`),
- q(`Calculate: 3 ${fracText(F(5,6))} + 2 ${fracText(F(7,9))}`,[F(119,18),F(109,18),F(6,11),F(53,9)],0,`5 + 5/6+7/9. ค.ร.น.=18 ได้ 15/18+14/18=29/18=1 11/18 รวมทั้งหมด 6 11/18 =119/18`),
- q(`Calculate: ${fracText(F(13,24))}+${fracText(F(5,16))}`,[F(41,48),F(17,40),F(7,12),F(23,24)],0,`ค.ร.น.=48: 26/48+15/48=41/48`),
- q(`Calculate: 1 ${fracText(F(2,5))}+${fracText(F(7,15))}+${fracText(F(11,30))}`,[F(67,30),F(13,6),F(41,30),F(37,15)],0,`1 2/5=42/30, 7/15=14/30, 11/30 คงเดิม รวม 67/30 =2 7/30`),
- q(`Which sum is equal to 1?`,["5/12 + 7/12","3/8 + 4/8","7/15 + 9/15","11/20 + 8/20"],0,`5/12+7/12=12/12=1`),
- q(`Calculate: ${fracText(F(9,10))}+${fracText(F(11,15))}`,[F(49,30),F(41,30),F(8,5),F(29,30)],0,`ค.ร.น.=30: 27/30+22/30=49/30=1 19/30`),
- q(`The sum of two fractions is 1 1/6. One fraction is 5/9. Find the other.`,[F(11,18),F(7,18),F(13,18),F(5,18)],0,`1 1/6=7/6=21/18 และ 5/9=10/18 ดังนั้นอีกจำนวนคือ 11/18`),
- q(`Calculate: ${fracText(F(7,18))}+${fracText(F(5,12))}+${fracText(F(1,9))}`,[F(11,12),F(7,9),F(35,36),F(13,18)],0,`ค.ร.น.=36: 14/36+15/36+4/36=33/36=11/12`)
+ q(`Calculate: 7/12 + 5/18`,[F(17,30),F(31,36),F(29,36),F(1,2)],1,`ค.ร.น. ของ 12 และ 18 คือ 36: 7/12=21/36 และ 5/18=10/36 รวมเป็น 31/36`),
+ q(`Calculate: 11/15 + 7/20`,[F(17,20),F(1,12),F(13,12),F(29,30)],2,`ค.ร.น.=60: 44/60+21/60=65/60=13/12 = 1 1/12`),
+ q(`Calculate: 2 3/8 + 1 5/12`,[F(83,24),F(4,1),F(91,24),F(3,20)],2,`3+ (3/8+5/12). ค.ร.น.=24 ได้ 9/24+10/24=19/24 รวมเป็น 3 19/24 = 91/24`),
+ q(`Calculate: 5/14+3/7+11/21`,[F(19,21),F(4,3),F(55,42),F(25,42)],2,`ค.ร.น. ของ 14,7,21 คือ 42: 15/42+18/42+22/42=55/42`),
+ q(`What must be added to 7/10 to make 1 1/4?`,[F(11,20),F(3,5),F(9,20),F(13,20)],0,`1 1/4=5/4. 5/4-7/10=25/20-14/20=11/20`),
+ q(`Calculate: 3 5/6 + 2 7/9`,[F(109,18),F(119,18),F(53,9),F(6,11)],1,`5 + 5/6+7/9. ค.ร.น.=18 ได้ 15/18+14/18=29/18=1 11/18 รวมทั้งหมด 6 11/18 =119/18`),
+ q(`Calculate: 13/24+5/16`,[F(41,48),F(23,24),F(7,12),F(17,40)],0,`ค.ร.น.=48: 26/48+15/48=41/48`),
+ q(`Calculate: 1 2/5+7/15+11/30`,[F(41,30),F(13,6),F(37,15),F(67,30)],3,`1 2/5=42/30, 7/15=14/30, 11/30 คงเดิม รวม 67/30 =2 7/30`),
+ q(`Which sum is equal to 1?`,["5/12 + 7/12","11/20 + 8/20","3/8 + 4/8","7/15 + 9/15"],0,`5/12+7/12=12/12=1`),
+ q(`Calculate: 9/10+11/15`,[F(8,5),F(29,30),F(41,30),F(49,30)],3,`ค.ร.น.=30: 27/30+22/30=49/30=1 19/30`),
+ q(`The sum of two fractions is 1 1/6. One fraction is 5/9. Find the other.`,[F(13,18),F(11,18),F(7,18),F(5,18)],1,`1 1/6=7/6=21/18 และ 5/9=10/18 ดังนั้นอีกจำนวนคือ 11/18`),
+ q(`Calculate: 7/18+5/12+1/9`,[F(7,9),F(35,36),F(13,18),F(11,12)],3,`ค.ร.น.=36: 14/36+15/36+4/36=33/36=11/12`)
  ]
 },
 {
@@ -290,18 +727,18 @@ const parts=[
  desc:"ลบเศษส่วน การยืมจำนวนคละ และหาค่าที่หายไป",
  level:"Intermediate–Hard",
  questions:[
- q(`Calculate: ${fracText(F(11,12))}-${fracText(F(5,18))}`,[F(23,36),F(13,36),F(7,12),F(2,3)],0,`ค.ร.น.=36: 33/36-10/36=23/36`),
- q(`Calculate: 3 ${fracText(F(1,4))}-1 ${fracText(F(5,6))}`,[F(17,12),F(19,12),F(13,12),F(7,6)],0,`3 1/4=39/12 และ 1 5/6=22/12 ต่างกัน 17/12 =1 5/12`),
- q(`Calculate: 5 ${fracText(F(2,7))}-2 ${fracText(F(5,14))}`,[F(41,14),F(39,14),F(45,14),F(19,7)],0,`5 2/7=74/14 และ 2 5/14=33/14 ต่างกัน 41/14=2 13/14`),
- q(`What must be subtracted from 2 ${fracText(F(1,3))} to get ${fracText(F(7,8))}?`,[F(35,24),F(29,24),F(31,24),F(17,24)],0,`2 1/3=56/24 และ 7/8=21/24 ดังนั้นจำนวนที่ลบคือ 35/24`),
- q(`Calculate: ${fracText(F(17,20))}-${fracText(F(7,15))}`,[F(23,60),F(19,60),F(7,20),F(2,5)],0,`ค.ร.น.=60: 51/60-28/60=23/60`),
- q(`Calculate: 4-${fracText(F(11,16))}`,[F(53,16),F(45,16),F(3,16),F(57,16)],0,`4=64/16 ดังนั้น 64/16-11/16=53/16 =3 5/16`),
- q(`Calculate: 6 ${fracText(F(1,5))}-3 ${fracText(F(7,10))}`,[F(5,2),F(27,10),F(23,10),F(29,10)],0,`6 1/5=62/10 และ 3 7/10=37/10 ต่างกัน 25/10=5/2=2 1/2`),
- q(`Find x: x + ${fracText(F(5,12))}=1 ${fracText(F(1,8))}`,[F(17,24),F(19,24),F(13,24),F(7,12)],0,`1 1/8=27/24 และ 5/12=10/24 ดังนั้น x=17/24`),
- q(`Calculate: ${fracText(F(13,14))}-${fracText(F(5,21))}`,[F(29,42),F(19,42),F(11,21),F(5,6)],0,`ค.ร.น.=42: 39/42-10/42=29/42`),
- q(`The difference between two fractions is 7/15. The larger fraction is 11/12. Find the smaller fraction.`,[F(9,20),F(7,20),F(11,30),F(13,30)],0,`11/12-7/15 =55/60-28/60=27/60=9/20`),
- q(`Calculate: 2 ${fracText(F(3,8))}-${fracText(F(11,12))}`,[F(35,24),F(31,24),F(37,24),F(29,24)],0,`2 3/8=57/24 และ 11/12=22/24 ต่างกัน 35/24=1 11/24`),
- q(`Calculate: 7 ${fracText(F(1,6))}-4 ${fracText(F(5,9))}`,[F(47,18),F(43,18),F(49,18),F(41,18)],0,`7 1/6=129/18 และ 4 5/9=82/18 ต่างกัน 47/18=2 11/18`)
+ q(`Calculate: 11/12-5/18`,[F(23,36),F(13,36),F(7,12),F(2,3)],0,`ค.ร.น.=36: 33/36-10/36=23/36`),
+ q(`Calculate: 3 1/4-1 5/6`,[F(19,12),F(7,6),F(17,12),F(13,12)],2,`3 1/4=39/12 และ 1 5/6=22/12 ต่างกัน 17/12 =1 5/12`),
+ q(`Calculate: 5 2/7-2 5/14`,[F(39,14),F(41,14),F(45,14),F(19,7)],1,`5 2/7=74/14 และ 2 5/14=33/14 ต่างกัน 41/14=2 13/14`),
+ q(`What must be subtracted from 2 1/3 to get 7/8?`,[F(35,24),F(17,24),F(31,24),F(29,24)],0,`2 1/3=56/24 และ 7/8=21/24 ดังนั้นจำนวนที่ลบคือ 35/24`),
+ q(`Calculate: 17/20-7/15`,[F(2,5),F(19,60),F(7,20),F(23,60)],3,`ค.ร.น.=60: 51/60-28/60=23/60`),
+ q(`Calculate: 4-11/16`,[F(3,16),F(57,16),F(45,16),F(53,16)],3,`4=64/16 ดังนั้น 64/16-11/16=53/16 =3 5/16`),
+ q(`Calculate: 6 1/5-3 7/10`,[F(27,10),F(23,10),F(29,10),F(5,2)],3,`6 1/5=62/10 และ 3 7/10=37/10 ต่างกัน 25/10=5/2=2 1/2`),
+ q(`Find x: x + 5/12=1 1/8`,[F(13,24),F(17,24),F(7,12),F(19,24)],1,`1 1/8=27/24 และ 5/12=10/24 ดังนั้น x=17/24`),
+ q(`Calculate: 13/14-5/21`,[F(5,6),F(19,42),F(29,42),F(11,21)],2,`ค.ร.น.=42: 39/42-10/42=29/42`),
+ q(`The difference between two fractions is 7/15. The larger fraction is 11/12. Find the smaller fraction.`,[F(7,20),F(13,30),F(9,20),F(11,30)],2,`11/12-7/15 =55/60-28/60=27/60=9/20`),
+ q(`Calculate: 2 3/8-11/12`,[F(35,24),F(29,24),F(37,24),F(31,24)],0,`2 3/8=57/24 และ 11/12=22/24 ต่างกัน 35/24=1 11/24`),
+ q(`Calculate: 7 1/6-4 5/9`,[F(41,18),F(47,18),F(49,18),F(43,18)],1,`7 1/6=129/18 และ 4 5/9=82/18 ต่างกัน 47/18=2 11/18`)
  ]
 },
 {
@@ -310,18 +747,18 @@ const parts=[
  desc:"รวมบวกและลบในข้อเดียว มีวงเล็บและหลายขั้นตอน",
  level:"Hard",
  questions:[
- q(`Calculate: ${fracText(F(3,4))}+${fracText(F(5,6))}-${fracText(F(7,12))}`,[F(1,1),F(11,12),F(13,12),F(5,6)],0,`แปลงเป็นส่วน 12: 9/12+10/12-7/12=12/12=1`),
- q(`Calculate: 2 ${fracText(F(1,3))}-${fracText(F(5,8))}+${fracText(F(7,12))}`,[F(55,24),F(53,24),F(59,24),F(49,24)],0,`2 1/3=56/24, 5/8=15/24, 7/12=14/24 ดังนั้น 56-15+14=55/24`),
- q(`Calculate: ${fracText(F(7,10))}-(${fracText(F(1,4))}+${fracText(F(1,5))})`,[F(1,4),F(3,20),F(7,20),F(9,20)],0,`ในวงเล็บ 1/4+1/5=9/20 และ 7/10=14/20 จึงเหลือ 5/20=1/4`),
- q(`Calculate: 3-${fracText(F(7,9))}-${fracText(F(5,12))}`,[F(65,36),F(67,36),F(61,36),F(59,36)],0,`3=108/36, 7/9=28/36, 5/12=15/36 ดังนั้น 108-28-15=65/36`),
- q(`Calculate: (${fracText(F(5,6))}-${fracText(F(3,8))})+${fracText(F(7,12))}`,[F(25,24),F(23,24),F(13,12),F(11,12)],0,`5/6-3/8=20/24-9/24=11/24 แล้วบวก 14/24 ได้ 25/24`),
- q(`Calculate: 4 ${fracText(F(1,5))}-(1 ${fracText(F(3,10))}+${fracText(F(7,15))})`,[F(73,30),F(71,30),F(77,30),F(69,30)],0,`4 1/5=126/30. ในวงเล็บ 1 3/10=39/30 และ 7/15=14/30 รวม 53/30. ผลต่าง 73/30`),
- q(`Calculate: ${fracText(F(11,14))}+${fracText(F(5,21))}-${fracText(F(3,7))}`,[F(25,42),F(23,42),F(27,42),F(29,42)],0,`ส่วนร่วม 42: 33+10-18=25 จึงได้ 25/42`),
- q(`Calculate: 1 ${fracText(F(5,8))}+2 ${fracText(F(1,6))}-1 ${fracText(F(7,12))}`,[F(53,24),F(49,24),F(55,24),F(47,24)],0,`แปลงเป็นส่วน 24: 39/24+52/24-38/24=53/24`),
- q(`Calculate: ${fracText(F(9,10))}-(${fracText(F(2,5))}-${fracText(F(1,6))})`,[F(2,3),F(7,15),F(13,30),F(5,6)],0,`ในวงเล็บ 2/5-1/6=12/30-5/30=7/30. 9/10=27/30 จึงเหลือ 20/30=2/3`),
- q(`Calculate: (${fracText(F(7,8))}+${fracText(F(5,12))})-${fracText(F(11,18))}`,[F(49,72),F(47,72),F(53,72),F(43,72)],0,`ส่วนร่วม 72: 63/72+30/72-44/72=49/72`),
- q(`Calculate: 5 ${fracText(F(1,4))}-2 ${fracText(F(2,3))}+${fracText(F(5,12))}`,[F(3,1),F(37,12),F(35,12),F(41,12)],0,`5 1/4=63/12, 2 2/3=32/12, บวก 5/12 ได้ (63-32+5)/12=36/12=3`),
- q(`Calculate: ${fracText(F(13,15))}-(${fracText(F(7,20))}+${fracText(F(1,6))})`,[F(7,20),F(19,60),F(23,60),F(17,60)],0,`ส่วนร่วม 60: 52/60-(21/60+10/60)=21/60=7/20`)
+ q(`Calculate: 3/4+5/6-7/12`,[F(11,12),F(5,6),F(1,1),F(13,12)],2,`แปลงเป็นส่วน 12: 9/12+10/12-7/12=12/12=1`),
+ q(`Calculate: 2 1/3-5/8+7/12`,[F(49,24),F(55,24),F(53,24),F(59,24)],1,`2 1/3=56/24, 5/8=15/24, 7/12=14/24 ดังนั้น 56-15+14=55/24`),
+ q(`Calculate: 7/10-(1/4+1/5)`,[F(7,20),F(3,20),F(1,4),F(9,20)],2,`ในวงเล็บ 1/4+1/5=9/20 และ 7/10=14/20 จึงเหลือ 5/20=1/4`),
+ q(`Calculate: 3-7/9-5/12`,[F(67,36),F(61,36),F(65,36),F(59,36)],2,`3=108/36, 7/9=28/36, 5/12=15/36 ดังนั้น 108-28-15=65/36`),
+ q(`Calculate: (5/6-3/8)+7/12`,[F(13,12),F(23,24),F(11,12),F(25,24)],3,`5/6-3/8=20/24-9/24=11/24 แล้วบวก 14/24 ได้ 25/24`),
+ q(`Calculate: 4 1/5-(1 3/10+7/15)`,[F(73,30),F(77,30),F(69,30),F(71,30)],0,`4 1/5=126/30. ในวงเล็บ 1 3/10=39/30 และ 7/15=14/30 รวม 53/30. ผลต่าง 73/30`),
+ q(`Calculate: 11/14+5/21-3/7`,[F(29,42),F(25,42),F(23,42),F(27,42)],1,`ส่วนร่วม 42: 33+10-18=25 จึงได้ 25/42`),
+ q(`Calculate: 1 5/8+2 1/6-1 7/12`,[F(47,24),F(53,24),F(49,24),F(55,24)],1,`แปลงเป็นส่วน 24: 39/24+52/24-38/24=53/24`),
+ q(`Calculate: 9/10-(2/5-1/6)`,[F(5,6),F(7,15),F(13,30),F(2,3)],3,`ในวงเล็บ 2/5-1/6=12/30-5/30=7/30. 9/10=27/30 จึงเหลือ 20/30=2/3`),
+ q(`Calculate: (7/8+5/12)-11/18`,[F(49,72),F(43,72),F(47,72),F(53,72)],0,`ส่วนร่วม 72: 63/72+30/72-44/72=49/72`),
+ q(`Calculate: 5 1/4-2 2/3+5/12`,[F(3,1),F(41,12),F(35,12),F(37,12)],0,`5 1/4=63/12, 2 2/3=32/12, บวก 5/12 ได้ (63-32+5)/12=36/12=3`),
+ q(`Calculate: 13/15-(7/20+1/6)`,[F(23,60),F(17,60),F(19,60),F(7,20)],3,`ส่วนร่วม 60: 52/60-(21/60+10/60)=21/60=7/20`)
  ]
 },
 {
@@ -330,66 +767,305 @@ const parts=[
  desc:"โจทย์สถานการณ์จริงหลายขั้นตอน เน้นวิเคราะห์และวางแผน",
  level:"Hard",
  questions:[
- q(`Mina used 3/8 m of ribbon for a card and 5/12 m for a gift box. How much ribbon did she use altogether?`,[F(19,24),F(17,24),F(2,3),F(7,10)],0,`3/8=9/24 และ 5/12=10/24 รวมเป็น 19/24 เมตร`),
- q(`A tank was 7/8 full. After 5/12 of the tank was used, what fraction of the tank remained?`,[F(11,24),F(13,24),F(5,24),F(1,2)],0,`7/8=21/24 และ 5/12=10/24 เหลือ 11/24`),
- q(`Nina walked 1 3/5 km in the morning and 2 7/10 km in the evening. How far did she walk in total?`,[F(43,10),F(41,10),F(23,5),F(39,10)],0,`1 3/5=16/10 และ 2 7/10=27/10 รวม 43/10=4 3/10 กม.`),
- q(`A recipe needs 2 1/4 cups of flour. Beam has already added 1 5/6 cups. How much more is needed?`,[F(5,12),F(7,12),F(1,3),F(11,24)],0,`2 1/4=27/12 และ 1 5/6=22/12 ต่างกัน 5/12 ถ้วย`),
- q(`A class finished 3/10 of a project on Monday, 1/4 on Tuesday, and 1/5 on Wednesday. What fraction was completed?`,[F(3,4),F(7,10),F(4,5),F(13,20)],0,`ส่วนร่วม 20: 6/20+5/20+4/20=15/20=3/4`),
- q(`A water bottle held 1 1/2 L. Tara drank 3/8 L and then 5/12 L. How much water remained?`,[F(17,24),F(19,24),F(5,8),F(3,4)],0,`1 1/2=36/24, 3/8=9/24, 5/12=10/24 เหลือ 17/24 ลิตร`),
- q(`A runner completed 5/12 of a race before lunch and 7/18 after lunch. What fraction of the race did the runner complete?`,[F(29,36),F(31,36),F(7,9),F(5,6)],0,`ส่วนร่วม 36: 15/36+14/36=29/36`),
- q(`A board is 4 1/3 m long. A piece 1 7/12 m is cut off. How long is the remaining board?`,[F(11,4),F(31,12),F(35,12),F(29,12)],0,`4 1/3=52/12 และ 1 7/12=19/12 เหลือ 33/12=11/4=2 3/4 ม.`),
+ q(`Mina used 3/8 m of ribbon for a card and 5/12 m for a gift box. How much ribbon did she use altogether?`,[F(7,10),F(19,24),F(2,3),F(17,24)],1,`3/8=9/24 และ 5/12=10/24 รวมเป็น 19/24 เมตร`),
+ q(`A tank was 7/8 full. After 5/12 of the tank was used, what fraction of the tank remained?`,[F(1,2),F(13,24),F(11,24),F(5,24)],2,`7/8=21/24 และ 5/12=10/24 เหลือ 11/24`),
+ q(`Nina walked 1 3/5 km in the morning and 2 7/10 km in the evening. How far did she walk in total?`,[F(41,10),F(39,10),F(43,10),F(23,5)],2,`1 3/5=16/10 และ 2 7/10=27/10 รวม 43/10=4 3/10 กม.`),
+ q(`A recipe needs 2 1/4 cups of flour. Beam has already added 1 5/6 cups. How much more is needed?`,[F(11,24),F(5,12),F(1,3),F(7,12)],1,`2 1/4=27/12 และ 1 5/6=22/12 ต่างกัน 5/12 ถ้วย`),
+ q(`A class finished 3/10 of a project on Monday, 1/4 on Tuesday, and 1/5 on Wednesday. What fraction was completed?`,[F(13,20),F(3,4),F(4,5),F(7,10)],1,`ส่วนร่วม 20: 6/20+5/20+4/20=15/20=3/4`),
+ q(`A water bottle held 1 1/2 L. Tara drank 3/8 L and then 5/12 L. How much water remained?`,[F(17,24),F(5,8),F(3,4),F(19,24)],0,`1 1/2=36/24, 3/8=9/24, 5/12=10/24 เหลือ 17/24 ลิตร`),
+ q(`A runner completed 5/12 of a race before lunch and 7/18 after lunch. What fraction of the race did the runner complete?`,[F(7,9),F(31,36),F(5,6),F(29,36)],3,`ส่วนร่วม 36: 15/36+14/36=29/36`),
+ q(`A board is 4 1/3 m long. A piece 1 7/12 m is cut off. How long is the remaining board?`,[F(11,4),F(35,12),F(31,12),F(29,12)],0,`4 1/3=52/12 และ 1 7/12=19/12 เหลือ 33/12=11/4=2 3/4 ม.`),
  q(`A farmer used 2/7 of a field for corn and 5/14 for vegetables. What fraction of the field is still unused?`,[F(5,14),F(3,14),F(1,2),F(9,14)],0,`ใช้ทั้งหมด 2/7+5/14=4/14+5/14=9/14 จึงเหลือ 5/14`),
- q(`A book has been read for 3/8 on Friday and 1/3 on Saturday. If 1/12 was read on Sunday, what fraction remains unread?`,[F(5,24),F(7,24),F(1,4),F(3,8)],0,`อ่านแล้ว 3/8+1/3+1/12 =9/24+8/24+2/24=19/24 จึงเหลือ 5/24`),
- q(`A rope 6 1/4 m long is cut into two pieces. One piece is 2 5/6 m. How long is the other piece?`,[F(41,12),F(39,12),F(43,12),F(37,12)],0,`6 1/4=75/12 และ 2 5/6=34/12 ต่างกัน 41/12=3 5/12 ม.`),
- q(`A school used 1 2/5 boxes of paper in Week 1, 1 3/4 boxes in Week 2, and 5/8 box in Week 3. If it started with 5 boxes, how many boxes remain?`,[F(49,40),F(47,40),F(51,40),F(43,40)],0,`ใช้ทั้งหมด 56/40+70/40+25/40=151/40. เริ่ม 200/40 จึงเหลือ 49/40=1 9/40 กล่อง`)
+ q(`A book has been read for 3/8 on Friday and 1/3 on Saturday. If 1/12 was read on Sunday, what fraction remains unread?`,[F(1,4),F(3,8),F(7,24),F(5,24)],3,`อ่านแล้ว 3/8+1/3+1/12 =9/24+8/24+2/24=19/24 จึงเหลือ 5/24`),
+ q(`A rope 6 1/4 m long is cut into two pieces. One piece is 2 5/6 m. How long is the other piece?`,[F(39,12),F(37,12),F(43,12),F(41,12)],3,`6 1/4=75/12 และ 2 5/6=34/12 ต่างกัน 41/12=3 5/12 ม.`),
+ q(`A school used 1 2/5 boxes of paper in Week 1, 1 3/4 boxes in Week 2, and 5/8 box in Week 3. If it started with 5 boxes, how many boxes remain?`,[F(51,40),F(43,40),F(49,40),F(47,40)],2,`ใช้ทั้งหมด 56/40+70/40+25/40=151/40. เริ่ม 200/40 จึงเหลือ 49/40=1 9/40 กล่อง`)
  ]
 }
 ];
 
+/* ---- additive metadata: colours, icons, skill labels, hints (does not
+        alter any question text, choice, answer index or explanation) ---- */
+const partMeta=[
+ {color:"purple",skill:"Comparing & ordering fraction values",hint:"Convert every fraction to a common denominator (or a decimal) before you compare — never compare numerators alone.",descEn:"Compare fractions, order them from least to greatest, and work with mixed numbers."},
+ {color:"blue",skill:"Adding fractions with unlike denominators",hint:"Find the least common denominator (LCD) first, convert every fraction, then add the numerators and simplify.",descEn:"Add fractions with unlike denominators, mixed numbers, and multi-term sums."},
+ {color:"p3",skill:"Subtracting fractions and mixed numbers",hint:"Find the LCD, convert each fraction, and regroup (borrow) from the whole number if the top fraction is too small.",descEn:"Subtract fractions, regroup mixed numbers, and find missing values."},
+ {color:"orange",skill:"Multi-step fraction operations",hint:"Work inside parentheses first, then handle addition and subtraction from left to right using one common denominator.",descEn:"Combine addition and subtraction in one question, including parentheses and multiple steps."},
+ {color:"green",skill:"Solving fraction word problems",hint:"Underline the key numbers, decide whether you need to add or subtract (or both), then solve one step at a time.",descEn:"Real-world, multi-step story problems that reward careful analysis and planning."}
+];
+parts.forEach((p,i)=>{p.color=partMeta[i].color;p.skill=partMeta[i].skill;p.hint=partMeta[i].hint;p.descEn=partMeta[i].descEn});
+
+const wpIconKeys=["ribbon","tank","run","bowl","book","bottle","run","board","garden","book","rope","box"];
+parts[4].questions.forEach((qq,i)=>{qq.icon=wpIconKeys[i]});
+
+/* ======================================================================
+   ICONS — minimal inline SVG, single-colour line art (no raster images)
+   ====================================================================== */
+const partIcons={
+ purple:`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 7l-3 6 3 2 3-2-3-6zM19 7l-3 6 3 2 3-2-3-6z"/><path d="M5 21h14"/></svg>`,
+ blue:`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>`,
+ p3:`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/></svg>`,
+ orange:`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10M17 7L7 17"/></svg>`,
+ green:`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V6a2 2 0 0 1 2-2h13v14H6a2 2 0 0 0 0 4h13"/></svg>`
+};
+const wpIcons={
+ ribbon:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-3 0-4 2-4 4s2 3 4 3 4-1 4-3-1-4-4-4z"/><path d="M8 10l-3 11 4-2 3 2 3-2 4 2-3-11"/></svg>`,
+ tank:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M9 7V5a3 3 0 0 1 6 0v2M4 13h16"/></svg>`,
+ run:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="15" cy="5" r="2"/><path d="M12 9l3 3-2 7M15 12l4 2M9 15l-3 2-2 5M9 15l3-4-2-3-5 2"/></svg>`,
+ bowl:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18a9 8 0 0 1-18 0z"/><path d="M8 11c0-3 1-6 4-7 3 1 4 4 4 7"/></svg>`,
+ book:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5c3-1.5 6-1.5 8 0v14c-2-1.5-5-1.5-8 0zM20 5c-3-1.5-6-1.5-8 0v14c2-1.5 5-1.5 8 0z"/></svg>`,
+ bottle:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2h4v3.5l2 2.5v12a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V8l2-2.5z"/><path d="M8 13h8"/></svg>`,
+ board:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="18" height="6" rx="1"/><path d="M7 9v6M11 9v6M15 9v6"/></svg>`,
+ garden:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V9M12 9c0-4-3-6-7-6 0 4 3 7 7 7zM12 12c0-4 3-6 7-6 0 4-3 7-7 7z"/></svg>`,
+ rope:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12c0-3 2-5 4-5s3 2 3 4-1 4-3 4-4-2-4-3zM21 12c0-3-2-5-4-5s-3 2-3 4 1 4 3 4 4-2 4-3z"/></svg>`,
+ box:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l9-4 9 4-9 4-9-4zM3 8v9l9 4 9-4V8M12 12v9"/></svg>`
+};
+const wpIconLabels={ribbon:"Ribbon",tank:"Water tank",run:"Running track",bowl:"Recipe bowl",book:"Book",bottle:"Water bottle",board:"Wooden board",garden:"Garden field",rope:"Rope",box:"School supplies"};
+
+const badgeIcons={
+ starter:`<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.6 6.2L21 9l-5 4.5L17.4 21 12 17.4 6.6 21 8 13.5 3 9l6.4-.8z"/></svg>`,
+ comparisonExpert:`<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 7l-3 6 3 2 3-2-3-6zM19 7l-3 6 3 2 3-2-3-6z"/><path d="M5 21h14"/></svg>`,
+ additionMaster:`<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>`,
+ subtractionMaster:`<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/></svg>`,
+ mixedSolver:`<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h5l3 10h5M4 17h5l1.2-4M17 5l3 2-3 2M17 15l3 2-3 2"/></svg>`,
+ wordChampion:`<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5c3-1.5 6-1.5 8 0v14c-2-1.5-5-1.5-8 0zM20 5c-3-1.5-6-1.5-8 0v14c2-1.5 5-1.5 8 0z"/></svg>`,
+ fractionMaster:`<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3-4 3 4 3-4 3 4 3-4 3 4-2 9H5z"/><path d="M8 21h8"/></svg>`
+};
+const badges=[
+ {id:"starter",name:"Fraction Starter",desc:"Complete your first quiz part",check:s=>Object.keys(s).length>=1},
+ {id:"comparisonExpert",name:"Comparison Expert",desc:"Score 80%+ on Part 1",check:s=>s[0]&&s[0].percent>=80},
+ {id:"additionMaster",name:"Addition Master",desc:"Score 80%+ on Part 2",check:s=>s[1]&&s[1].percent>=80},
+ {id:"subtractionMaster",name:"Subtraction Master",desc:"Score 80%+ on Part 3",check:s=>s[2]&&s[2].percent>=80},
+ {id:"mixedSolver",name:"Mixed Operation Solver",desc:"Score 80%+ on Part 4",check:s=>s[3]&&s[3].percent>=80},
+ {id:"wordChampion",name:"Word Problem Champion",desc:"Score 80%+ on Part 5",check:s=>s[4]&&s[4].percent>=80},
+ {id:"fractionMaster",name:"Fraction Master",desc:"Score 90%+ on all 5 parts",check:s=>[0,1,2,3,4].every(i=>s[i]&&s[i].percent>=90)}
+];
+
+/* ======================================================================
+   QUICK REVIEW CONTENT
+   ====================================================================== */
+const reviewConcepts=[
+ {n:1,color:"purple",title:"Comparing Fractions",body:"Convert both fractions to the same denominator, then compare the numerators.",example:`3/4 vs 5/6 → 9/12 vs 10/12 → 5/6 is greater`},
+ {n:2,color:"purple",title:"Ordering Fractions",body:"Use one common denominator for every fraction in the list, then order the numerators.",example:`3/5, 7/10, 4/5 → 6/10, 7/10, 8/10`},
+ {n:3,color:"blue",title:"Finding the LCD",body:"List multiples of each denominator until you find the smallest one they share.",th:"หาตัวคูณร่วมน้อย (ค.ร.น.) โดยหาตัวคูณร่วมที่เล็กที่สุดของตัวส่วน",example:"LCD of 6 and 8 → 24"},
+ {n:4,color:"blue",title:"Adding Fractions",body:"Find the LCD → convert each fraction → add the numerators → simplify.",example:`1/3 + 1/4 = 7/12`},
+ {n:5,color:"p3",title:"Subtracting Fractions",body:"Find the LCD → convert each fraction → subtract the numerators → simplify.",example:`5/6 − 1/4 = 7/12`},
+ {n:6,color:"p3",title:"Subtracting Mixed Numbers",body:"If the top fraction is smaller, regroup 1 whole into a fraction before subtracting.",th:"ถ้าเศษส่วนตัวตั้งน้อยกว่า ให้ยืม 1 จากจำนวนเต็มมาแปลงเป็นเศษส่วนก่อนลบ",example:"3 1/4 − 1 3/4 → 2 5/4 − 1 3/4 = 1 2/4"},
+ {n:7,color:"orange",title:"Simplifying Fractions",body:"Divide the numerator and denominator by their greatest common factor (GCF).",example:"8/12 ÷ 4/4 = 2/3"},
+ {n:8,color:"green",title:"Solving Word Problems",body:"Read carefully, underline key numbers, choose the operation(s), solve step by step, then check if the answer makes sense.",th:"อ่านโจทย์ให้เข้าใจ ขีดเส้นใต้ตัวเลขสำคัญ เลือกวิธีคำนวณ แล้วตรวจคำตอบอีกครั้ง",example:"3/8 + 5/12 = 19/24 m of ribbon"}
+];
+
 function displayChoice(c){
- if(typeof c==="string") return c.replaceAll(/(\d+)\/(\d+)/g,(m,a,b)=>fracText(F(+a,+b)));
+ if(typeof c==="string")return formatMathText(c);
  return mixedText(c);
 }
-let currentPart=0,currentQ=0,answers=[],locked=false;
+
+/* ======================================================================
+   STATE
+   ====================================================================== */
+let currentPart=0,currentQ=0,answers=[],locked=false,hintShown=false;
+
+/* ---------- localStorage helpers ---------- */
+function getAllScores(){
+ const s={};
+ parts.forEach((p,i)=>{const v=JSON.parse(localStorage.getItem("fractionPart"+i)||"null");if(v)s[i]=v});
+ return s;
+}
+function getUnlockedBadges(){return JSON.parse(localStorage.getItem("fractionBadges")||"[]")}
+function saveUnlockedBadges(arr){localStorage.setItem("fractionBadges",JSON.stringify(arr))}
+
+function evaluateBadges(){
+ const scores=getAllScores();
+ const already=getUnlockedBadges();
+ const nowUnlocked=badges.filter(b=>b.check(scores)).map(b=>b.id);
+ const newlyUnlocked=nowUnlocked.filter(id=>!already.includes(id));
+ saveUnlockedBadges(nowUnlocked);
+ return {nowUnlocked,newlyUnlocked};
+}
+
+/* ======================================================================
+   THAI TRANSLATION TOGGLE
+   ====================================================================== */
+function isThaiHidden(){return localStorage.getItem("fractionThaiHidden")==="1"}
+function applyThaiVisibility(){
+ const hidden=isThaiHidden();
+ document.body.classList.toggle("thai-hidden",hidden);
+ const btn=document.getElementById("thaiToggleBtn");
+ if(btn)btn.textContent=hidden?"🇹🇭 แสดงคำแปลไทย":"🇹🇭 ซ่อนคำแปลไทย";
+}
+function toggleThai(){
+ localStorage.setItem("fractionThaiHidden",isThaiHidden()?"0":"1");
+ applyThaiVisibility();
+}
+
+/* ======================================================================
+   VIEW NAVIGATION
+   ====================================================================== */
+function showView(id){
+ document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+function goHome(scrollToPartsAfter){
+ showView("view-home");
+ renderHome();
+ if(scrollToPartsAfter)setTimeout(()=>scrollToParts(),80);
+}
+function goReview(){renderReviewGrid();showView("view-review")}
+function scrollToParts(fromReview){
+ if(fromReview)showView("view-home");
+ const el=document.getElementById("partsSection");
+ if(el)setTimeout(()=>window.scrollTo({top:el.offsetTop-70,behavior:"smooth"}),fromReview?60:0);
+}
+
+/* ======================================================================
+   HOME RENDER — dashboard, objectives, part cards, achievements
+   ====================================================================== */
+const objectiveText=[
+ "Compare and order fractions with unlike denominators confidently.",
+ "Add fractions and mixed numbers using the least common denominator.",
+ "Subtract fractions and mixed numbers, including regrouping.",
+ "Solve multi-step problems that combine addition and subtraction.",
+ "Apply fraction operations to real-world, multi-step word problems."
+];
+function renderObjectives(){
+ const list=document.getElementById("objList");
+ list.innerHTML=objectiveText.map((t,i)=>`
+   <li><span class="obj-dot" style="background:var(--${dotColor(i)})">${i+1}</span>${t}</li>
+ `).join("");
+}
+function dotColor(i){return ["purple","blue","p3","orange","green"][i]}
+
+function renderHome(){
+ renderDashboard();
+ renderObjectives();
+ renderParts();
+ renderBadgeGrid();
+}
+
+function renderDashboard(){
+ const scores=getAllScores();
+ const completed=Object.keys(scores).length;
+ let best=0;
+ Object.values(scores).forEach(v=>{if(v.percent>best)best=v.percent});
+ document.getElementById("completedStat").textContent=`${completed}/5`;
+ document.getElementById("bestStat").textContent=`${best}%`;
+ const unlocked=getUnlockedBadges();
+ document.getElementById("badgeStat").textContent=`${unlocked.length}/${badges.length}`;
+}
 
 function renderParts(){
  const grid=document.getElementById("partsGrid");grid.innerHTML="";
- let completed=0,best=0;
+ const scores=getAllScores();
  parts.forEach((p,i)=>{
-   const saved=JSON.parse(localStorage.getItem("fractionPart"+i)||"null");
-   if(saved){completed++;best=Math.max(best,saved.percent)}
-   const card=document.createElement("div");card.className="part-card";
+   const saved=scores[i];
+   const percent=saved?saved.percent:0;
+   const card=document.createElement("div");
+   card.className="part-card";
+   card.dataset.color=p.color;
+   card.style.animationDelay=(i*0.06)+"s";
    card.innerHTML=`
-    <div class="part-top"><div class="part-num">${i+1}</div><div class="level">${p.level}</div></div>
-    <h3>${p.short}</h3><p>${p.desc}</p>
-    <div class="progress-bar"><span style="width:${saved?saved.percent:0}%"></span></div>
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px">
-      <small style="color:var(--muted)">${saved?`Best ${saved.percent}%`:"Not started"}</small>
-      <button class="btn btn-primary" onclick="startPart(${i})">${saved?"Practice Again":"Start Part"}</button>
+    <div class="part-top">
+      <div class="part-icon">${partIcons[p.color]}</div>
+      <div class="level-chip">${p.level}</div>
+    </div>
+    <h3>${p.short}</h3>
+    <p class="part-desc">${p.descEn}<br><span class="thai-text">${p.desc}</span></p>
+    <div class="part-meta-row"><span>${p.questions.length} Questions</span><span>${saved?`Best ${saved.percent}%`:"Not started"}</span></div>
+    <div class="progress-bar"><span style="width:${percent}%"></span></div>
+    <div class="part-foot">
+      ${saved&&saved.percent>=60?`<span class="complete-chip">✓ Completed</span>`:`<small>Ready to start</small>`}
+      <button class="btn btn-primary btn-sm" onclick="startPart(${i})">${saved?"Continue":"Start Part"}</button>
     </div>`;
    grid.appendChild(card);
  });
- document.getElementById("completedStat").textContent=`${completed}/5`;
- document.getElementById("bestStat").textContent=`${best}%`;
 }
+
+function renderBadgeGrid(){
+ const grid=document.getElementById("badgeGrid");grid.innerHTML="";
+ const unlocked=getUnlockedBadges();
+ badges.forEach(b=>{
+   const isUnlocked=unlocked.includes(b.id);
+   const el=document.createElement("div");
+   el.className="ach-card"+(isUnlocked?" unlocked":"");
+   el.innerHTML=`<div class="ach-icon">${badgeIcons[b.id]}</div><h4>${b.name}</h4><p>${b.desc}</p>`;
+   grid.appendChild(el);
+ });
+ const sub=document.getElementById("achSub");
+ if(unlocked.length===0)sub.textContent="Complete a part to earn your first badge.";
+ else if(unlocked.length===badges.length)sub.textContent="Amazing! You've earned every badge.";
+ else sub.textContent=`${unlocked.length} of ${badges.length} badges earned — keep going!`;
+}
+
+function renderReviewGrid(){
+ const grid=document.getElementById("reviewGrid");grid.innerHTML="";
+ reviewConcepts.forEach(c=>{
+   const el=document.createElement("div");
+   el.className="concept-card";
+   el.innerHTML=`
+    <h4><span class="num-chip" style="background:var(--${c.color})">${c.n}</span>${c.title}</h4>
+    <p>${c.body}</p>
+    <div class="concept-example">${formatMathText(c.example)}</div>
+    ${c.th?`<div class="concept-th thai-text">${c.th}</div>`:""}
+   `;
+   grid.appendChild(el);
+ });
+}
+
+/* ======================================================================
+   QUIZ FLOW
+   ====================================================================== */
 function startPart(i){
  currentPart=i;currentQ=0;answers=Array(parts[i].questions.length).fill(null);locked=false;
- document.getElementById("partsSection").style.display="none";
- document.getElementById("quizShell").classList.add("active");
  document.getElementById("quizContent").style.display="block";
- document.getElementById("result").classList.remove("show");
- renderQuestion();window.scrollTo({top:document.getElementById("quizShell").offsetTop-15,behavior:"smooth"});
+ document.getElementById("result").style.display="none";
+ applyPartTheme(parts[i].color);
+ showView("view-quiz");
+ renderQuestion();
 }
+function applyPartTheme(color){
+ const map={purple:["--purple","--purple-dark","--purple-light"],blue:["--blue","--blue-dark","--blue-light"],p3:["--p3","--p3-dark","--p3-light"],orange:["--orange","--orange-dark","--orange-light"],green:["--green","--green-dark","--green-light"]};
+ const root=document.getElementById("quizShell");
+ const vars=map[color];
+ root.style.setProperty("--pc",`var(${vars[0]})`);
+ root.style.setProperty("--pc-dark",`var(${vars[1]})`);
+ root.style.setProperty("--pc-light",`var(${vars[2]})`);
+ root.style.setProperty("--pc-grad",`linear-gradient(90deg,var(${vars[0]}),var(${vars[1]}))`);
+}
+
 function renderQuestion(){
  const p=parts[currentPart],question=p.questions[currentQ];
  document.getElementById("quizTitle").textContent=p.short;
+ document.getElementById("partTag").textContent=`Part ${currentPart+1} of 5`;
  document.getElementById("questionCount").textContent=`Question ${currentQ+1} of ${p.questions.length}`;
  document.getElementById("quizProgress").style.width=`${((currentQ+1)/p.questions.length)*100}%`;
- document.getElementById("questionText").innerHTML=question.text;
+
+ const answeredSoFar=answers.filter((a,idx)=>idx<=currentQ&&a!==null).length;
+ const correctSoFar=answers.reduce((acc,a,idx)=>idx<=currentQ&&a===p.questions[idx].answer?acc+1:acc,0);
+ document.getElementById("scoreIndicator").textContent=`Score: ${correctSoFar}/${answeredSoFar} so far`;
+
+ const cardEl=document.getElementById("questionCardEl");
+ cardEl.classList.toggle("word-card",currentPart===4);
+ document.getElementById("questionText").innerHTML=formatMathText(question.text);
+
+ const wpSlot=document.getElementById("wpIconSlot");
+ if(currentPart===4&&question.icon){
+   wpSlot.innerHTML=`<div class="wp-icon-badge" title="${wpIconLabels[question.icon]||''}" aria-hidden="true">${wpIcons[question.icon]||""}</div>`;
+ }else wpSlot.innerHTML="";
+
+ document.getElementById("hintPanel").className="hint-panel";
+ document.getElementById("hintPanel").innerHTML=formatMathText(p.hint);
+ hintShown=false;
+ document.getElementById("hintBtn").textContent="💡 Show Hint";
+
  const box=document.getElementById("options");box.innerHTML="";
+ const letters=["A","B","C","D"];
  question.choices.forEach((choice,idx)=>{
-   const btn=document.createElement("button");btn.className="option";btn.innerHTML=displayChoice(choice);
-   btn.onclick=()=>selectAnswer(idx);box.appendChild(btn);
+   const btn=document.createElement("button");
+   btn.className="option";
+   btn.setAttribute("aria-label",`Option ${letters[idx]}`);
+   btn.innerHTML=`<span class="opt-letter">${letters[idx]}</span><span>${displayChoice(choice)}</span>`;
+   btn.onclick=()=>selectAnswer(idx);
+   box.appendChild(btn);
  });
  const feedback=document.getElementById("feedback");feedback.className="feedback";feedback.innerHTML="";
  locked=false;
@@ -397,6 +1073,14 @@ function renderQuestion(){
  document.getElementById("nextBtn").disabled=answers[currentQ]===null;
  document.getElementById("nextBtn").textContent=currentQ===p.questions.length-1?"Finish Part":"Next Question";
 }
+
+function toggleHint(){
+ hintShown=!hintShown;
+ document.getElementById("hintPanel").classList.toggle("show",hintShown);
+ document.getElementById("hintBtn").textContent=hintShown?"🙈 Hide Hint":"💡 Show Hint";
+}
+
+const goodMessages=["Great thinking!","Correct!","Excellent work!","You found the common denominator!","Nice fraction skills!"];
 function selectAnswer(idx){
  if(locked)return;
  answers[currentQ]=idx;showSavedAnswer();
@@ -412,47 +1096,147 @@ function showSavedAnswer(){
  const good=chosen===question.answer;
  const fb=document.getElementById("feedback");
  fb.className=`feedback show ${good?"good":"bad"}`;
- fb.innerHTML=`<strong>${good?"Correct! ✅":"Not quite ❌"}</strong><br>${question.explanation}`;
+ const msg=good?goodMessages[Math.floor(Math.random()*goodMessages.length)]:"Not quite — here's how to solve it:";
+ const icon=good
+   ?`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline class="check-draw" points="5 13 10 18 19 7"/></svg>`
+   :`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>`;
+ fb.innerHTML=`<div class="feedback-head"><span class="feedback-icon">${icon}</span>${msg}</div>
+   <div class="explain-steps">${formatMathText(question.explanation)}</div>`;
  document.getElementById("nextBtn").disabled=false;
+
+ const answeredSoFar=answers.filter((a,idx)=>idx<=currentQ&&a!==null).length;
+ const correctSoFar=answers.reduce((acc,a,idx)=>idx<=currentQ&&a===parts[currentPart].questions[idx].answer?acc+1:acc,0);
+ document.getElementById("scoreIndicator").textContent=`Score: ${correctSoFar}/${answeredSoFar} so far`;
 }
+
 function nextQuestion(){
  if(answers[currentQ]===null)return;
- if(currentQ<parts[currentPart].questions.length-1){currentQ++;renderQuestion()}else finishPart();
+ if(currentQ<parts[currentPart].questions.length-1){currentQ++;renderQuestion();window.scrollTo({top:document.getElementById("quizShell").offsetTop-15,behavior:"smooth"})}
+ else finishPart();
 }
 function prevQuestion(){if(currentQ>0){currentQ--;renderQuestion()}}
+
+function scoreMessage(percent){
+ if(percent>=90)return "Outstanding! You are a Fraction Master.";
+ if(percent>=75)return "Great work! Review a few questions and try for mastery.";
+ if(percent>=60)return "Good progress. Practise the questions you missed.";
+ return "Keep going. Review the worked examples and try again.";
+}
+
+function animateScoreCircle(percent){
+ const circle=document.getElementById("scoreCircle");
+ const text=document.getElementById("scoreText");
+ const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+ if(reduced){
+   circle.style.background=`conic-gradient(var(--pc,var(--coral)) ${percent*3.6}deg,#F1ECE0 0deg)`;
+   text.textContent=`${percent}%`;
+   return;
+ }
+ let cur=0;
+ const step=()=>{
+   cur+=Math.max(1,Math.round(percent/30));
+   if(cur>=percent)cur=percent;
+   circle.style.background=`conic-gradient(var(--pc,var(--coral)) ${cur*3.6}deg,#F1ECE0 0deg)`;
+   text.textContent=`${cur}%`;
+   if(cur<percent)requestAnimationFrame(step);
+ };
+ requestAnimationFrame(step);
+}
+
+function launchConfetti(){
+ if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+ const colors=["#FF6B4A","#8B6BF2","#3DA5DE","#FBA23A","#2FB673","#FFC94A"];
+ for(let i=0;i<36;i++){
+   const piece=document.createElement("div");
+   piece.className="confetti-piece";
+   piece.style.left=Math.random()*100+"vw";
+   piece.style.background=colors[Math.floor(Math.random()*colors.length)];
+   piece.style.transform=`rotate(${Math.random()*360}deg)`;
+   piece.style.animation=`confettiFall ${1.8+Math.random()*1.4}s ease-in forwards`;
+   piece.style.animationDelay=(Math.random()*0.3)+"s";
+   document.body.appendChild(piece);
+   setTimeout(()=>piece.remove(),3600);
+ }
+}
+const confettiStyle=document.createElement("style");
+confettiStyle.textContent=`@keyframes confettiFall{to{transform:translateY(105vh) rotate(360deg);opacity:.2}}`;
+document.head.appendChild(confettiStyle);
+
+function showToast(msg){
+ const t=document.getElementById("toast");
+ t.textContent=msg;t.classList.add("show");
+ clearTimeout(showToast._tm);
+ showToast._tm=setTimeout(()=>t.classList.remove("show"),2600);
+}
+
 function finishPart(){
  const p=parts[currentPart];let score=0;
  answers.forEach((a,i)=>{if(a===p.questions[i].answer)score++});
  const percent=Math.round(score/p.questions.length*100);
  const old=JSON.parse(localStorage.getItem("fractionPart"+currentPart)||"null");
  if(!old||percent>old.percent)localStorage.setItem("fractionPart"+currentPart,JSON.stringify({percent,score}));
+
  document.getElementById("quizContent").style.display="none";
- document.getElementById("result").classList.add("show");
- document.getElementById("scoreText").textContent=`${percent}%`;
- document.getElementById("scoreCircle").style.background=`conic-gradient(var(--primary) ${percent*3.6}deg,#f0ece5 0deg)`;
- document.getElementById("resultMessage").textContent=percent>=85?"Excellent work — you are ready for challenging fraction problems.":percent>=70?"Good progress — review the incorrect questions and try again.":"Keep practising — focus on finding common denominators and showing each step.";
- const list=document.getElementById("reviewList");list.innerHTML="<h3>Answer Review</h3>";
+ const resultEl=document.getElementById("result");
+ resultEl.style.display="block";
+
+ document.getElementById("scoreTextSmall").textContent=`${score}/${p.questions.length} correct`;
+ document.getElementById("correctCount").textContent=score;
+ document.getElementById("incorrectCount").textContent=p.questions.length-score;
+ document.getElementById("resultMessage").textContent=scoreMessage(percent);
+ animateScoreCircle(percent);
+
+ const {newlyUnlocked}=evaluateBadges();
+ const slot=document.getElementById("badgeEarnedSlot");
+ if(newlyUnlocked.length){
+   const b=badges.find(x=>x.id===newlyUnlocked[0]);
+   slot.innerHTML=`<div class="badge-earned">${badgeIcons[b.id]} Badge unlocked: ${b.name}</div>`;
+   showToast(`🏅 New badge: ${b.name}`);
+ }else slot.innerHTML="";
+
+ if(percent>=75)launchConfetti();
+
+ const nextBtn=document.getElementById("nextPartBtn");
+ if(currentPart<parts.length-1){nextBtn.style.display="inline-flex";nextBtn.textContent="Continue to Next Part"}
+ else nextBtn.style.display="none";
+
+ const list=document.getElementById("reviewList");
+ list.innerHTML="<h3>Answer Review</h3>";
  p.questions.forEach((qq,i)=>{
-   const ok=answers[i]===qq.answer;const div=document.createElement("div");div.className=`review-item ${ok?"ok":"no"}`;
-   div.innerHTML=`<strong>${i+1}. ${ok?"Correct":"Incorrect"}</strong><br>
-   <span style="color:var(--muted)">Correct answer: ${displayChoice(qq.choices[qq.answer])}</span><br>
-   <small>${qq.explanation}</small>`;
+   const ok=answers[i]===qq.answer;
+   const div=document.createElement("div");
+   div.className=`review-item ${ok?"ok":"no"}`;
+   div.innerHTML=`
+    <div class="ri-top"><span class="ri-status">${i+1}. ${ok?"Correct":"Incorrect"}</span><span class="skill-tag">${p.skill}</span></div>
+    <div class="ri-q">${formatMathText(qq.text)}</div>
+    ${ok?"":`<div class="ri-ans">Your answer: ${displayChoice(qq.choices[answers[i]])}</div>`}
+    <div class="ri-ans">Correct answer: ${displayChoice(qq.choices[qq.answer])}</div>
+    <div class="ri-explain">${formatMathText(qq.explanation)}</div>`;
    list.appendChild(div);
  });
- renderParts();window.scrollTo({top:document.getElementById("quizShell").offsetTop-15,behavior:"smooth"});
+
+ renderDashboard();
+ window.scrollTo({top:document.getElementById("quizShell").offsetTop-15,behavior:"smooth"});
 }
+
 function retryPart(){startPart(currentPart)}
-function backHome(){
- document.getElementById("quizShell").classList.remove("active");
- document.getElementById("partsSection").style.display="block";
- renderParts();window.scrollTo({top:document.getElementById("partsSection").offsetTop-20,behavior:"smooth"});
-}
+function nextPart(){if(currentPart<parts.length-1)startPart(currentPart+1);else goHome()}
+function backHome(){goHome(true)}
+
 function resetAll(){
- if(confirm("Reset all saved scores?")){
-   parts.forEach((_,i)=>localStorage.removeItem("fractionPart"+i));renderParts();
+ if(confirm("Reset all saved scores and badges? This cannot be undone.")){
+   parts.forEach((_,i)=>localStorage.removeItem("fractionPart"+i));
+   localStorage.removeItem("fractionBadges");
+   renderHome();
+   showToast("Progress reset.");
  }
 }
-renderParts();
+
+/* ======================================================================
+   INIT
+   ====================================================================== */
+applyThaiVisibility();
+renderHome();
 </script>
 </body>
 </html>

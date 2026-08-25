@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ratio Rally — Grade 6 Ratio &amp; Proportion</title>
+<meta name="description" content="Five practice papers with full answer keys: ratio and proportion word problems for Grade 6 / P.6.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23E2604A'/%3E%3Ctext x='16' y='23' font-size='18' font-family='Georgia,serif' fill='%23FBF6EC' text-anchor='middle'%3E:%3C/text%3E%3C/svg%3E">
+<style>/* ===== Ratio Rally — poster-pop theme: sunflower ground, hot-pink hero, cream cards, hard black outlines ===== */
+:root{
+  color-scheme: light;
+
+  --black:#000000;
+  --paper:#F7CB46;      /* sunflower page */
+  --paper-2:#EFBC2A;    /* deeper sunflower: tracks, tints */
+  --card:#FEF6E1;       /* cream card */
+  --card-2:#FFFFFF;
+  --pink:#F196E5;
+  --pink-2:#E7A3CA;
+  --orange:#FD8000;
+  --orange-2:#E37100;
+
+  --ink:#141414;
+  --ink-2:#3D3D3D;
+  --ink-3:#6E6A5F;
+
+  --good:#0F7A45;  --good-fill:#59CC8F;  --good-soft:#DCF6E7;
+  --amber:#8A5A00; --amber-fill:#FFC53D; --amber-soft:#FFF1C9;
+  --bad:#BE2A18;   --bad-fill:#FF6250;   --bad-soft:#FFE1DC;
+
+  --s1:#F196E5; --s2:#FD8000; --s3:#59CC8F; --s4:#8FD3FF; --s5:#141414;
+  --on-s1:#141414; --on-s2:#141414; --on-s3:#141414; --on-s4:#141414; --on-s5:#FEF6E1;
+
+  --bd:3px solid var(--black);
+  --bd-2:2px solid var(--black);
+  --pop:5px 5px 0 var(--black);
+  --pop-sm:3px 3px 0 var(--black);
+  --pop-lg:7px 7px 0 var(--black);
+
+  --r-s:8px; --r-m:12px; --r-l:18px;
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+  --fs:17px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--font); font-size:var(--fs); line-height:1.5;
+  overflow-x:hidden; -webkit-font-smoothing:antialiased;
+}
+body.teacher{--fs:20px}
+img,svg{max-width:100%}
+h1,h2,h3,h4{font-weight:900; line-height:1.08; margin:0; letter-spacing:-.03em; text-wrap:balance}
+p{margin:0 0 .85em}
+p:last-child{margin-bottom:0}
+button{font:inherit; color:inherit}
+:focus-visible{outline:3px solid var(--black); outline-offset:3px; border-radius:4px}
+.wrap{width:min(1000px,100% - 36px); margin-inline:auto}
+.hide{display:none !important}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* ---------- header: solid black bar ---------- */
+.top{position:sticky; top:0; z-index:30; background:var(--black)}
+.top-in{display:flex; align-items:center; gap:12px; padding:8px 0; min-height:58px}
+.brand{display:flex; align-items:center; gap:10px; background:none; border:0; padding:5px 8px 5px 5px; margin-left:-5px; border-radius:9px; cursor:pointer; text-align:left; min-height:44px; min-width:0; flex:0 1 auto; overflow:hidden; color:#fff}
+.brand:hover{background:rgba(255,255,255,.14)}
+.mark{
+  width:32px;height:32px;flex:none;border-radius:8px;background:var(--orange);border:var(--bd-2);
+  display:grid;place-items:center;color:var(--black);font-size:15px;font-weight:900
+}
+.brand-txt{min-width:0;display:block}
+.brand-name{display:block;font-size:1rem;font-weight:800;line-height:1.2;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand-sub{display:block;font-size:.72rem;color:rgba(255,255,255,.72);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top-sp{flex:1 1 0; min-width:8px}
+.top-nav{display:flex; gap:4px; align-items:center; flex:none}
+.tbtn{
+  background:none;border:2px solid transparent;border-radius:999px;padding:8px 13px;cursor:pointer;
+  font-size:.88rem;font-weight:700;color:rgba(255,255,255,.9);
+  min-height:42px;display:inline-flex;align-items:center;gap:6px
+}
+.tbtn:hover{background:rgba(255,255,255,.16);color:#fff}
+.tbtn[aria-current="page"]{background:var(--card);color:var(--black);border-color:var(--card)}
+.tbtn[aria-pressed="true"]{background:var(--orange);color:var(--black);border-color:var(--black)}
+.tbtn .ico{display:none}
+@media(max-width:790px){ .brand-sub{display:none} .tbtn .lbl{display:none} .tbtn .ico{display:inline;font-size:1.05rem;line-height:1} .tbtn{padding:8px 11px} }
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  border:var(--bd);border-radius:11px;padding:11px 22px;min-height:48px;
+  font-size:.98rem;font-weight:800;letter-spacing:-.01em;cursor:pointer;color:var(--black);
+  box-shadow:var(--pop-sm); transition:transform .08s ease, box-shadow .08s ease, background .15s ease;
+}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--black)}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--black)}
+.btn-primary{background:var(--orange)}
+.btn-primary:hover{background:#FF8F1F}
+.btn-dark{background:var(--black);color:var(--card)}
+.btn-ghost{background:var(--card-2)}
+.btn-ghost:hover{background:var(--card)}
+.btn-quiet{background:transparent;border-color:transparent;box-shadow:none;font-weight:700;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:2px}
+.btn-quiet:hover{background:rgba(0,0,0,.07);transform:none;box-shadow:none}
+.btn-quiet:active{transform:none;box-shadow:none}
+.btn[disabled]{opacity:.45;cursor:not-allowed;transform:none;box-shadow:var(--pop-sm)}
+.btn-sm{padding:8px 15px;min-height:40px;font-size:.88rem}
+
+/* ---------- hero band ---------- */
+.hero{position:relative; background:var(--pink); padding:56px 0 104px; margin-bottom:-6px}
+.hero::after{
+  content:""; position:absolute; left:0; right:0; bottom:-1px; height:58px; pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 60' preserveAspectRatio='none'%3E%3Cpath d='M0,30 C110,66 215,-4 335,22 C450,47 545,-6 670,20 C790,45 890,-4 1010,22 C1090,39 1145,36 1200,26 L1200,60 L0,60 Z' fill='%23F7CB46'/%3E%3C/svg%3E") no-repeat center bottom/100% 100%;
+}
+.hero-grid{display:grid; grid-template-columns:1.15fr .85fr; gap:40px; align-items:center}
+@media(max-width:860px){.hero-grid{grid-template-columns:1fr;gap:26px}.hero{padding:38px 0 76px}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.76rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--black);background:var(--card);border:var(--bd-2);border-radius:999px;padding:6px 14px;box-shadow:var(--pop-sm)}
+.hero h1{font-size:clamp(2.3rem,6vw,3.7rem); margin:18px 0 14px; letter-spacing:-.04em}
+.hero h1 em{font-style:normal;color:var(--card-2)}
+.lede{font-size:1.05rem;color:var(--ink);max-width:54ch;font-weight:500}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:26px}
+.hero-facts{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.fact{background:var(--card);border:var(--bd-2);border-radius:12px;padding:10px 16px;box-shadow:var(--pop-sm);min-width:106px}
+.fact b{display:block;font-size:1.45rem;font-weight:900;line-height:1.1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.fact span{font-size:.74rem;font-weight:700;color:var(--ink-2);text-transform:uppercase;letter-spacing:.05em}
+
+.hero-art{background:var(--card);border:var(--bd);border-radius:var(--r-l);padding:22px;box-shadow:var(--pop)}
+.hero-art h4{font-size:.74rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:16px}
+
+/* ---------- section head ---------- */
+.sec{padding:16px 0 54px}
+.sec-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:20px}
+.sec-head h2{font-size:1.9rem}
+.sec-head p{color:var(--ink-2);font-size:.94rem;margin:0;font-weight:500}
+
+/* ---------- stage list ---------- */
+.stages{display:grid;gap:14px}
+.stage{
+  display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;
+  background:var(--card);border:var(--bd);border-radius:var(--r-l);
+  padding:18px 20px;box-shadow:var(--pop);cursor:pointer;text-align:left;width:100%;
+  transition:transform .1s ease, box-shadow .1s ease;
+}
+.stage:hover{transform:translate(-2px,-2px);box-shadow:var(--pop-lg)}
+.stage:active{transform:translate(2px,2px);box-shadow:var(--pop-sm)}
+.stage-no{
+  width:52px;height:52px;border:var(--bd);border-radius:13px;display:grid;place-items:center;flex:none;
+  font-size:1.3rem;font-weight:900;font-variant-numeric:tabular-nums
+}
+.c1{background:var(--s1);color:var(--on-s1)}
+.c2{background:var(--s2);color:var(--on-s2)}
+.c3{background:var(--s3);color:var(--on-s3)}
+.c4{background:var(--s4);color:var(--on-s4)}
+.c5{background:var(--s5);color:var(--on-s5)}
+.s1{color:#B44BA2} .s2{color:#C46200} .s3{color:var(--good)} .s4{color:#2B7CA8} .s5{color:var(--ink)}
+.stage-body{min-width:0}
+.stage-kicker{font-size:.74rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.stage-body h3{font-size:1.2rem;margin:3px 0 4px}
+.stage-body p{font-size:.93rem;color:var(--ink-2);margin:0;font-weight:500}
+.stage-end{display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex:none}
+.score-pill{font-size:.78rem;font-weight:800;padding:5px 12px;border:var(--bd-2);border-radius:999px;background:var(--card-2);color:var(--ink-2);white-space:nowrap;font-variant-numeric:tabular-nums}
+.score-pill.done{background:var(--good-fill);color:var(--black)}
+.chev{font-size:1.15rem;line-height:1;font-weight:900}
+@media(max-width:620px){
+  .stage{grid-template-columns:auto 1fr;gap:14px;padding:16px}
+  .stage-end{grid-column:1/-1;flex-direction:row;align-items:center;justify-content:space-between;border-top:2px dashed var(--black);padding-top:11px}
+}
+.diff{display:inline-flex;gap:4px;vertical-align:middle;margin-left:9px}
+.diff i{width:8px;height:8px;border:1.5px solid var(--black);border-radius:50%;background:transparent;display:block}
+.diff i.on{background:currentColor}
+
+/* ---------- generic card ---------- */
+.card{background:var(--card);border:var(--bd);border-radius:var(--r-l);padding:26px;box-shadow:var(--pop)}
+.card + .card{margin-top:18px}
+.card h3{font-size:1.3rem;margin-bottom:10px}
+.note{background:var(--pink);border:var(--bd-2);border-radius:var(--r-m);padding:13px 17px;font-size:.94rem;font-weight:500}
+
+/* ---------- method / lesson ---------- */
+.steps3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
+@media(max-width:760px){.steps3{grid-template-columns:1fr}}
+.step3{background:var(--card-2);border:var(--bd-2);border-radius:var(--r-m);padding:18px;box-shadow:var(--pop-sm)}
+.step3 b{display:flex;align-items:center;gap:10px;font-size:1.05rem;font-weight:900;margin-bottom:7px}
+.step3 .n{width:28px;height:28px;border:var(--bd-2);border-radius:50%;background:var(--pink);display:grid;place-items:center;font-size:.82rem;font-weight:900;flex:none}
+.step3 p{font-size:.93rem;color:var(--ink-2);font-weight:500}
+
+/* ---------- bar model ---------- */
+.bar{margin:6px 0 2px}
+.bar-row{display:grid;grid-template-columns:minmax(74px,auto) 1fr minmax(0,auto);align-items:center;gap:11px;margin-bottom:9px}
+.bar-name{font-size:.82rem;font-weight:800;color:var(--ink-2);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-track{display:grid;gap:5px}
+.blk{height:26px;border:var(--bd-2);border-radius:6px;background:var(--card-2)}
+.b1{background:var(--pink)} .b2{background:var(--orange)} .b3{background:var(--s4)}
+.bar-val{font-size:.86rem;font-weight:900;white-space:nowrap;font-variant-numeric:tabular-nums}
+.bar-foot{display:grid;grid-template-columns:minmax(74px,auto) 1fr minmax(0,auto);gap:11px;margin-top:2px}
+.foot-cell{grid-column:2}
+.brace{border-left:2px solid var(--black);border-right:2px solid var(--black);border-bottom:2px solid var(--black);border-radius:0 0 9px 9px;height:10px}
+.brace-lbl{text-align:center;font-size:.83rem;font-weight:800;margin-top:6px}
+@media(max-width:520px){
+  .bar-row,.bar-foot{grid-template-columns:1fr}
+  .bar-name{text-align:left}
+  .bar-val{text-align:left}
+  .foot-cell{grid-column:1}
+}
+
+/* ---------- proportion table ---------- */
+.ptab{width:100%;border-collapse:separate;border-spacing:0;font-size:.98rem;max-width:420px;font-variant-numeric:tabular-nums;background:var(--card-2);border:var(--bd-2);border-radius:var(--r-m);overflow:hidden}
+.ptab th,.ptab td{border-bottom:2px solid var(--black);padding:10px 15px;text-align:left}
+.ptab th{font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-2);font-weight:800;background:var(--paper)}
+.ptab tr:last-child td{border-bottom:0}
+.ptab td{font-weight:700}
+.ptab .q{color:#C0300F;font-weight:900}
+.vis-box{background:var(--card-2);border:var(--bd-2);border-radius:var(--r-m);padding:17px 19px;margin:18px 0}
+.vis-cap{font-size:.7rem;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);font-weight:800;margin-bottom:12px}
+
+/* ---------- quiz ---------- */
+.qbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:22px 0 12px}
+.qbar .chip{font-size:.76rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:7px 14px;border:var(--bd-2);border-radius:999px;background:var(--card);box-shadow:var(--pop-sm)}
+.prog{flex:1;min-width:140px;height:16px;border:var(--bd-2);border-radius:999px;background:var(--card-2);overflow:hidden}
+.prog i{display:block;height:100%;background:var(--orange);border-right:2px solid var(--black);transition:width .3s ease}
+.qcount{font-size:.85rem;font-weight:800;white-space:nowrap;font-variant-numeric:tabular-nums}
+.dots{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}
+.dot{width:28px;height:28px;border:var(--bd-2);border-radius:9px;background:var(--card-2);font-size:.78rem;font-weight:800;display:grid;place-items:center;font-variant-numeric:tabular-nums}
+.dot.ok{background:var(--good-fill)}
+.dot.no{background:var(--bad-fill)}
+.dot.now{background:var(--black);color:var(--card)}
+
+.qtext{font-size:1.18rem;line-height:1.45;font-weight:600}
+.qnum{font-weight:900;margin-right:6px;font-variant-numeric:tabular-nums}
+
+.opts{display:grid;gap:11px;margin:20px 0 4px}
+.opt{
+  display:flex;align-items:center;gap:14px;width:100%;text-align:left;cursor:pointer;
+  background:var(--card-2);border:var(--bd-2);border-radius:var(--r-m);
+  padding:13px 17px;min-height:56px;font-size:1rem;font-weight:700;box-shadow:var(--pop-sm);
+  transition:transform .08s ease, box-shadow .08s ease, background .12s ease;
+}
+.opt:hover:not(:disabled){transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--black)}
+.opt .key{width:29px;height:29px;flex:none;border:var(--bd-2);border-radius:50%;background:var(--paper);display:grid;place-items:center;font-size:.82rem;font-weight:900}
+.opt[aria-checked="true"]{background:var(--pink)}
+.opt[aria-checked="true"] .key{background:var(--black);color:var(--card)}
+.opt.reveal-ok{background:var(--good-fill)}
+.opt.reveal-ok .key{background:var(--card-2)}
+.opt.reveal-no{background:var(--bad-fill)}
+.opt.reveal-no .key{background:var(--card-2)}
+.opt:disabled{cursor:default;transform:none}
+
+.answer-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:22px 0 4px}
+.answer-row label{font-weight:800}
+.inp{
+  font:inherit;font-weight:900;font-size:1.15rem;padding:12px 16px;min-height:54px;width:172px;
+  border:var(--bd);border-radius:var(--r-m);background:var(--card-2);color:var(--ink);
+  box-shadow:var(--pop-sm);font-variant-numeric:tabular-nums
+}
+.inp:focus{outline:none;box-shadow:var(--pop);background:#fff}
+.unit{font-weight:800;color:var(--ink-2)}
+.qactions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;padding-top:20px;border-top:2px dashed var(--black)}
+.qactions .sp{flex:1}
+
+.fb{border:var(--bd);border-radius:var(--r-m);padding:17px 19px;margin-top:20px;box-shadow:var(--pop-sm)}
+.fb-ok{background:var(--good-soft)}
+.fb-try{background:var(--amber-soft)}
+.fb-no{background:var(--bad-soft)}
+.fb h4{display:flex;align-items:center;gap:10px;font-size:1.06rem;margin-bottom:8px}
+.fb-ico{width:26px;height:26px;border:var(--bd-2);border-radius:50%;display:grid;place-items:center;font-size:.8rem;font-weight:900;flex:none;color:var(--black)}
+.fb-ok .fb-ico{background:var(--good-fill)} .fb-try .fb-ico{background:var(--amber-fill)} .fb-no .fb-ico{background:var(--bad-fill)}
+.sol{list-style:none;margin:12px 0 0;padding:0;counter-reset:s}
+.sol li{counter-increment:s;position:relative;padding-left:34px;margin-bottom:8px;font-size:.97rem;font-weight:500}
+.sol li::before{content:counter(s);position:absolute;left:0;top:1px;width:23px;height:23px;border:var(--bd-2);border-radius:50%;background:var(--card-2);display:grid;place-items:center;font-size:.74rem;font-weight:900}
+.sol li:last-child{font-weight:800}
+.hintbox{margin-top:16px;background:var(--card-2);border:var(--bd-2);border-radius:var(--r-m);padding:14px 17px;font-size:.95rem;font-weight:500}
+.hintbox b{font-weight:900}
+
+/* ---------- results ---------- */
+.result-hero{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center}
+@media(max-width:620px){.result-hero{grid-template-columns:1fr;text-align:center;justify-items:center}}
+.ring{width:136px;height:136px;flex:none;border:var(--bd);border-radius:50%;display:grid;place-items:center;box-shadow:var(--pop-sm)}
+.ring > div{border:var(--bd-2)}
+.ring b{display:block;font-size:1.85rem;font-weight:900;line-height:1.05;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.ring span{display:block;font-size:.66rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-top:3px}
+.medal{display:inline-flex;align-items:center;gap:8px;font-weight:800;padding:7px 15px;border:var(--bd-2);border-radius:999px;font-size:.85rem;box-shadow:var(--pop-sm)}
+.m-gold{background:var(--amber-fill)}
+.m-silver{background:var(--s4)}
+.m-bronze{background:var(--pink)}
+.m-again{background:var(--card-2)}
+.review{margin-top:24px;border-top:2px dashed var(--black)}
+.rev{display:grid;grid-template-columns:auto 1fr auto;gap:15px;align-items:start;padding:15px 0;border-bottom:2px dashed var(--black)}
+.rev-ico{width:26px;height:26px;border:var(--bd-2);border-radius:50%;display:grid;place-items:center;font-size:.76rem;font-weight:900;flex:none;margin-top:2px}
+.rev-ico.ok{background:var(--good-fill)} .rev-ico.no{background:var(--bad-fill)}
+.rev p{font-size:.95rem;margin:0;font-weight:500}
+.rev .meta{font-size:.84rem;color:var(--ink-3);margin-top:3px;font-weight:600}
+.rev .ans{font-size:.88rem;font-weight:900;white-space:nowrap;font-variant-numeric:tabular-nums}
+@media(max-width:560px){.rev{grid-template-columns:auto 1fr}.rev .ans{grid-column:2}}
+
+/* ---------- certificate ---------- */
+.cert{background:var(--card);border:var(--bd);border-radius:var(--r-l);padding:44px 30px 40px;text-align:center;box-shadow:var(--pop);position:relative;overflow:hidden}
+.cert::before{content:"";position:absolute;inset:0 0 auto;height:14px;border-bottom:var(--bd);
+  background:linear-gradient(90deg,var(--pink) 0 20%,var(--orange) 20% 40%,var(--good-fill) 40% 60%,var(--s4) 60% 80%,var(--amber-fill) 80% 100%)}
+.cert .seal{width:62px;height:62px;border:var(--bd);border-radius:50%;background:var(--orange);display:grid;place-items:center;margin:16px auto 18px;font-size:1.5rem;font-weight:900;box-shadow:var(--pop-sm)}
+.cert h2{font-size:1.8rem;margin:8px 0}
+.cert .who{font-size:2.1rem;font-weight:900;letter-spacing:-.03em;border-bottom:3px dashed var(--black);display:inline-block;padding:0 28px 8px;margin:16px 0 8px;min-width:250px}
+.cert .meta{color:var(--ink-2);font-weight:500}
+.cert .kicker{letter-spacing:.16em;text-transform:uppercase;font-size:.72rem;font-weight:900;color:var(--ink-3)}
+
+/* ---------- answer key ---------- */
+.key-set{margin-bottom:32px}
+.key-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:12px;border-bottom:3px solid var(--black)}
+.key-head .stage-no{width:40px;height:40px;font-size:1.1rem;border-radius:11px}
+.key-head h3{font-size:1.15rem;margin:0}
+.key-q{padding:15px 0;border-bottom:2px dashed var(--black);display:grid;grid-template-columns:32px 1fr;gap:12px}
+.key-q:last-child{border-bottom:0}
+.key-n{font-weight:900;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.key-a{display:inline-block;background:var(--good-fill);border:var(--bd-2);font-weight:900;border-radius:999px;padding:3px 14px;margin:8px 0 6px}
+.key-steps{font-size:.91rem;color:var(--ink-2);margin:0;padding-left:18px;font-weight:500}
+.key-steps li{margin-bottom:3px}
+
+/* ---------- misc ---------- */
+.foot{border-top:3px solid var(--black);padding:26px 0 44px;color:var(--ink-2);font-size:.86rem;font-weight:500}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.field{display:flex;flex-direction:column;gap:7px}
+.field label{font-size:.82rem;font-weight:800}
+.field input{font:inherit;font-weight:600;padding:11px 14px;min-height:48px;border:var(--bd-2);border-radius:var(--r-m);background:var(--card-2);color:var(--ink);box-shadow:var(--pop-sm)}
+.field input:focus{outline:none;box-shadow:var(--pop-sm),0 0 0 3px var(--pink)}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important}
+  .stage:hover,.opt:hover,.btn:hover{transform:none}
+}
+
+/* ---------- print ---------- */
+@media print{
+  .top,.qactions,.no-print,.foot{display:none !important}
+  body{background:#fff;font-size:11pt}
+  .card,.cert{box-shadow:none;break-inside:avoid}
+  .hero::after{display:none}
+  .key-q{break-inside:avoid}
+  .wrap{width:100%}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>/* Ratio Rally — Grade 6 ratio & proportion practice. Vanilla JS, no dependencies. */
+(function () {
+  "use strict";
+
+  var SETS = [{"id":1,"code":"Stage 1","name":"Warm-Up Ratios","tagline":"Find the missing amount when one part is known.","skill":"Unitary method: find 1 part, then multiply.","level":1,"questions":[{"n":1,"type":"input","text":"A drink is made by mixing orange juice and water in the ratio 1 : 4. There are 200 ml of water. How much orange juice is needed?","vis":{"kind":"bar","labels":["Orange juice","Water"],"parts":[1,4],"knownIndex":1,"knownText":"200 ml"},"unit":"ml","answer":50,"formula":"(1/4)*200","hint":"Water is 4 parts and it equals 200 ml. What is 1 part worth?","steps":["Water = 4 parts = 200 ml","1 part = 200 ÷ 4 = 50 ml","Orange juice = 1 part = 50 ml"]},{"n":2,"type":"input","text":"A recipe uses flour and sugar in the ratio 5 : 2. If you use 250 grams of flour, how many grams of sugar do you need?","vis":{"kind":"bar","labels":["Flour","Sugar"],"parts":[5,2],"knownIndex":0,"knownText":"250 g"},"unit":"g","answer":100,"formula":"(2/5)*250","hint":"Flour is 5 parts = 250 g. Find 1 part first.","steps":["Flour = 5 parts = 250 g","1 part = 250 ÷ 5 = 50 g","Sugar = 2 parts = 2 × 50 = 100 g"]},{"n":3,"type":"mcq","text":"The ratio of boys to girls in a class is 3 : 5. If there are 15 boys, how many girls are there?","vis":{"kind":"bar","labels":["Boys","Girls"],"parts":[3,5],"knownIndex":0,"knownText":"15"},"unit":"girls","answer":25,"formula":"(5/3)*15","options":["25 girls","9 girls","45 girls","20 girls"],"correct":0,"why":["","This flips the ratio — it multiplies by 3/5 instead of 5/3.","This multiplies 15 by 3 instead of finding 1 part first.","This adds 5 to the boys instead of working in parts."],"hint":"Boys are 3 parts = 15, so 1 part = 5 students.","steps":["Boys = 3 parts = 15","1 part = 15 ÷ 3 = 5 students","Girls = 5 parts = 5 × 5 = 25 girls"]},{"n":4,"type":"input","text":"To make green paint, yellow and blue are mixed in the ratio 1 : 2. If you use 90 ml of blue paint, how much yellow paint do you need?","vis":{"kind":"bar","labels":["Yellow","Blue"],"parts":[1,2],"knownIndex":1,"knownText":"90 ml"},"unit":"ml","answer":45,"formula":"(1/2)*90","hint":"Blue is 2 parts = 90 ml.","steps":["Blue = 2 parts = 90 ml","1 part = 90 ÷ 2 = 45 ml","Yellow = 1 part = 45 ml"]},{"n":5,"type":"input","text":"In a jar, the ratio of red marbles to blue marbles is 4 : 1. If there are 36 red marbles, how many blue marbles are there?","vis":{"kind":"bar","labels":["Red","Blue"],"parts":[4,1],"knownIndex":0,"knownText":"36"},"unit":"blue marbles","answer":9,"formula":"(1/4)*36","hint":"Red is 4 parts = 36 marbles.","steps":["Red = 4 parts = 36 marbles","1 part = 36 ÷ 4 = 9 marbles","Blue = 1 part = 9 marbles"]},{"n":6,"type":"mcq","text":"A school has a teacher-to-student ratio of 1 : 20. If there are 15 teachers, how many students are there?","vis":{"kind":"bar","labels":["Teachers","Students"],"parts":[1,20],"knownIndex":0,"knownText":"15"},"unit":"students","answer":300,"formula":"15*20","options":["300 students","35 students","20 students","320 students"],"correct":0,"why":["","This adds 15 + 20 instead of multiplying.","This just repeats the ratio number.","This adds the teachers to the students."],"hint":"1 teacher goes with 20 students, and there are 15 teachers.","steps":["1 part = 1 teacher = 15 teachers ÷ 1 = 15","Students = 20 parts = 20 × 15","= 300 students"]},{"n":7,"type":"input","text":"A garden has roses and tulips planted in the ratio 7 : 3. If there are 210 roses, how many tulips are there?","vis":{"kind":"bar","labels":["Roses","Tulips"],"parts":[7,3],"knownIndex":0,"knownText":"210"},"unit":"tulips","answer":90,"formula":"(3/7)*210","hint":"Roses are 7 parts = 210 flowers.","steps":["Roses = 7 parts = 210","1 part = 210 ÷ 7 = 30","Tulips = 3 parts = 3 × 30 = 90 tulips"]},{"n":8,"type":"input","text":"A necklace is made with red and green beads in the ratio 5 : 2. If 10 green beads are used, how many red beads are needed?","vis":{"kind":"bar","labels":["Red beads","Green beads"],"parts":[5,2],"knownIndex":1,"knownText":"10"},"unit":"red beads","answer":25,"formula":"(5/2)*10","hint":"Green is 2 parts = 10 beads.","steps":["Green = 2 parts = 10 beads","1 part = 10 ÷ 2 = 5 beads","Red = 5 parts = 5 × 5 = 25 beads"]},{"n":9,"type":"mcq","text":"The ratio of cats to dogs in a shelter is 3 : 2. If there are 18 cats, how many dogs are there?","vis":{"kind":"bar","labels":["Cats","Dogs"],"parts":[3,2],"knownIndex":0,"knownText":"18"},"unit":"dogs","answer":12,"formula":"(2/3)*18","options":["12 dogs","27 dogs","6 dogs","36 dogs"],"correct":0,"why":["","This flips the ratio and multiplies by 3/2.","This is the value of 1 part, not 2 parts.","This doubles the cats instead of using parts."],"hint":"Cats are 3 parts = 18, so 1 part = 6 animals.","steps":["Cats = 3 parts = 18","1 part = 18 ÷ 3 = 6 animals","Dogs = 2 parts = 2 × 6 = 12 dogs"]},{"n":10,"type":"input","text":"The ratio of sugar to water in a syrup is 1 : 6. If the syrup contains 60 ml of sugar, how much water is needed?","vis":{"kind":"bar","labels":["Sugar","Water"],"parts":[1,6],"knownIndex":0,"knownText":"60 ml"},"unit":"ml","answer":360,"formula":"6*60","hint":"Sugar is 1 part, so 1 part = 60 ml.","steps":["Sugar = 1 part = 60 ml","Water = 6 parts","Water = 6 × 60 = 360 ml"]}]},{"id":2,"code":"Stage 2","name":"Everyday Ratios","tagline":"The same method, in real shops, kitchens and classrooms.","skill":"Reading which quantity is given before you divide.","level":1,"questions":[{"n":1,"type":"input","text":"The ratio of pencils to pens in a classroom is 2 : 5. If there are 50 pens, how many pencils are there?","vis":{"kind":"bar","labels":["Pencils","Pens"],"parts":[2,5],"knownIndex":1,"knownText":"50"},"unit":"pencils","answer":20,"formula":"(2/5)*50","hint":"Pens are 5 parts = 50.","steps":["Pens = 5 parts = 50","1 part = 50 ÷ 5 = 10","Pencils = 2 parts = 2 × 10 = 20 pencils"]},{"n":2,"type":"input","text":"The ratio of mangoes to bananas in a basket is 4 : 7. If there are 56 bananas, how many mangoes are there?","vis":{"kind":"bar","labels":["Mangoes","Bananas"],"parts":[4,7],"knownIndex":1,"knownText":"56"},"unit":"mangoes","answer":32,"formula":"(4/7)*56","hint":"Bananas are 7 parts = 56.","steps":["Bananas = 7 parts = 56","1 part = 56 ÷ 7 = 8","Mangoes = 4 parts = 4 × 8 = 32 mangoes"]},{"n":3,"type":"mcq","text":"In a recipe, milk and chocolate syrup are mixed in the ratio 3 : 1. If you use 90 ml of milk, how much syrup do you need?","vis":{"kind":"bar","labels":["Milk","Syrup"],"parts":[3,1],"knownIndex":0,"knownText":"90 ml"},"unit":"ml","answer":30,"formula":"(1/3)*90","options":["30 ml","270 ml","45 ml","60 ml"],"correct":0,"why":["","This multiplies by 3 instead of dividing by 3.","This halves the milk instead of using parts.","This is 2 parts, but syrup is only 1 part."],"hint":"Milk is 3 parts = 90 ml.","steps":["Milk = 3 parts = 90 ml","1 part = 90 ÷ 3 = 30 ml","Syrup = 1 part = 30 ml"]},{"n":4,"type":"input","text":"The ratio of apples to oranges in a basket is 6 : 1. If there are 72 apples, how many oranges are there?","vis":{"kind":"bar","labels":["Apples","Oranges"],"parts":[6,1],"knownIndex":0,"knownText":"72"},"unit":"oranges","answer":12,"formula":"(1/6)*72","hint":"Apples are 6 parts = 72.","steps":["Apples = 6 parts = 72","1 part = 72 ÷ 6 = 12","Oranges = 1 part = 12 oranges"]},{"n":5,"type":"input","text":"A football team has a win-to-loss ratio of 5 : 3. If they have 40 wins, how many losses do they have?","vis":{"kind":"bar","labels":["Wins","Losses"],"parts":[5,3],"knownIndex":0,"knownText":"40"},"unit":"losses","answer":24,"formula":"(3/5)*40","hint":"Wins are 5 parts = 40 games.","steps":["Wins = 5 parts = 40","1 part = 40 ÷ 5 = 8 games","Losses = 3 parts = 3 × 8 = 24 losses"]},{"n":6,"type":"mcq","text":"A school has a student-to-computer ratio of 8 : 1. If there are 160 students, how many computers are needed?","vis":{"kind":"bar","labels":["Students","Computers"],"parts":[8,1],"knownIndex":0,"knownText":"160"},"unit":"computers","answer":20,"formula":"160/8","options":["20 computers","1280 computers","152 computers","8 computers"],"correct":0,"why":["","This multiplies by 8 instead of dividing by 8.","This subtracts 8 instead of dividing.","This just repeats the ratio number."],"hint":"Every 8 students share 1 computer.","steps":["Students = 8 parts = 160","1 part = 160 ÷ 8 = 20","Computers = 1 part = 20 computers"]},{"n":7,"type":"input","text":"A bakery mixes butter and sugar in the ratio 3 : 4. If the baker uses 180 grams of butter, how much sugar is needed?","vis":{"kind":"bar","labels":["Butter","Sugar"],"parts":[3,4],"knownIndex":0,"knownText":"180 g"},"unit":"g","answer":240,"formula":"(4/3)*180","hint":"Butter is 3 parts = 180 g.","steps":["Butter = 3 parts = 180 g","1 part = 180 ÷ 3 = 60 g","Sugar = 4 parts = 4 × 60 = 240 g"]},{"n":8,"type":"input","text":"A shop sells T-shirts and caps in the ratio 9 : 4. If the shop sold 28 caps, how many T-shirts did it sell?","vis":{"kind":"bar","labels":["T-shirts","Caps"],"parts":[9,4],"knownIndex":1,"knownText":"28"},"unit":"T-shirts","answer":63,"formula":"(9/4)*28","hint":"Caps are 4 parts = 28.","steps":["Caps = 4 parts = 28","1 part = 28 ÷ 4 = 7","T-shirts = 9 parts = 9 × 7 = 63 T-shirts"]},{"n":9,"type":"mcq","text":"In a canteen the ratio of chairs to tables is 6 : 1. If there are 14 tables, how many chairs are there?","vis":{"kind":"bar","labels":["Chairs","Tables"],"parts":[6,1],"knownIndex":1,"knownText":"14"},"unit":"chairs","answer":84,"formula":"6*14","options":["84 chairs","20 chairs","70 chairs","7 chairs"],"correct":0,"why":["","This adds 14 + 6 instead of multiplying.","This multiplies by 5 instead of 6.","This halves the tables instead of multiplying by 6."],"hint":"Tables are 1 part, so 1 part = 14.","steps":["Tables = 1 part = 14","Chairs = 6 parts","Chairs = 6 × 14 = 84 chairs"]},{"n":10,"type":"input","text":"A photo is enlarged so that its width and height stay in the ratio 5 : 7. If the new width is 45 cm, what is the new height?","vis":{"kind":"bar","labels":["Width","Height"],"parts":[5,7],"knownIndex":0,"knownText":"45 cm"},"unit":"cm","answer":63,"formula":"(7/5)*45","hint":"Width is 5 parts = 45 cm.","steps":["Width = 5 parts = 45 cm","1 part = 45 ÷ 5 = 9 cm","Height = 7 parts = 7 × 9 = 63 cm"]}]},{"id":3,"code":"Stage 3","name":"Sharing a Total","tagline":"Now the TOTAL is given — count all the parts first.","skill":"Total ÷ sum of parts = 1 part.","level":2,"questions":[{"n":1,"type":"input","text":"Water and lemon juice are mixed in the ratio 4 : 1. If 300 ml of lemonade is made altogether, how much lemon juice is used?","vis":{"kind":"bar","labels":["Water","Lemon juice"],"parts":[4,1],"totalText":"Total = 300 ml"},"unit":"ml","answer":60,"formula":"(1/5)*300","hint":"This time 300 ml is the WHOLE drink, so add the parts: 4 + 1 = 5.","steps":["Total parts = 4 + 1 = 5","1 part = 300 ÷ 5 = 60 ml","Lemon juice = 1 part = 60 ml"]},{"n":2,"type":"input","text":"A bag contains red, green and blue balls in the ratio 2 : 3 : 5. If there are 30 blue balls, how many red balls are there?","vis":{"kind":"bar","labels":["Red","Green","Blue"],"parts":[2,3,5],"knownIndex":2,"knownText":"30"},"unit":"red balls","answer":12,"formula":"(2/5)*30","hint":"Blue is 5 parts = 30 balls.","steps":["Blue = 5 parts = 30 balls","1 part = 30 ÷ 5 = 6 balls","Red = 2 parts = 2 × 6 = 12 red balls"]},{"n":3,"type":"mcq","text":"Ann and Ben share 480 baht in the ratio 5 : 3. How much money does Ann receive?","vis":{"kind":"bar","labels":["Ann","Ben"],"parts":[5,3],"totalText":"Total = 480 baht"},"unit":"baht","answer":300,"formula":"(5/8)*480","options":["300 baht","180 baht","160 baht","288 baht"],"correct":0,"why":["","That is Ben's share, not Ann's.","This divides 480 by 3 instead of by 8 parts.","This takes 3/5 of 480 instead of 5/8."],"hint":"Add the parts first: 5 + 3 = 8 parts share 480 baht.","steps":["Total parts = 5 + 3 = 8","1 part = 480 ÷ 8 = 60 baht","Ann = 5 parts = 5 × 60 = 300 baht"]},{"n":4,"type":"input","text":"A ribbon 72 cm long is cut into two pieces in the ratio 3 : 5. How long is the LONGER piece?","vis":{"kind":"bar","labels":["Shorter","Longer"],"parts":[3,5],"totalText":"Total = 72 cm"},"unit":"cm","answer":45,"formula":"(5/8)*72","hint":"8 parts altogether make 72 cm.","steps":["Total parts = 3 + 5 = 8","1 part = 72 ÷ 8 = 9 cm","Longer piece = 5 parts = 5 × 9 = 45 cm"]},{"n":5,"type":"input","text":"A class of 45 students has boys and girls in the ratio 4 : 5. How many girls are in the class?","vis":{"kind":"bar","labels":["Boys","Girls"],"parts":[4,5],"totalText":"Total = 45 students"},"unit":"girls","answer":25,"formula":"(5/9)*45","hint":"45 is the whole class, so use 4 + 5 = 9 parts.","steps":["Total parts = 4 + 5 = 9","1 part = 45 ÷ 9 = 5 students","Girls = 5 parts = 5 × 5 = 25 girls"]},{"n":6,"type":"input","text":"200 sweets are shared among Amy, Ben and Cara in the ratio 3 : 2 : 5. How many sweets does Cara get?","vis":{"kind":"bar","labels":["Amy","Ben","Cara"],"parts":[3,2,5],"totalText":"Total = 200 sweets"},"unit":"sweets","answer":100,"formula":"(5/10)*200","hint":"Add all three numbers in the ratio to get the total parts.","steps":["Total parts = 3 + 2 + 5 = 10","1 part = 200 ÷ 10 = 20 sweets","Cara = 5 parts = 5 × 20 = 100 sweets"]},{"n":7,"type":"mcq","text":"A farm has 96 animals. The ratio of cows to goats is 5 : 7. How many goats are on the farm?","vis":{"kind":"bar","labels":["Cows","Goats"],"parts":[5,7],"totalText":"Total = 96 animals"},"unit":"goats","answer":56,"formula":"(7/12)*96","options":["56 goats","40 goats","48 goats","84 goats"],"correct":0,"why":["","That is the number of cows.","This just halves the total.","This multiplies 12 by 7 instead of finding 1 part."],"hint":"Total parts = 5 + 7 = 12.","steps":["Total parts = 5 + 7 = 12","1 part = 96 ÷ 12 = 8 animals","Goats = 7 parts = 7 × 8 = 56 goats"]},{"n":8,"type":"input","text":"A snack mix weighing 350 g contains nuts and raisins in the ratio 4 : 3. What is the mass of the raisins?","vis":{"kind":"bar","labels":["Nuts","Raisins"],"parts":[4,3],"totalText":"Total = 350 g"},"unit":"g","answer":150,"formula":"(3/7)*350","hint":"7 parts altogether weigh 350 g.","steps":["Total parts = 4 + 3 = 7","1 part = 350 ÷ 7 = 50 g","Raisins = 3 parts = 3 × 50 = 150 g"]},{"n":9,"type":"input","text":"The ratio of Nan's stickers to Om's stickers is 7 : 4. Nan has 27 more stickers than Om. How many stickers does Om have?","vis":{"kind":"bar","labels":["Nan","Om"],"parts":[7,4],"diffText":"Difference = 27 stickers"},"unit":"stickers","answer":36,"formula":"(4/3)*27","hint":"The difference is 7 − 4 = 3 parts, and that difference is 27.","steps":["Difference = 7 − 4 = 3 parts","3 parts = 27, so 1 part = 27 ÷ 3 = 9 stickers","Om = 4 parts = 4 × 9 = 36 stickers"]},{"n":10,"type":"input","text":"720 baht is shared among three friends in the ratio 2 : 3 : 4. How much does the friend with the LARGEST share receive?","vis":{"kind":"bar","labels":["Friend A","Friend B","Friend C"],"parts":[2,3,4],"totalText":"Total = 720 baht"},"unit":"baht","answer":320,"formula":"(4/9)*720","hint":"Total parts = 2 + 3 + 4 = 9. The largest share is 4 parts.","steps":["Total parts = 2 + 3 + 4 = 9","1 part = 720 ÷ 9 = 80 baht","Largest share = 4 parts = 4 × 80 = 320 baht"]}]},{"id":4,"code":"Stage 4","name":"Rates, Scale & Proportion","tagline":"When two amounts grow together — recipes, speed, prices and maps.","skill":"Find the value of ONE unit, then scale up.","level":2,"questions":[{"n":1,"type":"input","text":"A car travels 60 km using 5 litres of fuel. How much fuel is needed to travel 180 km?","vis":{"kind":"table","head":["Distance","Fuel"],"rows":[["60 km","5 L"],["180 km","? L"]]},"unit":"litres","answer":15,"formula":"(180/60)*5","hint":"180 km is how many times 60 km?","steps":["180 ÷ 60 = 3, so the journey is 3 times as long","Fuel = 3 × 5","= 15 litres"]},{"n":2,"type":"input","text":"On a map, the ratio of map distance to real distance is 1 : 500. Two towns are 6 cm apart on the map. How far apart are they in real life, in metres?","vis":{"kind":"table","head":["On the map","In real life"],"rows":[["1 cm","500 cm"],["6 cm","? cm"]]},"unit":"m","answer":30,"formula":"6*500/100","hint":"First find the real distance in centimetres, then change to metres (100 cm = 1 m).","steps":["Real distance = 6 × 500 = 3000 cm","3000 ÷ 100 = 30","= 30 metres"]},{"n":3,"type":"mcq","text":"4 notebooks cost 60 baht. At the same price, how much do 7 notebooks cost?","vis":{"kind":"table","head":["Notebooks","Cost"],"rows":[["4","60 baht"],["7","? baht"]]},"unit":"baht","answer":105,"formula":"(60/4)*7","options":["105 baht","420 baht","15 baht","63 baht"],"correct":0,"why":["","This multiplies 60 by 7 without finding the price of one.","That is the price of one notebook only.","This adds 3 baht instead of scaling."],"hint":"How much does ONE notebook cost?","steps":["1 notebook = 60 ÷ 4 = 15 baht","7 notebooks = 7 × 15","= 105 baht"]},{"n":4,"type":"input","text":"A printer prints 24 pages in 3 minutes. How many pages does it print in 15 minutes?","vis":{"kind":"table","head":["Time","Pages"],"rows":[["3 min","24"],["15 min","?"]]},"unit":"pages","answer":120,"formula":"(24/3)*15","hint":"How many pages in 1 minute?","steps":["1 minute = 24 ÷ 3 = 8 pages","15 minutes = 15 × 8","= 120 pages"]},{"n":5,"type":"input","text":"A rice recipe for 4 people uses 300 grams of rice. How much rice is needed for 10 people?","vis":{"kind":"table","head":["People","Rice"],"rows":[["4","300 g"],["10","? g"]]},"unit":"g","answer":750,"formula":"(300/4)*10","hint":"Find the rice for 1 person first.","steps":["1 person = 300 ÷ 4 = 75 g","10 people = 10 × 75","= 750 g"]},{"n":6,"type":"mcq","text":"A car travels 240 km in 3 hours at a steady speed. How far does it travel in 5 hours?","vis":{"kind":"table","head":["Time","Distance"],"rows":[["3 h","240 km"],["5 h","? km"]]},"unit":"km","answer":400,"formula":"(240/3)*5","options":["400 km","144 km","720 km","480 km"],"correct":0,"why":["","This scales by 3/5 instead of 5/3 — the ratio is upside down.","This multiplies 240 by 3 by mistake.","This doubles 240 instead of scaling by 5/3."],"hint":"Find the distance in 1 hour first.","steps":["1 hour = 240 ÷ 3 = 80 km","5 hours = 5 × 80","= 400 km"]},{"n":7,"type":"input","text":"A map uses the scale 1 cm : 4 km. Two cities are 7.5 cm apart on the map. What is the real distance between them?","vis":{"kind":"table","head":["On the map","In real life"],"rows":[["1 cm","4 km"],["7.5 cm","? km"]]},"unit":"km","answer":30,"formula":"7.5*4","hint":"Every 1 cm on the map stands for 4 km.","steps":["1 cm stands for 4 km","Real distance = 7.5 × 4","= 30 km"]},{"n":8,"type":"input","text":"5 kilograms of apples cost 175 baht. How much do 8 kilograms cost?","vis":{"kind":"table","head":["Apples","Cost"],"rows":[["5 kg","175 baht"],["8 kg","? baht"]]},"unit":"baht","answer":280,"formula":"(175/5)*8","hint":"Find the cost of 1 kilogram first.","steps":["1 kg = 175 ÷ 5 = 35 baht","8 kg = 8 × 35","= 280 baht"]},{"n":9,"type":"input","text":"A tap fills 18 litres of water in 4 minutes. How much water does it fill in 10 minutes?","vis":{"kind":"table","head":["Time","Water"],"rows":[["4 min","18 L"],["10 min","? L"]]},"unit":"litres","answer":45,"formula":"(18/4)*10","hint":"1 minute = 18 ÷ 4 = 4.5 litres.","steps":["1 minute = 18 ÷ 4 = 4.5 litres","10 minutes = 10 × 4.5","= 45 litres"]},{"n":10,"type":"mcq","text":"A model car is built to the scale 1 : 25. The model is 18 cm long. How long is the real car?","vis":{"kind":"table","head":["Model","Real car"],"rows":[["1 cm","25 cm"],["18 cm","? cm"]]},"unit":"cm","answer":450,"formula":"18*25","options":["450 cm","43 cm","180 cm","0.72 cm"],"correct":0,"why":["","This adds 18 + 25 instead of multiplying.","This multiplies by 10 instead of 25.","This divides instead of multiplying — the real car must be bigger."],"hint":"Every 1 cm of the model stands for 25 cm of the real car.","steps":["1 cm of model = 25 cm of real car","Real length = 18 × 25","= 450 cm (4.5 m)"]}]},{"id":5,"code":"Stage 5","name":"Challenge Papers","tagline":"Two-step problems — exam level. Read slowly and label the parts.","skill":"Deciding what the question really asks: a share, a total, or a difference.","level":3,"questions":[{"n":1,"type":"input","text":"Red and blue counters are in the ratio 3 : 5. There are 64 counters altogether. How many MORE blue counters than red counters are there?","vis":{"kind":"bar","labels":["Red","Blue"],"parts":[3,5],"totalText":"Total = 64 counters"},"unit":"counters","answer":16,"formula":"(2/8)*64","hint":"The difference is 5 − 3 = 2 parts.","steps":["Total parts = 3 + 5 = 8","1 part = 64 ÷ 8 = 8 counters","Difference = 2 parts = 2 × 8 = 16 more blue counters"]},{"n":2,"type":"input","text":"The ratio of boys to girls in a club is 2 : 3. There are 12 boys. How many students are in the club ALTOGETHER?","vis":{"kind":"bar","labels":["Boys","Girls"],"parts":[2,3],"knownIndex":0,"knownText":"12"},"unit":"students","answer":30,"formula":"(12/2)*5","hint":"Find 1 part, then multiply by the TOTAL number of parts (2 + 3).","steps":["Boys = 2 parts = 12, so 1 part = 6 students","Total parts = 2 + 3 = 5","Total = 5 × 6 = 30 students"]},{"n":3,"type":"input","text":"A fruit drink is made from concentrate and water in the ratio 1 : 6. A jug holds 350 ml of the finished drink. How much concentrate is in the jug?","vis":{"kind":"bar","labels":["Concentrate","Water"],"parts":[1,6],"totalText":"Total = 350 ml"},"unit":"ml","answer":50,"formula":"(1/7)*350","hint":"350 ml is the finished drink, so use 1 + 6 = 7 parts.","steps":["Total parts = 1 + 6 = 7","1 part = 350 ÷ 7 = 50 ml","Concentrate = 1 part = 50 ml"]},{"n":4,"type":"mcq","text":"A : B = 2 : 3 and B : C = 3 : 5. If A = 8, what is the value of C?","vis":{"kind":"bar","labels":["A","B","C"],"parts":[2,3,5],"knownIndex":0,"knownText":"8"},"unit":"","answer":20,"formula":"(5/2)*8","options":["20","12","15","40"],"correct":0,"why":["","That is the value of B, not C.","This multiplies the 3 and the 5 from the ratios together.","This multiplies A by 5 without finding the value of 1 part."],"hint":"B is 3 parts in both ratios, so you can join them: A : B : C = 2 : 3 : 5.","steps":["B is 3 in both ratios, so A : B : C = 2 : 3 : 5","A = 2 parts = 8, so 1 part = 4","C = 5 parts = 5 × 4 = 20"]},{"n":5,"type":"input","text":"A class of 36 students has boys and girls in the ratio 5 : 4. How many MORE boys than girls are there?","vis":{"kind":"bar","labels":["Boys","Girls"],"parts":[5,4],"totalText":"Total = 36 students"},"unit":"students","answer":4,"formula":"(1/9)*36","hint":"The difference is 5 − 4 = 1 part.","steps":["Total parts = 5 + 4 = 9","1 part = 36 ÷ 9 = 4 students","Difference = 1 part = 4 more boys"]},{"n":6,"type":"input","text":"3 kilograms of rice cost 96 baht. How much do 7.5 kilograms of the same rice cost?","vis":{"kind":"table","head":["Rice","Cost"],"rows":[["3 kg","96 baht"],["7.5 kg","? baht"]]},"unit":"baht","answer":240,"formula":"(96/3)*7.5","hint":"Find the cost of 1 kilogram first.","steps":["1 kg = 96 ÷ 3 = 32 baht","7.5 kg = 7.5 × 32","= 240 baht"]},{"n":7,"type":"mcq","text":"The length and width of a rectangle are in the ratio 7 : 3. The perimeter of the rectangle is 60 cm. What is its length?","vis":{"kind":"bar","labels":["Length","Width"],"parts":[7,3],"totalText":"Perimeter = 60 cm"},"unit":"cm","answer":21,"formula":"7*(60/20)","options":["21 cm","42 cm","9 cm","30 cm"],"correct":0,"why":["","This treats 60 cm as length + width (10 parts) instead of the full perimeter (20 parts).","That is the width, not the length.","This just halves the perimeter."],"hint":"Going once around uses length + width + length + width = 2 × (7 + 3) = 20 parts.","steps":["Perimeter = 2 × (7 + 3) = 20 parts","1 part = 60 ÷ 20 = 3 cm","Length = 7 parts = 7 × 3 = 21 cm"]},{"n":8,"type":"input","text":"Green paint is mixed from yellow and blue in the ratio 2 : 3. A painter needs 20 litres of green paint. How much BLUE paint does she need?","vis":{"kind":"bar","labels":["Yellow","Blue"],"parts":[2,3],"totalText":"Total = 20 litres"},"unit":"litres","answer":12,"formula":"(3/5)*20","hint":"20 litres is the finished green paint, so use 2 + 3 = 5 parts.","steps":["Total parts = 2 + 3 = 5","1 part = 20 ÷ 5 = 4 litres","Blue = 3 parts = 3 × 4 = 12 litres"]},{"n":9,"type":"input","text":"Ploy and Mint have money in the ratio 4 : 7. Together they have 550 baht. How much MORE money does Mint have than Ploy?","vis":{"kind":"bar","labels":["Ploy","Mint"],"parts":[4,7],"totalText":"Total = 550 baht"},"unit":"baht","answer":150,"formula":"(3/11)*550","hint":"Total parts = 4 + 7 = 11, and the difference is 7 − 4 = 3 parts.","steps":["Total parts = 4 + 7 = 11","1 part = 550 ÷ 11 = 50 baht","Difference = 3 parts = 3 × 50 = 150 baht"]},{"n":10,"type":"input","text":"A drink is made with milk and water in the ratio 2 : 5. The jug holds 4.2 litres of the drink. How much milk is in the jug?","vis":{"kind":"bar","labels":["Milk","Water"],"parts":[2,5],"totalText":"Total = 4.2 litres"},"unit":"litres","answer":1.2,"formula":"(2/7)*4.2","hint":"Total parts = 2 + 5 = 7. Dividing 4.2 by 7 gives a decimal.","steps":["Total parts = 2 + 5 = 7","1 part = 4.2 ÷ 7 = 0.6 litres","Milk = 2 parts = 2 × 0.6 = 1.2 litres"]}]}];
+  var LSKEY = "ratio-rally-v1";
+  var LETTERS = ["A", "B", "C", "D"];
+
+  /* ---------------- storage ---------------- */
+  var defaults = {
+    name: "",
+    brandName: "Ratio Rally",
+    brandSub: "Grade 6 · Ratio & Proportion",
+    teacher: false,
+    results: {}
+  };
+  var store = load();
+
+  function load() {
+    try {
+      var raw = localStorage.getItem(LSKEY);
+      if (!raw) return Object.assign({}, defaults);
+      var d = JSON.parse(raw);
+      return Object.assign({}, defaults, d && typeof d === "object" ? d : {});
+    } catch (e) { return Object.assign({}, defaults); }
+  }
+  function save() {
+    try { localStorage.setItem(LSKEY, JSON.stringify(store)); } catch (e) {}
+  }
+
+  /* ---------------- helpers ---------------- */
+  function esc(s) {
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
+  function num(x) {
+    var t = String(x).replace(/,/g, "").replace(/[^0-9.\-]/g, "");
+    if (!t || t === "-" || t === ".") return NaN;
+    return parseFloat(t);
+  }
+  function same(a, b) { return isFinite(a) && Math.abs(a - b) < 1e-6; }
+  function fmt(n) { return String(Math.round(n * 1000) / 1000); }
+  function setById(id) { for (var i = 0; i < SETS.length; i++) if (SETS[i].id === id) return SETS[i]; return null; }
+  function totalQuestions() { return SETS.reduce(function (a, s) { return a + s.questions.length; }, 0); }
+
+  /* ---------------- visuals ---------------- */
+  function barVis(v) {
+    var total = v.parts.reduce(function (a, b) { return a + b; }, 0);
+    var rows = v.parts.map(function (p, i) {
+      var blocks = "";
+      for (var k = 0; k < p; k++) blocks += '<span class="blk b' + ((i % 3) + 1) + '"></span>';
+      var val = (v.knownIndex === i && v.knownText) ? '<span class="bar-val">= ' + esc(v.knownText) + "</span>" : '<span class="bar-val"></span>';
+      return '<div class="bar-row"><span class="bar-name">' + esc(v.labels[i]) + "</span>" +
+        '<div class="bar-track" style="grid-template-columns:repeat(' + total + ',minmax(0,1fr))">' + blocks + "</div>" + val + "</div>";
+    }).join("");
+    var footText = v.totalText || v.diffText || "";
+    var foot = footText
+      ? '<div class="bar-foot"><div class="foot-cell"><div class="brace"></div><div class="brace-lbl">' + esc(footText) + "</div></div></div>"
+      : "";
+    return '<div class="bar">' + rows + foot + "</div>";
+  }
+  function tableVis(v) {
+    var head = "<tr><th>" + esc(v.head[0]) + "</th><th>" + esc(v.head[1]) + "</th></tr>";
+    var body = v.rows.map(function (r) {
+      return "<tr>" + r.map(function (c) {
+        return '<td class="' + (String(c).indexOf("?") >= 0 ? "q" : "") + '">' + esc(c) + "</td>";
+      }).join("") + "</tr>";
+    }).join("");
+    return '<table class="ptab"><thead>' + head + "</thead><tbody>" + body + "</tbody></table>";
+  }
+  function visual(v, caption) {
+    if (!v) return "";
+    var inner = v.kind === "bar" ? barVis(v) : tableVis(v);
+    return '<div class="vis-box"><div class="vis-cap">' + esc(caption || (v.kind === "bar" ? "Bar model" : "Proportion table")) + "</div>" + inner + "</div>";
+  }
+
+  /* ---------------- app state ---------------- */
+  var view = { name: "home" };
+  var quiz = null;
+
+  function go(name, opts) {
+    view = Object.assign({ name: name }, opts || {});
+    render();
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }
+
+  function startQuiz(setId, onlyMissed) {
+    var set = setById(setId);
+    var order = set.questions.map(function (_, i) { return i; });
+    if (onlyMissed) {
+      var prev = store.results[setId];
+      if (prev && prev.marks) {
+        var missed = order.filter(function (i) { return prev.marks[i] !== "first" && prev.marks[i] !== "retry"; });
+        if (missed.length) order = missed;
+      }
+    }
+    quiz = {
+      setId: setId, order: order, pos: 0, retryMode: !!onlyMissed,
+      marks: new Array(set.questions.length).fill(null),
+      given: new Array(set.questions.length).fill(""),
+      state: "answering", attempts: 0, selected: null, draft: "", hint: false
+    };
+    go("quiz");
+  }
+
+  /* ---------------- shared chrome ---------------- */
+  function header() {
+    var nav = [
+      ["home", "Home", "&#8962;"],
+      ["method", "How to solve", "&#9432;"],
+      ["key", "Answer key", "&#10003;"]
+    ].map(function (n) {
+      return '<button class="tbtn" data-go="' + n[0] + '"' + (view.name === n[0] ? ' aria-current="page"' : "") + '><span class="ico" aria-hidden="true">' + n[2] + '</span><span class="lbl">' + n[1] + "</span></button>";
+    }).join("");
+    return '<header class="top no-print"><div class="wrap top-in">' +
+      '<button class="brand" data-go="home" aria-label="Ratio Rally home"><span class="mark" aria-hidden="true">R</span>' +
+      '<span class="brand-txt"><span class="brand-name">' + esc(store.brandName || "Ratio Rally") + "</span>" +
+      '<span class="brand-sub">' + esc(store.brandSub || "") + "</span></span></button>" +
+      '<span class="top-sp"></span><nav class="top-nav">' + nav +
+      '<button class="tbtn" data-action="teacher" aria-pressed="' + (store.teacher ? "true" : "false") + '" title="Teacher mode: larger text for projecting"><span class="ico" aria-hidden="true">&#9673;</span><span class="lbl">Teacher</span></button>' +
+      '<button class="tbtn" data-go="settings" aria-label="Settings"><span class="ico" aria-hidden="true">&#9881;</span><span class="lbl">Settings</span></button>' +
+      "</nav></div></header>";
+  }
+  function footer() {
+    return '<footer class="foot no-print"><div class="wrap">' +
+      "<p><strong>Ratio Rally</strong> — 5 practice papers &middot; 50 word problems &middot; full worked answer key. " +
+      "Progress is saved in this browser only; there is no account and nothing is uploaded.</p>" +
+      "<p>Created for Grade 6 / P.6 English-programme mathematics.</p>" +
+      "</div></footer>";
+  }
+  function diffDots(level) {
+    var s = "";
+    for (var i = 1; i <= 3; i++) s += '<i class="' + (i <= level ? "on" : "") + '"></i>';
+    return '<span class="diff" aria-label="Difficulty ' + level + ' of 3">' + s + "</span>";
+  }
+
+  /* ---------------- views ---------------- */
+  function viewHome() {
+    var done = Object.keys(store.results).length;
+    var totalScore = 0, totalPoss = 0;
+    SETS.forEach(function (s) {
+      var r = store.results[s.id];
+      if (r) { totalScore += r.score; totalPoss += r.total; }
+    });
+
+    var stages = SETS.map(function (s) {
+      var r = store.results[s.id];
+      var pill = r
+        ? '<span class="score-pill done">Best ' + r.score + "/" + r.total + "</span>"
+        : '<span class="score-pill">Not started</span>';
+      return '<button class="stage" data-start="' + s.id + '">' +
+        '<span class="stage-no c' + s.id + '">' + s.id + "</span>" +
+        '<span class="stage-body"><span class="stage-kicker">' + esc(s.code) + " · 10 questions" + '</span>' +
+        "<h3>" + esc(s.name) + '<span class="s' + s.id + '">' + diffDots(s.level) + "</span></h3>" +
+        "<p>" + esc(s.tagline) + "</p></span>" +
+        '<span class="stage-end">' + pill + '<span class="chev" aria-hidden="true">&#8594;</span></span>' +
+        "</button>";
+    }).join("");
+
+    var demo = { kind: "bar", labels: ["Orange juice", "Water"], parts: [1, 4], knownIndex: 1, knownText: "200 ml" };
+
+    return '<main><section class="hero"><div class="wrap hero-grid">' +
+      "<div>" +
+      '<span class="eyebrow">Grade 6 &middot; P.6 mathematics</span>' +
+      "<h1>Ratio &amp; proportion, <em>one part at a time</em></h1>" +
+      '<p class="lede">Five practice papers of real-life word problems — mixing drinks, sharing money, reading maps. ' +
+      "Every question is marked instantly, with a bar model and a worked solution when you need one.</p>" +
+      '<div class="hero-cta"><button class="btn btn-primary" data-start="' + (nextStage()) + '">' +
+      (done ? "Continue with Stage " + nextStage() : "Start Stage 1") + "</button>" +
+      '<button class="btn btn-ghost" data-go="method">Show me the method</button></div>' +
+      '<div class="hero-facts">' +
+      '<span class="fact"><b>5</b><span>practice papers</span></span>' +
+      '<span class="fact"><b>' + totalQuestions() + "</b><span>word problems</span></span>" +
+      '<span class="fact"><b>' + (totalPoss ? totalScore + "/" + totalPoss : "&mdash;") + "</b><span>your score so far</span></span>" +
+      "</div></div>" +
+      '<div class="hero-art" aria-hidden="false"><h4>The idea in one picture</h4>' +
+      barVis(demo) +
+      '<p style="margin-top:14px;font-size:.92rem;color:var(--ink-2)">Juice : water = 1 : 4. Water is <b>4 parts</b> and equals 200 ml, ' +
+      "so <b>1 part = 50 ml</b> — and that is the juice.</p></div>" +
+      "</div></section>" +
+
+      '<section class="sec"><div class="wrap">' +
+      '<div class="sec-head"><h2>Choose a practice paper</h2><p>Work through them in order — each stage adds one new idea.</p></div>' +
+      '<div class="stages">' + stages + "</div>" +
+      (done ? '<div class="row" style="margin-top:18px"><button class="btn btn-quiet btn-sm" data-go="key">View the full answer key &#8594;</button></div>' : "") +
+      "</div></section></main>";
+  }
+
+  function nextStage() {
+    for (var i = 0; i < SETS.length; i++) {
+      var r = store.results[SETS[i].id];
+      if (!r || r.score < r.total) return SETS[i].id;
+    }
+    return SETS[0].id;
+  }
+
+  function viewMethod() {
+    var ex1 = { kind: "bar", labels: ["Flour", "Sugar"], parts: [5, 2], knownIndex: 0, knownText: "250 g" };
+    var ex2 = { kind: "bar", labels: ["Boys", "Girls"], parts: [4, 5], totalText: "Total = 45 students" };
+    var ex3 = { kind: "table", head: ["Notebooks", "Cost"], rows: [["4", "60 baht"], ["7", "? baht"]] };
+
+    return '<main><section class="sec" style="padding-top:34px"><div class="wrap">' +
+      '<div class="sec-head"><h2>How to solve any ratio problem</h2><p>Three steps that work every time.</p></div>' +
+
+      '<div class="card"><div class="steps3">' +
+      '<div class="step3"><b><span class="n">1</span>Count the parts</b><p>Write the ratio as blocks. 5 : 2 means 5 blocks and 2 blocks — 7 blocks altogether.</p></div>' +
+      '<div class="step3"><b><span class="n">2</span>Find ONE part</b><p>Divide the amount you were given by the number of blocks it covers.</p></div>' +
+      '<div class="step3"><b><span class="n">3</span>Multiply back</b><p>Multiply one part by the number of blocks the question asks about.</p></div>' +
+      "</div></div>" +
+
+      '<div class="card"><h3>Example 1 — one quantity is given</h3>' +
+      "<p><em>Flour and sugar are mixed in the ratio 5 : 2. You use 250 g of flour. How much sugar?</em></p>" +
+      visual(ex1, "Bar model") +
+      '<ol class="sol"><li>Flour covers 5 blocks and equals 250 g.</li><li>1 block = 250 &divide; 5 = 50 g.</li><li>Sugar = 2 blocks = 2 &times; 50 = <b>100 g</b>.</li></ol></div>' +
+
+      '<div class="card"><h3>Example 2 — the TOTAL is given</h3>' +
+      "<p><em>A class of 45 students has boys and girls in the ratio 4 : 5. How many girls?</em></p>" +
+      visual(ex2, "Bar model") +
+      '<div class="note" style="margin-bottom:14px"><b>Watch out.</b> When the question gives you the whole amount, you must add the ratio numbers first: 4 + 5 = 9 blocks.</div>' +
+      '<ol class="sol"><li>Total blocks = 4 + 5 = 9.</li><li>1 block = 45 &divide; 9 = 5 students.</li><li>Girls = 5 blocks = 5 &times; 5 = <b>25 girls</b>.</li></ol></div>' +
+
+      '<div class="card"><h3>Example 3 — proportion (rates, prices, maps)</h3>' +
+      "<p><em>4 notebooks cost 60 baht. How much do 7 notebooks cost?</em></p>" +
+      visual(ex3, "Proportion table") +
+      '<ol class="sol"><li>Find the cost of ONE: 60 &divide; 4 = 15 baht.</li><li>Multiply for 7: 7 &times; 15.</li><li>= <b>105 baht</b>.</li></ol></div>' +
+
+      '<div class="card"><h3>Three mistakes to avoid</h3>' +
+      '<ol class="sol" style="counter-reset:s">' +
+      "<li>Flipping the ratio. In 3 : 5 (boys : girls), the 3 always belongs to the boys.</li>" +
+      "<li>Using the total when only one part is given — or one part when the total is given. Read the question twice.</li>" +
+      "<li>Forgetting the units. If the parts are in ml, the answer is in ml. On maps, change cm to m or km at the end.</li>" +
+      "</ol></div>" +
+
+      '<div class="row no-print" style="margin-top:20px"><button class="btn btn-primary" data-start="1">Start Stage 1</button>' +
+      '<button class="btn btn-ghost" data-go="home">Back to all stages</button></div>' +
+      "</div></section></main>";
+  }
+
+  function viewQuiz() {
+    var set = setById(quiz.setId);
+    var qi = quiz.order[quiz.pos];
+    var q = set.questions[qi];
+    var resolved = quiz.state === "resolved";
+    var trying = quiz.state === "try";
+
+    var dots = quiz.order.map(function (idx, k) {
+      var m = quiz.marks[idx];
+      var cls = k === quiz.pos ? "now" : (m === "first" || m === "retry" ? "ok" : (m === "miss" ? "no" : ""));
+      return '<span class="dot ' + cls + '">' + (idx + 1) + "</span>";
+    }).join("");
+
+    var answered = quiz.order.filter(function (i) { return quiz.marks[i]; }).length;
+    var pct = Math.round((answered / quiz.order.length) * 100);
+
+    var answerUI;
+    if (q.type === "mcq") {
+      answerUI = '<div class="opts" role="radiogroup" aria-label="Answer options">' + q.options.map(function (o, i) {
+        var cls = "opt";
+        if (resolved) {
+          if (i === q.correct) cls += " reveal-ok";
+          else if (quiz.selected === i) cls += " reveal-no";
+        }
+        return '<button class="' + cls + '" role="radio" aria-checked="' + (quiz.selected === i ? "true" : "false") + '"' +
+          (resolved ? " disabled" : "") + ' data-opt="' + i + '"><span class="key" aria-hidden="true">' + LETTERS[i] + "</span>" +
+          "<span>" + esc(o) + "</span></button>";
+      }).join("") + "</div>";
+    } else {
+      answerUI = '<div class="answer-row"><label for="ansin">Answer</label>' +
+        '<input class="inp" id="ansin" type="text" inputmode="decimal" autocomplete="off" placeholder="0"' +
+        ' value="' + esc(quiz.draft) + '"' + (resolved ? " disabled" : "") + '>' +
+        (q.unit ? '<span class="unit">' + esc(q.unit) + "</span>" : "") + "</div>";
+    }
+
+    var fb = "";
+    if (trying) {
+      fb = '<div class="fb fb-try"><h4><span class="fb-ico" aria-hidden="true">!</span>Not quite — have one more try.</h4>' +
+        "<p>Check which quantity the question actually gives you, then look at the hint below.</p>" +
+        '<div class="hintbox"><b>Hint.</b> ' + esc(q.hint) + "</div></div>";
+    } else if (resolved) {
+      var m = quiz.marks[qi];
+      var ok = m === "first" || m === "retry";
+      var title = m === "first" ? "Correct — first try!" : (m === "retry" ? "Correct on the second try. Well done." : "The correct answer is shown below.");
+      fb = '<div class="fb ' + (ok ? "fb-ok" : "fb-no") + '"><h4><span class="fb-ico" aria-hidden="true">' + (ok ? "&#10003;" : "&#10007;") + "</span>" + title + "</h4>" +
+        "<p><strong>Answer: " + fmt(q.answer) + (q.unit ? " " + esc(q.unit) : "") + "</strong></p>" +
+        '<ol class="sol">' + q.steps.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("") + "</ol>" +
+        (!ok && q.type === "mcq" && quiz.selected != null && q.why && q.why[quiz.selected]
+          ? '<div class="hintbox"><b>Why ' + LETTERS[quiz.selected] + " is wrong.</b> " + esc(q.why[quiz.selected]) + "</div>" : "") +
+        "</div>";
+    }
+
+    var actions;
+    if (resolved) {
+      var last = quiz.pos === quiz.order.length - 1;
+      actions = '<button class="btn btn-primary" data-action="next">' + (last ? "See my results" : "Next question &#8594;") + "</button>";
+    } else if (trying) {
+      actions = '<button class="btn btn-primary" data-action="retry">Try again</button>' +
+        '<button class="btn btn-ghost" data-action="reveal">Show me how</button>';
+    } else {
+      actions = '<button class="btn btn-primary" data-action="check">Check answer</button>' +
+        (quiz.hint ? "" : '<button class="btn btn-ghost" data-action="hint">Need a hint?</button>');
+    }
+
+    var hintOpen = (quiz.hint && !trying && !resolved)
+      ? '<div class="hintbox"><b>Hint.</b> ' + esc(q.hint) + "</div>" : "";
+
+    return "<main><section class=\"sec\" style=\"padding-top:22px\"><div class=\"wrap\">" +
+      '<div class="qbar"><span class="chip s' + set.id + '">' + esc(set.code) + " · " + esc(set.name) + "</span>" +
+      '<span class="prog"><i style="width:' + pct + '%"></i></span>' +
+      '<span class="qcount">' + (quiz.pos + 1) + " of " + quiz.order.length + "</span></div>" +
+      '<div class="dots" aria-hidden="true">' + dots + "</div>" +
+      '<div class="card">' +
+      '<p class="qtext"><span class="qnum">' + (qi + 1) + ".</span>" + esc(q.text) + "</p>" +
+      visual(q.vis) +
+      answerUI + hintOpen + fb +
+      '<div class="qactions">' + actions + '<span class="sp"></span>' +
+      '<button class="btn btn-quiet btn-sm" data-action="quit">Leave paper</button></div>' +
+      "</div></div></section></main>";
+  }
+
+  function viewResults() {
+    var set = setById(view.setId);
+    var r = view.run;
+    var pct = Math.round((r.score / r.total) * 100);
+    var medal = pct >= 90 ? ["m-gold", "Gold — excellent"] : pct >= 70 ? ["m-silver", "Silver — strong work"] :
+      pct >= 50 ? ["m-bronze", "Bronze — keep going"] : ["m-again", "Try this paper again"];
+    var ringColor = pct >= 70 ? "var(--good)" : pct >= 50 ? "var(--amber)" : "var(--bad)";
+
+    var rows = r.order.map(function (idx) {
+      var q = set.questions[idx];
+      var m = r.marks[idx];
+      var ok = m === "first" || m === "retry";
+      var label = m === "first" ? "Correct, first try" : m === "retry" ? "Correct on the second try" : "Answer was revealed";
+      return '<div class="rev"><span class="rev-ico ' + (ok ? "ok" : "no") + '" aria-hidden="true">' + (ok ? "&#10003;" : "&#10007;") + "</span>" +
+        "<div><p><b>" + (idx + 1) + ".</b> " + esc(q.text) + '</p><p class="meta">' + label +
+        (r.given[idx] ? " · you answered " + esc(r.given[idx]) : "") + "</p></div>" +
+        '<span class="ans">' + fmt(q.answer) + (q.unit ? " " + esc(q.unit) : "") + "</span></div>";
+    }).join("");
+
+    var missed = r.order.filter(function (i) { return r.marks[i] === "miss"; }).length;
+    var nextSet = setById(set.id + 1);
+
+    return '<main><section class="sec" style="padding-top:30px"><div class="wrap">' +
+      '<div class="card"><div class="result-hero">' +
+      '<div class="ring" style="background:conic-gradient(' + ringColor + " " + pct + "%, var(--paper-2) 0);\">" +
+      '<div style="width:104px;height:104px;border-radius:50%;background:var(--card);display:grid;place-items:center;text-align:center">' +
+      "<div><b>" + r.score + "/" + r.total + "</b><span>score</span></div></div></div>" +
+      "<div><h2>" + esc(set.code) + " complete — " + esc(set.name) + "</h2>" +
+      '<p class="lede" style="margin:8px 0 12px">' + pct + "% correct. " + esc(set.skill) + "</p>" +
+      '<span class="medal ' + medal[0] + '">' + esc(medal[1]) + "</span></div>" +
+      "</div>" +
+      '<div class="row no-print" style="margin-top:22px">' +
+      (missed ? '<button class="btn btn-primary" data-retry="' + set.id + '">Practise the ' + missed + " I missed</button>" : "") +
+      (nextSet ? '<button class="btn ' + (missed ? "btn-ghost" : "btn-primary") + '" data-start="' + nextSet.id + '">Next: ' + esc(nextSet.name) + " &#8594;</button>" : "") +
+      '<button class="btn btn-ghost" data-start="' + set.id + '">Redo this paper</button>' +
+      '<button class="btn btn-quiet" data-cert="' + set.id + '">Certificate</button>' +
+      '<button class="btn btn-quiet" data-go="home">All stages</button></div>' +
+      '<div class="review">' + rows + "</div>" +
+      "</div></div></section></main>";
+  }
+
+  function viewCert() {
+    var set = setById(view.setId);
+    var r = store.results[set.id];
+    var d = new Date();
+    var date = d.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
+    return '<main><section class="sec" style="padding-top:30px"><div class="wrap">' +
+      '<div class="card no-print"><div class="row" style="align-items:flex-end">' +
+      '<div class="field" style="flex:1;min-width:220px"><label for="nm">Student name on the certificate</label>' +
+      '<input id="nm" type="text" value="' + esc(store.name) + '" placeholder="Type the name" maxlength="40"></div>' +
+      '<button class="btn btn-ghost" data-action="savename">Save name</button>' +
+      '<button class="btn btn-primary" data-action="print">Print / Save as PDF</button>' +
+      '<button class="btn btn-quiet" data-go="home">Back</button></div></div>' +
+      '<div class="cert" style="margin-top:16px">' +
+      '<div class="seal" aria-hidden="true">&#10003;</div>' +
+      '<p class="kicker">Certificate of achievement</p>' +
+      "<h2>" + esc(set.code) + ": " + esc(set.name) + "</h2>" +
+      '<div class="who">' + esc(store.name || "________________") + "</div>" +
+      '<p class="meta">has completed the Ratio &amp; Proportion practice paper<br>with a score of <b>' +
+      (r ? r.score + " out of " + r.total : "—") + "</b></p>" +
+      '<p class="meta" style="margin-top:18px;font-size:.9rem">' + esc(date) + " &middot; " + esc(store.brandName || "Ratio Rally") + "</p>" +
+      "</div></div></section></main>";
+  }
+
+  function viewKey() {
+    var sets = SETS.map(function (s) {
+      var qs = s.questions.map(function (q) {
+        return '<div class="key-q"><span class="key-n">' + q.n + ".</span><div>" +
+          "<p>" + esc(q.text) + "</p>" +
+          '<span class="key-a">' + fmt(q.answer) + (q.unit ? " " + esc(q.unit) : "") + "</span>" +
+          '<ol class="key-steps">' + q.steps.map(function (st) { return "<li>" + esc(st) + "</li>"; }).join("") + "</ol>" +
+          "</div></div>";
+      }).join("");
+      return '<section class="key-set"><div class="key-head"><span class="stage-no c' + s.id + '">' + s.id + "</span>" +
+        "<div><h3>" + esc(s.code) + " — " + esc(s.name) + "</h3>" +
+        '<p style="margin:0;font-size:.9rem;color:var(--ink-3)">' + esc(s.skill) + "</p></div></div>" + qs + "</section>";
+    }).join("");
+
+    return '<main><section class="sec" style="padding-top:30px"><div class="wrap">' +
+      '<div class="sec-head no-print"><h2>Answer key &amp; worked solutions</h2><p>All 50 questions with every step shown — ready to print for marking.</p></div>' +
+      '<div class="row no-print" style="margin-bottom:20px"><button class="btn btn-primary" data-action="print">Print / Save as PDF</button>' +
+      '<button class="btn btn-ghost" data-go="home">Back to stages</button></div>' +
+      '<div class="card">' + sets + "</div>" +
+      "</div></section></main>";
+  }
+
+  function viewSettings() {
+    return '<main><section class="sec" style="padding-top:30px"><div class="wrap">' +
+      '<div class="sec-head"><h2>Settings</h2><p>Everything is stored in this browser only.</p></div>' +
+      '<div class="card">' +
+      '<div class="field" style="max-width:340px"><label for="s-name">Student name (used on certificates)</label>' +
+      '<input id="s-name" type="text" maxlength="40" value="' + esc(store.name) + '"></div>' +
+      '<div class="field" style="max-width:340px;margin-top:14px"><label for="s-brand">Title shown in the header</label>' +
+      '<input id="s-brand" type="text" maxlength="40" value="' + esc(store.brandName) + '"></div>' +
+      '<div class="field" style="max-width:340px;margin-top:14px"><label for="s-sub">Subtitle (your school or shop name)</label>' +
+      '<input id="s-sub" type="text" maxlength="60" value="' + esc(store.brandSub) + '"></div>' +
+      '<div class="row" style="margin-top:20px"><button class="btn btn-primary" data-action="savesettings">Save</button>' +
+      '<button class="btn btn-ghost" data-go="home">Back</button></div>' +
+      "</div>" +
+      '<div class="card"><h3>Teacher mode</h3><p>Increases the text size across the whole app so questions stay readable on a projector or in a Zoom screen share.</p>' +
+      '<button class="btn btn-ghost" data-action="teacher">Teacher mode is ' + (store.teacher ? "ON" : "OFF") + "</button></div>" +
+      '<div class="card"><h3>Reset progress</h3><p>Clears all saved scores and the student name from this browser. This cannot be undone.</p>' +
+      '<button class="btn btn-ghost" data-action="reset">Reset all progress</button></div>' +
+      "</div></section></main>";
+  }
+
+  /* ---------------- render ---------------- */
+  function render() {
+    document.body.classList.toggle("teacher", !!store.teacher);
+    var body;
+    if (view.name === "home") body = viewHome();
+    else if (view.name === "method") body = viewMethod();
+    else if (view.name === "quiz") body = viewQuiz();
+    else if (view.name === "results") body = viewResults();
+    else if (view.name === "cert") body = viewCert();
+    else if (view.name === "key") body = viewKey();
+    else if (view.name === "settings") body = viewSettings();
+    else body = viewHome();
+    document.getElementById("app").innerHTML = header() + body + footer();
+
+    if (view.name === "quiz") {
+      var inp = document.getElementById("ansin");
+      if (inp && !inp.disabled) inp.focus();
+    }
+  }
+
+  /* ---------------- actions ---------------- */
+  function checkAnswer() {
+    var set = setById(quiz.setId);
+    var qi = quiz.order[quiz.pos];
+    var q = set.questions[qi];
+    var correct = false, givenText = "";
+
+    if (q.type === "mcq") {
+      if (quiz.selected == null) { flash("Choose one of the four options first."); return; }
+      correct = quiz.selected === q.correct;
+      givenText = q.options[quiz.selected];
+    } else {
+      var inp = document.getElementById("ansin");
+      quiz.draft = inp ? inp.value : quiz.draft;
+      var v = num(quiz.draft);
+      if (isNaN(v)) { flash("Type a number in the answer box first."); return; }
+      correct = same(v, q.answer);
+      givenText = quiz.draft.trim() + (q.unit ? " " + q.unit : "");
+    }
+
+    quiz.given[qi] = givenText;
+    quiz.attempts++;
+
+    if (correct) {
+      quiz.marks[qi] = quiz.attempts === 1 ? "first" : "retry";
+      quiz.state = "resolved";
+    } else if (quiz.attempts === 1) {
+      quiz.state = "try";
+    } else {
+      quiz.marks[qi] = "miss";
+      quiz.state = "resolved";
+    }
+    render();
+  }
+
+  function reveal() {
+    var qi = quiz.order[quiz.pos];
+    quiz.marks[qi] = "miss";
+    quiz.state = "resolved";
+    render();
+  }
+
+  function nextQuestion() {
+    if (quiz.pos < quiz.order.length - 1) {
+      quiz.pos++;
+      quiz.state = "answering"; quiz.attempts = 0; quiz.selected = null; quiz.draft = ""; quiz.hint = false;
+      render();
+      window.scrollTo({ top: 0, behavior: "auto" });
+    } else {
+      finish();
+    }
+  }
+
+  function finish() {
+    var set = setById(quiz.setId);
+    var score = quiz.order.filter(function (i) { return quiz.marks[i] === "first" || quiz.marks[i] === "retry"; }).length;
+    var run = { order: quiz.order.slice(), marks: quiz.marks.slice(), given: quiz.given.slice(), score: score, total: quiz.order.length };
+
+    // Only a full paper counts as an official result, and only if it beats the best.
+    if (quiz.order.length === set.questions.length) {
+      var prev = store.results[set.id];
+      if (!prev || score > prev.score) {
+        store.results[set.id] = { score: score, total: set.questions.length, marks: quiz.marks.slice(), at: Date.now() };
+      } else {
+        // keep the better score but remember which ones were missed this time
+        prev.marks = quiz.marks.slice();
+      }
+      save();
+    } else {
+      // retry run: update the mark record so "practise missed" shrinks as they improve
+      var p = store.results[set.id];
+      if (p && p.marks) {
+        quiz.order.forEach(function (i) { if (quiz.marks[i] === "first" || quiz.marks[i] === "retry") p.marks[i] = "retry"; });
+        p.score = Math.max(p.score, p.marks.filter(function (m) { return m === "first" || m === "retry"; }).length);
+        save();
+      }
+    }
+    var sid = quiz.setId;
+    quiz = null;
+    go("results", { setId: sid, run: run });
+  }
+
+  var flashTimer = null;
+  function flash(msg) {
+    var el = document.getElementById("flash");
+    if (!el) {
+      el = document.createElement("div");
+      el.id = "flash";
+      el.setAttribute("role", "status");
+      el.style.cssText = "position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--card);" +
+        "padding:12px 22px;border-radius:980px;font-weight:700;z-index:80;border:2px solid #000;box-shadow:4px 4px 0 rgba(0,0,0,.35);max-width:90vw;text-align:center";
+      document.body.appendChild(el);
+    }
+    el.textContent = msg;
+    el.style.display = "block";
+    clearTimeout(flashTimer);
+    flashTimer = setTimeout(function () { el.style.display = "none"; }, 2600);
+  }
+
+  /* ---------------- events ---------------- */
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest("[data-go],[data-start],[data-retry],[data-cert],[data-opt],[data-action]");
+    if (!t) return;
+
+    if (t.dataset.go) { go(t.dataset.go); return; }
+    if (t.dataset.start) { startQuiz(parseInt(t.dataset.start, 10), false); return; }
+    if (t.dataset.retry) { startQuiz(parseInt(t.dataset.retry, 10), true); return; }
+    if (t.dataset.cert) { go("cert", { setId: parseInt(t.dataset.cert, 10) }); return; }
+    if (t.dataset.opt != null && quiz && quiz.state !== "resolved") {
+      quiz.selected = parseInt(t.dataset.opt, 10);
+      render();
+      return;
+    }
+
+    var a = t.dataset.action;
+    if (a === "check") checkAnswer();
+    else if (a === "retry") { quiz.state = "answering"; quiz.hint = true; render(); }
+    else if (a === "reveal") reveal();
+    else if (a === "next") nextQuestion();
+    else if (a === "hint") { quiz.hint = true; render(); }
+    else if (a === "quit") {
+      if (confirm("Leave this paper? Your answers on it will not be saved.")) { quiz = null; go("home"); }
+    }
+    else if (a === "teacher") { store.teacher = !store.teacher; save(); render(); }
+    else if (a === "print") window.print();
+    else if (a === "savename") {
+      var nm = document.getElementById("nm");
+      store.name = nm ? nm.value.trim() : "";
+      save(); render(); flash("Name saved.");
+    }
+    else if (a === "savesettings") {
+      var n1 = document.getElementById("s-name"), n2 = document.getElementById("s-brand"), n3 = document.getElementById("s-sub");
+      if (n1) store.name = n1.value.trim();
+      if (n2) store.brandName = n2.value.trim() || "Ratio Rally";
+      if (n3) store.brandSub = n3.value.trim();
+      save(); render(); flash("Saved.");
+    }
+    else if (a === "reset") {
+      if (confirm("Delete all saved scores and settings from this browser?")) {
+        store = Object.assign({}, defaults);
+        store.results = {};
+        save(); go("home"); flash("Progress reset.");
+      }
+    }
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" && view.name === "quiz" && quiz) {
+      var inp = document.getElementById("ansin");
+      if (document.activeElement === inp) { e.preventDefault(); checkAnswer(); }
+    }
+  });
+
+  document.addEventListener("input", function (e) {
+    if (e.target && e.target.id === "ansin" && quiz) quiz.draft = e.target.value;
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

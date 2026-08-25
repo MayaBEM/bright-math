@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transformation Studio — Position &amp; Transformation | Bright EngMath</title>
+<meta name="description" content="Interactive lessons, practice and printable worksheets for Position & Transformation: scale drawings, distance between points, translation, reflection, rotation and enlargement. Cambridge Lower Secondary Stage 7 aligned. By Bright EngMath.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FAF6ED; --card:#FFFEFA; --ink:#26343F; --mute:#54646F;
+  --line:#26343F; --rule:#E3DCCB; --grid:#EEE8D9;
+  --ok:#177E63; --bad:#C03E33; --oks:#E4F1EB; --bads:#F8E7E4;
+  --hl:#FFE694; /* highlighter yellow */
+  --l1:#20749B; --l2:#177E63; --l3:#D7502B; --l4:#B97E0A; --l5:#B34766; --l6:#587F2E;
+  --l1s:#E8F1F6; --l2s:#E4F1EB; --l3s:#FBEAE3; --l4s:#F8EFD9; --l5s:#F7E8EC; --l6s:#EBF1E0;
+  --font:'Atkinson Hyperlegible','Segoe UI',-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif;
+  --hand:'Caveat','Comic Sans MS',cursive;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--paper);color:var(--ink);font-size:18px;line-height:1.7;
+  /* faint squared exercise-book paper */
+  background-image:linear-gradient(var(--grid) 1px, transparent 1px),linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size:26px 26px;}
+img,svg{max-width:100%}
+button{font-family:inherit;color:inherit}
+b,strong{font-weight:700}
+
+/* highlighter swipe for key words */
+.hl{background:linear-gradient(104deg, transparent 2%, var(--hl) 4%, var(--hl) 96%, transparent 98%);
+  padding:0 .18em;border-radius:2px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.hand{font-family:var(--hand);font-weight:600}
+
+/* ============ header ============ */
+.topbar{position:sticky;top:0;z-index:50;background:var(--card);border-bottom:1.5px solid var(--line);
+  display:flex;align-items:center;gap:14px;padding:12px 22px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:11px;cursor:pointer;user-select:none}
+.logo svg{width:36px;height:36px;flex:0 0 auto}
+.logo .t1{font-weight:700;font-size:1.1rem;line-height:1.15;letter-spacing:-.01em}
+.logo .t2{font-size:.74rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--l3)}
+.topnav{margin-left:auto;display:flex;gap:22px;flex-wrap:wrap}
+.topnav a{display:inline-block;padding:6px 2px;color:var(--mute);text-decoration:none;font-weight:700;font-size:.95rem;
+  border-bottom:3px solid transparent}
+.topnav a:hover{color:var(--ink)}
+.topnav a.active{color:var(--ink);border-bottom-color:var(--l3)}
+
+.wrap{max-width:1020px;margin:0 auto;padding:34px 22px 80px}
+
+/* ============ hero ============ */
+.hero{display:flex;gap:44px;align-items:center;flex-wrap:wrap;padding:16px 0 8px}
+.hero .htxt{flex:1 1 400px;min-width:0}
+.kicker{font-size:.82rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);
+  display:block;margin-bottom:14px}
+.hero h1{font-size:clamp(1.8rem,4.4vw,2.7rem);font-weight:700;line-height:1.18;margin-bottom:16px;letter-spacing:-.015em}
+.hero p.lead{color:var(--ink);max-width:54ch;margin-bottom:24px;font-size:1.06rem}
+.hero p.lead .dim{color:var(--mute)}
+.hero .hfig{flex:0 1 320px;min-width:230px;position:relative;transform:rotate(-1.4deg)}
+.hero .hfig .figbox{box-shadow:0 10px 24px -14px rgba(38,52,63,.4)}
+.tape{position:absolute;width:76px;height:22px;background:#F6DFA1;opacity:.85;border-radius:2px;
+  box-shadow:0 1px 2px rgba(38,52,63,.15);transform:rotate(-4deg);top:-11px;left:26px}
+.tape.t2{left:auto;right:22px;transform:rotate(5deg)}
+.scribble{position:absolute;bottom:-16px;right:-6px;font-family:var(--hand);font-size:1.25rem;color:var(--l3);
+  transform:rotate(-3deg);line-height:1.1;text-align:right}
+.btnrow{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:9px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);font-weight:700;font-size:.98rem;cursor:pointer;text-decoration:none;
+  transition:background .12s, transform .12s}
+.btn:hover{background:var(--paper)}
+.btn:active{transform:translateY(1px)}
+.btn.primary{background:var(--ink);color:#FFFEFA;border-color:var(--ink);box-shadow:0 3px 0 rgba(38,52,63,.25)}
+.btn.primary:hover{background:#374856}
+.btn.acc{background:var(--acc,var(--l3));color:#fff;border-color:transparent}
+.btn.ghost{border-color:transparent;background:none;text-decoration:underline;text-underline-offset:4px;color:var(--mute)}
+.btn.ghost:hover{color:var(--ink)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn:focus-visible,.opt:focus-visible,a:focus-visible,.smallbtn:focus-visible{outline:3px solid var(--l1);outline-offset:2px}
+
+/* ============ sections ============ */
+.sect{margin-top:46px}
+.sect>h2{font-size:1.45rem;font-weight:700;margin-bottom:4px;letter-spacing:-.01em}
+.sect>h2::after{content:"";display:block;width:64px;height:4px;background:var(--hl);margin-top:6px;border-radius:2px}
+.sect>p.sub{color:var(--mute);margin:10px 0 22px;max-width:64ch}
+
+/* lesson list — exercise-book dividers, not identical cards */
+.lgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px}
+.lcard{background:var(--card);border:1.5px solid var(--rule);border-left:7px solid var(--acc);border-radius:8px;
+  padding:16px 18px 14px 16px;display:flex;gap:14px;cursor:pointer;transition:border-color .12s, background .12s}
+.lcard:hover{border-color:var(--acc);background:#fff}
+.lcard .num{font-family:var(--hand);font-size:1.7rem;font-weight:700;color:var(--acc);line-height:1;flex:0 0 30px;padding-top:3px}
+.lcard .lbody{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.lcard h3{font-size:1.08rem;font-weight:700}
+.lcard p{color:var(--mute);font-size:.92rem;flex:1}
+.lcard .meta{display:flex;align-items:center;gap:10px;font-size:.82rem;font-weight:700;color:var(--mute);margin-top:6px}
+.pbar{flex:1;max-width:170px;height:7px;border-radius:99px;background:var(--rule);overflow:hidden}
+.pbar i{display:block;height:100%;background:var(--acc,var(--l1));width:0%;border-radius:99px}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:20px}
+@media(max-width:760px){.duo{grid-template-columns:1fr}.lgrid{grid-template-columns:1fr}}
+.bigcard{border-top:3px solid var(--line);padding:18px 2px 0;background:none}
+.bigcard h3{font-weight:700;font-size:1.12rem;margin-bottom:4px}
+.bigcard p{color:var(--mute);font-size:.95rem;margin-bottom:14px}
+
+/* ============ lesson view ============ */
+.crumb{margin-bottom:16px}
+.crumb a{color:var(--mute);font-weight:700;text-decoration:none;font-size:.92rem}
+.crumb a:hover{text-decoration:underline;color:var(--ink)}
+.lhead{display:flex;gap:18px;align-items:baseline;flex-wrap:wrap;border-bottom:1.5px solid var(--line);padding-bottom:16px}
+.lhead .num{font-family:var(--hand);font-size:2.6rem;font-weight:700;color:var(--acc);line-height:1;flex:0 0 auto}
+.lhead h1{font-size:clamp(1.5rem,3.6vw,2.1rem);font-weight:700;line-height:1.15;letter-spacing:-.015em}
+.lhead .goal{color:var(--mute);font-size:.98rem;margin-top:4px;max-width:66ch}
+.tabs{display:flex;gap:26px;margin:4px 0 24px;flex-wrap:wrap;border-bottom:1.5px solid var(--rule)}
+.tab{padding:12px 2px;border:none;background:none;font-weight:700;cursor:pointer;font-size:1rem;color:var(--mute);
+  border-bottom:3px solid transparent;margin-bottom:-1.5px}
+.tab:hover{color:var(--ink)}
+.tab.active{color:var(--ink);border-bottom-color:var(--acc)}
+
+.learn .block{background:var(--card);border:1.5px solid var(--rule);border-radius:8px;padding:22px 26px;margin-bottom:18px}
+.learn .block h3{font-weight:700;font-size:1.12rem;margin-bottom:10px;padding-bottom:8px;border-bottom:1.5px dashed var(--rule)}
+.learn p{margin-bottom:10px;max-width:68ch}
+.learn .cols{display:flex;gap:26px;flex-wrap:wrap;align-items:flex-start}
+.learn .cols .txt{flex:1 1 320px;min-width:0}
+.learn .cols .fig{flex:0 1 280px;min-width:210px}
+.kw{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 2px;align-items:baseline}
+.kw::before{content:"Key words:";font-weight:700;font-size:.88rem;color:var(--mute);margin-right:2px}
+.kw span{background:var(--accs,var(--l4s));border-radius:4px;padding:1px 9px;font-weight:400;font-size:.9rem}
+.tip{border-left:4px solid var(--acc);padding:2px 0 2px 14px;margin:14px 0;font-size:.96rem;color:var(--ink)}
+.tip b:first-child{font-family:var(--hand);font-size:1.18rem;color:var(--acc);font-weight:700;margin-right:2px}
+.ex{border:1.5px solid var(--rule);border-radius:8px;padding:13px 17px;margin:12px 0;background:#fff;
+  background-image:linear-gradient(var(--grid) 1px, transparent 1px);background-size:100% 27px}
+.ex .exh{font-family:var(--hand);font-weight:700;font-size:1.15rem;color:var(--acc);margin-bottom:2px}
+.rule{background:var(--hl);border-radius:4px;padding:7px 14px;font-weight:700;display:inline-block;margin:6px 0;font-size:.98rem}
+table.mini{border-collapse:collapse;margin:10px 0}
+table.mini td,table.mini th{border:1.5px solid var(--line);padding:6px 14px;font-size:.94rem}
+table.mini th{background:var(--accs,var(--l1s));font-weight:700;text-align:left}
+
+/* ============ questions ============ */
+.qcard{background:var(--card);border:1.5px solid var(--rule);border-radius:8px;padding:18px 22px;margin-bottom:14px}
+.qtop{display:flex;align-items:baseline;gap:12px;margin-bottom:8px;flex-wrap:wrap}
+.qn{font-family:var(--hand);font-size:1.5rem;font-weight:700;color:var(--acc,var(--l1));flex:0 0 auto;line-height:1}
+.qtag{font-size:.76rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.qtag.done-ok{color:var(--ok)}
+.qtext{font-size:1.03rem;margin-bottom:14px;max-width:72ch}
+.qfig{margin:4px 0 14px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;max-width:760px}
+.opt{display:flex;align-items:center;gap:11px;padding:12px 15px;border:1.5px solid var(--rule);border-radius:8px;
+  background:#fff;font-size:.98px;font-size:.98rem;cursor:pointer;text-align:left;transition:border-color .1s, background .1s}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt .ol{width:27px;height:27px;border:1.5px solid var(--line);border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-weight:700;font-size:.82rem;flex:0 0 auto;background:none}
+.opt.sel-ok{background:var(--oks);border-color:var(--ok)}
+.opt.sel-ok .ol{background:var(--ok);color:#fff;border-color:var(--ok)}
+.opt.sel-bad{background:var(--bads);border-color:var(--bad)}
+.opt.sel-bad .ol{background:var(--bad);color:#fff;border-color:var(--bad)}
+.opt.reveal-ok{border-color:var(--ok);border-style:dashed}
+.opt:disabled{cursor:default;opacity:.9}
+.numrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.numrow input{border:none;border-bottom:2px solid var(--ink);border-radius:0;padding:8px 6px;font-family:inherit;
+  font-size:1.05rem;width:190px;background:transparent;color:var(--ink)}
+.numrow input::placeholder{color:#9AA7B0}
+.numrow input:focus{outline:none;border-bottom-color:var(--l1);box-shadow:0 2px 0 var(--l1)}
+.numrow .unit{font-weight:700;color:var(--mute)}
+.fb{margin-top:14px;border-radius:8px;padding:12px 16px;font-size:.96rem;display:none;border:1.5px solid transparent}
+.fb.show{display:block}
+.fb.ok{background:var(--oks);border-color:var(--ok)}
+.fb.bad{background:var(--bads);border-color:var(--bad)}
+.fb .fh{font-weight:700;margin-bottom:2px}
+.fb.ok .fh{color:var(--ok)}.fb.bad .fh{color:var(--bad)}
+.qacts{display:flex;gap:14px;margin-top:12px;flex-wrap:wrap;align-items:center}
+.hintbox{display:none;margin-top:12px;border-left:4px solid var(--l4);padding:2px 0 2px 14px;font-size:.94rem;color:var(--ink)}
+.hintbox.show{display:block}
+.hintbox::before{content:"Hint: ";font-family:var(--hand);font-weight:700;font-size:1.12rem;color:var(--l4)}
+.smallbtn{padding:9px 16px;border-radius:7px;border:1.5px solid var(--line);background:#fff;font-weight:700;
+  font-size:.9rem;cursor:pointer}
+.smallbtn:hover{background:var(--paper)}
+.smallbtn:active{transform:translateY(1px)}
+.smallbtn.dark{background:var(--ink);color:#FFFEFA}
+.smallbtn.dark:hover{background:#374856}
+.qacts .smallbtn:not(.dark){border-color:transparent;text-decoration:underline;text-underline-offset:4px;color:var(--mute);padding-left:2px;padding-right:2px}
+.qacts .smallbtn:not(.dark):hover{color:var(--ink);background:none}
+
+/* practice progress strip */
+.pstrip{display:flex;align-items:center;gap:12px;padding:2px 2px 14px;margin-bottom:20px;font-weight:700;font-size:.93rem;
+  flex-wrap:wrap;color:var(--mute);border-bottom:1.5px dashed var(--rule)}
+.pstrip .pbar{max-width:240px}
+
+/* ============ test runner ============ */
+.trun{max-width:760px;margin:0 auto}
+.tbar{display:flex;align-items:center;gap:14px;margin-bottom:18px;font-weight:700;color:var(--mute)}
+.tbar .pbar{flex:1;max-width:none}
+.tres{background:var(--card);border:1.5px solid var(--rule);border-radius:10px;padding:34px 30px;text-align:center;
+  max-width:620px;margin:0 auto}
+.tres h1{letter-spacing:-.015em}
+.score{font-size:3.2rem;font-weight:700;line-height:1;letter-spacing:-.02em}
+.tres .grade{display:inline-block;margin:12px 0 4px;padding:4px 18px;border-radius:6px;font-weight:700;font-size:1.05rem}
+.bych{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px 22px;margin:20px 0;text-align:left}
+.bych .b{border-top:2px solid var(--rule);padding:8px 2px;background:none}
+.bych .b b{display:block;font-size:.84rem;margin-bottom:2px}
+.review-h{margin:30px 0 14px;font-weight:700;font-size:1.25rem}
+
+/* ============ print center ============ */
+.pcgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0 26px}
+.pcitem{border-top:2px solid var(--rule);padding:14px 2px 18px;background:none}
+.pcitem h4{font-weight:700;margin-bottom:2px;font-size:1.02rem}
+.pcitem p{color:var(--mute);font-size:.88rem;margin-bottom:10px}
+.pcitem .chip{display:inline-block;font-size:.74rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--mute);margin-bottom:4px}
+#preview{margin-top:30px}
+#preview .pvhead{display:flex;align-items:center;gap:14px;margin-bottom:14px;flex-wrap:wrap}
+.paper-preview{background:#fff;border:1.5px solid var(--rule);border-radius:4px;box-shadow:0 14px 30px -18px rgba(38,52,63,.35);
+  padding:36px 42px;max-width:820px}
+
+/* ============ figures ============ */
+.figbox{display:inline-block;background:#fff;border:1.5px solid var(--rule);border-radius:6px;padding:8px}
+.figcap{font-size:.82rem;font-weight:700;color:var(--mute);text-align:center;margin-top:4px}
+
+footer.site{border-top:1.5px solid var(--rule);margin-top:48px;padding:24px 22px;text-align:center;
+  color:var(--mute);font-size:.88rem}
+footer.site b{color:var(--ink)}
+
+@media(max-width:640px){
+  body{font-size:17px}
+  .wrap{padding:22px 16px 60px}
+  .hero{gap:26px}
+  .opts{grid-template-columns:1fr}
+  .topbar{padding:10px 16px}
+  .topnav{width:100%;margin-left:0;gap:18px}
+  .paper-preview{padding:20px 16px}
+  .lhead .num{font-size:2rem}
+}
+@media (prefers-reduced-motion: reduce){
+  *{transition:none!important;animation:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* ============ PRINT ============ */
+#printRoot{display:none}
+@media print{
+  body{background:#fff;background-image:none;font-size:12.2pt}
+  .app,.topbar,footer.site{display:none!important}
+  #printRoot{display:block}
+  @page{margin:13mm 14mm}
+}
+.sheet{color:#111;font-family:var(--font)}
+.sheet .shead{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid #111;
+  padding-bottom:8px;margin-bottom:6px;gap:12px}
+.sheet .shead .st{font-size:1.32rem;font-weight:700;line-height:1.15}
+.sheet .shead .ss{font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#444}
+.sheet .brandmark{font-weight:700;font-size:.86rem;text-align:right;white-space:nowrap}
+.sheet .namebar{display:flex;gap:26px;font-size:.9rem;font-weight:700;margin:8px 0 14px}
+.sheet .namebar span{flex:1;border-bottom:1.5px solid #111;padding-bottom:2px}
+.sheet .sgoal{border:1.6px solid #111;border-radius:8px;padding:7px 12px;font-size:.88rem;margin-bottom:14px}
+.sheet .pq{margin-bottom:13px;break-inside:avoid;page-break-inside:avoid}
+.sheet .pq .pqt{font-weight:400}
+.sheet .pq .pqn{font-weight:700;margin-right:6px}
+.sheet .pq .popts{display:flex;gap:6px 26px;flex-wrap:wrap;margin:5px 0 0 22px}
+.sheet .ansline{display:inline-block;min-width:150px;border-bottom:1.5px solid #111;margin-left:8px}
+.sheet .workspace{border:1.5px dashed #777;border-radius:8px;min-height:52px;margin:6px 0 0 22px}
+.sheet .pgrid{margin:8px 0 4px 22px}
+.sheet .sfoot{margin-top:18px;padding-top:8px;border-top:1.5px solid #111;display:flex;justify-content:space-between;
+  font-size:.74rem;font-weight:700;color:#444}
+.sheet .pagebreak{page-break-after:always;break-after:page}
+.sheet h3.keyh{font-size:1.05rem;font-weight:700;margin:14px 0 8px;border-bottom:2px solid #111;padding-bottom:3px}
+.sheet .keys{columns:2;column-gap:34px;font-size:.95rem}
+.sheet .keys div{break-inside:avoid;margin-bottom:5px}
+.sheet .keys b{margin-right:5px}
+.sheet ul{margin:6px 0 6px 24px}
+.sheet .tou p{margin-bottom:9px;font-size:.95rem}
+.sheet .tou h4{margin:14px 0 5px;font-weight:700}
+.sheet .covertitle{font-size:2rem;font-weight:700;text-align:center;margin:30px 0 8px}
+.sheet .coversub{text-align:center;font-weight:400;color:#444;margin-bottom:22px}
+.sheet .coverbox{border:2.5px solid #111;border-radius:14px;padding:20px 26px;max-width:520px;margin:0 auto 16px}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="logo" onclick="location.hash='#/home'" role="link" tabindex="0" aria-label="Go to home"
+         onkeydown="if(event.key==='Enter')location.hash='#/home'">
+      <svg viewBox="0 0 40 40" aria-hidden="true">
+        <rect x="1" y="1" width="38" height="38" rx="5" fill="#fff" stroke="#26343F" stroke-width="2"/>
+        <path d="M10 1v38M20 1v38M30 1v38M1 10h38M1 20h38M1 30h38" stroke="#EEE8D9" stroke-width="1.4"/>
+        <path d="M20 3v34" stroke="#B97E0A" stroke-width="1.8" stroke-dasharray="4 3"/>
+        <polygon points="7,30 17,30 7,12" fill="#D7502B" fill-opacity=".75" stroke="#26343F" stroke-width="2" stroke-linejoin="round"/>
+        <polygon points="33,30 23,30 33,12" fill="none" stroke="#20749B" stroke-width="2" stroke-dasharray="4 3" stroke-linejoin="round"/>
+      </svg>
+      <div>
+        <div class="t1">Transformation Studio</div>
+        <div class="t2">Bright EngMath</div>
+      </div>
+    </div>
+    <nav class="topnav" id="topnav">
+      <a href="#/home" data-nav="home">Lessons</a>
+      <a href="#/test" data-nav="test">Unit Test</a>
+      <a href="#/print" data-nav="print">Print Center</a>
+    </nav>
+  </header>
+
+  <main class="wrap" id="view" aria-live="polite"></main>
+
+  <footer class="site">
+    <b>Transformation Studio</b> · Position &amp; Transformation · Cambridge Lower Secondary Stage 7 aligned<br>
+    © 2026 <b>Bright EngMath</b> — for single-classroom use. All questions are original.
+  </footer>
+</div>
+
+<div id="printRoot"></div>
+<script>
+/* =====================================================================
+   Transformation Studio — content data (all questions are ORIGINAL,
+   written for Bright EngMath; aligned to Cambridge Lower Secondary
+   Stage 7 "Position and transformation" skills, not copied from any book)
+   ===================================================================== */
+
+const ACC = {l1:'#20749B',l2:'#177E63',l3:'#D7502B',l4:'#B97E0A',l5:'#B34766',l6:'#587F2E'};
+
+const LESSONS = [
+/* ================= LESSON 1 — SCALE ================= */
+{
+id:1, key:'l1', accfg:'#fff',
+title:'Maps, Plans & Scale',
+short:'Scale drawings',
+goal:'Use a scale to convert between lengths on a drawing or map and lengths in real life.',
+desc:'Read scales like “1 cm represents 5 m” and ratio scales like 1 : 50 000, and convert both ways.',
+learn:[
+ {h:'What is a scale drawing?',
+  body:`<p>A <b>scale drawing</b> shows a real object with every length shrunk (or enlarged) by the same amount. The <b>scale</b> tells you how drawing lengths and real-life lengths are connected.</p>
+  <p>Example scale: <b>1 cm represents 5 m</b>. So 2 cm on the drawing is 10 m in real life, 3 cm is 15 m, and so on.</p>
+  <div class="kw"><span>scale</span><span>scale drawing</span><span>map</span><span>plan</span></div>`},
+ {h:'Drawing → real life: multiply',
+  body:`<div class="rule">real length = drawing length × scale</div>
+  <div class="ex"><div class="exh">Worked example</div>
+  Scale: 1 cm represents 4 m. A wall is 7 cm on the plan.<br>
+  Real length = 7 × 4 = <b>28 m</b>.</div>
+  <div class="tip"><b>Tip:</b> going from the small drawing to big real life? Lengths get bigger — <b>multiply</b>.</div>`},
+ {h:'Real life → drawing: divide',
+  body:`<div class="rule">drawing length = real length ÷ scale</div>
+  <div class="ex"><div class="exh">Worked example</div>
+  Scale: 1 cm represents 4 m. A garden is 26 m long in real life.<br>
+  Drawing length = 26 ÷ 4 = <b>6.5 cm</b>.</div>
+  <div class="tip"><b>Tip:</b> going from big real life to the small drawing? Lengths get smaller — <b>divide</b>.</div>`},
+ {h:'Ratio scales like 1 : 50 000',
+  body:`<p>A scale written <b>1 : 50 000</b> means 1 unit on the map is 50 000 of the <i>same</i> unit in real life. So 1 cm on the map = 50 000 cm in real life.</p>
+  <table class="mini"><tr><th>Map</th><th>Real life</th></tr>
+  <tr><td>1 cm</td><td>50 000 cm = 500 m = 0.5 km</td></tr>
+  <tr><td>4 cm</td><td>4 × 0.5 km = 2 km</td></tr></table>
+  <div class="tip"><b>Remember:</b> 100 cm = 1 m and 100 000 cm = 1 km.</div>`},
+],
+bank:[
+ {id:'l1q1',type:'mcq',level:'F',q:'A scale drawing uses the scale <b>1 cm represents 4 m</b>. A path is 6 cm long on the drawing. How long is the real path?',
+  opts:['24 m','1.5 m','10 m','46 m'],a:0,
+  hint:'Drawing → real life, so multiply by the scale.',
+  expl:'6 × 4 = 24 m. (1.5 comes from dividing — that is the wrong direction.)'},
+ {id:'l1q2',type:'num',level:'F',q:'Scale: <b>1 cm represents 5 m</b>. A fence is 9 cm on the drawing. How long is the real fence?',unit:'m',ans:45,
+  hint:'Multiply the drawing length by 5.',expl:'9 × 5 = 45 m.'},
+ {id:'l1q3',type:'num',level:'F',q:'Scale: <b>1 cm represents 20 cm</b>. A real bookshelf is 140 cm wide. How wide is it on the drawing?',unit:'cm',ans:7,
+  hint:'Real life → drawing, so divide by the scale.',expl:'140 ÷ 20 = 7 cm.'},
+ {id:'l1q4',type:'num',level:'P',q:'Scale: <b>1 cm represents 10 m</b>. A playground is 85 m long in real life. How long is it on the drawing?',unit:'cm',ans:8.5,
+  hint:'Divide by 10.',expl:'85 ÷ 10 = 8.5 cm. Decimal answers are fine on scale drawings.'},
+ {id:'l1q5',type:'mcq',level:'F',q:'To change a length <b>on the drawing</b> into the <b>real-life</b> length, you should…',
+  opts:['multiply by the scale','divide by the scale','add the scale','subtract the scale'],a:0,
+  hint:'Real life is bigger than the drawing.',expl:'Drawing → real life = multiply. Real life → drawing = divide.'},
+ {id:'l1q6',type:'num',level:'P',q:'A map has the scale <b>1 cm represents 30 km</b>. Two towns are 4.5 cm apart on the map. What is the real distance between them?',unit:'km',ans:135,
+  hint:'Multiply 4.5 by 30.',expl:'4.5 × 30 = 135 km.'},
+ {id:'l1q7',type:'mcq',level:'P',q:'A plan uses the ratio scale <b>1 : 200</b>. A corridor is 3 cm on the plan. What is its real length?',
+  opts:['6 m','600 m','66 cm','0.6 m'],a:0,
+  hint:'1 : 200 means 1 cm on the plan = 200 cm in real life.',
+  expl:'3 × 200 = 600 cm = 6 m. Watch the units — 600 cm is not 600 m!'},
+ {id:'l1q8',type:'num',level:'P',q:'A map has the scale <b>1 : 50 000</b>. A river is 6 cm long on the map. How long is the river in real life, in <b>km</b>?',unit:'km',ans:3,
+  hint:'6 × 50 000 = 300 000 cm. Change cm into km (100 000 cm = 1 km).',
+  expl:'6 × 50 000 = 300 000 cm = 3 km.'},
+ {id:'l1q9',type:'num',level:'P',q:'A map has the scale <b>1 : 100 000</b>. Two villages are 4 km apart in real life. How far apart are they on the map, in <b>cm</b>?',unit:'cm',ans:4,
+  hint:'4 km = 400 000 cm. Then divide by 100 000.',
+  expl:'400 000 ÷ 100 000 = 4 cm.'},
+ {id:'l1q10',type:'mcq',level:'F',q:'A room is 8 m long. On a plan with scale <b>1 cm represents 2 m</b>, the room is…',
+  opts:['4 cm long','16 cm long','10 cm long','6 cm long'],a:0,
+  hint:'Real life → drawing: divide.',expl:'8 ÷ 2 = 4 cm. (16 comes from multiplying — the wrong direction.)'},
+ {id:'l1q11',type:'num',level:'C',q:'A cycle route is <b>36 km</b> long in real life. On a map the route measures <b>24 cm</b>. The map scale is “1 cm represents ▢ km”. What number goes in the box?',unit:'km',ans:1.5,
+  hint:'Scale = real ÷ drawing.',expl:'36 ÷ 24 = 1.5, so 1 cm represents 1.5 km.'},
+ {id:'l1q12',type:'mcq',level:'C',q:'A model car is built to the scale <b>1 : 18</b>. The model is 25 cm long. How long is the real car?',
+  opts:['4.5 m','450 m','43 cm','1.8 m'],a:0,
+  hint:'25 × 18 cm, then convert to metres.',
+  expl:'25 × 18 = 450 cm = 4.5 m.'},
+],
+wsdraw:[]
+},
+
+/* ================= LESSON 2 — DISTANCE ================= */
+{
+id:2, key:'l2', accfg:'#fff',
+title:'Distance Between Two Points',
+short:'Coordinate distance',
+goal:'Find the distance between two points that share an x-coordinate or a y-coordinate.',
+desc:'Line up the coordinates, cover the pair that match, and subtract the other pair — negatives included.',
+learn:[
+ {h:'The cover-up method',
+  body:`<p>When two points share a coordinate, they sit on the same horizontal or vertical line, so the distance is just a subtraction.</p>
+  <p><b>Step 1</b> — write the points one under the other.<br>
+  <b>Step 2</b> — cover the coordinates that are the <i>same</i>.<br>
+  <b>Step 3</b> — subtract the two numbers left: <b>biggest − smallest</b>.</p>
+  <div class="ex"><div class="exh">Worked example</div>
+  (9, 4) and (3, 4) → the y-coordinates match.<br>
+  Distance = 9 − 3 = <b>6 units</b>.</div>`,
+  fig:{x0:0,x1:10,y0:0,y1:6,w:290,axes:true,
+    points:[{x:9,y:4,l:'(9, 4)'},{x:3,y:4,l:'(3, 4)'}],
+    segs:[[[3,4],[9,4]]], marks:[{x:6,y:4.55,t:'6 units'}]}},
+ {h:'Same x → subtract the y’s',
+  body:`<p>If the <b>x-coordinates</b> are the same, the points are on a vertical line. Subtract the y-coordinates.</p>
+  <div class="ex"><div class="exh">Worked example</div>(5, 12) and (5, 3) → distance = 12 − 3 = <b>9 units</b>.</div>
+  <div class="tip"><b>Check:</b> a distance is never negative — always do biggest − smallest.</div>`},
+ {h:'Careful with negative coordinates',
+  body:`<p>The same method works with negatives — subtracting a negative means the points are on opposite sides of the axis.</p>
+  <div class="ex"><div class="exh">Worked example</div>(−4, 2) and (3, 2) → distance = 3 − (−4) = 3 + 4 = <b>7 units</b>.</div>
+  <div class="tip"><b>Picture it:</b> from −4 to 0 is 4 steps, then 0 to 3 is 3 steps. 4 + 3 = 7. ✔</div>
+  <div class="kw"><span>x-coordinate</span><span>y-coordinate</span><span>distance</span><span>units</span></div>`},
+],
+bank:[
+ {id:'l2q1',type:'num',level:'F',q:'Find the distance between <b>(9, 2)</b> and <b>(4, 2)</b>.',unit:'units',ans:5,
+  hint:'The y-coordinates match, so subtract the x-coordinates.',expl:'9 − 4 = 5 units.'},
+ {id:'l2q2',type:'num',level:'F',q:'Find the distance between <b>(3, 7)</b> and <b>(3, 15)</b>.',unit:'units',ans:8,
+  hint:'The x-coordinates match, so subtract the y-coordinates.',expl:'15 − 7 = 8 units.'},
+ {id:'l2q3',type:'num',level:'F',q:'Find the distance between <b>(1, 0)</b> and <b>(12, 0)</b>.',unit:'units',ans:11,
+  hint:'Both points are on the x-axis.',expl:'12 − 1 = 11 units.'},
+ {id:'l2q4',type:'mcq',level:'F',q:'What is the distance between <b>(6, 4)</b> and <b>(6, 13)</b>?',
+  opts:['9 units','7 units','17 units','3 units'],a:0,
+  hint:'Subtract the y-coordinates: 13 − 4.',expl:'13 − 4 = 9 units. (17 comes from adding instead of subtracting.)'},
+ {id:'l2q5',type:'num',level:'P',q:'Find the distance between <b>(−4, 5)</b> and <b>(2, 5)</b>.',unit:'units',ans:6,
+  hint:'2 − (−4) = 2 + 4.',expl:'2 − (−4) = 6 units. Subtracting a negative becomes adding.'},
+ {id:'l2q6',type:'num',level:'P',q:'Find the distance between <b>(7, −3)</b> and <b>(7, −9)</b>.',unit:'units',ans:6,
+  hint:'Biggest − smallest: −3 is bigger than −9.',expl:'−3 − (−9) = 6 units.'},
+ {id:'l2q7',type:'num',level:'P',q:'Find the distance between <b>(−8, −2)</b> and <b>(−1, −2)</b>.',unit:'units',ans:7,
+  hint:'−1 − (−8) = ?',expl:'−1 − (−8) = 7 units.'},
+ {id:'l2q8',type:'mcq',level:'P',q:'Which pair of points is exactly <b>10 units</b> apart?',
+  opts:['(2, 3) and (12, 3)','(5, 1) and (5, 9)','(0, 4) and (4, 8)','(−3, 2) and (3, 2)'],a:0,
+  hint:'Check each pair — which subtraction gives 10?',
+  expl:'12 − 2 = 10 ✔. The others give 8, a diagonal (not allowed here), and 6.'},
+ {id:'l2q9',type:'num',level:'P',q:'Find the distance between <b>(15, 11)</b> and <b>(15, −4)</b>.',unit:'units',ans:15,
+  hint:'11 − (−4).',expl:'11 − (−4) = 15 units — the points are on opposite sides of the x-axis.'},
+ {id:'l2q10',type:'mcq',level:'C',q:'Rectangle ABCD has vertices A(2, 1), B(8, 1), C(8, 5) and D(2, 5). What is its <b>perimeter</b>?',
+  opts:['20 units','10 units','24 units','12 units'],a:0,
+  hint:'AB = 8 − 2 and BC = 5 − 1. Perimeter = 2 × (length + width).',
+  expl:'AB = 6, BC = 4, so perimeter = 2 × (6 + 4) = 20 units.'},
+ {id:'l2q11',type:'num',level:'C',q:'P is the point (4, 6). Q is <b>directly below</b> P and PQ = 7 units. What is the <b>y-coordinate</b> of Q?',unit:'',ans:-1,
+  hint:'Go down 7 from y = 6.',expl:'6 − 7 = −1, so Q is (4, −1).'},
+ {id:'l2q12',type:'mcq',level:'C',q:'ABCD is a square. A is (3, 2) and B is (9, 2). Which point could be C?',
+  opts:['(9, 8)','(9, 6)','(8, 9)','(3, 9)'],a:0,
+  hint:'AB = 6, so every side must be 6 units.',
+  expl:'AB = 9 − 3 = 6, so BC must also be 6: from B(9, 2) go up 6 to (9, 8).'},
+],
+wsdraw:[]
+},
+
+/* ================= LESSON 3 — TRANSLATION ================= */
+{
+id:3, key:'l3', accfg:'#fff',
+title:'Translating 2D Shapes',
+short:'Translation (sliding)',
+goal:'Translate points and shapes on a coordinate grid and describe translations.',
+desc:'Slide shapes left, right, up and down by adding or subtracting on the coordinates.',
+learn:[
+ {h:'What is a translation?',
+  body:`<p>A <b>translation</b> slides a shape to a new position <b>without turning or flipping it</b>. The original shape is the <b>object</b>; the new shape is the <b>image</b> (marked with dashes, e.g. A′).</p>
+  <div class="kw"><span>object</span><span>image</span><span>translate</span></div>`,
+  fig:{x0:0,x1:6,y0:0,y1:4,w:290,axes:true,
+    shapes:[{pts:[[1,1],[1,3],[2,1]],acc:'l3',label:'A'},{pts:[[4,1],[4,3],[5,1]],acc:'l3',label:'A′',dash:true}],
+    marks:[{x:3,y:3.55,t:'3 right →'}]}},
+ {h:'The coordinate rules',
+  body:`<div class="rule">right → add to x &nbsp;·&nbsp; left → subtract from x</div><br>
+  <div class="rule">up → add to y &nbsp;·&nbsp; down → subtract from y</div>
+  <div class="ex"><div class="exh">Worked example</div>
+  P(2, 5) is translated 3 right and 4 down.<br>
+  x: 2 + 3 = 5 &nbsp;&nbsp; y: 5 − 4 = 1 &nbsp;→&nbsp; P′ is <b>(5, 1)</b>.</div>
+  <div class="tip"><b>Watch out!</b> “3 left” means <b>subtract</b> 3 from x. A very common mistake is adding instead.</div>`},
+ {h:'Describing a translation',
+  body:`<p>To describe how an object moved, compare coordinates of matching points:</p>
+  <div class="ex"><div class="exh">Worked example</div>
+  (2, 7) → (6, 4).&nbsp; x went 2 → 6 (<b>4 right</b>); y went 7 → 4 (<b>3 down</b>).<br>
+  Translation: <b>4 squares right and 3 squares down</b>.</div>
+  <div class="tip"><b>Check your answer:</b> apply your translation to the object — you should land exactly on the image.</div>`},
+],
+bank:[
+ {id:'l3q1',type:'text',level:'F',q:'A(3, 5) is translated <b>4 squares right</b>. Write the coordinates of A′.',ans:'(7, 5)',
+  hint:'Right → add 4 to the x-coordinate.',expl:'x: 3 + 4 = 7, y stays 5 → A′(7, 5).'},
+ {id:'l3q2',type:'text',level:'F',q:'B(6, 2) is translated <b>3 squares up</b>. Write the coordinates of B′.',ans:'(6, 5)',
+  hint:'Up → add 3 to the y-coordinate.',expl:'y: 2 + 3 = 5 → B′(6, 5).'},
+ {id:'l3q3',type:'text',level:'F',q:'C(5, 7) is translated <b>2 squares left and 3 squares down</b>. Write the coordinates of C′.',ans:'(3, 4)',
+  hint:'Left → subtract from x. Down → subtract from y.',expl:'x: 5 − 2 = 3, y: 7 − 3 = 4 → C′(3, 4).'},
+ {id:'l3q4',type:'mcq',level:'F',q:'P(4, 1) is translated 5 squares right and 2 squares up. Where is P′?',
+  opts:['(9, 3)','(−1, 3)','(9, −1)','(6, 6)'],a:0,
+  hint:'Add 5 to x and add 2 to y.',expl:'(4 + 5, 1 + 2) = (9, 3).'},
+ {id:'l3q5',type:'text',level:'P',q:'D(−2, 4) is translated <b>3 squares right and 5 squares down</b>. Write the coordinates of D′.',ans:'(1, -1)',
+  hint:'−2 + 3 and 4 − 5.',expl:'x: −2 + 3 = 1, y: 4 − 5 = −1 → D′(1, −1).'},
+ {id:'l3q6',type:'mcq',level:'P',q:'Which translation maps (2, 7) onto (6, 4)?',
+  opts:['4 right and 3 down','4 left and 3 up','4 right and 3 up','3 right and 4 down'],a:0,
+  hint:'Compare x: 2 → 6. Compare y: 7 → 4.',expl:'x increased by 4 (right); y decreased by 3 (down).'},
+ {id:'l3q7',type:'text',level:'P',q:'E(0, −3) is translated <b>6 squares left and 2 squares up</b>. Write the coordinates of E′.',ans:'(-6, -1)',
+  hint:'0 − 6 and −3 + 2.',expl:'x: 0 − 6 = −6, y: −3 + 2 = −1 → E′(−6, −1).'},
+ {id:'l3q8',type:'mcq',level:'P',q:'A triangle has vertices (1, 2), (4, 2) and (3, 5). It is translated <b>2 right and 1 up</b>. What are the vertices of the image?',
+  fig:{x0:0,x1:7,y0:0,y1:7,w:250,axes:true,shapes:[{pts:[[1,2],[4,2],[3,5]],acc:'l3',label:'T'}]},
+  opts:['(3, 3), (6, 3), (5, 6)','(−1, 1), (2, 1), (1, 4)','(3, 1), (6, 1), (5, 4)','(2, 4), (5, 4), (4, 7)'],a:0,
+  hint:'Add 2 to every x and 1 to every y.',expl:'Every vertex moves the same way: +2 on x, +1 on y.'},
+ {id:'l3q9',type:'mcq',level:'F',q:'The point (5, 8) is translated to (5, 3). Which translation is this?',
+  opts:['5 squares down','5 squares up','5 squares left','3 squares down'],a:0,
+  hint:'Only the y-coordinate changed.',expl:'y went 8 → 3, a drop of 5, so 5 squares down.'},
+ {id:'l3q10',type:'text',level:'C',q:'F(2, 1) is translated 3 right and 2 up, then the result is translated 1 left and 4 up. Write the coordinates of the <b>final</b> image of F.',ans:'(4, 7)',
+  hint:'Do the moves one at a time, or combine: 3 right + 1 left = 2 right.',
+  expl:'(2, 1) → (5, 3) → (4, 7). Combined this is one translation: 2 right and 6 up.'},
+ {id:'l3q11',type:'mcq',level:'C',q:'Mai translates G(4, 7) <b>3 squares left and 2 squares down</b> and writes G′(7, 5). What mistake has she made?',
+  opts:['She added instead of subtracting','She swapped x and y','She moved 2 left and 3 down','No mistake — she is correct'],a:0,
+  hint:'Left and down both mean subtract.',
+  expl:'Left/down mean subtract: correct answer is (4 − 3, 7 − 2) = (1, 5). She did 4 + 3 and 7 − 2.'},
+ {id:'l3q12',type:'text',level:'C',q:'A line segment joins (−1, 2) to (3, 4). It is translated <b>2 right and 2 down</b>. Write the coordinates of the image of the endpoint (3, 4).',ans:'(5, 2)',
+  hint:'Only follow the endpoint (3, 4).',expl:'(3 + 2, 4 − 2) = (5, 2). The other endpoint maps to (1, 0).'},
+],
+wsdraw:[
+ {q:'Draw the image of triangle T after the translation <b>3 squares left and 2 squares up</b>. Label it T′.',
+  fig:{x0:-6,x1:6,y0:-6,y1:6,w:300,axes:true,shapes:[{pts:[[1,1],[4,1],[4,3]],acc:'l3',label:'T'}]},
+  keyfig:{x0:-6,x1:6,y0:-6,y1:6,w:260,axes:true,shapes:[{pts:[[1,1],[4,1],[4,3]],acc:'l3',label:'T'},{pts:[[-2,3],[1,3],[1,5]],acc:'l3',label:'T′',dash:true}]},
+  key:'T′ has vertices (−2, 3), (1, 3) and (1, 5).'},
+ {q:'Draw the image of rectangle R after the translation <b>2 squares right and 4 squares up</b>. Label it R′.',
+  fig:{x0:-6,x1:6,y0:-6,y1:6,w:300,axes:true,shapes:[{pts:[[-4,-2],[-2,-2],[-2,-1],[-4,-1]],acc:'l3',label:'R'}]},
+  keyfig:{x0:-6,x1:6,y0:-6,y1:6,w:260,axes:true,shapes:[{pts:[[-4,-2],[-2,-2],[-2,-1],[-4,-1]],acc:'l3',label:'R'},{pts:[[-2,2],[0,2],[0,3],[-2,3]],acc:'l3',label:'R′',dash:true}]},
+  key:'R′ has vertices (−2, 2), (0, 2), (0, 3) and (−2, 3).'},
+]
+},
+
+/* ================= LESSON 4 — REFLECTION ================= */
+{
+id:4, key:'l4', accfg:'#22384A',
+title:'Reflecting Shapes',
+short:'Reflection (flipping)',
+goal:'Reflect points and shapes in the x-axis and the y-axis.',
+desc:'Flip shapes across a mirror line and learn the quick coordinate rules for the axes.',
+learn:[
+ {h:'What is a reflection?',
+  body:`<p>A <b>reflection</b> flips a shape across a <b>mirror line</b>. Every point of the image is the <i>same distance</i> from the mirror line as its matching point on the object — but on the other side.</p>
+  <div class="kw"><span>reflected</span><span>mirror line</span><span>x-axis</span><span>y-axis</span></div>`,
+  fig:{x0:-4,x1:4,y0:0,y1:3,w:290,axes:true,mirror:'y',
+    shapes:[{pts:[[1,1],[3,1],[3,2],[1,2]],acc:'l4',label:'A'},{pts:[[-1,1],[-3,1],[-3,2],[-1,2]],acc:'l4',label:'A′',dash:true}]}},
+ {h:'Reflecting in the x-axis',
+  body:`<div class="rule">(x, y) → (x, −y) &nbsp;— the y-coordinate changes sign</div>
+  <div class="ex"><div class="exh">Worked example</div>
+  Reflect (3, 5) in the x-axis → <b>(3, −5)</b>.&nbsp; Reflect (2, −4) → <b>(2, 4)</b>.</div>
+  <div class="tip"><b>Why?</b> The x-axis is horizontal, so the flip moves points up/down — only y changes.</div>`},
+ {h:'Reflecting in the y-axis',
+  body:`<div class="rule">(x, y) → (−x, y) &nbsp;— the x-coordinate changes sign</div>
+  <div class="ex"><div class="exh">Worked example</div>
+  Reflect (2, 7) in the y-axis → <b>(−2, 7)</b>.&nbsp; Reflect (−6, 1) → <b>(6, 1)</b>.</div>
+  <div class="tip"><b>Special case:</b> a point <i>on</i> the mirror line does not move. Reflect (0, 4) in the y-axis → still (0, 4).</div>`},
+],
+bank:[
+ {id:'l4q1',type:'text',level:'F',q:'Reflect the point (3, 5) in the <b>x-axis</b>. Write the image coordinates.',ans:'(3, -5)',
+  hint:'x-axis → the y-coordinate changes sign.',expl:'(3, 5) → (3, −5).'},
+ {id:'l4q2',type:'text',level:'F',q:'Reflect the point (2, 7) in the <b>y-axis</b>. Write the image coordinates.',ans:'(-2, 7)',
+  hint:'y-axis → the x-coordinate changes sign.',expl:'(2, 7) → (−2, 7).'},
+ {id:'l4q3',type:'text',level:'F',q:'Reflect the point (−4, 6) in the <b>x-axis</b>. Write the image coordinates.',ans:'(-4, -6)',
+  hint:'Only the y-coordinate changes sign.',expl:'(−4, 6) → (−4, −6).'},
+ {id:'l4q4',type:'text',level:'P',q:'Reflect the point (−3, −2) in the <b>y-axis</b>. Write the image coordinates.',ans:'(3, -2)',
+  hint:'Only the x-coordinate changes sign.',expl:'(−3, −2) → (3, −2).'},
+ {id:'l4q5',type:'mcq',level:'F',q:'The point (5, −1) is reflected in the <b>x-axis</b>. Where is the image?',
+  opts:['(5, 1)','(−5, −1)','(−5, 1)','(1, 5)'],a:0,
+  hint:'Change the sign of y only.',expl:'(5, −1) → (5, 1). Changing x instead would be a y-axis reflection.'},
+ {id:'l4q6',type:'mcq',level:'P',q:'Triangle T is reflected in the <b>y-axis</b>. Which image, A or B, is the correct reflection?',
+  fig:{x0:-5,x1:5,y0:-4,y1:4,w:290,axes:true,mirror:'y',
+   shapes:[{pts:[[1,1],[4,1],[1,3]],acc:'l4',label:'T'},{pts:[[-1,1],[-4,1],[-1,3]],acc:'l4',label:'A',dash:true},{pts:[[1,-1],[4,-1],[1,-3]],acc:'l4',label:'B',dash:true}]},
+  opts:['Image A','Image B','Both are correct','Neither is correct'],a:0,
+  hint:'A y-axis reflection flips the shape left–right, not up–down.',
+  expl:'A is the flip across the y-axis. B is a reflection in the x-axis.'},
+ {id:'l4q7',type:'text',level:'P',q:'Rectangle JKLM has vertex M(2, 3). The rectangle is reflected in the <b>x-axis</b>. Write the coordinates of M′.',ans:'(2, -3)',
+  hint:'y changes sign.',expl:'M(2, 3) → M′(2, −3).'},
+ {id:'l4q8',type:'mcq',level:'P',q:'The point (0, 4) is reflected in the <b>y-axis</b>. Where is the image?',
+  opts:['(0, 4) — it does not move','(0, −4)','(4, 0)','(−4, 0)'],a:0,
+  hint:'Where does the point sit compared with the mirror line?',
+  expl:'(0, 4) is on the y-axis — points on the mirror line stay where they are.'},
+ {id:'l4q9',type:'mcq',level:'C',q:'The point (6, 2) is reflected in the x-axis, and that image is then reflected in the y-axis. Where does it end up?',
+  opts:['(−6, −2)','(6, −2)','(−6, 2)','(2, 6)'],a:0,
+  hint:'Do one reflection at a time.',
+  expl:'(6, 2) → (6, −2) → (−6, −2). Both coordinates change sign — the same as a 180° rotation about the origin!'},
+ {id:'l4q10',type:'text',level:'C',q:'Reflect the point (−5, 0) in the <b>x-axis</b>. Write the image coordinates.',ans:'(-5, 0)',
+  hint:'Look carefully at the y-coordinate.',
+  expl:'(−5, 0) lies on the x-axis (y = 0), so it does not move.'},
+ {id:'l4q11',type:'mcq',level:'C',q:'Arun reflects P(1, 3) in the <b>x-axis</b> and writes P′(−1, 3). What mistake has he made?',
+  opts:['He changed the sign of x instead of y','He translated the point','He used the wrong distance','No mistake — he is correct'],a:0,
+  hint:'Which coordinate should change for an x-axis reflection?',
+  expl:'An x-axis reflection changes y: the correct image is (1, −3). He used the y-axis rule.'},
+ {id:'l4q12',type:'mcq',level:'F',q:'Which rule describes a reflection in the <b>y-axis</b>?',
+  opts:['(x, y) → (−x, y)','(x, y) → (x, −y)','(x, y) → (−x, −y)','(x, y) → (y, x)'],a:0,
+  hint:'The y-axis is vertical, so the flip is left–right.',
+  expl:'Left–right flip → x changes sign: (x, y) → (−x, y).'},
+],
+wsdraw:[
+ {q:'Draw the image of trapezium P after a reflection in the <b>y-axis</b>. Label it P′.',
+  fig:{x0:-6,x1:6,y0:-6,y1:6,w:300,axes:true,mirror:'y',shapes:[{pts:[[1,1],[4,1],[3,3],[2,3]],acc:'l4',label:'P'}]},
+  keyfig:{x0:-6,x1:6,y0:-6,y1:6,w:260,axes:true,mirror:'y',shapes:[{pts:[[1,1],[4,1],[3,3],[2,3]],acc:'l4',label:'P'},{pts:[[-1,1],[-4,1],[-3,3],[-2,3]],acc:'l4',label:'P′',dash:true}]},
+  key:'P′ has vertices (−1, 1), (−4, 1), (−3, 3) and (−2, 3).'},
+ {q:'Draw the image of triangle Q after a reflection in the <b>x-axis</b>. Label it Q′.',
+  fig:{x0:-6,x1:6,y0:-6,y1:6,w:300,axes:true,mirror:'x',shapes:[{pts:[[-3,1],[-1,1],[-1,4]],acc:'l4',label:'Q'}]},
+  keyfig:{x0:-6,x1:6,y0:-6,y1:6,w:260,axes:true,mirror:'x',shapes:[{pts:[[-3,1],[-1,1],[-1,4]],acc:'l4',label:'Q'},{pts:[[-3,-1],[-1,-1],[-1,-4]],acc:'l4',label:'Q′',dash:true}]},
+  key:'Q′ has vertices (−3, −1), (−1, −1) and (−1, −4).'},
+]
+},
+
+/* ================= LESSON 5 — ROTATION ================= */
+{
+id:5, key:'l5', accfg:'#fff',
+title:'Rotating Shapes',
+short:'Rotation (turning)',
+goal:'Rotate shapes 90° and 180° about a centre, and describe rotations.',
+desc:'Turn shapes clockwise or anticlockwise about a centre of rotation.',
+learn:[
+ {h:'What is a rotation?',
+  body:`<p>A <b>rotation</b> turns a shape about a fixed point called the <b>centre of rotation</b> (marked C). To describe a rotation you need <b>three things</b>: the centre, the angle (usually 90° or 180°), and the direction — <b>clockwise</b> ↻ or <b>anticlockwise</b> ↺.</p>
+  <div class="kw"><span>centre of rotation</span><span>clockwise</span><span>anticlockwise</span><span>congruent</span></div>
+  <div class="tip"><b>Key fact:</b> the object and image are always <b>congruent</b> — identical in shape and size, just turned.</div>`,
+  fig:{x0:-5,x1:3,y0:-2,y1:5,w:290,axes:false,centre:[0,0],
+   shapes:[{pts:[[-4,0],[-1,0],[-1,1],[-4,1]],acc:'l5',label:'A'},{pts:[[0,4],[0,1],[1,1],[1,4]],acc:'l5',label:'A′',dash:true}],
+   marks:[{x:1.7,y:-1.1,t:'90° clockwise about C'}]}},
+ {h:'Half turns: 180°',
+  body:`<p>For a <b>180° rotation</b> the direction does not matter — clockwise and anticlockwise land in the same place.</p>
+  <div class="rule">180° about the origin: (x, y) → (−x, −y)</div>
+  <div class="ex"><div class="exh">Worked example</div>
+  Rotate (3, 1) by 180° about the origin → <b>(−3, −1)</b>.</div>`},
+ {h:'Quarter turns: 90°',
+  body:`<p>Picture a clock face: <b>clockwise</b> is the way the hands move. A useful anchor: the minute hand turning from 12 to 3 is a <b>90° clockwise</b> turn; from 12 to 6 is <b>180°</b>.</p>
+  <div class="ex"><div class="exh">Worked example (about the origin)</div>
+  90° clockwise: (x, y) → (y, −x), so (2, 3) → <b>(3, −2)</b>.<br>
+  90° anticlockwise: (x, y) → (−y, x), so (2, 3) → <b>(−3, 2)</b>.</div>
+  <div class="tip"><b>Tracing-paper trick:</b> trace the shape, hold your pencil on C, and turn the paper. Perfect for checking drawings.</div>`},
+],
+bank:[
+ {id:'l5q1',type:'mcq',level:'F',q:'Shape A is rotated about the centre C to give shape A′. Describe the rotation.',
+  fig:{x0:-5,x1:3,y0:-2,y1:5,w:280,axes:false,centre:[0,0],
+   shapes:[{pts:[[-4,0],[-1,0],[-1,1],[-4,1]],acc:'l5',label:'A'},{pts:[[0,4],[0,1],[1,1],[1,4]],acc:'l5',label:'A′',dash:true}]},
+  opts:['90° clockwise','90° anticlockwise','180°','It is a translation'],a:0,
+  hint:'The bar points left, then points up. Which way did it turn?',
+  expl:'Left → up is a quarter turn in the clockwise direction.'},
+ {id:'l5q2',type:'mcq',level:'F',q:'For a <b>180° rotation</b>, which statement is true?',
+  opts:['Clockwise and anticlockwise give the same image','You must always turn clockwise','The shape gets bigger','The image is a reflection, not congruent'],a:0,
+  hint:'A half turn ends up opposite the start.',
+  expl:'A half turn lands in the same place whichever way you turn.'},
+ {id:'l5q3',type:'mcq',level:'F',q:'A shape is rotated 90° about a centre. Compared with the object, the image is…',
+  opts:['congruent — same shape and size','similar but larger','similar but smaller','always overlapping the object'],a:0,
+  hint:'Rotation only turns a shape.',
+  expl:'Rotations (like reflections and translations) never change size or shape — object and image are congruent.'},
+ {id:'l5q4',type:'mcq',level:'P',q:'Triangle A is rotated about C to give triangle B. Describe the rotation.',
+  fig:{x0:-4,x1:4,y0:-1,y1:4,w:280,axes:false,centre:[0,0],
+   shapes:[{pts:[[1,1],[3,1],[1,2]],acc:'l5',label:'A'},{pts:[[-1,1],[-1,3],[-2,1]],acc:'l5',label:'B',dash:true}]},
+  opts:['90° anticlockwise','90° clockwise','180°','360°'],a:0,
+  hint:'A points right of C; B points above-left. Which quarter turn is that?',
+  expl:'Right side → upper-left side is a quarter turn anticlockwise about C.'},
+ {id:'l5q5',type:'text',level:'P',q:'Rotate the point P(3, 1) by <b>180° about the origin</b>. Write the coordinates of P′.',ans:'(-3, -1)',
+  hint:'(x, y) → (−x, −y).',expl:'Both signs change: (3, 1) → (−3, −1).'},
+ {id:'l5q6',type:'text',level:'P',q:'Rotate the point Q(−2, 5) by <b>180° about the origin</b>. Write the coordinates of Q′.',ans:'(2, -5)',
+  hint:'Change the sign of both coordinates.',expl:'(−2, 5) → (2, −5).'},
+ {id:'l5q7',type:'mcq',level:'C',q:'The point (2, 3) is rotated <b>90° clockwise about the origin</b>. Where is the image?',
+  opts:['(3, −2)','(−3, 2)','(−2, −3)','(3, 2)'],a:0,
+  hint:'90° clockwise: (x, y) → (y, −x).',
+  expl:'(2, 3) → (3, −2). The anticlockwise turn would give (−3, 2).'},
+ {id:'l5q8',type:'mcq',level:'F',q:'The minute hand of a clock moves from 12 to 3. Describe the turn.',
+  opts:['90° clockwise','90° anticlockwise','180°','45° clockwise'],a:0,
+  hint:'12 to 3 is a quarter of the clock face.',
+  expl:'A quarter of a full turn is 90°, and clock hands move clockwise.'},
+ {id:'l5q9',type:'mcq',level:'P',q:'Square S is rotated <b>180° about the centre C</b>. Which image, A or B, is correct?',
+  fig:{x0:-4,x1:4,y0:-3,y1:3,w:290,axes:false,centre:[0,0],
+   shapes:[{pts:[[1,0],[3,0],[3,2],[1,2]],acc:'l5',label:'S'},{pts:[[-1,0],[-3,0],[-3,-2],[-1,-2]],acc:'l5',label:'A',dash:true},{pts:[[-1,0],[-3,0],[-3,2],[-1,2]],acc:'l5',label:'B',dash:true}]},
+  opts:['Image A','Image B','Both are correct','Neither is correct'],a:0,
+  hint:'A half turn sends “up and right of C” to “down and left of C”.',
+  expl:'A is the half turn. B is only a reflection in the vertical line through C.'},
+ {id:'l5q10',type:'mcq',level:'F',q:'The minute hand of a clock moves from 12 to 6. Describe the turn.',
+  opts:['180°','90° clockwise','90° anticlockwise','360°'],a:0,
+  hint:'12 to 6 is half the clock face.',expl:'Half a full turn = 180°.'},
+ {id:'l5q11',type:'text',level:'C',q:'Rotate the point R(4, −2) by <b>180° about the origin</b>. Write the coordinates of R′.',ans:'(-4, 2)',
+  hint:'Change both signs.',expl:'(4, −2) → (−4, 2).'},
+ {id:'l5q12',type:'mcq',level:'C',q:'A shape is rotated 90° clockwise about C, then 90° clockwise about C again. The combined result is the same as…',
+  opts:['a 180° rotation about C','a reflection in the x-axis','a translation','a 90° anticlockwise rotation about C'],a:0,
+  hint:'Add the turns together.',expl:'90° + 90° = 180° about the same centre.'},
+],
+wsdraw:[
+ {q:'Draw the image of rectangle A after a rotation of <b>180° about the origin O</b>. Label it A′.',
+  fig:{x0:-6,x1:6,y0:-6,y1:6,w:300,axes:true,centre:[0,0],shapes:[{pts:[[1,1],[4,1],[4,2],[1,2]],acc:'l5',label:'A'}]},
+  keyfig:{x0:-6,x1:6,y0:-6,y1:6,w:260,axes:true,centre:[0,0],shapes:[{pts:[[1,1],[4,1],[4,2],[1,2]],acc:'l5',label:'A'},{pts:[[-1,-1],[-4,-1],[-4,-2],[-1,-2]],acc:'l5',label:'A′',dash:true}]},
+  key:'A′ has vertices (−1, −1), (−4, −1), (−4, −2) and (−1, −2).'},
+ {q:'Draw the image of triangle B after a rotation of <b>90° clockwise about the origin O</b>. Label it B′.',
+  fig:{x0:-6,x1:6,y0:-6,y1:6,w:300,axes:true,centre:[0,0],shapes:[{pts:[[0,1],[0,3],[1,1]],acc:'l5',label:'B'}]},
+  keyfig:{x0:-6,x1:6,y0:-6,y1:6,w:260,axes:true,centre:[0,0],shapes:[{pts:[[0,1],[0,3],[1,1]],acc:'l5',label:'B'},{pts:[[1,0],[3,0],[1,-1]],acc:'l5',label:'B′',dash:true}]},
+  key:'B′ has vertices (1, 0), (3, 0) and (1, −1).'},
+]
+},
+
+/* ================= LESSON 6 — ENLARGEMENT ================= */
+{
+id:6, key:'l6', accfg:'#fff',
+title:'Enlarging Shapes',
+short:'Enlargement',
+goal:'Enlarge shapes by a whole-number or decimal scale factor and find scale factors.',
+desc:'Make every side of a shape bigger by the same scale factor, and spot when a shape is NOT an enlargement.',
+learn:[
+ {h:'What is an enlargement?',
+  body:`<p>An <b>enlargement</b> makes a copy of a shape where <b>every side</b> is multiplied by the same number — the <b>scale factor</b>. The object and image are <b>similar shapes</b>: same shape, different size.</p>
+  <div class="rule">image side = object side × scale factor</div>
+  <div class="kw"><span>enlargement</span><span>scale factor</span><span>similar shapes</span><span>dimensions</span></div>`,
+  fig:{x0:0,x1:8,y0:0,y1:5,w:290,axes:false,
+   shapes:[{pts:[[1,1],[2,1],[2,2],[1,2]],acc:'l6',label:'A'},{pts:[[4,1],[7,1],[7,4],[4,4]],acc:'l6',label:'B',dash:true}],
+   marks:[{x:4.1,y:4.6,t:'scale factor 3'}]}},
+ {h:'Finding a scale factor',
+  body:`<div class="rule">scale factor = image side ÷ object side</div>
+  <div class="ex"><div class="exh">Worked example</div>
+  Object width 2 cm, image width 8 cm → scale factor = 8 ÷ 2 = <b>4</b>.</div>
+  <div class="tip"><b>Going backwards:</b> if you know the image and the scale factor, <b>divide</b> to find the object: object side = image side ÷ scale factor.</div>`},
+ {h:'Is it really an enlargement?',
+  body:`<p>Check <b>every</b> pair of matching sides. If the widths use one factor and the heights use a different factor, it is <b>not</b> an enlargement — the shape has been stretched.</p>
+  <div class="ex"><div class="exh">Worked example</div>
+  3 × 2 rectangle → 9 × 4 rectangle?&nbsp; Widths: 9 ÷ 3 = 3. Heights: 4 ÷ 2 = 2.&nbsp; Different factors → <b>not an enlargement</b>.</div>
+  <div class="tip"><b>Note:</b> an enlargement can be turned round too — rotation does not stop shapes being similar. And when the scale factor is 2, the <i>area</i> becomes 2² = 4 times bigger, not 2 times!</div>`},
+],
+bank:[
+ {id:'l6q1',type:'num',level:'F',q:'A rectangle is 2 cm by 3 cm. It is enlarged by <b>scale factor 4</b>. How long is the <b>longer</b> side of the image?',unit:'cm',ans:12,
+  hint:'Multiply 3 by 4.',expl:'3 × 4 = 12 cm (and the short side becomes 8 cm).'},
+ {id:'l6q2',type:'num',level:'F',q:'A triangle has a base of 3 cm. It is enlarged by <b>scale factor 5</b>. How long is the base of the image?',unit:'cm',ans:15,
+  hint:'Base × 5.',expl:'3 × 5 = 15 cm.'},
+ {id:'l6q3',type:'mcq',level:'F',q:'An object is 2 squares wide. Its enlargement is 8 squares wide. What is the scale factor?',
+  opts:['4','6','16','2'],a:0,
+  hint:'Scale factor = image ÷ object.',expl:'8 ÷ 2 = 4. (6 comes from subtracting — scale factors use division.)'},
+ {id:'l6q4',type:'num',level:'P',q:'An object side is 4 cm and the matching image side is 6 cm. What is the scale factor?',unit:'',ans:1.5,
+  hint:'6 ÷ 4.',expl:'6 ÷ 4 = 1.5 — scale factors can be decimals.'},
+ {id:'l6q5',type:'mcq',level:'P',q:'A 3 cm × 2 cm rectangle is drawn again as a 9 cm × 4 cm rectangle. Is this an enlargement?',
+  opts:['No — the sides use different factors (×3 and ×2)','Yes — scale factor 3','Yes — scale factor 2','No — rectangles cannot be enlarged'],a:0,
+  hint:'Divide matching sides: 9 ÷ 3 and 4 ÷ 2.',
+  expl:'9 ÷ 3 = 3 but 4 ÷ 2 = 2. The factors differ, so the image is stretched, not enlarged.'},
+ {id:'l6q6',type:'mcq',level:'F',q:'Shape B is an enlargement of shape A. What is the scale factor?',
+  fig:{x0:0,x1:8,y0:0,y1:5,w:270,axes:false,
+   shapes:[{pts:[[1,1],[2,1],[2,2],[1,2]],acc:'l6',label:'A'},{pts:[[4,1],[7,1],[7,4],[4,4]],acc:'l6',label:'B',dash:true}]},
+  opts:['3','2','4','9'],a:0,
+  hint:'Count squares: A is 1 wide, B is 3 wide.',expl:'3 ÷ 1 = 3, and the heights agree: 3 ÷ 1 = 3. Scale factor 3.'},
+ {id:'l6q7',type:'num',level:'P',q:'A photo is 4 cm × 6 cm. It is enlarged by <b>scale factor 2.5</b>. How long is the <b>longer</b> side of the enlarged photo?',unit:'cm',ans:15,
+  hint:'6 × 2.5.',expl:'6 × 2.5 = 15 cm (the short side becomes 10 cm).'},
+ {id:'l6q8',type:'mcq',level:'F',q:'An enlargement changes a shape’s…',
+  opts:['size but not its shape','shape but not its size','size and its angles','position only'],a:0,
+  hint:'Object and image are similar.',expl:'All lengths grow by the scale factor, but angles and proportions stay the same.'},
+ {id:'l6q9',type:'num',level:'P',q:'After an enlargement with <b>scale factor 4</b>, a side of the image is 20 cm. How long was the matching side of the <b>object</b>?',unit:'cm',ans:5,
+  hint:'Work backwards: divide by the scale factor.',expl:'20 ÷ 4 = 5 cm.'},
+ {id:'l6q10',type:'mcq',level:'C',q:'A company makes a box measuring 4 cm × 5 cm. Which of these boxes is an <b>enlargement</b> of it?',
+  opts:['8 cm × 10 cm','8 cm × 15 cm','12 cm × 20 cm','10 cm × 11 cm'],a:0,
+  hint:'Both dimensions must use the same factor.',
+  expl:'8 ÷ 4 = 2 and 10 ÷ 5 = 2 ✔ (scale factor 2). The others give mismatched factors.'},
+ {id:'l6q11',type:'num',level:'C',q:'A rectangle 2 cm × 3 cm (area 6 cm²) is enlarged by <b>scale factor 2</b>. What is the <b>area</b> of the image, in cm²?',unit:'cm²',ans:24,
+  hint:'Find the new sides first: 4 cm × 6 cm.',
+  expl:'4 × 6 = 24 cm². Area grows by 2² = 4 times, not 2 times.'},
+ {id:'l6q12',type:'mcq',level:'F',q:'For a correct enlargement, the scale factor must be…',
+  opts:['the same for every side of the shape','bigger for longer sides','used only on the width','always a whole number'],a:0,
+  hint:'What makes shapes similar?',expl:'One scale factor for all sides — that is what keeps the shape similar. (It can be a decimal.)'},
+],
+wsdraw:[
+ {q:'On the grid, draw an enlargement of shape L with <b>scale factor 2</b>. Label it L′. (You may draw it anywhere on the grid.)',
+  fig:{x0:0,x1:11,y0:0,y1:6,w:330,axes:false,shapes:[{pts:[[0,0],[2,0],[2,1],[1,1],[1,2],[0,2]],acc:'l6',label:'L'}]},
+  keyfig:{x0:0,x1:11,y0:0,y1:6,w:290,axes:false,shapes:[{pts:[[0,0],[2,0],[2,1],[1,1],[1,2],[0,2]],acc:'l6',label:'L'},{pts:[[4,0],[8,0],[8,2],[6,2],[6,4],[4,4]],acc:'l6',label:'L′',dash:true}]},
+  key:'Every side doubles: the long edges become 4 squares, the steps become 2 squares. (Position may vary.)'},
+ {q:'On the grid, draw an enlargement of triangle M with <b>scale factor 3</b>. Label it M′.',
+  fig:{x0:0,x1:11,y0:0,y1:5,w:330,axes:false,shapes:[{pts:[[0,0],[2,0],[0,1]],acc:'l6',label:'M'}]},
+  keyfig:{x0:0,x1:11,y0:0,y1:5,w:290,axes:false,shapes:[{pts:[[0,0],[2,0],[0,1]],acc:'l6',label:'M'},{pts:[[4,0],[10,0],[4,3]],acc:'l6',label:'M′',dash:true}]},
+  key:'Base 2 → 6 squares, height 1 → 3 squares. (Position may vary.)'},
+]
+},
+];
+
+/* ================= UNIT TEST (24 questions, 4 per lesson) ================= */
+const TEST = [
+ {id:'t1',topic:1,type:'num',q:'Scale: <b>1 cm represents 8 m</b>. A building is 7 cm long on the drawing. How long is the real building?',unit:'m',ans:56,
+  expl:'7 × 8 = 56 m.'},
+ {id:'t2',topic:1,type:'num',q:'Scale: <b>1 cm represents 25 cm</b>. A real table is 175 cm long. How long is it on the drawing?',unit:'cm',ans:7,
+  expl:'175 ÷ 25 = 7 cm.'},
+ {id:'t3',topic:1,type:'mcq',q:'A map has the scale <b>1 : 20 000</b>. Two schools are 5 cm apart on the map. What is the real distance?',
+  opts:['1 km','100 km','10 km','0.1 km'],a:0,
+  expl:'5 × 20 000 = 100 000 cm = 1 km.'},
+ {id:'t4',topic:1,type:'num',q:'A hiking trail is 45 km long in real life and measures 30 cm on a map. The scale is “1 cm represents ▢ km”. Find the missing number.',unit:'km',ans:1.5,
+  expl:'45 ÷ 30 = 1.5 km per cm.'},
+ {id:'t5',topic:2,type:'num',q:'Find the distance between <b>(11, 6)</b> and <b>(4, 6)</b>.',unit:'units',ans:7,
+  expl:'11 − 4 = 7 units.'},
+ {id:'t6',topic:2,type:'num',q:'Find the distance between <b>(8, −3)</b> and <b>(8, 9)</b>.',unit:'units',ans:12,
+  expl:'9 − (−3) = 12 units.'},
+ {id:'t7',topic:2,type:'mcq',q:'What is the distance between <b>(−6, 2)</b> and <b>(4, 2)</b>?',
+  opts:['10 units','2 units','8 units','4 units'],a:0,
+  expl:'4 − (−6) = 10 units.'},
+ {id:'t8',topic:2,type:'mcq',q:'ABCD is a square with A(1, 1) and B(6, 1). What is the <b>perimeter</b> of the square?',
+  opts:['20 units','10 units','25 units','24 units'],a:0,
+  expl:'AB = 5, so perimeter = 4 × 5 = 20 units.'},
+ {id:'t9',topic:3,type:'text',q:'The point (5, 4) is translated <b>3 squares right and 2 squares down</b>. Write the coordinates of the image.',ans:'(8, 2)',
+  expl:'(5 + 3, 4 − 2) = (8, 2).'},
+ {id:'t10',topic:3,type:'text',q:'The point (−3, 6) is translated <b>4 squares left and 1 square up</b>. Write the coordinates of the image.',ans:'(-7, 7)',
+  expl:'(−3 − 4, 6 + 1) = (−7, 7).'},
+ {id:'t11',topic:3,type:'mcq',q:'Which translation maps (2, −1) onto (−3, 4)?',
+  opts:['5 left and 5 up','5 right and 5 down','5 left and 5 down','3 left and 5 up'],a:0,
+  expl:'x: 2 → −3 is 5 left; y: −1 → 4 is 5 up.'},
+ {id:'t12',topic:3,type:'mcq',q:'A triangle with vertices (2, 2), (5, 2) and (4, 6) is translated <b>1 left and 3 up</b>. The image vertices are…',
+  opts:['(1, 5), (4, 5), (3, 9)','(3, 5), (6, 5), (5, 9)','(1, −1), (4, −1), (3, 3)','(5, 1), (2, 1), (7, 3)'],a:0,
+  expl:'Subtract 1 from every x and add 3 to every y.'},
+ {id:'t13',topic:4,type:'text',q:'Reflect the point (7, 2) in the <b>x-axis</b>. Write the image coordinates.',ans:'(7, -2)',
+  expl:'x-axis reflection: (x, y) → (x, −y).'},
+ {id:'t14',topic:4,type:'text',q:'Reflect the point (−5, 3) in the <b>y-axis</b>. Write the image coordinates.',ans:'(5, 3)',
+  expl:'y-axis reflection: (x, y) → (−x, y).'},
+ {id:'t15',topic:4,type:'mcq',q:'The point (0, −6) is reflected in the <b>y-axis</b>. Where is the image?',
+  opts:['(0, −6) — it does not move','(0, 6)','(−6, 0)','(6, 0)'],a:0,
+  expl:'(0, −6) lies on the y-axis, so it stays fixed.'},
+ {id:'t16',topic:4,type:'mcq',q:'Which rule describes a reflection in the <b>x-axis</b>?',
+  opts:['(x, y) → (x, −y)','(x, y) → (−x, y)','(x, y) → (−x, −y)','(x, y) → (y, x)'],a:0,
+  expl:'The x-axis flip moves points up–down, so only y changes sign.'},
+ {id:'t17',topic:5,type:'mcq',q:'The point (3, −4) is rotated <b>180° about the origin</b>. Where is the image?',
+  opts:['(−3, 4)','(3, 4)','(−3, −4)','(−4, 3)'],a:0,
+  expl:'180° about the origin: (x, y) → (−x, −y).'},
+ {id:'t18',topic:5,type:'mcq',q:'Which statement about a <b>180° rotation</b> is true?',
+  opts:['Turning clockwise or anticlockwise gives the same image','It always needs a direction','It doubles the size of the shape','It is the same as a translation'],a:0,
+  expl:'A half turn lands in the same position either way.'},
+ {id:'t19',topic:5,type:'mcq',q:'Triangle A is rotated about the centre C to give triangle B. Describe the rotation.',
+  fig:{x0:-4,x1:3,y0:-2,y1:4,w:270,axes:false,centre:[0,0],
+   shapes:[{pts:[[-3,0],[-1,0],[-1,1]],acc:'l5',label:'A'},{pts:[[0,3],[0,1],[1,1]],acc:'l5',label:'B',dash:true}]},
+  opts:['90° clockwise','90° anticlockwise','180°','It is a reflection'],a:0,
+  expl:'The triangle points left, then points up: a quarter turn clockwise about C.'},
+ {id:'t20',topic:5,type:'mcq',q:'A shape is rotated <b>360°</b> about a centre. Where is the image?',
+  opts:['Exactly on top of the object','90° from the object','Opposite the object','It depends on the direction'],a:0,
+  expl:'A full turn brings the shape back to where it started.'},
+ {id:'t21',topic:6,type:'num',q:'A side of a shape is 6 cm. The shape is enlarged by <b>scale factor 3</b>. How long is the matching side of the image?',unit:'cm',ans:18,
+  expl:'6 × 3 = 18 cm.'},
+ {id:'t22',topic:6,type:'num',q:'An object side is 5 cm and the matching image side is 30 cm. What is the scale factor?',unit:'',ans:6,
+  expl:'30 ÷ 5 = 6.'},
+ {id:'t23',topic:6,type:'mcq',q:'A rectangle is 4 cm × 6 cm. Which image is an <b>enlargement</b> of it?',
+  opts:['12 cm × 18 cm','8 cm × 10 cm','6 cm × 8 cm','12 cm × 14 cm'],a:0,
+  expl:'12 ÷ 4 = 3 and 18 ÷ 6 = 3 ✔ — same factor for both sides.'},
+ {id:'t24',topic:6,type:'mcq',q:'After an enlargement, the object and its image are always…',
+  opts:['similar — same shape, different size','congruent — identical','the same area','in the same position'],a:0,
+  expl:'Enlargement keeps the shape but changes the size: the shapes are similar.'},
+];
+
+/* Deterministic option rotation so the correct MCQ answer is not always (a).
+   Uses the question id, so the app, worksheets and answer keys always agree. */
+(function(){
+  const rotQ=q=>{
+    if(q.type!=='mcq')return;
+    let h=0;for(const c of q.id)h+=c.charCodeAt(0);
+    const r=h%q.opts.length;
+    q.opts=q.opts.slice(r).concat(q.opts.slice(0,r));
+    q.a=(q.a-r+q.opts.length)%q.opts.length;
+  };
+  LESSONS.forEach(L=>L.bank.forEach(rotQ));
+  TEST.forEach(rotQ);
+})();
+
+const GRADES = [
+ {min:0.85,label:'Outstanding',note:'You have mastered position and transformation.'},
+ {min:0.7,label:'Great work',note:'Solid understanding — review the topics you missed below.'},
+ {min:0.5,label:'Getting there',note:'Revisit the lessons for the topics you missed, then try again.'},
+ {min:0,label:'Keep practising',note:'Work through each lesson’s Learn tab first, then retake the test.'},
+];
+</script>
+<script>
+/* ============================ helpers ============================ */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const norm=s=>String(s).toLowerCase().replace(/[()\s]/g,'').replace(/−/g,'-').replace(/,+/g,',');
+const LKEY='ts-unit14-v1';
+let STATE={p:{},best:null};
+try{const raw=localStorage.getItem(LKEY);if(raw)STATE=Object.assign(STATE,JSON.parse(raw))}catch(e){}
+function save(){try{localStorage.setItem(LKEY,JSON.stringify(STATE))}catch(e){}}
+const qById={};LESSONS.forEach(L=>L.bank.forEach(q=>{q.lesson=L.id;qById[q.id]=q}));TEST.forEach(q=>qById[q.id]=q);
+const LEVELN={F:'Focus',P:'Practice',C:'Challenge'};
+
+/* ============================ SVG grid figure ============================ */
+function fig(sp,opt){
+  opt=opt||{};
+  const w=opt.w||sp.w||280, x0=sp.x0,x1=sp.x1,y0=sp.y0,y1=sp.y1;
+  const s=(w-0)/(x1-x0), pad=sp.axes?20:8, W=w+pad*2, H=(y1-y0)*s+pad*2;
+  const X=x=>pad+(x-x0)*s, Y=y=>pad+(y1-y)*s;
+  let out=`<svg viewBox="0 0 ${W} ${H}" width="${w+pad*2}" style="max-width:100%;height:auto" role="img" aria-label="grid diagram">`;
+  out+=`<rect x="0" y="0" width="${W}" height="${H}" fill="#fff"/>`;
+  for(let gx=x0;gx<=x1;gx++)out+=`<line x1="${X(gx)}" y1="${Y(y0)}" x2="${X(gx)}" y2="${Y(y1)}" stroke="#DCE2E6" stroke-width="1"/>`;
+  for(let gy=y0;gy<=y1;gy++)out+=`<line x1="${X(x0)}" y1="${Y(gy)}" x2="${X(x1)}" y2="${Y(gy)}" stroke="#DCE2E6" stroke-width="1"/>`;
+  if(sp.axes){
+    if(y0<=0&&y1>=0)out+=`<line x1="${X(x0)}" y1="${Y(0)}" x2="${X(x1)}" y2="${Y(0)}" stroke="#26343F" stroke-width="2"/>`;
+    if(x0<=0&&x1>=0)out+=`<line x1="${X(0)}" y1="${Y(y0)}" x2="${X(0)}" y2="${Y(y1)}" stroke="#26343F" stroke-width="2"/>`;
+    const step=(x1-x0)>10?2:1;
+    for(let gx=x0;gx<=x1;gx+=step){if(gx===0)continue;
+      out+=`<text x="${X(gx)}" y="${Y(0)+13}" font-size="9" text-anchor="middle" fill="#54646F" font-family="inherit">${gx}</text>`}
+    for(let gy=y0;gy<=y1;gy+=step){if(gy===0)continue;
+      out+=`<text x="${X(0)-5}" y="${Y(gy)+3}" font-size="9" text-anchor="end" fill="#54646F" font-family="inherit">${gy}</text>`}
+    if(x0<=0&&y0<=0&&x1>=0&&y1>=0)out+=`<text x="${X(0)-5}" y="${Y(0)+13}" font-size="9" text-anchor="end" fill="#54646F">0</text>`;
+    out+=`<text x="${X(x1)-2}" y="${Y(0)-5}" font-size="10" font-style="italic" text-anchor="end" fill="#26343F">x</text>`;
+    out+=`<text x="${X(0)+6}" y="${Y(y1)+9}" font-size="10" font-style="italic" fill="#26343F">y</text>`;
+  }else{
+    out+=`<rect x="${X(x0)}" y="${Y(y1)}" width="${(x1-x0)*s}" height="${(y1-y0)*s}" fill="none" stroke="#9aa7b1" stroke-width="1.4"/>`;
+  }
+  if(sp.mirror==='y'&&x0<=0&&x1>=0)out+=`<line x1="${X(0)}" y1="${Y(y0)}" x2="${X(0)}" y2="${Y(y1)}" stroke="#B97E0A" stroke-width="3.4" stroke-dasharray="7 5" opacity=".85"/>`;
+  if(sp.mirror==='x'&&y0<=0&&y1>=0)out+=`<line x1="${X(x0)}" y1="${Y(0)}" x2="${X(x1)}" y2="${Y(0)}" stroke="#B97E0A" stroke-width="3.4" stroke-dasharray="7 5" opacity=".85"/>`;
+  (sp.segs||[]).forEach(sg=>{out+=`<line x1="${X(sg[0][0])}" y1="${Y(sg[0][1])}" x2="${X(sg[1][0])}" y2="${Y(sg[1][1])}" stroke="#F25C33" stroke-width="3" stroke-linecap="round"/>`});
+  (sp.shapes||[]).forEach(sh=>{
+    const col=ACC[sh.acc]||'#F25C33';
+    const pts=sh.pts.map(p=>X(p[0])+','+Y(p[1])).join(' ');
+    out+=`<polygon points="${pts}" fill="${col}${sh.dash?'22':'40'}" stroke="${col}" stroke-width="2.6" ${sh.dash?'stroke-dasharray="7 4"':''} stroke-linejoin="round"/>`;
+    if(sh.label){
+      const cx=sh.pts.reduce((a,p)=>a+p[0],0)/sh.pts.length, cy=sh.pts.reduce((a,p)=>a+p[1],0)/sh.pts.length;
+      out+=`<text x="${X(cx)}" y="${Y(cy)+4.5}" font-size="13" font-weight="700" text-anchor="middle" fill="#26343F" font-family="inherit" paint-order="stroke" stroke="#ffffff" stroke-width="3.5">${sh.label}</text>`;
+    }
+  });
+  (sp.points||[]).forEach(p=>{
+    out+=`<circle cx="${X(p.x)}" cy="${Y(p.y)}" r="4.4" fill="#F25C33" stroke="#26343F" stroke-width="1.6"/>`;
+    if(p.l)out+=`<text x="${X(p.x)}" y="${Y(p.y)-9}" font-size="11" font-weight="700" text-anchor="middle" fill="#26343F" paint-order="stroke" stroke="#fff" stroke-width="3">${p.l}</text>`;
+  });
+  if(sp.centre){
+    out+=`<circle cx="${X(sp.centre[0])}" cy="${Y(sp.centre[1])}" r="4.6" fill="#26343F"/>`;
+    out+=`<text x="${X(sp.centre[0])+8}" y="${Y(sp.centre[1])+13}" font-size="12" font-weight="700" font-style="italic" fill="#26343F" paint-order="stroke" stroke="#fff" stroke-width="3">${sp.centreLabel||'C'}</text>`;
+  }
+  (sp.marks||[]).forEach(m=>{
+    out+=`<text x="${X(m.x)}" y="${Y(m.y)}" font-size="11.5" font-weight="700" text-anchor="middle" fill="#26343F" paint-order="stroke" stroke="#fff" stroke-width="3">${m.t}</text>`;
+  });
+  return out+'</svg>';
+}
+
+/* ============================ question rendering ============================ */
+function qHTML(q,n){
+  const st=STATE.p[q.id]||{};
+  const doneChip=st.done?`<span class="qtag done-ok">${st.ok?'✓ solved':'seen'}</span>`:'';
+  let body='';
+  if(q.type==='mcq'){
+    body=`<div class="opts" data-q="${q.id}">`+q.opts.map((o,i)=>
+      `<button class="opt" data-act="mcq" data-q="${q.id}" data-i="${i}"><span class="ol">${'ABCD'[i]}</span><span>${o}</span></button>`).join('')+`</div>`;
+  }else{
+    const ph=q.type==='text'?'e.g. (3, -2)':'your answer';
+    body=`<div class="numrow"><input type="text" inputmode="${q.type==='num'?'decimal':'text'}" placeholder="${ph}"
+      aria-label="answer" data-inp="${q.id}" data-qtype="${q.type}">
+      ${q.unit?`<span class="unit">${q.unit}</span>`:''}
+      <button class="smallbtn dark" data-act="check" data-q="${q.id}">Check answer</button></div>`;
+  }
+  return `<div class="qcard" id="qc-${q.id}">
+    <div class="qtop"><span class="qn">${n}.</span><span class="qtag">${LEVELN[q.level]||'Question'}</span>${doneChip}</div>
+    <div class="qtext">${q.q}</div>
+    ${q.fig?`<div class="qfig figbox">${fig(q.fig)}</div>`:''}
+    ${body}
+    <div class="hintbox" id="hint-${q.id}">${q.hint||''}</div>
+    <div class="fb" id="fb-${q.id}"></div>
+    <div class="qacts">
+      ${q.hint?`<button class="smallbtn" data-act="hint" data-q="${q.id}">Need a hint?</button>`:''}
+      <button class="smallbtn" data-act="reveal" data-q="${q.id}" id="rv-${q.id}" style="display:none">Show answer</button>
+    </div>
+  </div>`;
+}
+function correctText(q){
+  if(q.type==='mcq')return q.opts[q.a];
+  if(q.type==='num')return q.ans+(q.unit?' '+q.unit:'');
+  return q.ans;
+}
+function feedback(q,ok,final){
+  const fb=$('#fb-'+q.id);if(!fb)return;
+  fb.className='fb show '+(ok?'ok':'bad');
+  if(ok)fb.innerHTML=`<div class="fh">✓ Correct!</div>${q.expl||''}`;
+  else if(final)fb.innerHTML=`<div class="fh">Answer: ${esc(correctText(q))}</div>${q.expl||''}`;
+  else fb.innerHTML=`<div class="fh">✗ Not quite — try again.</div>${q.hint?'Need help? Use the hint button.':''}`;
+}
+function recordTry(q,ok){
+  const st=STATE.p[q.id]||(STATE.p[q.id]={tries:0});
+  st.tries=(st.tries||0)+1;
+  if(ok&&!st.done){st.done=true;st.ok=st.tries===1}
+  if(ok)st.solved=true;
+  save();
+  if(st.tries>=2&&!st.solved){const rv=$('#rv-'+q.id);if(rv)rv.style.display='inline-block'}
+}
+function lockQ(q){
+  document.querySelectorAll(`#qc-${q.id} .opt`).forEach(b=>b.disabled=true);
+  const inp=document.querySelector(`[data-inp="${q.id}"]`);if(inp)inp.disabled=true;
+  const chk=document.querySelector(`#qc-${q.id} [data-act="check"]`);if(chk)chk.disabled=true;
+  const rv=$('#rv-'+q.id);if(rv)rv.style.display='none';
+  updateStrips();
+}
+function handleMCQ(q,i,btn){
+  const ok=i===q.a;
+  recordTry(q,ok);
+  if(ok){btn.classList.add('sel-ok');feedback(q,true);lockQ(q)}
+  else{btn.classList.add('sel-bad');btn.disabled=true;feedback(q,false,false)}
+}
+function handleCheck(q){
+  const inp=document.querySelector(`[data-inp="${q.id}"]`);if(!inp)return;
+  const v=inp.value.trim();if(!v){inp.focus();return}
+  let ok=false;
+  if(q.type==='num'){const num=parseFloat(v.replace(/,/g,'').replace(/−/g,'-'));ok=isFinite(num)&&Math.abs(num-q.ans)<1e-9}
+  else{const target=norm(q.ans);const accepts=[target].concat((q.accept||[]).map(norm));ok=accepts.includes(norm(v))}
+  recordTry(q,ok);
+  if(ok){feedback(q,true);lockQ(q)}else feedback(q,false,false);
+}
+function handleReveal(q){
+  const st=STATE.p[q.id]||(STATE.p[q.id]={tries:9});
+  if(!st.done){st.done=true;st.ok=false}
+  save();feedback(q,false,true);lockQ(q);
+}
+function updateStrips(){
+  document.querySelectorAll('[data-strip]').forEach(el=>{
+    const L=LESSONS.find(x=>x.id==el.dataset.strip);if(!L)return;
+    const solved=L.bank.filter(q=>(STATE.p[q.id]||{}).solved).length;
+    el.querySelector('.pbar i').style.width=(solved/L.bank.length*100)+'%';
+    el.querySelector('[data-count]').textContent=solved+' / '+L.bank.length+' solved';
+  });
+}
+
+/* ============================ views ============================ */
+const view=$('#view');
+function setNav(k){document.querySelectorAll('#topnav a').forEach(a=>a.classList.toggle('active',a.dataset.nav===k))}
+
+function homeView(){
+  setNav('home');
+  const cards=LESSONS.map(L=>{
+    const solved=L.bank.filter(q=>(STATE.p[q.id]||{}).solved).length;
+    return `<div class="lcard" style="--acc:${ACC[L.key]};--accs:var(--${L.key}s)" data-act="go" data-to="#/lesson/${L.id}" role="link" tabindex="0">
+      <div class="num">${L.id}</div>
+      <div class="lbody"><h3>${L.title}</h3><p>${L.desc}</p>
+      <div class="meta"><div class="pbar"><i style="width:${solved/L.bank.length*100}%"></i></div><span>${solved} of ${L.bank.length} done</span></div></div>
+    </div>`}).join('');
+  const best=STATE.best!=null?`Best score so far: <b>${STATE.best} / ${TEST.length}</b>`:'You have not taken it yet';
+  view.innerHTML=`
+  <section class="hero">
+    <div class="htxt">
+      <span class="kicker">Maths · Stage 7 · Position &amp; Transformation</span>
+      <h1>The whole unit, in one <span class="hl">exercise book</span> you can click.</h1>
+      <p class="lead">Read a short lesson, practise until it clicks, then take the test.
+      <span class="dim">Covers scale drawings, distance between points, translation, reflection, rotation and enlargement — with worksheets you can print for homework.</span></p>
+      <div class="btnrow">
+        <a class="btn primary" href="#/lesson/1">Start Lesson 1</a>
+        <a class="btn" href="#/test">Take the Unit Test</a>
+        <a class="btn ghost" href="#/print">Print worksheets</a>
+      </div>
+    </div>
+    <div class="hfig"><span class="tape"></span><span class="tape t2"></span><div class="figbox">${fig({x0:-5,x1:5,y0:-4,y1:4,w:270,axes:true,mirror:'y',
+      shapes:[{pts:[[1,1],[4,1],[1,3]],acc:'l3',label:'A'},{pts:[[-1,1],[-4,1],[-1,3]],acc:'l1',label:'A′',dash:true},{pts:[[1,-1],[4,-1],[1,-3]],acc:'l6',label:'A″',dash:true}]})}</div>
+      <span class="scribble">reflect A in the y-axis →&nbsp;A′</span></div>
+  </section>
+  <section class="sect">
+    <h2>Lessons</h2><p class="sub">Work in order, or jump to the topic you need. Each lesson has a short Learn page and 12 practice questions that mark themselves.</p>
+    <div class="lgrid">${cards}</div>
+    <div class="duo">
+      <div class="bigcard"><h3>Unit Test</h3><p>24 mixed questions, 4 from each lesson, no hints. ${best}.</p>
+        <a class="btn primary" href="#/test">Start the test</a></div>
+      <div class="bigcard"><h3>Printable pack</h3><p>Six worksheets, a paper version of the test, and full answer keys — print them or save as PDF.</p>
+        <a class="btn" href="#/print">Open Print Center</a></div>
+    </div>
+  </section>`;
+}
+
+let curTab={};
+function lessonView(id,tab){
+  const L=LESSONS.find(x=>x.id===id);if(!L){location.hash='#/home';return}
+  setNav('');
+  tab=tab||curTab[id]||'learn';curTab[id]=tab;
+  const acc=`--acc:${ACC[L.key]};--accs:var(--${L.key}s);--accfg:${L.accfg}`;
+  let inner='';
+  if(tab==='learn'){
+    inner='<div class="learn">'+L.learn.map((b,bi)=>`
+      <div class="block" style="${acc}"><h3>${L.id}.${bi+1} &nbsp; ${b.h}</h3>
+        <div class="cols"><div class="txt">${b.body}</div>${b.fig?`<div class="fig figbox">${fig(b.fig)}</div>`:''}</div>
+      </div>`).join('')+
+      `<div class="btnrow" style="margin-top:20px">
+        <button class="btn acc" style="${acc}" data-act="tab" data-l="${id}" data-tab="practice">Practise this skill →</button>
+      </div></div>`;
+  }else{
+    const solved=L.bank.filter(q=>(STATE.p[q.id]||{}).solved).length;
+    inner=`<div class="pstrip" data-strip="${L.id}">
+        <span>Progress</span><div class="pbar"><i style="width:${solved/L.bank.length*100}%"></i></div>
+        <span data-count>${solved} / ${L.bank.length} solved</span>
+        <button class="smallbtn" data-act="resetlesson" data-l="${id}" style="margin-left:auto">Reset</button>
+      </div>`+
+      L.bank.map((q,i)=>qHTML(q,i+1)).join('')+
+      `<div class="btnrow" style="margin-top:8px">
+        ${id<6?`<a class="btn" href="#/lesson/${id+1}">Next lesson →</a>`:`<a class="btn primary" href="#/test">Take the Unit Test →</a>`}
+      </div>`;
+  }
+  view.innerHTML=`
+    <div class="crumb"><a href="#/home">← All lessons</a></div>
+    <div class="lhead" style="${acc}">
+      <div class="num">${L.id}.</div>
+      <div><h1>${L.title}</h1><div class="goal">${L.goal}</div></div>
+    </div>
+    <div class="tabs" style="${acc}">
+      <button class="tab ${tab==='learn'?'active':''}" data-act="tab" data-l="${id}" data-tab="learn">Learn</button>
+      <button class="tab ${tab==='practice'?'active':''}" data-act="tab" data-l="${id}" data-tab="practice">Practice · ${L.bank.length} questions</button>
+    </div>
+    <div style="${acc}">${inner}</div>`;
+  window.scrollTo(0,0);
+}
+
+/* ============================ test ============================ */
+let T={on:false,idx:0,ans:{}};
+function testView(){
+  setNav('test');
+  if(!T.on){
+    const best=STATE.best!=null?`<p class="sub">Your best score so far: <b>${STATE.best} / ${TEST.length}</b></p>`:'';
+    view.innerHTML=`<div class="tres">
+      <span class="kicker">Unit Test</span>
+      <h1 style="font-size:1.7rem;font-weight:700;margin:10px 0 6px">Position &amp; Transformation</h1>
+      <p style="color:var(--mute);font-weight:600">24 questions · 4 from each lesson · no hints.<br>You can retake the test as many times as you like.</p>
+      ${best}
+      <div class="btnrow" style="justify-content:center;margin-top:18px">
+        <button class="btn primary" data-act="tstart">Start the test</button>
+        <a class="btn ghost" href="#/home">Back to lessons</a>
+      </div></div>`;
+    return;
+  }
+  const q=TEST[T.idx];
+  const picked=T.ans[q.id];
+  let body='';
+  if(q.type==='mcq'){
+    body=`<div class="opts">`+q.opts.map((o,i)=>
+      `<button class="opt ${picked===i?'sel-ok':''}" data-act="tpick" data-i="${i}" ${picked===i?'style="background:var(--l1s);border-color:var(--l1)"':''}><span class="ol">${'ABCD'[i]}</span><span>${o}</span></button>`).join('')+`</div>`;
+  }else{
+    body=`<div class="numrow"><input type="text" inputmode="${q.type==='num'?'decimal':'text'}" data-tinp
+      placeholder="${q.type==='text'?'e.g. (3, -2)':'your answer'}" value="${picked!=null?esc(picked):''}" aria-label="answer">
+      ${q.unit?`<span class="unit">${q.unit}</span>`:''}</div>`;
+  }
+  view.innerHTML=`<div class="trun">
+    <div class="tbar"><span>Q ${T.idx+1} / ${TEST.length}</span>
+      <div class="pbar"><i style="width:${(T.idx)/TEST.length*100}%;background:var(--l1)"></i></div>
+      <button class="smallbtn" data-act="tquit">Quit</button></div>
+    <div class="qcard" style="--acc:var(--l1);--accfg:#fff">
+      <div class="qtop"><span class="qn">${T.idx+1}.</span><span class="qtag">${LESSONS[q.topic-1].short}</span></div>
+      <div class="qtext">${q.q}</div>
+      ${q.fig?`<div class="qfig figbox">${fig(q.fig)}</div>`:''}
+      ${body}
+      <div class="qacts">
+        ${T.idx>0?'<button class="smallbtn" data-act="tprev">← Back</button>':''}
+        <button class="btn primary" style="margin-left:auto" data-act="tnext">${T.idx===TEST.length-1?'Finish ✓':'Next →'}</button>
+      </div>
+    </div></div>`;
+  const ti=view.querySelector('[data-tinp]');if(ti)ti.focus();
+  window.scrollTo(0,0);
+}
+function tAnswerOK(q){
+  const v=T.ans[q.id];
+  if(v==null||v==='')return false;
+  if(q.type==='mcq')return v===q.a;
+  if(q.type==='num'){const n=parseFloat(String(v).replace(/,/g,'').replace(/−/g,'-'));return isFinite(n)&&Math.abs(n-q.ans)<1e-9}
+  return [norm(q.ans)].concat((q.accept||[]).map(norm)).includes(norm(v));
+}
+function tFinish(){
+  T.on=false;
+  const results=TEST.map(q=>({q,ok:tAnswerOK(q),user:T.ans[q.id]}));
+  const score=results.filter(r=>r.ok).length;
+  if(STATE.best==null||score>STATE.best){STATE.best=score;save()}
+  const g=GRADES.find(g=>score/TEST.length>=g.min);
+  const byTopic=LESSONS.map(L=>{
+    const rs=results.filter(r=>r.q.topic===L.id);
+    return `<div class="b"><b>${L.id}. ${L.short}</b>${rs.filter(r=>r.ok).length} / ${rs.length} correct</div>`}).join('');
+  const review=results.map((r,i)=>{
+    const q=r.q;
+    let user=r.user==null||r.user===''?'—':(q.type==='mcq'?q.opts[r.user]:r.user);
+    return `<div class="qcard" style="--acc:${r.ok?'var(--ok)':'var(--bad)'};--accfg:#fff">
+      <div class="qtop"><span class="qn">${i+1}</span><span class="qtag">${LESSONS[q.topic-1].short}</span>
+        <span class="qtag" style="${r.ok?'color:var(--ok);border-color:var(--ok)':'color:var(--bad);border-color:var(--bad)'}">${r.ok?'✓ correct':'✗ wrong'}</span></div>
+      <div class="qtext">${q.q}</div>
+      ${q.fig?`<div class="qfig figbox">${fig(q.fig,{w:210})}</div>`:''}
+      <div class="fb show ${r.ok?'ok':'bad'}"><b>Your answer:</b> ${esc(user)}${r.ok?'':` &nbsp;·&nbsp; <b>Correct answer:</b> ${esc(correctText(q))}`}<br>${q.expl||''}</div>
+    </div>`}).join('');
+  view.innerHTML=`<div class="tres">
+      <span class="kicker">Results</span>
+      <div class="score" style="margin-top:10px">${score} / ${TEST.length}</div>
+      <div class="grade" style="background:${score/TEST.length>=0.7?'var(--oks)':'var(--l4s)'}">${g.label}</div>
+      <p style="color:var(--mute);font-weight:600">${g.note}</p>
+      <div class="bych">${byTopic}</div>
+      <div class="btnrow" style="justify-content:center">
+        <button class="btn primary" data-act="tstart">Retake test</button>
+        <a class="btn" href="#/home">Back to lessons</a>
+      </div></div>
+    <div class="trun"><h2 class="review-h">Review your answers</h2>${review}</div>`;
+  window.scrollTo(0,0);
+}
+
+/* ============================ print center ============================ */
+function printView(){
+  setNav('print');
+  const ws=LESSONS.map(L=>`
+    <div class="pcitem"><span class="chip" style="--accs:var(--${L.key}s)">Worksheet ${L.id}</span>
+      <h4>${L.title}</h4><p>${L.bank.length} questions${L.wsdraw.length?` + ${L.wsdraw.length} drawing tasks`:''} · A4</p>
+      <div class="btnrow"><button class="smallbtn" data-act="pv" data-kind="ws" data-id="${L.id}">Preview</button>
+      <button class="smallbtn dark" data-act="pr" data-kind="ws" data-id="${L.id}">Print</button></div>
+    </div>`).join('');
+  view.innerHTML=`
+    <h2 style="font-weight:700;font-size:1.45rem">Print Center</h2>
+    <p class="sub" style="color:var(--mute);font-weight:600;margin:6px 0 20px">Preview any sheet, then print it or save it as a PDF (choose “Save as PDF” in the print dialog). Answer keys are separate so you can hand sheets straight to students.</p>
+    <div class="pcgrid">
+      ${ws}
+      <div class="pcitem"><span class="chip" style="--accs:var(--l1s)">Assessment</span><h4>Unit Test (paper)</h4><p>The same 24 questions as the online test, formatted for paper.</p>
+        <div class="btnrow"><button class="smallbtn" data-act="pv" data-kind="test">Preview</button>
+        <button class="smallbtn dark" data-act="pr" data-kind="test">Print</button></div></div>
+      <div class="pcitem"><span class="chip" style="--accs:var(--oks)">Teacher</span><h4>Answer Keys</h4><p>Answers for all six worksheets and the unit test.</p>
+        <div class="btnrow"><button class="smallbtn" data-act="pv" data-kind="keys">Preview</button>
+        <button class="smallbtn dark" data-act="pr" data-kind="keys">Print</button></div></div>
+      <div class="pcitem"><span class="chip" style="--accs:var(--l4s)">Bundle</span><h4>Complete Pack</h4><p>Cover page, terms of use, all worksheets, test and keys in one print job.</p>
+        <div class="btnrow"><button class="smallbtn" data-act="pv" data-kind="pack">Preview</button>
+        <button class="smallbtn dark" data-act="pr" data-kind="pack">Print all</button></div></div>
+    </div>
+    <div id="preview"></div>`;
+}
+function sheetHead(title,sub,nameBar=true){
+  return `<div class="shead"><div><div class="ss">${sub}</div><div class="st">${title}</div></div>
+    <div class="brandmark">Bright EngMath ✦<br><span style="font-weight:600;color:#555">Transformation Studio</span></div></div>
+    ${nameBar?`<div class="namebar"><span>Name:</span><span>Class:</span><span style="max-width:160px">Date:</span></div>`:''}`;
+}
+function sheetFoot(){
+  return `<div class="sfoot"><span>© 2026 Bright EngMath · brightengmath.com</span><span>For single-classroom use only</span></div>`;
+}
+function printQ(q,n){
+  let body='';
+  if(q.type==='mcq')body=`<div class="popts">`+q.opts.map((o,i)=>`<span>(${'abcd'[i]}) ${o}</span>`).join('')+`</div>`;
+  else body=`<div style="margin:4px 0 0 22px">Answer: <span class="ansline"></span> ${q.unit||''}</div>`;
+  return `<div class="pq"><div class="pqt"><span class="pqn">${n}.</span>${q.q}</div>
+    ${q.fig?`<div class="pgrid">${fig(q.fig,{w:230})}</div>`:''}${body}</div>`;
+}
+function wsSheet(id,inPack){
+  const L=LESSONS.find(x=>x.id===id);
+  let n=0;
+  let html=sheetHead(`Worksheet ${L.id} — ${L.title}`,'Position & Transformation · Stage 7')+
+    `<div class="sgoal"><b>Learning goal:</b> ${L.goal}</div>`+
+    L.bank.map(q=>printQ(q,++n)).join('');
+  L.wsdraw.forEach(d=>{
+    html+=`<div class="pq"><div class="pqt"><span class="pqn">${++n}.</span>${d.q}</div>
+      <div class="pgrid">${fig(d.fig,{w:300})}</div></div>`;
+  });
+  return html+sheetFoot()+(inPack?'<div class="pagebreak"></div>':'');
+}
+function testSheet(inPack){
+  let html=sheetHead('Unit Test — Position & Transformation','24 questions · 4 per topic')+
+    `<div class="sgoal"><b>Instructions:</b> answer every question. Write coordinates like (3, −2). Score: ______ / 24</div>`+
+    TEST.map((q,i)=>printQ(q,i+1)).join('');
+  return html+sheetFoot()+(inPack?'<div class="pagebreak"></div>':'');
+}
+function keysSheet(inPack){
+  let html=sheetHead('Answer Keys','Teacher copy — all worksheets + unit test',false);
+  LESSONS.forEach(L=>{
+    let n=0;
+    html+=`<h3 class="keyh">Worksheet ${L.id} — ${L.title}</h3><div class="keys">`+
+      L.bank.map(q=>{
+        n++;
+        const a=q.type==='mcq'?`(${'abcd'[q.a]}) ${q.opts[q.a]}`:correctText(q);
+        return `<div><b>${n}.</b>${a}</div>`}).join('')+`</div>`;
+    L.wsdraw.forEach(d=>{
+      n++;
+      html+=`<div class="pq" style="margin-top:6px"><b>${n}.</b> ${d.key}<div class="pgrid">${fig(d.keyfig,{w:210})}</div></div>`;
+    });
+  });
+  html+=`<h3 class="keyh">Unit Test</h3><div class="keys">`+
+    TEST.map((q,i)=>{
+      const a=q.type==='mcq'?`(${'abcd'[q.a]}) ${q.opts[q.a]}`:correctText(q);
+      return `<div><b>${i+1}.</b>${a}</div>`}).join('')+`</div>`;
+  return html+sheetFoot()+(inPack?'<div class="pagebreak"></div>':'');
+}
+function coverSheet(){
+  return `<div style="padding-top:30px">
+    <div class="covertitle">Transformation Studio</div>
+    <div class="coversub">Position &amp; Transformation · Interactive Lessons + Printable Worksheets<br>Cambridge Lower Secondary Stage 7 aligned · Ages 11–13</div>
+    <div class="coverbox"><b>This resource includes</b>
+      <ul>
+        <li>6 self-marking interactive lessons (open the HTML file in any browser — no internet needed)</li>
+        <li>6 printable worksheets: scale, coordinate distance, translation, reflection, rotation, enlargement</li>
+        <li>A 24-question unit test — online and printable versions</li>
+        <li>Complete answer keys for every worksheet and the test</li>
+      </ul></div>
+    <div style="text-align:center;font-weight:900;margin-top:18px">Bright EngMath ✦<br>
+      <span style="font-weight:600;color:#444">brightengmath.com</span></div>
+  </div><div class="pagebreak"></div>
+  <div class="tou">${sheetHead('Terms of Use & Credits','Please read before sharing',false)}
+    <h4>You may</h4>
+    <p>• Use this resource with your own students, in your classroom or online lessons.<br>
+    • Print as many copies as you need for your own classes.<br>
+    • Load the HTML file on devices used by your own students.</p>
+    <h4>You may not</h4>
+    <p>• Share, resell or redistribute the files to other teachers or post them on the internet (including school shared drives accessible beyond your classes).<br>
+    • Claim this work as your own or remove the Bright EngMath credit.</p>
+    <h4>Credits</h4>
+    <p>Created by <b>Bright EngMath</b>. All questions, explanations and diagrams are original.
+    Aligned to the Cambridge Lower Secondary Stage 7 objectives for position and transformation.</p>
+    <p>Questions or spot a typo? Contact us via our store page — we love feedback and update our resources.</p>
+    ${sheetFoot()}</div><div class="pagebreak"></div>`;
+}
+function buildPrint(kind,id){
+  let html='';
+  if(kind==='ws')html=wsSheet(+id,false);
+  else if(kind==='test')html=testSheet(false);
+  else if(kind==='keys')html=keysSheet(false);
+  else if(kind==='pack')html=coverSheet()+LESSONS.map(L=>wsSheet(L.id,true)).join('')+testSheet(true)+keysSheet(false);
+  return `<div class="sheet">${html}</div>`;
+}
+function doPreview(kind,id){
+  const html=buildPrint(kind,id);
+  $('#preview').innerHTML=`<div class="pvhead"><h3 style="font-weight:900">Preview</h3>
+    <button class="smallbtn dark" data-act="pr" data-kind="${kind}" ${id?`data-id="${id}"`:''}>Print this</button>
+    <button class="smallbtn" data-act="pvclose">Close preview</button></div>
+    <div class="paper-preview">${html}</div>`;
+  $('#preview').scrollIntoView({behavior:'smooth'});
+}
+function doPrint(kind,id){
+  $('#printRoot').innerHTML=buildPrint(kind,id);
+  setTimeout(()=>window.print(),60);
+}
+
+/* ============================ router + events ============================ */
+function render(){
+  const h=location.hash||'#/home';
+  const m=h.match(/^#\/lesson\/(\d)(?:\/(learn|practice))?/);
+  if(m)lessonView(+m[1],m[2]);
+  else if(h.startsWith('#/test'))testView();
+  else if(h.startsWith('#/print'))printView();
+  else homeView();
+}
+window.addEventListener('hashchange',render);
+
+document.addEventListener('click',e=>{
+  const el=e.target.closest('[data-act]');if(!el)return;
+  const act=el.dataset.act;
+  if(act==='go')location.hash=el.dataset.to;
+  else if(act==='tab'){curTab[el.dataset.l]=el.dataset.tab;lessonView(+el.dataset.l,el.dataset.tab)}
+  else if(act==='mcq')handleMCQ(qById[el.dataset.q],+el.dataset.i,el);
+  else if(act==='check')handleCheck(qById[el.dataset.q]);
+  else if(act==='hint')$('#hint-'+el.dataset.q).classList.toggle('show');
+  else if(act==='reveal')handleReveal(qById[el.dataset.q]);
+  else if(act==='resetlesson'){
+    const L=LESSONS.find(x=>x.id==el.dataset.l);
+    L.bank.forEach(q=>delete STATE.p[q.id]);save();lessonView(L.id,'practice');
+  }
+  else if(act==='tstart'){T={on:true,idx:0,ans:{}};testView()}
+  else if(act==='tquit'){T.on=false;testView()}
+  else if(act==='tpick'){T.ans[TEST[T.idx].id]=+el.dataset.i;testView()}
+  else if(act==='tprev'){const ti=view.querySelector('[data-tinp]');if(ti)T.ans[TEST[T.idx].id]=ti.value.trim();T.idx--;testView()}
+  else if(act==='tnext'){
+    const q=TEST[T.idx];
+    const ti=view.querySelector('[data-tinp]');if(ti)T.ans[q.id]=ti.value.trim();
+    if(T.ans[q.id]==null||T.ans[q.id]===''){
+      const card=view.querySelector('.qcard');card.style.outline='3px solid var(--bad)';
+      setTimeout(()=>card.style.outline='',600);return;
+    }
+    if(T.idx===TEST.length-1)tFinish();else{T.idx++;testView()}
+  }
+  else if(act==='pv')doPreview(el.dataset.kind,el.dataset.id);
+  else if(act==='pvclose')$('#preview').innerHTML='';
+  else if(act==='pr')doPrint(el.dataset.kind,el.dataset.id);
+});
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Enter')return;
+  const inp=e.target.closest('[data-inp]');
+  if(inp){handleCheck(qById[inp.dataset.inp]);return}
+  if(e.target.closest('[data-tinp]')){const b=view.querySelector('[data-act="tnext"]');if(b)b.click()}
+  const card=e.target.closest('.lcard[data-act="go"]');if(card)location.hash=card.dataset.to;
+});
+render();
+</script>
+</body>
+</html>

@@ -3,8 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Grade 6 (EP/Inter) maths practice: 60 questions on Decimals and Ratio &amp; Percentage, with worked solutions.">
+<meta name="author" content="Bright EngMath">
+<meta name="copyright" content="© 2026 Bright EngMath. Single-classroom licence.">
+<meta name="description" content="Bright EngMath — Grade 6 (EP/Inter) maths practice: 60 questions on Decimals and Ratio &amp; Percentage, with worked solutions.">
 <style>html{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<!-- Decimals & Ratio Workbook - (c) 2026 Bright EngMath. Licensed for one teacher and their own classroom. Not for resale or redistribution. -->
 <title>Decimals &amp; Ratio Workbook</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -76,7 +79,7 @@ b{font-weight:800}
 .brand{display:flex; align-items:center; gap:12px; min-width:0}
 .seal{width:50px;height:50px;flex:none;border-radius:15px;background:var(--g3);color:var(--ink);
   border:var(--bw) solid var(--line); box-shadow:var(--pop-sm);
-  display:grid;place-items:center;font-family:var(--f-mono);font-weight:700;font-size:12px;line-height:1.1;text-align:center}
+  display:grid;place-items:center;font-family:var(--f-display);font-size:19px;letter-spacing:-.02em;line-height:1;text-align:center}
 .brand h1{font-family:var(--f-display); font-size:23px; margin:0; letter-spacing:-.02em; text-transform:uppercase; line-height:1.05; text-wrap:balance}
 .brand p{margin:3px 0 0; font-size:12.5px; color:var(--ink-2); font-weight:700}
 .mast-tools{display:flex; align-items:center; gap:9px; flex-wrap:wrap}
@@ -164,7 +167,7 @@ b{font-weight:800}
 .statusbar .stat{font-family:var(--f-mono); font-size:12px; color:var(--ink-2); white-space:nowrap; font-weight:500}
 .statusbar .stat b{color:var(--ink); font-weight:700}
 
-.qcard{background:var(--card); border:var(--bw) solid var(--line); border-radius:22px; box-shadow:var(--pop); overflow:hidden}
+.qcard{position:relative; background:var(--card); border:var(--bw) solid var(--line); border-radius:22px; box-shadow:var(--pop); overflow:hidden}
 .qhead{display:flex; align-items:center; gap:12px; flex-wrap:wrap; padding:15px 22px; background:var(--gc,var(--paper)); border-bottom:var(--bw) solid var(--line)}
 .qnum{font-family:var(--f-display); font-size:27px; letter-spacing:-.03em; color:var(--ink); line-height:1}
 .qmeta{display:flex; flex-direction:column; min-width:0}
@@ -173,8 +176,18 @@ b{font-weight:800}
 .tag{margin-left:auto; font-family:var(--f-mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; border:2px solid var(--line); border-radius:9px; padding:4px 10px; color:var(--ink); background:var(--card); font-weight:500}
 .qbody{padding:24px 22px 20px}
 .qtext{font-size:19px; line-height:1.6; margin:0 0 20px; max-width:60ch; text-wrap:pretty; font-weight:600}
-.qtext b{font-weight:800; color:var(--ink); background:var(--g1); border:2px solid var(--line); padding:0 6px; border-radius:7px}
+.qtext b{font-weight:800; color:var(--ink); background:var(--g1); border:2px solid var(--line); padding:2px 8px; border-radius:8px; display:inline-block; line-height:1.25}
+.qtext b .frac,.qtext b .mixed .frac{font-size:.88em}
 .hintline{font-family:var(--f-mono); font-size:13px; color:var(--ink-2); font-weight:500}
+
+/* proper maths fractions: numerator over denominator, mixed numbers beside them */
+.frac{display:inline-block; vertical-align:middle; text-align:center; font-size:.78em; line-height:1.12; margin:0 .1em; position:relative; top:-.06em}
+.frac .n{display:block; padding:0 .3em}
+.frac .d{display:block; padding:0 .3em; border-top:.09em solid currentColor; margin-top:.05em}
+.mixed{display:inline-block; vertical-align:middle; white-space:nowrap}
+.mixed .w{margin-right:.12em}
+.opt .frac,.fb-head .frac{font-size:.8em}
+.steps .frac{font-size:.8em}
 
 .opts{display:grid; gap:11px; max-width:600px}
 .opt{display:flex; align-items:center; gap:13px; width:100%; text-align:left;
@@ -239,8 +252,51 @@ b{font-weight:800}
 .brow .bar i{position:relative; display:block; height:100%; background:var(--accent)}
 .review{display:flex; flex-wrap:wrap; gap:9px; margin-top:14px}
 .hidden{display:none !important}
+.brand p .by{font-family:var(--f-display); font-size:12.5px; letter-spacing:-.01em; text-transform:uppercase; color:var(--ink)}
+.licence{display:flex; gap:15px; align-items:center; margin-top:26px; padding:15px 17px; background:var(--paper); border:var(--bw) solid var(--line); border-radius:16px}
+.licence .mk{flex:none; width:78px; font-family:var(--f-display); font-size:12px; line-height:1.15; text-transform:uppercase; letter-spacing:-.01em; text-align:center;
+  background:var(--g4); border:2px solid var(--line); border-radius:11px; padding:10px 4px; box-shadow:2px 2px 0 var(--line)}
+.licence p{margin:0; font-size:13.5px; line-height:1.5; color:var(--ink-2); font-weight:600}
+.licence p b{color:var(--ink); font-weight:800}
+@media (max-width:520px){.licence{flex-direction:column; align-items:flex-start; gap:12px}}
 footer{margin-top:26px; padding-top:16px; border-top:2.5px dashed var(--line-soft); font-size:12.5px; color:var(--ink-2); display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; font-weight:700}
-@media (prefers-reduced-motion:reduce){*{transition:none !important; animation:none !important}}
+
+/* ---------- motion ---------- */
+@keyframes cardIn{from{opacity:0; transform:translateY(12px) scale(.985)} to{opacity:1; transform:none}}
+@keyframes popIn{0%{opacity:0; transform:scale(.9) rotate(-2deg)} 60%{opacity:1; transform:scale(1.02) rotate(.6deg)} 100%{transform:none}}
+@keyframes stampIn{0%{opacity:0; transform:scale(2.3) rotate(-20deg)} 55%{opacity:1; transform:scale(.9) rotate(5deg)} 100%{transform:none}}
+@keyframes shakeX{10%,90%{transform:translateX(-3px)} 20%,80%{transform:translateX(4px)} 30%,50%,70%{transform:translateX(-7px)} 40%,60%{transform:translateX(7px)}}
+@keyframes riseIn{from{opacity:0; transform:translateY(16px)} to{opacity:1; transform:none}}
+@keyframes burst{0%{opacity:1; transform:translate(0,0) rotate(0deg) scale(1)} 100%{opacity:0; transform:translate(var(--tx),var(--ty)) rotate(var(--rot)) scale(.35)}}
+@keyframes drift{0%,100%{transform:translateY(0) rotate(var(--rot0,0deg))} 50%{transform:translateY(-9px) rotate(var(--rot1,0deg))}}
+@keyframes fillBar{from{width:0}}
+
+.qcard.anim-in{animation:cardIn .3s cubic-bezier(.2,.9,.3,1) both}
+.feedback{animation:popIn .34s cubic-bezier(.2,.9,.3,1) both}
+.fb-head .mark{animation:stampIn .5s cubic-bezier(.2,1.2,.4,1) both}
+.shake{animation:shakeX .42s both}
+.cell{animation:riseIn .42s cubic-bezier(.2,.9,.3,1) both; animation-delay:calc(var(--i,0)*45ms)}
+.brow{animation:riseIn .42s cubic-bezier(.2,.9,.3,1) both; animation-delay:calc(var(--i,0)*45ms)}
+.brow .bar i{transition:width .85s cubic-bezier(.2,.85,.25,1)}
+.chip.is-correct,.chip.is-wrong{animation:popIn .3s cubic-bezier(.2,1.1,.4,1) both}
+.seal{transition:transform .2s cubic-bezier(.2,1.3,.4,1)}
+.seal:hover{transform:rotate(-7deg) scale(1.05)}
+.track i{animation:fillBar .6s cubic-bezier(.2,.85,.25,1)}
+.deco .dots{--rot0:0deg; --rot1:2deg; animation:drift 11s ease-in-out infinite}
+.deco .tri{--rot0:-14deg; --rot1:-7deg; animation:drift 9s ease-in-out infinite}
+.deco .ring{animation:drift 13s ease-in-out infinite .6s}
+.deco .blob{animation:drift 8s ease-in-out infinite .3s}
+.deco .wave{animation:drift 12s ease-in-out infinite .9s}
+.deco .bar{--rot0:24deg; --rot1:31deg; animation:drift 10s ease-in-out infinite .4s}
+
+/* the little paper burst when an answer is right */
+.burst{position:absolute; left:0; top:0; width:100%; height:0; pointer-events:none; overflow:visible; z-index:3}
+.burst b{position:absolute; left:50%; top:0; width:11px; height:11px; border:2px solid var(--line); border-radius:3px;
+  animation:burst .9s cubic-bezier(.15,.7,.4,1) both}
+.burst b:nth-child(3n){border-radius:99px}
+.burst b:nth-child(4n){width:7px; height:15px}
+
+@media (prefers-reduced-motion:reduce){*{transition:none !important; animation:none !important}.burst{display:none}}
 @media (max-width:520px){
   .qbody{padding:20px 15px 18px} .qhead{padding:14px 15px} .qtext{font-size:17.5px}
   .hero{padding:24px 18px} .score-hero{padding:24px 18px}
@@ -254,10 +310,10 @@ footer{margin-top:26px; padding-top:16px; border-top:2.5px dashed var(--line-sof
 <div class="wrap">
   <div class="mast">
     <div class="brand">
-      <div class="seal">G6<br>MATH</div>
+      <div class="seal" title="Bright EngMath">BE</div>
       <div>
         <h1>Decimals &amp; Ratio Workbook</h1>
-        <p>Grade 6 · English Programme · Units 5–6</p>
+        <p><span class="by">Bright EngMath</span> · Grade 6 English Programme · Units 5–6</p>
       </div>
     </div>
     <div class="mast-tools">
@@ -289,9 +345,13 @@ footer{margin-top:26px; padding-top:16px; border-top:2.5px dashed var(--line-sof
         <button class="btn btn-lg" id="pickBtn" type="button">Pick a question</button>
         <p class="note" id="resumeNote"></p>
       </div>
+      <div class="licence">
+        <span class="mk">Bright<br>EngMath</span>
+        <p><b>Made by Bright EngMath.</b> Licensed for one teacher and their own classroom or tutoring group. Please do not resell it, share the file, or post it on a public website. Extra licences are available from the shop you bought this from.</p>
+      </div>
     </div>
     <footer>
-      <span>Answers and worked solutions checked question by question.</span>
+      <span>© 2026 Bright EngMath · All rights reserved</span>
       <span class="mono">UNITS 5–6 · 60 QUESTIONS</span>
     </footer>
   </section>
@@ -317,7 +377,7 @@ footer{margin-top:26px; padding-top:16px; border-top:2.5px dashed var(--line-sof
       </div>
     </div>
     <footer>
-      <span>Press <span class="mono">Enter</span> to check, <span class="mono">→</span> for the next question.</span>
+      <span>© 2026 Bright EngMath · Press <span class="mono">Enter</span> to check, <span class="mono">→</span> for next</span>
       <span class="mono" id="footPos">Q1 / 60</span>
     </footer>
   </section>
@@ -338,6 +398,10 @@ footer{margin-top:26px; padding-top:16px; border-top:2.5px dashed var(--line-sof
         <button class="btn btn-lg" id="backBtn" type="button">Back to questions</button>
       </div>
     </div>
+    <footer>
+      <span>© 2026 Bright EngMath · All rights reserved</span>
+      <span class="mono">UNITS 5–6 · 60 QUESTIONS</span>
+    </footer>
   </section>
 </div>
 
@@ -395,8 +459,8 @@ const QUESTIONS = [
   ],
   "suffix": "",
   "explain": [
-   "Make the denominator 100: 25 × 4 = 100, so multiply the top by 4 too.",
-   "3/25 = (3 × 4)/(25 × 4) = 12/100.",
+   "Make the denominator 100: 25 × 4 = 100.",
+   "Multiply the top by 4 as well: 3 × 4 = 12, so 3/25 = 12/100.",
    "12/100 = <b>0.12</b>."
   ],
   "tip": "If the denominator divides into 10, 100 or 1000, scale it up instead of dividing."
@@ -1483,6 +1547,7 @@ const GROUPS = [
 ];
 
 let state = { idx:0, results:{}, picked:{}, typed:{} };
+let lastIdx = null, justChecked = null;
 
 /* ---------- storage (best effort) ---------- */
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
@@ -1493,6 +1558,18 @@ function load(){
     if(s && typeof s.idx === "number" && s.results) return s;
   }catch(e){}
   return null;
+}
+
+/* ---------- maths typesetting ---------- */
+function fx(t){
+  if(t == null) return t;
+  return String(t)
+    // mixed number: whole number followed by a fraction
+    .replace(/(?<![\d.\/])(\d+)\s+(\d+)\s*\/\s*(\d+)(?!\d)/g,
+      (m,w,n,d) => `<span class="mixed"><span class="w">${w}</span><span class="frac"><span class="n">${n}</span><span class="d">${d}</span></span></span>`)
+    // plain fraction
+    .replace(/(?<![\d.\/])(\d+)\s*\/\s*(\d+)(?!\d)/g,
+      (m,n,d) => `<span class="frac"><span class="n">${n}</span><span class="d">${d}</span></span>`);
 }
 
 /* ---------- answer checking ---------- */
@@ -1561,7 +1638,7 @@ function render(){
       if(answered && i === q.answer) flag = `<span class="flag">Correct</span>`;
       else if(answered && picked === i) flag = `<span class="flag">Your answer</span>`;
       return `<button class="${cls}" type="button" data-pick="${i}" ${answered ? "disabled" : ""}>
-        <span class="k">${LETTERS[i]}</span><span>${o}</span>${flag}</button>`;
+        <span class="k">${LETTERS[i]}</span><span>${fx(o)}</span>${flag}</button>`;
     }).join("") + `</div>`;
   } else {
     const mark = answered ? (done ? " mark-good" : " mark-bad") : "";
@@ -1575,7 +1652,7 @@ function render(){
 
   let fb = "";
   if(answered){
-    const shown = q.type === "mcq" ? `${LETTERS[q.answer]} · ${q.options[q.answer]}` : `${q.answer[0]}${q.suffix ? " " + q.suffix : ""}`;
+    const shown = q.type === "mcq" ? `${LETTERS[q.answer]} · ${fx(q.options[q.answer])}` : `${fx(q.answer[0])}${q.suffix ? " " + q.suffix : ""}`;
     const tone = done === true ? "good" : (done === false ? "bad" : "neutral");
     const head = done === true ? `<span class="mark">✓</span><span>Correct — well done.</span>`
                                : `<span class="mark">✕</span><span>Not quite. Follow the working below.</span>`;
@@ -1583,8 +1660,8 @@ function render(){
       <div class="fb-head">${head}<span class="ans">Answer: ${shown}</span></div>
       <div class="fb-body">
         <h4>How to work it out</h4>
-        <ol class="steps">${q.explain.map(s => `<li><span>${s}</span></li>`).join("")}</ol>
-        <div class="watch"><span class="lbl">Watch out</span><span>${q.tip}</span></div>
+        <ol class="steps">${q.explain.map(s => `<li><span>${fx(s)}</span></li>`).join("")}</ol>
+        <div class="watch"><span class="lbl">Watch out</span><span>${fx(q.tip)}</span></div>
       </div>
     </div>`;
   }
@@ -1596,7 +1673,7 @@ function render(){
       <span class="tag">${q.type === "mcq" ? "Multiple choice" : "Write the answer"}</span>
     </div>
     <div class="qbody">
-      <p class="qtext">${q.q}</p>
+      <p class="qtext">${fx(q.q)}</p>
       ${answerHTML}
       ${fb}
       <div class="actions">
@@ -1621,8 +1698,41 @@ function render(){
   document.getElementById("prevBtn").onclick = () => go(state.idx-1);
   document.getElementById("nextBtn").onclick = () => go(state.idx+1);
 
+  if(lastIdx !== state.idx){
+    lastIdx = state.idx;
+    qcard.classList.remove("anim-in"); void qcard.offsetWidth; qcard.classList.add("anim-in");
+  }
+  if(justChecked === q.id){
+    justChecked = null;
+    if(state.results[q.id]) burst();
+    else {
+      const t = qcard.querySelector(".opt.mark-bad") || qcard.querySelector(".fill");
+      if(t){ t.classList.remove("shake"); void t.offsetWidth; t.classList.add("shake"); }
+    }
+  }
   document.getElementById("footPos").textContent = `Q${q.id} / 60`;
   paintRail(); paintStatus();
+}
+
+function burst(){
+  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const fb = qcard.querySelector(".feedback"); if(!fb) return;
+  const wrap = document.createElement("span");
+  wrap.className = "burst";
+  wrap.style.top = (fb.offsetTop + 22) + "px";
+  const tints = ["--g2","--g3","--g5","--g6","--g7","--accent"];
+  for(let i = 0; i < 14; i++){
+    const b = document.createElement("b");
+    const a = (Math.PI * (i + 0.5)) / 14, r = 90 + Math.random()*70;
+    b.style.setProperty("--tx", (-Math.cos(a)*r).toFixed(0) + "px");
+    b.style.setProperty("--ty", (-Math.sin(a)*r*0.75 - 10).toFixed(0) + "px");
+    b.style.setProperty("--rot", Math.round(-180 + Math.random()*360) + "deg");
+    b.style.background = `var(${tints[i % tints.length]})`;
+    b.style.animationDelay = (i * 12) + "ms";
+    wrap.appendChild(b);
+  }
+  qcard.appendChild(wrap);
+  setTimeout(() => wrap.remove(), 1300);
 }
 
 function check(){
@@ -1641,7 +1751,7 @@ function check(){
     if(v === ""){ const i = document.getElementById("fillInput"); if(i) i.focus(); return; }
     ok = isRight(v, q.answer);
   }
-  state.results[q.id] = ok; save(); render();
+  state.results[q.id] = ok; justChecked = q.id; save(); render();
   const fbEl = qcard.querySelector(".feedback");
   if(fbEl) fbEl.scrollIntoView({behavior:"smooth", block:"nearest"});
 }
@@ -1676,11 +1786,22 @@ function show(name){
   window.scrollTo({top:0, behavior:"auto"});
 }
 
+function countUp(el, to, outOf){
+  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches || to === 0){
+    el.innerHTML = `${to}<small>/${outOf}</small>`; return;
+  }
+  const dur = 700, t0 = performance.now();
+  (function step(t){
+    const k = Math.min(1, (t-t0)/dur), e = 1 - Math.pow(1-k, 3);
+    el.innerHTML = `${Math.round(to*e)}<small>/${outOf}</small>`;
+    if(k < 1) requestAnimationFrame(step);
+  })(t0);
+}
 function results(){
   const keys = Object.keys(state.results);
   const right = keys.filter(k => state.results[k] === true).length;
   const done = keys.length;
-  document.getElementById("scoreBig").innerHTML = `${right}<small>/${done || 60}</small>`;
+
   const pct = done ? Math.round(right/done*100) : 0;
   let msg;
   if(done === 0) msg = "You have not answered anything yet — go back and try a question.";
@@ -1690,18 +1811,22 @@ function results(){
   else msg = `${pct}% correct out of the ${done} question${done===1?"":"s"} you answered. Do not worry — open each question again and follow the worked solution step by step.`;
   document.getElementById("verdict").textContent = msg;
 
-  document.getElementById("breakdown").innerHTML = GROUPS.map(g => {
+  document.getElementById("breakdown").innerHTML = GROUPS.map((g,gi) => {
     const qs = QUESTIONS.filter(q => q.topic === g.name);
     const at = qs.filter(q => state.results[q.id] !== undefined);
     const ok = qs.filter(q => state.results[q.id] === true).length;
     const w = ok/qs.length*100;
     const seen = at.length ? at.length/qs.length*100 : 0;
-    return `<div class="brow" style="--gc:var(--${g.c})">
+    return `<div class="brow" style="--gc:var(--${g.c}); --i:${gi}">
       <span class="nm"><span>Unit ${g.unit}</span>${g.label}</span>
-      <span class="bar"><u style="width:${seen}%"></u><i style="width:${w}%"></i></span>
+      <span class="bar"><u style="width:${seen}%"></u><i data-w="${w}" style="width:0%"></i></span>
       <span class="sc">${ok}<em style="font-style:normal;color:var(--ink-3)">/${qs.length}</em></span>
     </div>`;
   }).join("");
+
+  requestAnimationFrame(() => document.querySelectorAll("#breakdown .bar i")
+    .forEach(el => { el.style.width = el.dataset.w + "%"; }));
+  countUp(document.getElementById("scoreBig"), right, done || 60);
 
   const wrong = QUESTIONS.filter(q => state.results[q.id] === false);
   document.getElementById("reviewWrap").classList.toggle("hidden", wrong.length === 0);
@@ -1745,9 +1870,9 @@ document.addEventListener("keydown", e => {
 });
 
 buildRail();
-document.getElementById("cells").innerHTML = GROUPS.map(g => {
+document.getElementById("cells").innerHTML = GROUPS.map((g,i) => {
   const qs = QUESTIONS.filter(q => q.topic === g.name);
-  return `<button class="cell" type="button" style="--gc:var(--${g.c})" data-go="${qs[0].id}">
+  return `<button class="cell" type="button" style="--gc:var(--${g.c}); --i:${i}" data-go="${qs[0].id}">
     <span class="u">Unit ${g.unit}</span>
     <span class="t">${g.label}</span>
     <span class="n">${qs.length}<em>questions</em></span>

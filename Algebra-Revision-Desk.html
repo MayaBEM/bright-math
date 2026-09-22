@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Algebra Revision Desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+:root{
+  --paper:#F7F4EC;
+  --grid:#E6E1D4;
+  --panel:#FFFFFF;
+  --ink:#1A2130;
+  --ink-soft:#5C6577;
+  --ink-faint:#8B93A3;
+  --rule:#DCD7C9;
+  --navy:#2F4A7C;
+  --navy-tint:#EAEFF7;
+  --amber:#B8801A;
+  --amber-tint:#FBF2DF;
+  --pine:#276B4E;
+  --pine-tint:#E6F1EA;
+  --brick:#A3392A;
+  --brick-tint:#FAEAE6;
+  --shadow:0 1px 0 rgba(26,33,48,.05), 0 8px 24px -18px rgba(26,33,48,.45);
+  --radius:6px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background-color:var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size:26px 26px;
+  color:var(--ink);
+  font-family:"Source Serif 4", Georgia, "Times New Roman", serif;
+  font-size:17px;
+  line-height:1.6;
+  -webkit-text-size-adjust:100%;
+}
+.mono{font-family:"IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace}
+h1,h2,h3,.ui{font-family:"Archivo", "Helvetica Neue", Arial, sans-serif}
+.eyebrow{
+  font-family:"Archivo", Arial, sans-serif; font-size:11.5px; font-weight:700;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--ink-faint);
+}
+
+/* ---------- shell ---------- */
+.wrap{max-width:1180px; margin:0 auto; padding-inline:16px; padding-block:0}
+
+/* ---------- masthead ---------- */
+header.mast{
+  background:var(--ink); color:#fff; border-bottom:3px solid var(--navy);
+}
+.mast .wrap{padding-block:22px 20px}
+.mast .row{display:flex; flex-wrap:wrap; gap:18px; align-items:flex-end; justify-content:space-between}
+.mast .eyebrow{color:rgba(255,255,255,.62)}
+.mast h1{
+  font-size:clamp(26px,4.6vw,40px); font-weight:800; letter-spacing:-.02em;
+  margin:6px 0 0; line-height:1.08; text-wrap:balance;
+}
+.mast p.lede{
+  margin:8px 0 0; max-width:54ch; color:rgba(255,255,255,.78); font-size:15.5px; line-height:1.55;
+}
+.brandmark{
+  font-family:"Archivo",Arial,sans-serif; font-size:12px; font-weight:700; letter-spacing:.1em;
+  text-transform:uppercase; color:#fff; border:1.5px solid rgba(255,255,255,.35);
+  padding:7px 11px; border-radius:4px; white-space:nowrap;
+}
+
+/* ---------- progress strip ---------- */
+.strip{background:var(--panel); border-bottom:1px solid var(--rule); position:sticky; top:0; z-index:20}
+.strip .wrap{display:flex; align-items:center; gap:16px; flex-wrap:wrap; padding-block:11px}
+.meter{flex:1 1 220px; min-width:180px}
+.meter .bar{height:8px; background:#EDEAE1; border-radius:99px; overflow:hidden}
+.meter .fill{height:100%; width:0%; background:var(--navy); border-radius:99px; transition:width .25s ease}
+.meter .cap{
+  display:flex; justify-content:space-between; gap:12px; margin-top:6px;
+  font-family:"Archivo",Arial,sans-serif; font-size:12px; font-weight:600; color:var(--ink-soft);
+  font-variant-numeric:tabular-nums;
+}
+.scorechip{
+  font-family:"IBM Plex Mono",monospace; font-size:13px; font-weight:600;
+  background:var(--pine-tint); color:var(--pine); border:1px solid #C4DFD1;
+  padding:5px 10px; border-radius:4px; white-space:nowrap;
+}
+
+/* ---------- layout ---------- */
+.cols{display:grid; grid-template-columns:238px minmax(0,1fr); gap:26px; padding-block:26px 44px; align-items:start}
+@media (max-width:860px){ .cols{grid-template-columns:1fr; gap:18px} }
+
+/* ---------- navigator ---------- */
+.nav{
+  background:var(--panel); border:1px solid var(--rule); border-radius:var(--radius);
+  box-shadow:var(--shadow); padding:16px 15px 15px; position:sticky; top:74px;
+}
+@media (max-width:860px){ .nav{position:static} }
+.nav h2{font-size:13px; letter-spacing:.14em; text-transform:uppercase; margin:0 0 4px; color:var(--ink-faint); font-weight:700}
+.nav .hint{font-size:13px; color:var(--ink-soft); margin:0 0 13px; line-height:1.45}
+.topicgroup + .topicgroup{margin-top:13px}
+.topicgroup .tname{
+  font-family:"Archivo",Arial,sans-serif; font-size:11.5px; font-weight:700; color:var(--ink);
+  display:flex; align-items:center; gap:7px; margin-bottom:6px;
+}
+.tdot{width:9px; height:9px; border-radius:2px; flex:none}
+.qgrid{display:grid; grid-template-columns:repeat(6,1fr); gap:5px}
+@media (max-width:860px){ .qgrid{grid-template-columns:repeat(10,minmax(0,1fr))} }
+@media (max-width:420px){ .qgrid{grid-template-columns:repeat(6,minmax(0,1fr))} }
+.qbtn{
+  font-family:"IBM Plex Mono",monospace; font-size:13px; font-weight:600;
+  aspect-ratio:1/1; min-height:30px; display:flex; align-items:center; justify-content:center;
+  border:1.5px solid var(--rule); background:#FCFBF8; color:var(--ink-soft);
+  border-radius:4px; cursor:pointer; padding:0; transition:transform .1s ease;
+}
+.qbtn:hover{border-color:var(--navy); color:var(--navy)}
+.qbtn:focus-visible{outline:2.5px solid var(--navy); outline-offset:2px}
+.qbtn.done{background:var(--pine-tint); border-color:#B6D8C6; color:var(--pine)}
+.qbtn.miss{background:var(--brick-tint); border-color:#E7C3BB; color:var(--brick)}
+.qbtn.here{border-color:var(--ink); border-width:2.5px; color:var(--ink); background:#fff}
+.legend{display:flex; flex-wrap:wrap; gap:10px 14px; margin-top:14px; padding-top:12px; border-top:1px solid var(--rule)}
+.legend span{display:flex; align-items:center; gap:6px; font-family:"Archivo",Arial,sans-serif; font-size:11.5px; color:var(--ink-soft)}
+.lswatch{width:13px; height:13px; border-radius:3px; border:1.5px solid var(--rule); background:#FCFBF8}
+.lswatch.ok{background:var(--pine-tint); border-color:#B6D8C6}
+.lswatch.no{background:var(--brick-tint); border-color:#E7C3BB}
+
+/* ---------- question card ---------- */
+.card{
+  background:var(--panel); border:1px solid var(--rule); border-radius:var(--radius);
+  box-shadow:var(--shadow); overflow:hidden;
+}
+.card .top{
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  padding:14px 22px; border-bottom:1px solid var(--rule); background:#FCFBF8;
+}
+.qnum{
+  font-family:"Archivo",Arial,sans-serif; font-weight:800; font-size:22px; letter-spacing:-.01em;
+  font-variant-numeric:tabular-nums;
+}
+.qnum small{font-size:13px; font-weight:600; color:var(--ink-faint)}
+.tpill{
+  font-family:"Archivo",Arial,sans-serif; font-size:11.5px; font-weight:700; letter-spacing:.06em;
+  text-transform:uppercase; padding:5px 10px; border-radius:99px; border:1.5px solid currentColor;
+}
+.card .body{padding:24px 22px 22px}
+.stem{font-size:18.5px; line-height:1.55; margin:0 0 18px; text-wrap:pretty}
+.stem .mono{font-size:17.5px; background:#F4F2EA; padding:1px 5px; border-radius:3px}
+.figure{margin:0 0 18px; padding:14px; background:#FBFAF6; border:1px solid var(--rule); border-radius:4px; overflow-x:auto}
+.figure svg{display:block; margin:0 auto; max-width:100%; height:auto}
+
+/* ---------- options ---------- */
+.opts{display:grid; gap:9px; margin:0 0 4px}
+.opt{
+  display:flex; align-items:flex-start; gap:13px; width:100%; text-align:left;
+  padding:13px 15px; border:1.5px solid var(--rule); background:var(--panel);
+  border-radius:5px; cursor:pointer; font-family:inherit; font-size:17px; color:var(--ink);
+  line-height:1.45; transition:border-color .12s ease, background .12s ease;
+}
+.opt:hover:not(:disabled){border-color:var(--navy); background:var(--navy-tint)}
+.opt:focus-visible{outline:2.5px solid var(--navy); outline-offset:2px}
+.opt:disabled{cursor:default}
+.tag{
+  flex:none; width:27px; height:27px; border-radius:4px; display:flex; align-items:center;
+  justify-content:center; font-family:"Archivo",Arial,sans-serif; font-weight:700; font-size:13px;
+  background:#F1EEE6; color:var(--ink-soft); border:1.5px solid var(--rule);
+}
+.opt .txt{padding-top:2px}
+.opt.correct{border-color:var(--pine); background:var(--pine-tint)}
+.opt.correct .tag{background:var(--pine); color:#fff; border-color:var(--pine)}
+.opt.wrong{border-color:var(--brick); background:var(--brick-tint)}
+.opt.wrong .tag{background:var(--brick); color:#fff; border-color:var(--brick)}
+.opt.dim{opacity:.55}
+.verdict{
+  margin-left:auto; align-self:center; font-family:"Archivo",Arial,sans-serif; font-weight:700;
+  font-size:12px; letter-spacing:.06em; text-transform:uppercase; white-space:nowrap;
+}
+
+/* ---------- feedback ---------- */
+.fb{margin-top:18px; border-left:4px solid var(--navy); background:#FAF9F4; border-radius:0 5px 5px 0; padding:15px 17px}
+.fb.good{border-left-color:var(--pine)}
+.fb.bad{border-left-color:var(--brick)}
+.fb .head{
+  font-family:"Archivo",Arial,sans-serif; font-weight:800; font-size:15px; margin:0 0 7px;
+  display:flex; align-items:center; gap:9px; flex-wrap:wrap;
+}
+.fb .head .mark{font-size:18px; line-height:1}
+.fb p{margin:0 0 9px; font-size:16.5px; line-height:1.55}
+.fb p:last-child{margin-bottom:0}
+.fb .work{
+  font-family:"IBM Plex Mono",monospace; font-size:15px; line-height:1.85; background:#fff;
+  border:1px solid var(--rule); border-radius:4px; padding:11px 13px; margin:0 0 9px;
+  white-space:pre-wrap; overflow-x:auto;
+}
+.trap{font-size:15.5px; color:var(--ink-soft)}
+.trap b{color:var(--brick)}
+
+/* ---------- controls ---------- */
+.controls{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:22px}
+.btn{
+  font-family:"Archivo",Arial,sans-serif; font-weight:700; font-size:15px; letter-spacing:.01em;
+  padding:11px 20px; border-radius:5px; border:1.5px solid var(--ink); background:var(--ink);
+  color:#fff; cursor:pointer; transition:transform .1s ease, opacity .12s ease;
+}
+.btn:hover:not(:disabled){transform:translateY(-1px)}
+.btn:focus-visible{outline:2.5px solid var(--navy); outline-offset:3px}
+.btn.ghost{background:transparent; color:var(--ink); border-color:var(--rule)}
+.btn.ghost:hover:not(:disabled){border-color:var(--ink)}
+.btn:disabled{opacity:.42; cursor:not-allowed; transform:none}
+.btn.finish{background:var(--pine); border-color:var(--pine)}
+.spacer{flex:1 1 auto}
+.leftnote{
+  font-family:"Archivo",Arial,sans-serif; font-size:13px; font-weight:600; color:var(--amber);
+  background:var(--amber-tint); border:1px solid #EBD9AE; padding:7px 11px; border-radius:4px;
+}
+.leftnote.ready{color:var(--pine); background:var(--pine-tint); border-color:#C4DFD1}
+
+/* ---------- results ---------- */
+.result .body{padding:26px 22px 24px}
+.bignum{
+  font-family:"Archivo",Arial,sans-serif; font-weight:800; font-size:clamp(46px,9vw,68px);
+  line-height:1; letter-spacing:-.03em; font-variant-numeric:tabular-nums;
+}
+.bignum span{font-size:.42em; color:var(--ink-faint); font-weight:700}
+.gradeline{font-size:17px; color:var(--ink-soft); margin:10px 0 0; max-width:56ch}
+.breakdown{margin-top:26px; display:grid; gap:13px}
+.brow{display:grid; grid-template-columns:minmax(0,1fr) 62px; gap:12px; align-items:center}
+.brow .bname{font-family:"Archivo",Arial,sans-serif; font-size:14px; font-weight:600}
+.brow .btrack{height:9px; background:#EDEAE1; border-radius:99px; overflow:hidden; margin-top:6px}
+.brow .bfill{height:100%; border-radius:99px}
+.brow .bscore{font-family:"IBM Plex Mono",monospace; font-size:14px; font-weight:600; text-align:right; font-variant-numeric:tabular-nums}
+.review{margin-top:26px; padding-top:20px; border-top:1px solid var(--rule)}
+.review h3{margin:0 0 4px; font-size:16px; font-weight:800}
+.review p.sub{margin:0 0 13px; font-size:15px; color:var(--ink-soft)}
+.misslist{display:flex; flex-wrap:wrap; gap:7px}
+.misslist button{
+  font-family:"IBM Plex Mono",monospace; font-size:13.5px; font-weight:600; cursor:pointer;
+  background:var(--brick-tint); color:var(--brick); border:1.5px solid #E7C3BB;
+  padding:7px 12px; border-radius:4px;
+}
+.misslist button:hover{border-color:var(--brick)}
+.misslist button:focus-visible{outline:2.5px solid var(--brick); outline-offset:2px}
+.allgood{
+  font-family:"Archivo",Arial,sans-serif; font-weight:700; color:var(--pine);
+  background:var(--pine-tint); border:1px solid #C4DFD1; border-radius:5px; padding:13px 15px; font-size:15px;
+}
+
+/* ---------- footer ---------- */
+footer.foot{border-top:1px solid var(--rule); background:var(--panel)}
+.foot .wrap{
+  padding-block:18px; display:flex; flex-wrap:wrap; gap:10px 20px; align-items:center;
+  justify-content:space-between; font-size:13.5px; color:var(--ink-soft);
+}
+.foot b{font-family:"Archivo",Arial,sans-serif; color:var(--ink); letter-spacing:.04em}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition:none !important; animation:none !important}
+  .btn:hover:not(:disabled){transform:none}
+}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="wrap">
+    <div class="row">
+      <div>
+        <div class="eyebrow">Stage 7 / Year 7 &nbsp;·&nbsp; Revision set</div>
+        <h1>Algebra Revision Desk</h1>
+        <p class="lede">Thirty questions across five topics. Answer them in any order &mdash; every answer is
+        marked the moment you choose it, with the working shown. Finish all thirty to see your score.</p>
+      </div>
+      <div class="brandmark">Bright EngMath</div>
+    </div>
+  </div>
+</header>
+
+<div class="strip">
+  <div class="wrap">
+    <div class="meter">
+      <div class="bar"><div class="fill" id="fill"></div></div>
+      <div class="cap"><span id="capLeft">0 of 30 answered</span><span id="capRight">30 to go</span></div>
+    </div>
+    <div class="scorechip" id="scoreChip">Score 0 / 0</div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="cols">
+
+    <aside class="nav" aria-label="Question navigator">
+      <h2>All questions</h2>
+      <p class="hint">Tap any number to jump. You can do them in any order.</p>
+      <div id="navGroups"></div>
+      <div class="legend">
+        <span><i class="lswatch"></i> Not done</span>
+        <span><i class="lswatch ok"></i> Correct</span>
+        <span><i class="lswatch no"></i> Wrong</span>
+      </div>
+    </aside>
+
+    <main>
+      <section class="card" id="qCard">
+        <div class="top">
+          <div class="qnum" id="qNum">1 <small>/ 30</small></div>
+          <div class="tpill" id="qTopic">Topic</div>
+        </div>
+        <div class="body">
+          <p class="stem" id="qStem"></p>
+          <div id="qFigure"></div>
+          <div class="opts" id="qOpts"></div>
+          <div id="qFeedback"></div>
+          <div class="controls">
+            <button class="btn ghost" id="btnPrev">&larr; Previous</button>
+            <button class="btn ghost" id="btnNext">Next &rarr;</button>
+            <div class="spacer"></div>
+            <div class="leftnote" id="leftNote">30 questions left</div>
+            <button class="btn finish" id="btnFinish" disabled>Finish &amp; see results</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="card result" id="resultCard" hidden>
+        <div class="top">
+          <div class="qnum">Results</div>
+          <div class="tpill" id="resPill">Complete</div>
+        </div>
+        <div class="body">
+          <div class="bignum" id="resScore">0 <span>/ 30</span></div>
+          <p class="gradeline" id="resLine"></p>
+          <div class="breakdown" id="resBreak"></div>
+          <div class="review">
+            <h3>Questions to go back to</h3>
+            <p class="sub" id="resSub">Tap a number to reread the question and its working.</p>
+            <div id="resMiss"></div>
+          </div>
+          <div class="controls">
+            <button class="btn" id="btnBack">Back to questions</button>
+            <button class="btn ghost" id="btnRestart">Start again</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+  </div>
+</div>
+
+<footer class="foot">
+  <div class="wrap">
+    <span><b>Bright EngMath</b> &nbsp;·&nbsp; Algebra Revision Desk &nbsp;·&nbsp; Stage 7 / Year 7</span>
+    <span>Writing expressions &nbsp;·&nbsp; Substitution &nbsp;·&nbsp; Brackets &nbsp;·&nbsp; Equations &nbsp;·&nbsp; Inequalities</span>
+  </div>
+</footer>
+
+<script>
+/* ------------------------------------------------------------------ topics */
+var TOPICS = {
+  expr:  {name:"Writing Expressions",   short:"Writing Expressions",   color:"#2F4A7C"},
+  sub:   {name:"Substitution & Formulae", short:"Substitution",        color:"#276B4E"},
+  brk:   {name:"Expanding Brackets",    short:"Expanding Brackets",    color:"#B8801A"},
+  eqn:   {name:"Solving Equations",     short:"Solving Equations",     color:"#A3392A"},
+  ineq:  {name:"Inequalities",          short:"Inequalities",          color:"#6B4C9A"}
+};
+
+/* -------------------------------------------------- number-line SVG helper */
+function numline(lo, hi, mark, dir, closed){
+  var W = 420, PAD = 30, Y = 34, n = hi - lo, step = (W - 2*PAD) / n, p = [];
+  p.push('<svg viewBox="0 0 '+W+' 62" width="'+W+'" role="img" aria-label="Number line from '+lo+' to '+hi+'">');
+  p.push('<line x1="'+(PAD-14)+'" y1="'+Y+'" x2="'+(W-PAD+14)+'" y2="'+Y+'" stroke="#1A2130" stroke-width="1.6" fill="none"/>');
+  for (var i=0; i<=n; i++){
+    var x = PAD + i*step, v = lo + i;
+    p.push('<line x1="'+x.toFixed(1)+'" y1="'+(Y-6)+'" x2="'+x.toFixed(1)+'" y2="'+(Y+6)+'" stroke="#1A2130" stroke-width="1.3" fill="none"/>');
+    p.push('<text x="'+x.toFixed(1)+'" y="'+(Y+23)+'" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="13" fill="#1A2130">'+(v<0?"−"+Math.abs(v):v)+'</text>');
+  }
+  if (mark !== null && mark !== undefined){
+    var mx = PAD + (mark - lo)*step;
+    if (dir === "gt"){
+      p.push('<line x1="'+mx.toFixed(1)+'" y1="'+Y+'" x2="'+(W-PAD+8)+'" y2="'+Y+'" stroke="#2F4A7C" stroke-width="3.4" fill="none"/>');
+      p.push('<polygon points="'+(W-PAD+16)+','+Y+' '+(W-PAD+4)+','+(Y-5.5)+' '+(W-PAD+4)+','+(Y+5.5)+'" fill="#2F4A7C"/>');
+    } else if (dir === "lt"){
+      p.push('<line x1="'+(PAD-8)+'" y1="'+Y+'" x2="'+mx.toFixed(1)+'" y2="'+Y+'" stroke="#2F4A7C" stroke-width="3.4" fill="none"/>');
+      p.push('<polygon points="'+(PAD-16)+','+Y+' '+(PAD-4)+','+(Y-5.5)+' '+(PAD-4)+','+(Y+5.5)+'" fill="#2F4A7C"/>');
+    }
+    p.push('<circle cx="'+mx.toFixed(1)+'" cy="'+Y+'" r="5.6" fill="'+(closed?"#2F4A7C":"#FFFFFF")+'" stroke="#2F4A7C" stroke-width="2.2"/>');
+  }
+  p.push('</svg>');
+  return '<div class="figure">'+p.join("")+'</div>';
+}
+
+/* ---------------------------------------------------------------- the 30 Q */
+var Q = [
+/* ---- Writing Algebraic Expressions ---- */
+{t:"expr", stem:'Which expression means <b>7 more than <span class="mono">n</span></b>?',
+ opts:['<span class="mono">n + 7</span>','<span class="mono">7n</span>','<span class="mono">7 &minus; n</span>','<span class="mono">n &minus; 7</span>'], a:0,
+ work:"7 more than n\n= n + 7",
+ why:"“More than” means add, and adding does not change which number comes first.",
+ trap:"<b>7n</b> means 7 <i>times</i> n, and <b>7 &minus; n</b> takes n away from 7 — the other way round."},
+
+{t:"expr", stem:'A number <span class="mono">y</span> is multiplied by 4, and then 3 is subtracted. Write the expression.',
+ opts:['<span class="mono">4y &minus; 3</span>','<span class="mono">4(y &minus; 3)</span>','<span class="mono">3 &minus; 4y</span>','<span class="mono">4 + y &minus; 3</span>'], a:0,
+ work:"multiply by 4  →  4y\nthen subtract 3  →  4y − 3",
+ why:"Do the steps in the order they are written: multiply first, then subtract.",
+ trap:"<b>4(y &minus; 3)</b> subtracts 3 <i>first</i>, which is a different instruction."},
+
+{t:"expr", stem:'Sofia has <span class="mono">p</span> sweets. She gives 5 away, then shares the rest equally between 3 friends. How many does each friend get?',
+ opts:['<span class="mono">(p &minus; 5) &divide; 3</span>','<span class="mono">p &divide; 3 &minus; 5</span>','<span class="mono">(p + 5) &divide; 3</span>','<span class="mono">p &minus; 5 &divide; 3</span>'], a:0,
+ work:"sweets left   = p − 5\nshared by 3   = (p − 5) ÷ 3",
+ why:"The subtraction happens before the sharing, so it needs brackets to keep it first.",
+ trap:"Without brackets, <b>p &minus; 5 &divide; 3</b> divides only the 5, because &divide; comes before &minus;."},
+
+{t:"expr", stem:'A rectangle is <span class="mono">m</span> cm long and <span class="mono">(m &minus; 2)</span> cm wide. Write an expression for its <b>perimeter</b>.',
+ opts:['<span class="mono">4m &minus; 4</span>','<span class="mono">2m &minus; 2</span>','<span class="mono">m&sup2; &minus; 2m</span>','<span class="mono">4m &minus; 2</span>'], a:0,
+ work:"P = 2(m) + 2(m − 2)\n  = 2m + 2m − 4\n  = 4m − 4",
+ why:"A rectangle has two lengths and two widths, so double each one and add.",
+ trap:"<b>m&sup2; &minus; 2m</b> is the <i>area</i>. Perimeter adds sides; area multiplies them."},
+
+{t:"expr", stem:'Write: <b>the product of 3 and the sum of <span class="mono">x</span> and 8</b>.',
+ opts:['<span class="mono">3(x + 8)</span>','<span class="mono">3x + 8</span>','<span class="mono">3 + x + 8</span>','<span class="mono">24x</span>'], a:0,
+ work:"the sum of x and 8   →  (x + 8)\nproduct of 3 and it  →  3(x + 8)",
+ why:"“Product” means multiply, and the whole sum is what gets multiplied — so it needs brackets.",
+ trap:"<b>3x + 8</b> multiplies only the x. The brackets are what make the 8 get multiplied too."},
+
+{t:"expr", stem:'Tickets cost $9 each. There is also a $12 booking fee on the whole order. Write the cost of <span class="mono">t</span> tickets.',
+ opts:['<span class="mono">9t + 12</span>','<span class="mono">9(t + 12)</span>','<span class="mono">12t + 9</span>','<span class="mono">9t &minus; 12</span>'], a:0,
+ work:"tickets      = 9 × t = 9t\nbooking fee  = 12  (once)\ntotal        = 9t + 12",
+ why:"The fee is charged once for the order, so it is added on at the end, not multiplied by t.",
+ trap:"<b>9(t + 12)</b> would charge the $12 fee on every single ticket."},
+
+/* ---- Substitution & Formulae ---- */
+{t:"sub", stem:'When <span class="mono">a = 5</span> and <span class="mono">b = &minus;3</span>, work out <span class="mono">2a + b</span>.',
+ opts:['<span class="mono">7</span>','<span class="mono">13</span>','<span class="mono">4</span>','<span class="mono">&minus;7</span>'], a:0,
+ work:"2a + b\n= 2 × 5 + (−3)\n= 10 − 3\n= 7",
+ why:"Adding a negative number is the same as subtracting, so 10 + (&minus;3) = 7.",
+ trap:"<b>13</b> comes from adding 3 instead of subtracting it — the minus sign belongs to b."},
+
+{t:"sub", stem:'Use the formula <span class="mono">v = u + at</span> with <span class="mono">u = 4</span>, <span class="mono">a = 3</span> and <span class="mono">t = 6</span>.',
+ opts:['<span class="mono">22</span>','<span class="mono">42</span>','<span class="mono">13</span>','<span class="mono">24</span>'], a:0,
+ work:"v = u + at\n  = 4 + 3 × 6\n  = 4 + 18\n  = 22",
+ why:"<span class=\"mono\">at</span> means a &times; t, and multiplication is done before the addition.",
+ trap:"<b>42</b> comes from adding first: (4 + 3) &times; 6. There are no brackets, so multiply first."},
+
+{t:"sub", stem:'When <span class="mono">x = &minus;2</span>, work out <span class="mono">x&sup2; + 5</span>.',
+ opts:['<span class="mono">9</span>','<span class="mono">1</span>','<span class="mono">&minus;9</span>','<span class="mono">25</span>'], a:0,
+ work:"x² = (−2) × (−2) = 4\nx² + 5 = 4 + 5 = 9",
+ why:"A negative number squared is positive, because a negative times a negative is a positive.",
+ trap:"<b>1</b> comes from writing x&sup2; as &minus;4. Square the whole of &minus;2, sign included."},
+
+{t:"sub", stem:'The perimeter of a rectangle is <span class="mono">P = 2(l + w)</span>. Find <span class="mono">P</span> when <span class="mono">l = 7.5</span> and <span class="mono">w = 3.2</span>.',
+ opts:['<span class="mono">21.4</span>','<span class="mono">10.7</span>','<span class="mono">20.4</span>','<span class="mono">24</span>'], a:0,
+ work:"P = 2(l + w)\n  = 2(7.5 + 3.2)\n  = 2 × 10.7\n  = 21.4",
+ why:"Work out the bracket first, then double it.",
+ trap:"<b>10.7</b> is the bracket on its own — the &times; 2 has been forgotten."},
+
+{t:"sub", stem:'The area of a triangle is <span class="mono">A = &frac12; &times; b &times; h</span>. If <span class="mono">A = 36</span> and <span class="mono">b = 9</span>, find <span class="mono">h</span>.',
+ opts:['<span class="mono">8</span>','<span class="mono">4</span>','<span class="mono">72</span>','<span class="mono">162</span>'], a:0,
+ work:"36 = ½ × 9 × h\n72 = 9 × h        (× 2 both sides)\n h = 72 ÷ 9 = 8",
+ why:"Undo the formula one step at a time: first the &frac12;, then the 9.",
+ trap:"<b>4</b> comes from 36 &divide; 9, which forgets the &frac12; completely."},
+
+{t:"sub", stem:'To change &deg;F to &deg;C: <span class="mono">C = 5(F &minus; 32) &divide; 9</span>. Find <span class="mono">C</span> when <span class="mono">F = 68</span>.',
+ opts:['<span class="mono">20</span>','<span class="mono">34.2</span>','<span class="mono">36</span>','<span class="mono">100</span>'], a:0,
+ work:"C = 5(68 − 32) ÷ 9\n  = 5 × 36 ÷ 9\n  = 180 ÷ 9\n  = 20",
+ why:"The bracket comes first, then multiply by 5, then divide by 9.",
+ trap:"<b>34.2</b> comes from (5 &times; 68 &minus; 32) &divide; 9 — the 5 was multiplied before the bracket was done."},
+
+/* ---- Expanding Brackets ---- */
+{t:"brk", stem:'Expand <span class="mono">3(x + 4)</span>.',
+ opts:['<span class="mono">3x + 12</span>','<span class="mono">3x + 4</span>','<span class="mono">x + 12</span>','<span class="mono">3x + 7</span>'], a:0,
+ work:"3 × x = 3x\n3 × 4 = 12\n→ 3x + 12",
+ why:"The 3 outside multiplies <i>every</i> term inside the bracket.",
+ trap:"<b>3x + 4</b> forgets to multiply the 4. Both terms get multiplied, not just the first."},
+
+{t:"brk", stem:'Expand <span class="mono">5(2y &minus; 3)</span>.',
+ opts:['<span class="mono">10y &minus; 15</span>','<span class="mono">10y &minus; 3</span>','<span class="mono">7y &minus; 8</span>','<span class="mono">10y + 15</span>'], a:0,
+ work:"5 × 2y = 10y\n5 × (−3) = −15\n→ 10y − 15",
+ why:"Multiply both terms, and carry the minus sign through with the 3.",
+ trap:"<b>7y &minus; 8</b> adds 5 to each term instead of multiplying."},
+
+{t:"brk", stem:'Expand <span class="mono">&minus;2(a + 6)</span>.',
+ opts:['<span class="mono">&minus;2a &minus; 12</span>','<span class="mono">&minus;2a + 12</span>','<span class="mono">2a &minus; 12</span>','<span class="mono">&minus;2a + 6</span>'], a:0,
+ work:"−2 × a = −2a\n−2 × 6 = −12\n→ −2a − 12",
+ why:"A negative outside the bracket multiplies both terms, so both answers are negative.",
+ trap:"<b>&minus;2a + 12</b> changes the sign of the second term for no reason — &minus;2 &times; 6 is &minus;12, not +12."},
+
+{t:"brk", stem:'Expand <span class="mono">x(x + 7)</span>.',
+ opts:['<span class="mono">x&sup2; + 7x</span>','<span class="mono">2x + 7</span>','<span class="mono">x&sup2; + 7</span>','<span class="mono">8x</span>'], a:0,
+ work:"x × x = x²\nx × 7 = 7x\n→ x² + 7x",
+ why:"A letter outside the bracket multiplies just like a number does, and x &times; x is x&sup2;.",
+ trap:"<b>x&sup2; + 7</b> forgets to multiply the 7 by x."},
+
+{t:"brk", stem:'Expand and simplify <span class="mono">4(n + 2) + 3(n &minus; 1)</span>.',
+ opts:['<span class="mono">7n + 5</span>','<span class="mono">7n + 11</span>','<span class="mono">7n &minus; 5</span>','<span class="mono">12n + 5</span>'], a:0,
+ work:"4(n + 2) = 4n + 8\n3(n − 1) = 3n − 3\nadd:  4n + 3n = 7n\n      8 − 3 = 5\n→ 7n + 5",
+ why:"Expand each bracket first, then collect the n terms and the numbers separately.",
+ trap:"<b>7n + 11</b> adds 8 and 3 instead of subtracting — the second bracket gives &minus;3."},
+
+{t:"brk", stem:'Expand and simplify <span class="mono">6(2k &minus; 1) &minus; 2(k + 4)</span>.',
+ opts:['<span class="mono">10k &minus; 14</span>','<span class="mono">10k + 2</span>','<span class="mono">10k &minus; 2</span>','<span class="mono">14k &minus; 14</span>'], a:0,
+ work:"6(2k − 1) = 12k − 6\n−2(k + 4)  = −2k − 8\nadd:  12k − 2k = 10k\n      −6 − 8 = −14\n→ 10k − 14",
+ why:"The minus in front of the second bracket multiplies both terms inside it, so +4 becomes &minus;8.",
+ trap:"<b>10k + 2</b> keeps the +8, which happens when the minus is only applied to the first term."},
+
+/* ---- Solving Equations ---- */
+{t:"eqn", stem:'Solve <span class="mono">x + 9 = 17</span>.',
+ opts:['<span class="mono">x = 8</span>','<span class="mono">x = 26</span>','<span class="mono">x = &minus;8</span>','<span class="mono">x = 9</span>'], a:0,
+ work:"x + 9 = 17\n    −9   −9\n    x = 8\ncheck: 8 + 9 = 17 ✓",
+ why:"The 9 is added to x, so undo it by subtracting 9 from both sides.",
+ trap:"<b>x = 26</b> adds 9 instead of subtracting. Always do the <i>opposite</i> of what the equation does."},
+
+{t:"eqn", stem:'Solve <span class="mono">5y = 45</span>.',
+ opts:['<span class="mono">y = 9</span>','<span class="mono">y = 40</span>','<span class="mono">y = 225</span>','<span class="mono">y = 50</span>'], a:0,
+ work:"5y = 45\n ÷5  ÷5\n  y = 9\ncheck: 5 × 9 = 45 ✓",
+ why:"<span class=\"mono\">5y</span> means 5 &times; y, so undo it by dividing both sides by 5.",
+ trap:"<b>y = 40</b> subtracts 5. But 5y is a multiplication, so it is undone by dividing."},
+
+{t:"eqn", stem:'Solve <span class="mono">3n &minus; 7 = 20</span>.',
+ opts:['<span class="mono">n = 9</span>','<span class="mono">n = 27</span>','<span class="mono">n = 13</span>','<span class="mono">n = 4</span>'], a:0,
+ work:"3n − 7 = 20\n     +7   +7\n    3n = 27\n    ÷3   ÷3\n     n = 9\ncheck: 3 × 9 − 7 = 20 ✓",
+ why:"Undo the subtraction first, then the multiplication — the reverse of the order they were done in.",
+ trap:"<b>n = 27</b> stops one step early: 3n = 27 still has to be divided by 3."},
+
+{t:"eqn", stem:'Solve <span class="mono">x &divide; 4 + 2 = 10</span>.',
+ opts:['<span class="mono">x = 32</span>','<span class="mono">x = 48</span>','<span class="mono">x = 3</span>','<span class="mono">x = 2</span>'], a:0,
+ work:"x ÷ 4 + 2 = 10\n        −2   −2\n    x ÷ 4 = 8\n      ×4    ×4\n        x = 32\ncheck: 32 ÷ 4 + 2 = 10 ✓",
+ why:"Take the 2 away first, then multiply by 4 to undo the division.",
+ trap:"<b>x = 48</b> multiplies by 4 before taking the 2 away, which multiplies the 2 as well."},
+
+{t:"eqn", stem:'Solve <span class="mono">2(p + 5) = 24</span>.',
+ opts:['<span class="mono">p = 7</span>','<span class="mono">p = 12</span>','<span class="mono">p = 17</span>','<span class="mono">p = 2</span>'], a:0,
+ work:"2(p + 5) = 24\n    ÷2      ÷2\n  p + 5 = 12\n     −5    −5\n      p = 7\ncheck: 2(7 + 5) = 24 ✓",
+ why:"Divide both sides by 2 first, which removes the bracket in one step.",
+ trap:"<b>p = 7</b> can also be reached by expanding: 2p + 10 = 24. <b>p = 12</b> stops before subtracting the 5."},
+
+{t:"eqn", stem:'Solve <span class="mono">4m + 3 = m + 18</span>.',
+ opts:['<span class="mono">m = 5</span>','<span class="mono">m = 3</span>','<span class="mono">m = 15</span>','<span class="mono">m = 7</span>'], a:0,
+ work:"4m + 3 = m + 18\n −m       −m\n3m + 3 = 18\n    −3   −3\n    3m = 15\n    ÷3   ÷3\n     m = 5\ncheck: 4(5) + 3 = 23  and  5 + 18 = 23 ✓",
+ why:"Take the smaller letter term off both sides first, so all the m ends up on one side.",
+ trap:"<b>m = 15</b> forgets the last step: 3m = 15 still needs dividing by 3."},
+
+/* ---- Inequalities & Number Lines ---- */
+{t:"ineq", stem:'Which statement says <b><span class="mono">x</span> is greater than 4</b>?',
+ opts:['<span class="mono">x &gt; 4</span>','<span class="mono">x &lt; 4</span>','<span class="mono">x &ge; 4</span>','<span class="mono">4 &gt; x</span>'], a:0,
+ work:"x > 4\nthe wide end of the sign faces the bigger side",
+ why:"The open, wider end of the symbol always faces the larger quantity — here that is x.",
+ trap:"<b>4 &gt; x</b> says 4 is the bigger one, which is the opposite. <b>x &ge; 4</b> also allows x to equal 4."},
+
+{t:"ineq", stem:'Solve <span class="mono">x + 3 &lt; 10</span>.',
+ opts:['<span class="mono">x &lt; 7</span>','<span class="mono">x &lt; 13</span>','<span class="mono">x &gt; 7</span>','<span class="mono">x &le; 7</span>'], a:0,
+ work:"x + 3 < 10\n   −3    −3\n    x < 7",
+ why:"Solve it exactly like an equation. Adding or subtracting never changes the direction of the sign.",
+ trap:"<b>x &le; 7</b> would include 7 itself, but the original sign is &lt;, so 7 is not allowed.",
+ fig:function(){ return numline(4,10,7,"lt",false); }},
+
+{t:"ineq", stem:'Solve <span class="mono">2x &ge; 14</span>.',
+ opts:['<span class="mono">x &ge; 7</span>','<span class="mono">x &ge; 28</span>','<span class="mono">x &gt; 7</span>','<span class="mono">x &le; 7</span>'], a:0,
+ work:"2x ≥ 14\n÷2    ÷2\n x ≥ 7",
+ why:"Dividing both sides by a <i>positive</i> number keeps the sign pointing the same way.",
+ trap:"<b>x &gt; 7</b> drops the “or equal to”. The sign was &ge;, so x = 7 is part of the answer.",
+ fig:function(){ return numline(4,10,7,"gt",true); }},
+
+{t:"ineq", stem:'What is the <b>largest whole number</b> that satisfies <span class="mono">n &lt; 6</span>?',
+ opts:['<span class="mono">5</span>','<span class="mono">6</span>','<span class="mono">7</span>','<span class="mono">5.9</span>'], a:0,
+ work:"n < 6  means n can be 5, 4, 3, …\nn cannot be 6 itself\nlargest whole number = 5",
+ why:"The sign is &lt;, not &le;, so 6 is excluded and the next whole number down is the largest.",
+ trap:"<b>5.9</b> is larger than 5 and does satisfy n &lt; 6, but the question asks for a <i>whole</i> number."},
+
+{t:"ineq", stem:'Which inequality is shown on this number line?',
+ opts:['<span class="mono">x &gt; &minus;2</span>','<span class="mono">x &ge; &minus;2</span>','<span class="mono">x &lt; &minus;2</span>','<span class="mono">x &le; &minus;2</span>'], a:0,
+ work:"open circle  →  the number itself is NOT included\narrow to the right  →  greater than\n→ x > −2",
+ why:"An empty circle means “not included”, so the sign is &gt; rather than &ge;.",
+ trap:"<b>x &ge; &minus;2</b> would be drawn with a <i>filled</i> circle.",
+ fig:function(){ return numline(-5,3,-2,"gt",false); }},
+
+{t:"ineq", stem:'Solve <span class="mono">3x &minus; 4 &le; 11</span>.',
+ opts:['<span class="mono">x &le; 5</span>','<span class="mono">x &le; 15</span>','<span class="mono">x &ge; 5</span>','<span class="mono">x &lt; 5</span>'], a:0,
+ work:"3x − 4 ≤ 11\n     +4    +4\n    3x ≤ 15\n    ÷3    ÷3\n     x ≤ 5",
+ why:"Two steps, both of them safe: add 4, then divide by 3. Neither flips the sign.",
+ trap:"<b>x &le; 15</b> stops at 3x &le; 15 without dividing by 3.",
+ fig:function(){ return numline(2,8,5,"lt",true); }}
+];
+
+/* --------------------------------------------------------- option shuffle */
+/* The answer is authored first in every list, so the options are reordered
+   once at load. The seed is fixed, so the order is the same on every visit and
+   a saved answer still points at the same option. */
+(function shuffleOptions(){
+  function rnd(seed){ var s = seed * 9301 + 49297; return (s % 233280) / 233280; }
+  Q.forEach(function(q, qi){
+    var idx = q.opts.map(function(_, j){ return j; });
+    for(var k = idx.length - 1; k > 0; k--){
+      var j = Math.floor(rnd((qi + 1) * 149 + k * 61) * (k + 1));
+      var tmp = idx[k]; idx[k] = idx[j]; idx[j] = tmp;
+    }
+    q.opts = idx.map(function(o){ return q.opts[o]; });
+    q.a = idx.indexOf(q.a);
+  });
+})();
+
+/* ------------------------------------------------------------------- state */
+var KEY = "bem-algebra-revision-v1";
+var state = {cur:0, picked:new Array(Q.length).fill(null)};
+
+function load(){
+  try{
+    var raw = localStorage.getItem(KEY);
+    if(!raw) return;
+    var s = JSON.parse(raw);
+    if(s && Array.isArray(s.picked) && s.picked.length === Q.length){
+      state.picked = s.picked;
+      state.cur = (typeof s.cur === "number" && s.cur >= 0 && s.cur < Q.length) ? s.cur : 0;
+    }
+  }catch(e){}
+}
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+}
+
+function answeredCount(){ var c=0; for(var i=0;i<Q.length;i++){ if(state.picked[i]!==null) c++; } return c; }
+function correctCount(){ var c=0; for(var i=0;i<Q.length;i++){ if(state.picked[i]!==null && state.picked[i]===Q[i].a) c++; } return c; }
+
+/* --------------------------------------------------------------- elements */
+var el = {
+  fill:document.getElementById("fill"),
+  capLeft:document.getElementById("capLeft"),
+  capRight:document.getElementById("capRight"),
+  scoreChip:document.getElementById("scoreChip"),
+  navGroups:document.getElementById("navGroups"),
+  qCard:document.getElementById("qCard"),
+  qNum:document.getElementById("qNum"),
+  qTopic:document.getElementById("qTopic"),
+  qStem:document.getElementById("qStem"),
+  qFigure:document.getElementById("qFigure"),
+  qOpts:document.getElementById("qOpts"),
+  qFeedback:document.getElementById("qFeedback"),
+  btnPrev:document.getElementById("btnPrev"),
+  btnNext:document.getElementById("btnNext"),
+  btnFinish:document.getElementById("btnFinish"),
+  leftNote:document.getElementById("leftNote"),
+  resultCard:document.getElementById("resultCard"),
+  resScore:document.getElementById("resScore"),
+  resLine:document.getElementById("resLine"),
+  resBreak:document.getElementById("resBreak"),
+  resMiss:document.getElementById("resMiss"),
+  btnBack:document.getElementById("btnBack"),
+  btnRestart:document.getElementById("btnRestart")
+};
+
+/* -------------------------------------------------------------- navigator */
+function buildNav(){
+  var order = ["expr","sub","brk","eqn","ineq"], html = "";
+  order.forEach(function(key){
+    var idx = [];
+    for(var i=0;i<Q.length;i++){ if(Q[i].t === key) idx.push(i); }
+    html += '<div class="topicgroup">'
+          +   '<div class="tname"><i class="tdot" style="background:'+TOPICS[key].color+'"></i>'+TOPICS[key].short+'</div>'
+          +   '<div class="qgrid">'
+          +     idx.map(function(i){
+                  return '<button type="button" class="qbtn" data-go="'+i+'" id="nav'+i+'" aria-label="Question '+(i+1)+'">'+(i+1)+'</button>';
+                }).join("")
+          +   '</div>'
+          + '</div>';
+  });
+  el.navGroups.innerHTML = html;
+  el.navGroups.addEventListener("click", function(ev){
+    var b = ev.target.closest("[data-go]");
+    if(b){ go(parseInt(b.getAttribute("data-go"),10)); }
+  });
+}
+
+function paintNav(){
+  for(var i=0;i<Q.length;i++){
+    var b = document.getElementById("nav"+i);
+    if(!b) continue;
+    b.className = "qbtn";
+    if(state.picked[i] !== null){ b.classList.add(state.picked[i] === Q[i].a ? "done" : "miss"); }
+    if(i === state.cur){ b.classList.add("here"); }
+  }
+}
+
+/* ---------------------------------------------------------------- render */
+function render(){
+  var i = state.cur, q = Q[i], T = TOPICS[q.t];
+
+  el.qNum.innerHTML = (i+1) + ' <small>/ ' + Q.length + '</small>';
+  el.qTopic.textContent = T.name;
+  el.qTopic.style.color = T.color;
+  el.qStem.innerHTML = q.stem;
+  el.qFigure.innerHTML = q.fig ? q.fig() : "";
+
+  var picked = state.picked[i], done = picked !== null;
+  var letters = ["A","B","C","D"];
+  el.qOpts.innerHTML = q.opts.map(function(o, j){
+    var cls = "opt", extra = "";
+    if(done){
+      if(j === q.a){ cls += " correct"; extra = '<span class="verdict" style="color:var(--pine)">Correct answer</span>'; }
+      else if(j === picked){ cls += " wrong"; extra = '<span class="verdict" style="color:var(--brick)">Your answer</span>'; }
+      else{ cls += " dim"; }
+    }
+    return '<button type="button" class="'+cls+'" data-pick="'+j+'"'+(done?' disabled':'')+'>'
+         +   '<span class="tag">'+letters[j]+'</span>'
+         +   '<span class="txt">'+o+'</span>'+extra
+         + '</button>';
+  }).join("");
+
+  if(done){
+    var right = picked === q.a;
+    el.qFeedback.innerHTML =
+        '<div class="fb '+(right?"good":"bad")+'">'
+      +   '<p class="head"><span class="mark">'+(right?"✓":"✗")+'</span>'
+      +      (right ? "Correct" : "Not quite — here is the working")+'</p>'
+      +   '<div class="work">'+q.work+'</div>'
+      +   '<p>'+q.why+'</p>'
+      +   (q.trap ? '<p class="trap">'+q.trap+'</p>' : '')
+      + '</div>';
+  } else {
+    el.qFeedback.innerHTML = "";
+  }
+
+  el.btnPrev.disabled = (i === 0);
+  el.btnNext.disabled = (i === Q.length - 1);
+  paintNav();
+  paintProgress();
+}
+
+function paintProgress(){
+  var n = answeredCount(), c = correctCount(), left = Q.length - n;
+  el.fill.style.width = (n / Q.length * 100) + "%";
+  el.capLeft.textContent = n + " of " + Q.length + " answered";
+  el.capRight.textContent = left === 0 ? "All done" : (left + " to go");
+  el.scoreChip.textContent = "Score " + c + " / " + n;
+  el.btnFinish.disabled = (left > 0);
+  el.leftNote.textContent = left === 0
+      ? "All 30 answered — you can finish"
+      : (left === 1 ? "1 question left" : left + " questions left");
+  el.leftNote.className = "leftnote" + (left === 0 ? " ready" : "");
+}
+
+/* --------------------------------------------------------------- actions */
+function go(i){
+  if(i < 0 || i >= Q.length) return;
+  state.cur = i;
+  el.resultCard.hidden = true;
+  el.qCard.hidden = false;
+  save();
+  render();
+  el.qCard.scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+el.qOpts.addEventListener("click", function(ev){
+  var b = ev.target.closest("[data-pick]");
+  if(!b || b.disabled) return;
+  if(state.picked[state.cur] !== null) return;
+  state.picked[state.cur] = parseInt(b.getAttribute("data-pick"),10);
+  save();
+  render();
+});
+
+el.btnPrev.addEventListener("click", function(){ go(state.cur - 1); });
+el.btnNext.addEventListener("click", function(){ go(state.cur + 1); });
+
+el.btnFinish.addEventListener("click", function(){
+  if(answeredCount() < Q.length) return;
+  showResults();
+});
+
+el.btnBack.addEventListener("click", function(){
+  el.resultCard.hidden = true;
+  el.qCard.hidden = false;
+  render();
+  el.qCard.scrollIntoView({behavior:"smooth", block:"start"});
+});
+
+el.btnRestart.addEventListener("click", function(){
+  if(!confirm("Clear all 30 answers and start again?")) return;
+  state.picked = new Array(Q.length).fill(null);
+  state.cur = 0;
+  save();
+  el.resultCard.hidden = true;
+  el.qCard.hidden = false;
+  render();
+  window.scrollTo({top:0, behavior:"smooth"});
+});
+
+/* --------------------------------------------------------------- results */
+function showResults(){
+  var c = correctCount(), pct = Math.round(c / Q.length * 100);
+  el.resScore.innerHTML = c + ' <span>/ ' + Q.length + '</span>';
+
+  var line;
+  if(pct >= 90)      line = "Excellent — " + pct + "%. You are secure across all five topics. Move on to mixed exam questions.";
+  else if(pct >= 75) line = "Strong work — " + pct + "%. Look at the topic bars below and give the weakest one one more pass.";
+  else if(pct >= 50) line = "A solid start — " + pct + "%. Reread the working on the ones you missed, then use Start again.";
+  else               line = pct + "%. Go back through the working on each question you missed — the method matters more than the score right now.";
+  el.resLine.textContent = line;
+
+  var order = ["expr","sub","brk","eqn","ineq"];
+  el.resBreak.innerHTML = order.map(function(key){
+    var tot = 0, got = 0;
+    for(var i=0;i<Q.length;i++){
+      if(Q[i].t !== key) continue;
+      tot++;
+      if(state.picked[i] === Q[i].a) got++;
+    }
+    var w = tot ? (got / tot * 100) : 0;
+    return '<div class="brow">'
+         +   '<div>'
+         +     '<div class="bname">'+TOPICS[key].name+'</div>'
+         +     '<div class="btrack"><div class="bfill" style="width:'+w+'%;background:'+TOPICS[key].color+'"></div></div>'
+         +   '</div>'
+         +   '<div class="bscore">'+got+' / '+tot+'</div>'
+         + '</div>';
+  }).join("");
+
+  var miss = [];
+  for(var i=0;i<Q.length;i++){ if(state.picked[i] !== Q[i].a) miss.push(i); }
+  if(miss.length === 0){
+    el.resMiss.innerHTML = '<div class="allgood">Nothing to go back to — all thirty correct.</div>';
+  } else {
+    el.resMiss.innerHTML = '<div class="misslist">' + miss.map(function(i){
+      return '<button type="button" data-go="'+i+'">Q'+(i+1)+' · '+TOPICS[Q[i].t].short+'</button>';
+    }).join("") + '</div>';
+    el.resMiss.querySelectorAll("[data-go]").forEach(function(b){
+      b.addEventListener("click", function(){ go(parseInt(b.getAttribute("data-go"),10)); });
+    });
+  }
+
+  el.qCard.hidden = true;
+  el.resultCard.hidden = false;
+  el.resultCard.scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+/* ------------------------------------------------------------------ boot */
+load();
+buildNav();
+render();
+
+document.addEventListener("keydown", function(ev){
+  if(ev.target.tagName === "INPUT" || ev.target.tagName === "TEXTAREA") return;
+  if(ev.key === "ArrowLeft"  && state.cur > 0)            go(state.cur - 1);
+  if(ev.key === "ArrowRight" && state.cur < Q.length - 1) go(state.cur + 1);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ratio &amp; Percentage Review Kitchen · Bright EngMath</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Nunito:wght@500;700;800&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBF6EC; --card:#FFFDF8; --ink:#2E2320; --ink2:#5E4E47; --line:#E9DFCC;
+  --tomato:#D9482E; --tomato-soft:#FBE2DA; --sage:#5F8A55; --sage-soft:#E3EEDC;
+  --butter:#F2C14E; --butter-soft:#FCF0CC; --sky:#6FA6C0; --sky-soft:#DDEDF4; --cocoa:#8A5A3C;
+  --r:12px;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:"Nunito",system-ui,sans-serif;font-size:17px;line-height:1.55;
+  background-image:radial-gradient(rgba(138,90,60,.07) 1px,transparent 1px);background-size:18px 18px}
+h1,h2,h3{font-family:"Fraunces",Georgia,serif;line-height:1.15;margin:0}
+button{font-family:inherit}
+.gingham{height:14px;background-color:var(--card);
+  background-image:linear-gradient(90deg,rgba(217,72,46,.55) 50%,transparent 50%),linear-gradient(rgba(217,72,46,.55) 50%,transparent 50%);
+  background-size:20px 20px;opacity:.9;border-bottom:2px solid var(--ink)}
+header.top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;max-width:1080px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}
+.brand .mark{width:34px;height:34px;border-radius:50%;background:var(--tomato);color:#fff;display:grid;place-items:center;border:2px solid var(--ink);font-family:Fraunces,serif;font-size:15px}
+.brand small{display:block;font-weight:700;color:var(--ink2);font-size:12px;letter-spacing:.8px;text-transform:uppercase}
+.navbtns{display:flex;gap:8px;flex-wrap:wrap}
+main{max-width:1080px;margin:0 auto;padding:8px 20px 40px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:10px 20px;border-radius:10px;border:2px solid var(--ink);
+  background:var(--tomato);color:#fff;font-weight:800;font-size:16px;cursor:pointer;box-shadow:0 3px 0 var(--ink);transition:transform .12s,box-shadow .12s}
+.btn:hover{transform:translateY(-1px);box-shadow:0 4px 0 var(--ink)}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
+.btn:focus-visible,.opt:focus-visible,.tab:focus-visible,input:focus-visible,.dot:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
+.btn.ghost{background:var(--card);color:var(--ink)}
+.btn.sage{background:var(--sage)}
+.btn.small{min-height:38px;padding:6px 14px;font-size:14px}
+.btn[disabled]{opacity:.45;cursor:not-allowed;transform:none;box-shadow:0 3px 0 var(--ink)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.25fr 1fr;gap:28px;align-items:center;margin:18px 0 26px}
+.eyebrow{font-weight:800;color:var(--tomato);text-transform:uppercase;letter-spacing:1.4px;font-size:13px}
+.hero h1{font-size:clamp(34px,5.4vw,56px);margin:6px 0 12px}
+.hero h1 em{font-style:normal;color:var(--tomato)}
+.hero p.lead{font-size:18px;color:var(--ink2);margin:0 0 18px;max-width:34em}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.meta span{background:var(--card);border:1.5px solid var(--ink);border-radius:999px;padding:3px 12px;font-size:14px;font-weight:700}
+.recipe{background:var(--card);border:2px solid var(--ink);border-radius:var(--r);padding:18px 20px 16px;position:relative;
+  background-image:linear-gradient(transparent 31px,var(--line) 32px);background-size:100% 32px;background-position:0 52px;box-shadow:6px 6px 0 var(--butter)}
+.recipe:before{content:"";position:absolute;left:0;right:0;top:48px;border-top:2px solid var(--tomato)}
+.recipe h3{font-size:20px;height:36px}
+.recipe ul{margin:12px 0 0;padding-left:22px;line-height:32px;font-size:16px}
+.hand{font-family:"Caveat",cursive;font-size:24px;color:var(--cocoa)}
+
+/* topic cards */
+.sectionhead{display:flex;justify-content:space-between;align-items:end;gap:10px;margin:8px 0 12px;flex-wrap:wrap}
+.sectionhead h2{font-size:26px}
+.overall{font-weight:800;color:var(--ink2)}
+.grid5{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.tcard{background:var(--card);border:2px solid var(--ink);border-radius:var(--r);padding:16px 18px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden}
+.tcard .tab-strip{position:absolute;left:0;top:0;bottom:0;width:8px}
+.tcard .num{font-family:Fraunces,serif;font-weight:800;font-size:14px;color:var(--ink2)}
+.tcard h3{font-size:21px}
+.tcard .pages{font-size:14px;color:var(--ink2);font-weight:700}
+.tcard p{margin:0;font-size:15px;color:var(--ink2)}
+.bar{height:10px;border-radius:99px;background:var(--line);overflow:hidden;border:1.5px solid var(--ink)}
+.bar i{display:block;height:100%;background:var(--sage);transition:width .4s}
+.tcard .row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:14px;font-weight:700}
+.tcard .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
+.testcard{grid-column:1/-1;background:var(--ink);color:#FFF6E6;border-color:var(--ink);flex-direction:row;align-items:center;justify-content:space-between;flex-wrap:wrap;
+  box-shadow:6px 6px 0 var(--tomato)}
+.testcard h3{color:#fff;font-size:24px}
+.testcard p{color:#E9DCCB}
+.testcard .btn{background:var(--butter);color:var(--ink)}
+
+/* topic page */
+.crumbs{margin:6px 0 10px;font-weight:700;font-size:15px}
+.crumbs a{color:var(--tomato);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.pagehead{display:flex;justify-content:space-between;gap:16px;align-items:end;flex-wrap:wrap;margin-bottom:14px}
+.pagehead h2{font-size:clamp(26px,4vw,36px)}
+.tabs{display:flex;gap:6px;border-bottom:2px solid var(--ink);margin-bottom:18px;flex-wrap:wrap}
+.tab{border:2px solid var(--ink);border-bottom:none;border-radius:10px 10px 0 0;background:var(--line);padding:9px 18px;font-weight:800;font-size:15px;cursor:pointer;color:var(--ink);margin-bottom:-2px}
+.tab[aria-selected=true]{background:var(--card);border-bottom:2px solid var(--card)}
+.panel{background:var(--card);border:2px solid var(--ink);border-radius:var(--r);padding:22px clamp(16px,3vw,30px)}
+.lesson h3{font-size:22px;margin:20px 0 8px}
+.lesson h3:first-child{margin-top:0}
+.lesson p{margin:6px 0}
+.keybox{background:var(--butter-soft);border:2px solid var(--ink);border-radius:10px;padding:12px 16px;margin:12px 0}
+.keybox b.k{display:block;font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--cocoa)}
+.watch{background:var(--tomato-soft);border-left:6px solid var(--tomato);border-radius:8px;padding:10px 14px;margin:12px 0}
+.worked{border:2px dashed var(--cocoa);border-radius:10px;padding:12px 16px;margin:12px 0;background:#fff}
+.worked ol{margin:6px 0;padding-left:22px}
+.fig{display:flex;justify-content:center;margin:10px 0}
+.fig svg{max-width:100%;height:auto}
+table.rt{border-collapse:collapse;margin:8px 0;font-weight:700}
+table.rt td,table.rt th{border:2px solid var(--ink);padding:6px 14px;text-align:center}
+table.rt th{background:var(--sky-soft)}
+
+/* practice */
+.dots{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.dot{width:36px;height:36px;border-radius:8px;border:2px solid var(--ink);background:#fff;font-weight:800;cursor:pointer;font-size:14px;color:var(--ink)}
+.dot.cur{background:var(--butter)}
+.dot.ok{background:var(--sage);color:#fff}
+.dot.no{background:var(--tomato);color:#fff}
+.qhead{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-weight:800;color:var(--ink2);font-size:14px;text-transform:uppercase;letter-spacing:1px}
+.qtext{font-size:20px;font-weight:700;margin:8px 0 12px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.opt{display:flex;gap:10px;align-items:center;text-align:left;border:2px solid var(--ink);background:#fff;border-radius:10px;padding:12px 14px;font-size:17px;font-weight:700;cursor:pointer;min-height:54px;color:var(--ink)}
+.opt .l{flex:none;width:30px;height:30px;border-radius:50%;border:2px solid var(--ink);display:grid;place-items:center;font-size:14px;background:var(--paper)}
+.opt:hover:not([disabled]){background:var(--butter-soft)}
+.opt.sel{background:var(--sky-soft)}
+.opt.right{background:var(--sage-soft);border-color:var(--sage)}
+.opt.right .l{background:var(--sage);color:#fff;border-color:var(--sage)}
+.opt.wrong{background:var(--tomato-soft);border-color:var(--tomato)}
+.opt.wrong .l{background:var(--tomato);color:#fff;border-color:var(--tomato)}
+.opt[disabled]{cursor:default}
+.ansrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.ansrow input{font:inherit;font-size:20px;font-weight:800;padding:10px 14px;border:2px solid var(--ink);border-radius:10px;width:200px;max-width:100%;background:#fff;color:var(--ink)}
+.ansrow .unit{font-weight:800;font-size:18px}
+.fmt{font-size:14px;color:var(--ink2);font-weight:700}
+.fb{border-radius:10px;padding:14px 16px;margin-top:14px;border:2px solid;animation:pop .25s ease}
+.fb.ok{background:var(--sage-soft);border-color:var(--sage)}
+.fb.no{background:var(--tomato-soft);border-color:var(--tomato)}
+.fb .t{font-weight:800;font-size:18px}
+.fb .t span{display:inline-block;margin-left:6px}
+.fb .ex{margin-top:6px}
+.fb .ex ol{margin:4px 0;padding-left:22px}
+@keyframes pop{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.qactions{display:flex;justify-content:space-between;gap:10px;margin-top:16px;flex-wrap:wrap}
+.done{text-align:center;padding:10px 0}
+.done .score{font-family:Fraunces,serif;font-size:64px;font-weight:800;color:var(--tomato);line-height:1}
+.done p{color:var(--ink2);max-width:30em;margin:10px auto}
+.breakdown{display:grid;gap:8px;max-width:520px;margin:14px auto;text-align:left}
+.breakdown .r{display:grid;grid-template-columns:1fr 110px 54px;gap:10px;align-items:center;font-weight:700;font-size:15px}
+.stamp{display:inline-block;border:3px solid var(--sage);color:var(--sage);font-weight:800;border-radius:8px;padding:2px 12px;transform:rotate(-4deg);letter-spacing:1px;text-transform:uppercase;font-size:14px;margin-bottom:6px}
+
+/* answer key */
+.key h3{font-size:22px;margin:22px 0 8px;padding-bottom:4px;border-bottom:2px solid var(--ink)}
+.kq{padding:10px 0;border-bottom:1px dashed var(--line);break-inside:avoid}
+.kq .qq{font-weight:700}
+.kq .aa{color:var(--sage);font-weight:800}
+.kq .ee{color:var(--ink2);font-size:15px}
+footer{text-align:center;color:var(--ink2);font-size:14px;padding:10px 20px 30px}
+footer b{color:var(--ink)}
+
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr}
+  .opts{grid-template-columns:1fr}
+  body{font-size:16px}
+  .qtext{font-size:18px}
+  header.top{padding:10px 16px}
+  .navbtns{width:100%}
+  .navbtns .btn{flex:1}
+  main{padding:6px 16px 30px}
+  .breakdown .r{grid-template-columns:1fr 70px 48px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media print{
+  body{background:#fff}
+  .gingham,header.top .navbtns,.noprint,footer .noprint{display:none!important}
+  .panel{border:none;padding:0}
+}
+</style>
+</head>
+<body>
+<div class="gingham" aria-hidden="true"></div>
+<header class="top">
+  <div class="brand"><div class="mark">BE</div><div>Bright EngMath<small>Grade 6 · Unit 6 Ratio &amp; Percentage</small></div></div>
+  <div class="navbtns">
+    <button class="btn ghost small" onclick="go('home')">Home</button>
+    <button class="btn ghost small" onclick="go('key')">Answer key</button>
+  </div>
+</header>
+<main id="app"></main>
+<footer>Made by <b>Bright EngMath</b> · Grade 6 · Unit 6 Ratio &amp; Percentage Review · For single-classroom use</footer>
+
+<script>
+/* ============ FIGURES (all SVG drawn from data so they always match the question) ============ */
+const C={tomato:'#D9482E',sage:'#5F8A55',butter:'#F2C14E',sky:'#6FA6C0',cocoa:'#8A5A3C',ink:'#2E2320',paper:'#FFFDF8',line:'#E9DFCC'};
+const F='font-family="Nunito,sans-serif" font-weight="800"';
+function shape(kind,x,y,col){
+  if(kind==='tri') return `<polygon points="${x},${y-15} ${x+15},${y+12} ${x-15},${y+12}" fill="${col}" stroke="${C.ink}" stroke-width="2.5" stroke-linejoin="round"/>`;
+  if(kind==='sq') return `<rect x="${x-13}" y="${y-13}" width="26" height="26" rx="3" fill="${col}" stroke="${C.ink}" stroke-width="2.5"/>`;
+  return `<circle cx="${x}" cy="${y}" r="14" fill="${col}" stroke="${C.ink}" stroke-width="2.5"/>`;
+}
+function figCounters(groups){
+  // groups: [{n,color,label,shape}]
+  let x=20, out='', h=0;
+  const per=5, gap=36;
+  groups.forEach(g=>{
+    const cols=Math.min(g.n,per), rows=Math.ceil(g.n/per);
+    const w=cols*gap;
+    for(let i=0;i<g.n;i++){const cx=x+18+(i%per)*gap, cy=26+Math.floor(i/per)*gap; out+=shape(g.shape||'circle',cx,cy,C[g.color]);}
+    const lh=26+rows*gap;
+    out+=`<text x="${x+w/2}" y="${lh}" text-anchor="middle" ${F} font-size="15" fill="${C.ink}">${g.n} ${g.label}</text>`;
+    h=Math.max(h,lh+10);
+    x+=w+34;
+  });
+  return `<svg viewBox="0 0 ${x} ${h}" width="${x}" role="img" aria-label="${groups.map(g=>g.n+' '+g.label).join(', ')}">${out}</svg>`;
+}
+function figBars(rows,opt={}){
+  // rows: [{label,units,color,right}], opt.total: text on right bracket
+  const U=opt.u||46, lx=90, top=12, rh=38, gap=16;
+  let out='', maxU=Math.max(...rows.map(r=>r.units));
+  rows.forEach((r,i)=>{
+    const y=top+i*(rh+gap);
+    out+=`<text x="${lx-10}" y="${y+rh/2+5}" text-anchor="end" ${F} font-size="15" fill="${C.ink}">${r.label}</text>`;
+    for(let k=0;k<r.units;k++) out+=`<rect x="${lx+k*U}" y="${y}" width="${U}" height="${rh}" fill="${C[r.color]}" fill-opacity=".85" stroke="${C.ink}" stroke-width="2.5"/>`;
+    if(r.right) out+=`<text x="${lx+r.units*U+10}" y="${y+rh/2+5}" ${F} font-size="15" fill="${C.cocoa}">${r.right}</text>`;
+  });
+  let W=lx+maxU*U+20;
+  const H=top+rows.length*(rh+gap);
+  if(opt.total){
+    const bx=lx+maxU*U+ (rows.some(r=>r.right)?110:14);
+    out+=`<path d="M${bx} ${top} q10 0 10 10 V${H/2-8} l8 8 l-8 8 V${H-gap-10} q0 10 -10 10" fill="none" stroke="${C.ink}" stroke-width="2.5"/>`;
+    out+=`<text x="${bx+24}" y="${H/2+5}" ${F} font-size="16" fill="${C.ink}">${opt.total}</text>`;
+    W=bx+24+opt.total.length*9+10;
+  } else if(rows.some(r=>r.right)) W+=140;
+  return `<svg viewBox="0 0 ${W} ${H}" width="${W}" role="img" aria-label="bar model">${out}</svg>`;
+}
+function figGrid(r,c,s,sz){
+  sz=sz||34; let out='';
+  for(let i=0;i<r*c;i++){const x=4+(i%c)*sz,y=4+Math.floor(i/c)*sz;
+    out+=`<rect x="${x}" y="${y}" width="${sz}" height="${sz}" fill="${i<s?C.sky:'#fff'}" stroke="${C.ink}" stroke-width="${sz<25?1.5:2.5}"/>`;}
+  const W=c*sz+8,H=r*sz+8;
+  return `<svg viewBox="0 0 ${W} ${H}" width="${W}" role="img" aria-label="${s} of ${r*c} squares shaded">${out}<rect x="4" y="4" width="${c*sz}" height="${r*sz}" fill="none" stroke="${C.ink}" stroke-width="3"/></svg>`;
+}
+function figScaleBar(segs,step,unit,note){
+  const S=90, x0=24; let out='';
+  for(let i=0;i<segs;i++) out+=`<rect x="${x0+i*S}" y="30" width="${S}" height="16" fill="${i%2?'#fff':C.ink}" stroke="${C.ink}" stroke-width="2"/>`;
+  for(let i=0;i<=segs;i++) out+=`<text x="${x0+i*S}" y="22" text-anchor="middle" ${F} font-size="15" fill="${C.ink}">${i*step}</text>`;
+  out+=`<text x="${x0+segs*S+14}" y="44" ${F} font-size="15" fill="${C.ink}">${unit}</text>`;
+  if(note) out+=`<text x="${x0}" y="72" ${F} font-size="14" fill="${C.cocoa}">${note}</text>`;
+  const W=x0+segs*S+60;
+  return `<svg viewBox="0 0 ${W} 82" width="${W}" role="img" aria-label="scale bar">${out}</svg>`;
+}
+function figPlan(w,h,lw,lh,title,scale){
+  const k=34, X=84, Y=34, RW=w*k, RH=h*k;
+  let out=`<rect x="${X}" y="${Y}" width="${RW}" height="${RH}" fill="${C.butter}" fill-opacity=".35" stroke="${C.ink}" stroke-width="3"/>`;
+  out+=`<text x="${X+RW/2}" y="${Y+RH/2+5}" text-anchor="middle" ${F} font-size="16" fill="${C.ink}">${title}</text>`;
+  out+=`<line x1="${X}" y1="${Y-14}" x2="${X+RW}" y2="${Y-14}" stroke="${C.cocoa}" stroke-width="2"/><line x1="${X}" y1="${Y-20}" x2="${X}" y2="${Y-8}" stroke="${C.cocoa}" stroke-width="2"/><line x1="${X+RW}" y1="${Y-20}" x2="${X+RW}" y2="${Y-8}" stroke="${C.cocoa}" stroke-width="2"/>`;
+  out+=`<text x="${X+RW/2}" y="${Y-20}" text-anchor="middle" ${F} font-size="15" fill="${C.cocoa}">${lw}</text>`;
+  out+=`<line x1="${X-14}" y1="${Y}" x2="${X-14}" y2="${Y+RH}" stroke="${C.cocoa}" stroke-width="2"/><line x1="${X-20}" y1="${Y}" x2="${X-8}" y2="${Y}" stroke="${C.cocoa}" stroke-width="2"/><line x1="${X-20}" y1="${Y+RH}" x2="${X-8}" y2="${Y+RH}" stroke="${C.cocoa}" stroke-width="2"/>`;
+  out+=`<text x="${X-20}" y="${Y+RH/2+5}" text-anchor="end" ${F} font-size="15" fill="${C.cocoa}">${lh}</text>`;
+  out+=`<text x="${X}" y="${Y+RH+26}" ${F} font-size="15" fill="${C.ink}">Scale ${scale}</text>`;
+  const W=X+RW+20, H=Y+RH+36;
+  return `<svg viewBox="0 0 ${W} ${H}" width="${W}" role="img" aria-label="scale drawing">${out}</svg>`;
+}
+function figMap(a,b,dist,scale){
+  const W=420,H=170;
+  let out=`<rect x="2" y="2" width="${W-4}" height="${H-4}" rx="10" fill="#EEF5E8" stroke="${C.ink}" stroke-width="2.5"/>`;
+  out+=`<path d="M20 130 C 110 100, 160 150, 250 115 S 380 90, 405 70" fill="none" stroke="${C.sky}" stroke-width="10" stroke-linecap="round" opacity=".7"/>`;
+  out+=`<line x1="70" y1="60" x2="340" y2="60" stroke="${C.ink}" stroke-width="2.5" stroke-dasharray="8 6"/>`;
+  [[70,a],[340,b]].forEach(([x,t])=>{out+=`<circle cx="${x}" cy="60" r="9" fill="${C.tomato}" stroke="${C.ink}" stroke-width="2.5"/><text x="${x}" y="38" text-anchor="middle" ${F} font-size="16" fill="${C.ink}">${t}</text>`;});
+  out+=`<rect x="160" y="68" width="90" height="26" rx="6" fill="#fff" stroke="${C.ink}" stroke-width="2"/><text x="205" y="87" text-anchor="middle" ${F} font-size="15" fill="${C.ink}">${dist}</text>`;
+  out+=`<text x="20" y="${H-14}" ${F} font-size="14" fill="${C.ink}">Scale ${scale}</text>`;
+  return `<svg viewBox="0 0 ${W} ${H}" width="${W}" role="img" aria-label="map from ${a} to ${b}, ${dist}">${out}</svg>`;
+}
+function fig(f){
+  if(!f) return '';
+  let s='';
+  if(f.k==='counters') s=figCounters(f.g);
+  if(f.k==='bars') s=figBars(f.rows,f);
+  if(f.k==='grid') s=figGrid(f.r,f.c,f.s,f.sz);
+  if(f.k==='scalebar') s=figScaleBar(f.segs,f.step,f.unit,f.note);
+  if(f.k==='plan') s=figPlan(f.w,f.h,f.lw,f.lh,f.title,f.scale);
+  if(f.k==='map') s=figMap(f.a,f.b,f.dist,f.scale);
+  return `<div class="fig">${s}</div>`;
+}
+
+/* ============ CONTENT ============ */
+const TOPICS=[
+{id:'idea',title:'Idea of Ratio',pages:'pages 214–222',color:'tomato',
+ blurb:'Compare two amounts, keep the order right, and link ratios to fractions.',
+ lesson:`
+ <h3>What is a ratio?</h3>
+ <p>A <b>ratio</b> compares two or more quantities of the same kind. We write it with a colon: <b>3 : 5</b> (read “3 to 5”).</p>
+ ${fig({k:'counters',g:[{n:3,color:'tomato',label:'red'},{n:5,color:'sage',label:'green'}]})}
+ <div class="keybox"><b class="k">Key idea</b>Red : Green = <b>3 : 5</b> &nbsp;·&nbsp; Green : Red = <b>5 : 3</b><br>The <b>order</b> of the words tells you the order of the numbers.</div>
+ <h3>Part-to-part and part-to-whole</h3>
+ <p><b>Part : part</b> compares two groups (red : green = 3 : 5).<br><b>Part : whole</b> compares one group with the total (red : all = 3 : 8).</p>
+ <h3>Ratios and fractions</h3>
+ <p>If red : green = 3 : 5, there are 3 + 5 = <b>8 units</b> altogether, so red is <b>3/8</b> of the total and green is <b>5/8</b>.</p>
+ <div class="worked"><b>Worked example.</b> A class has 12 boys and 15 girls.
+ <ol><li>Girls : boys = <b>15 : 12</b> (girls first because the question says girls first).</li><li>Total = 12 + 15 = 27, so boys : total = <b>12 : 27</b>.</li><li>Fraction of the class that are girls = <b>15/27</b>.</li></ol></div>
+ <div class="watch"><b>Watch out!</b> Ratios have no units, and the terms must be in the same unit before you compare them.</div>`},
+{id:'equiv',title:'Equivalent Ratios',pages:'pages 223–231',color:'butter',
+ blurb:'Simplify ratios, find missing terms and change units before comparing.',
+ lesson:`
+ <h3>Making equivalent ratios</h3>
+ <p>Multiply or divide <b>every term</b> by the <b>same number</b> and the ratio stays equivalent.</p>
+ <table class="rt"><tr><th>Orange</th><td>2</td><td>4</td><td>6</td><td>10</td></tr><tr><th>Water</th><td>5</td><td>10</td><td>15</td><td>25</td></tr></table>
+ <p>2 : 5 = 4 : 10 = 6 : 15 = 10 : 25</p>
+ <h3>Simplest form</h3>
+ <div class="keybox"><b class="k">Key idea</b>Divide all terms by their <b>highest common factor (HCF)</b>.<br>24 : 36 : 60 → HCF is 12 → <b>2 : 3 : 5</b></div>
+ <h3>Finding a missing term</h3>
+ <div class="worked"><b>Worked example.</b> 3 : 7 = 12 : ?
+ <ol><li>3 → 12 means we multiplied by 4.</li><li>7 × 4 = <b>28</b>, so 3 : 7 = 12 : 28.</li></ol></div>
+ <h3>Quantities with units</h3>
+ <div class="worked"><b>Worked example.</b> Ratio of 45 minutes to 2 hours.
+ <ol><li>Change to the same unit: 2 h = 120 min.</li><li>45 : 120 → divide by 15 → <b>3 : 8</b>.</li></ol></div>
+ <div class="watch"><b>Watch out!</b> Adding the same number to both terms does <b>not</b> make an equivalent ratio. 2 : 3 is not the same as 4 : 5.</div>`},
+{id:'scale',title:'Scale',pages:'pages 232–237',color:'sky',
+ blurb:'Read map scales and scale drawings to find real and drawn lengths.',
+ lesson:`
+ <h3>What does a scale tell us?</h3>
+ <p>A <b>scale</b> is a ratio: <b>drawing length : real length</b>.</p>
+ <div class="keybox"><b class="k">Key idea</b>Scale <b>1 : 50 000</b> means 1 cm on the map stands for 50 000 cm in real life.<br>50 000 cm = 500 m = <b>0.5 km</b>.</div>
+ ${fig({k:'scalebar',segs:3,step:2,unit:'km',note:'Each segment on this scale bar is 1 cm long.'})}
+ <p>On this scale bar, 1 cm represents 2 km.</p>
+ <h3>Two directions</h3>
+ <p><b>Map → real:</b> multiply. &nbsp; <b>Real → map:</b> divide.</p>
+ <div class="worked"><b>Worked example.</b> Scale 1 cm : 5 km.
+ <ol><li>Map distance 7.5 cm → real = 7.5 × 5 = <b>37.5 km</b>.</li><li>Real distance 24 km with scale 1 cm : 4 km → map = 24 ÷ 4 = <b>6 cm</b>.</li></ol></div>
+ <h3>Unit helper</h3>
+ <table class="rt"><tr><th>1 m</th><td>100 cm</td></tr><tr><th>1 km</th><td>1000 m = 100 000 cm</td></tr></table>
+ <div class="watch"><b>Watch out!</b> For an <b>area</b>, change each length to real size first, <i>then</i> multiply.</div>`},
+{id:'wp',title:'Word Problems',pages:'pages 238–245',color:'sage',
+ blurb:'Use bar models and units to solve sharing, difference and before–after problems.',
+ lesson:`
+ <h3>The unit method with a bar model</h3>
+ <p>Draw one bar for each person. Each box is <b>1 unit</b>. Find the value of 1 unit, then answer the question.</p>
+ ${fig({k:'bars',rows:[{label:'Anna',units:3,color:'tomato'},{label:'Bella',units:4,color:'sky'}],total:'$56'})}
+ <div class="worked"><b>Worked example.</b> Share $56 between Anna and Bella in the ratio 3 : 4.
+ <ol><li>Total units = 3 + 4 = 7.</li><li>1 unit = $56 ÷ 7 = $8.</li><li>Bella gets 4 × $8 = <b>$32</b>; Anna gets 3 × $8 = <b>$24</b>.</li></ol></div>
+ <h3>Three common types</h3>
+ <div class="keybox"><b class="k">Know the total</b>divide by the <b>sum</b> of the units.<br><b class="k" style="margin-top:6px">Know the difference</b>divide by the <b>difference</b> in units.<br><b class="k" style="margin-top:6px">Know one part</b>divide by <b>that part's</b> units.</div>
+ <div class="watch"><b>Watch out!</b> In “before and after” problems, look for the quantity that <b>does not change</b> and keep its units the same.</div>`},
+{id:'pct',title:'Word Problems with Percentages',pages:'pages 246–253',color:'cocoa',
+ blurb:'Percent of a quantity, discounts, tax, increase and decrease.',
+ lesson:`
+ <h3>Percent means “out of 100”</h3>
+ ${fig({k:'grid',r:10,c:10,s:36,sz:18})}
+ <p style="text-align:center">36 out of 100 squares are shaded → <b>36%</b></p>
+ <div class="keybox"><b class="k">Key formulas</b>
+ Percent of an amount: <b>25% of 80 = 25/100 × 80 = 20</b><br>
+ Write as a percentage: <b>part ÷ whole × 100%</b><br>
+ Percentage change: <b>change ÷ original × 100%</b></div>
+ <h3>Discount and tax</h3>
+ <div class="worked"><b>Worked example.</b> A $40 shirt has a 15% discount.
+ <ol><li>Discount = 15% × $40 = $6.</li><li>Sale price = $40 − $6 = <b>$34</b>. (Or: 85% × $40 = $34.)</li></ol></div>
+ <h3>Working backwards</h3>
+ <div class="worked"><b>Worked example.</b> After a 20% discount a bag costs $48. Find the original price.
+ <ol><li>$48 is 100% − 20% = 80% of the original.</li><li>1% = $48 ÷ 80 = $0.60, so 100% = <b>$60</b>.</li></ol></div>
+ <div class="watch"><b>Watch out!</b> A percentage change is always compared with the <b>original</b> amount, not the new one.</div>`}
+];
+
+/* Q: t = mc | num | ratio ; a = index | number | [terms] */
+const Q={
+idea:[
+ {t:'ratio',q:'Find the ratio of red counters to green counters to yellow counters. Give your answer in simplest form.',fig:{k:'counters',g:[{n:6,color:'tomato',label:'red'},{n:4,color:'sage',label:'green'},{n:8,color:'butter',label:'yellow'}]},a:[3,2,4],ex:'Red : green : yellow = 6 : 4 : 8. The HCF of 6, 4 and 8 is 2, so the simplest form is <b>3 : 2 : 4</b>. Keep the same order as the question.'},
+ {t:'mc',q:'What is the ratio of yellow counters to the total number of counters?',fig:{k:'counters',g:[{n:4,color:'sky',label:'blue'},{n:7,color:'butter',label:'yellow'}]},opts:['7 : 4','4 : 11','11 : 7','7 : 11'],a:3,ex:'Total = 4 + 7 = 11 counters. Yellow : total = <b>7 : 11</b>. 7 : 4 compares yellow with blue only.'},
+ {t:'mc',q:'A class has 12 boys and 15 girls. What is the ratio of girls to boys?',opts:['12 : 15','15 : 12','15 : 27','27 : 15'],a:1,ex:'The question asks for girls <i>to</i> boys, so girls come first: <b>15 : 12</b>. 12 : 15 has the order reversed.'},
+ {t:'ratio',q:'Sam has 6 pencils and 11 crayons. Write the ratio of crayons to the total number of items in simplest form.',a:[11,17],ex:'Total items = 6 + 11 = 17. Crayons : total = <b>11 : 17</b>. 11 and 17 have no common factor except 1, so it is already in simplest form.'},
+ {t:'ratio',q:'The bar model shows the amounts of money Ali and Ben have. What is the ratio of Ali’s money to the total? Give your answer in simplest form.',fig:{k:'bars',rows:[{label:'Ali',units:3,color:'tomato'},{label:'Ben',units:4,color:'sky'}]},a:[3,7],ex:'Ali has 3 units and Ben has 4 units, so the total is 3 + 4 = 7 units. Ali : total = <b>3 : 7</b>.'},
+ {t:'mc',q:'The ratio of flour to sugar in a cake recipe is 5 : 2. Which statement is true?',opts:['There are 5 cups of sugar for every 2 cups of flour.','For every 5 cups of flour, there are 2 cups of sugar.','Sugar is 2/5 of the whole mixture.','There must be exactly 7 cups of flour.'],a:1,ex:'5 : 2 means <b>5 parts flour for every 2 parts sugar</b>. Sugar is 2/7 of the mixture (not 2/5), and the ratio does not tell us the actual number of cups.'},
+ {t:'mc',q:'A bag has 8 red marbles and 5 blue marbles. What fraction of the marbles is blue?',opts:['5/8','8/13','5/13','13/5'],a:2,ex:'There are 8 + 5 = 13 marbles in total. Blue is 5 out of 13 → <b>5/13</b>. 5/8 compares blue with red, not with the whole bag.'},
+ {t:'mc',q:'The ratio of boys to girls in a club is 3 : 4. What fraction of the club are girls?',opts:['4/7','3/4','4/3','3/7'],a:0,ex:'Total units = 3 + 4 = 7. Girls are 4 of the 7 units → <b>4/7</b>.'},
+ {t:'mc',q:'The ratio of the mass of Box A to the mass of Box B is 3 : 5. The mass of Box A is what fraction of the mass of Box B?',opts:['5/3','3/8','3/5','5/8'],a:2,ex:'A : B = 3 : 5, so A is 3 units when B is 5 units. A is <b>3/5</b> of B. (3/8 is A as a fraction of the <i>total</i>.)'},
+ {t:'ratio',q:'What is the ratio of shaded squares to unshaded squares? Give your answer in simplest form.',fig:{k:'grid',r:3,c:4,s:5},a:[5,7],ex:'There are 12 squares. 5 are shaded, so 12 − 5 = 7 are unshaded. Shaded : unshaded = <b>5 : 7</b>.'},
+ {t:'mc',q:'In a class of 30 students, 13 wear glasses. Which ratio compares the students who wear glasses with the whole class?',opts:['13 : 17','17 : 13','30 : 13','13 : 30'],a:3,ex:'Part-to-whole: glasses : whole class = <b>13 : 30</b>. 13 : 17 is part-to-part (glasses : no glasses).'},
+ {t:'mc',q:'A recipe uses 2 cups of rice and 3 cups of water. Tom says the ratio of water to rice is 2 : 3. Is he right?',opts:['Yes, he is right.','No, it is 3 : 5.','No, it is 3 : 2.','No, it is 2 : 5.'],a:2,ex:'Water comes first: 3 cups of water, 2 cups of rice → <b>3 : 2</b>. Tom wrote the numbers in the wrong order.'}
+],
+equiv:[
+ {t:'ratio',q:'Write 12 : 18 in simplest form.',a:[2,3],ex:'The HCF of 12 and 18 is 6. 12 ÷ 6 = 2 and 18 ÷ 6 = 3 → <b>2 : 3</b>.'},
+ {t:'mc',q:'Which ratio is equivalent to 0.6 : 1.5?',opts:['3 : 5','5 : 2','2 : 5','4 : 15'],a:2,ex:'Multiply both terms by 10 to remove the decimals: 6 : 15. The HCF is 3, so 6 : 15 = <b>2 : 5</b>. 5 : 2 has the order reversed.'},
+ {t:'num',q:'Find the missing number: 3 : 7 = 12 : ?',a:28,ex:'3 × 4 = 12, so multiply the second term by 4 too: 7 × 4 = <b>28</b>.'},
+ {t:'ratio',q:'Write 24 : 36 : 60 in simplest form.',a:[2,3,5],ex:'The HCF of 24, 36 and 60 is 12. Divide every term by 12 → <b>2 : 3 : 5</b>.'},
+ {t:'ratio',q:'Find the ratio of 45 minutes to 2 hours in simplest form.',a:[3,8],ex:'Change to the same unit: 2 h = 120 min. 45 : 120 → divide by 15 → <b>3 : 8</b>.'},
+ {t:'ratio',q:'Find the ratio of 1.5 m to 60 cm in simplest form.',a:[5,2],ex:'1.5 m = 150 cm. 150 : 60 → divide by 30 → <b>5 : 2</b>.'},
+ {t:'mc',q:'Which ratio is NOT equivalent to 6 : 9?',opts:['2 : 3','12 : 18','9 : 12','18 : 27'],a:2,ex:'6 : 9 = 2 : 3. But 9 : 12 simplifies to 3 : 4, so <b>9 : 12</b> is not equivalent.'},
+ {t:'num',q:'A juice is made from orange concentrate and water in the ratio 2 : 5. If 10 cups of concentrate are used, how many cups of water are needed?',unit:'cups',a:25,ex:'2 → 10 means × 5. Water = 5 × 5 = <b>25 cups</b>. So 2 : 5 = 10 : 25.'},
+ {t:'num',q:'Complete the pattern of equivalent ratios: 3 : 4 = 9 : 12 = ? : 20',a:15,ex:'4 → 20 means × 5. So the first term is 3 × 5 = <b>15</b>. Check: 15 : 20 = 3 : 4 ✓'},
+ {t:'ratio',q:'Challenge: Write 2/3 : 1/2 as a ratio of whole numbers in simplest form.',a:[4,3],ex:'Multiply both terms by 6 (the LCM of 3 and 2): 2/3 × 6 = 4 and 1/2 × 6 = 3 → <b>4 : 3</b>.'},
+ {t:'num',q:'The ratio of boys to girls on a trip is 5 : 6. There are 30 girls. How many boys are there?',unit:'boys',a:25,ex:'6 units = 30 girls, so 1 unit = 5. Boys = 5 units = 5 × 5 = <b>25</b>.'},
+ {t:'mc',q:'The ratio of Amy’s stickers to Ben’s stickers is 14 : 21. Amy has what fraction of Ben’s number of stickers?',opts:['2/3','3/2','2/5','14/35'],a:0,ex:'Amy : Ben = 14 : 21 = 2 : 3. Amy has <b>2/3</b> as many as Ben. (2/5 is Amy’s fraction of the total, not of Ben’s.)'}
+],
+scale:[
+ {t:'num',q:'A map has a scale of 1 : 50 000. Two schools are 4 cm apart on the map. What is the real distance in km?',unit:'km',a:2,ex:'Real = 4 × 50 000 = 200 000 cm. 200 000 cm = 2000 m = <b>2 km</b>.'},
+ {t:'num',q:'The scale of a map is 1 cm : 5 km. A road is 7.5 cm long on the map. How long is the real road?',unit:'km',a:37.5,ex:'Map → real: multiply. 7.5 × 5 = <b>37.5 km</b>.'},
+ {t:'num',q:'Two towns are 24 km apart. On a map with a scale of 1 cm : 4 km, how far apart are they?',unit:'cm',a:6,ex:'Real → map: divide. 24 ÷ 4 = <b>6 cm</b>.'},
+ {t:'num',q:'This is a scale drawing of a classroom. What is the real length of the classroom?',fig:{k:'plan',w:6,h:4.5,lw:'6 cm',lh:'4.5 cm',title:'Classroom',scale:'1 cm : 2 m'},unit:'m',a:12,ex:'Each 1 cm stands for 2 m. Length = 6 × 2 = <b>12 m</b>.'},
+ {t:'num',q:'Use the same classroom drawing (6 cm by 4.5 cm, scale 1 cm : 2 m). What is the real floor area of the classroom?',fig:{k:'plan',w:6,h:4.5,lw:'6 cm',lh:'4.5 cm',title:'Classroom',scale:'1 cm : 2 m'},unit:'m²',a:108,ex:'Change each length first: 6 × 2 = 12 m and 4.5 × 2 = 9 m. Area = 12 × 9 = <b>108 m²</b>. (Multiplying 6 × 4.5 × 2 = 54 is a common mistake.)'},
+ {t:'mc',q:'Which scale is the same as 1 cm : 1 km?',opts:['1 : 1000','1 : 10 000','1 : 100 000','1 : 1 000 000'],a:2,ex:'1 km = 1000 m = 100 000 cm, so 1 cm : 1 km = <b>1 : 100 000</b>.'},
+ {t:'num',q:'A model car is made to a scale of 1 : 20. The model is 18 cm long. How long is the real car in metres?',unit:'m',a:3.6,ex:'Real = 18 × 20 = 360 cm. 360 cm = <b>3.6 m</b>.'},
+ {t:'num',q:'A real bridge is 150 m long. A model of it is made to a scale of 1 : 500. How long is the model in cm?',unit:'cm',a:30,ex:'150 m = 15 000 cm. Model = 15 000 ÷ 500 = <b>30 cm</b>.'},
+ {t:'num',q:'Look at the scale bar. Two towns are 5 cm apart on this map. What is the real distance?',fig:{k:'scalebar',segs:3,step:3,unit:'km',note:'Each segment is 1 cm long.'},unit:'km',a:15,ex:'Each 1 cm segment stands for 3 km. 5 cm → 5 × 3 = <b>15 km</b>.'},
+ {t:'num',q:'On this map, the distance from Palm Bay to Hill Town is 3.5 cm. What is the real distance?',fig:{k:'map',a:'Palm Bay',b:'Hill Town',dist:'3.5 cm',scale:'1 cm : 20 km'},unit:'km',a:70,ex:'3.5 × 20 = <b>70 km</b>.'},
+ {t:'num',q:'A drawing of an insect is enlarged with a scale of 5 : 1. The insect is 6 cm long in the drawing. How long is the real insect?',unit:'cm',a:1.2,ex:'5 : 1 means the drawing is 5 times the real size. Real = 6 ÷ 5 = <b>1.2 cm</b>.'},
+ {t:'num',q:'A house plan uses a scale of 1 : 200. A wall is 8 m long. How long is it on the plan?',unit:'cm',a:4,ex:'8 m = 800 cm. Plan = 800 ÷ 200 = <b>4 cm</b>.'}
+],
+wp:[
+ {t:'num',q:'$56 is shared between Anna and Bella in the ratio 3 : 4. How much does Bella get?',fig:{k:'bars',rows:[{label:'Anna',units:3,color:'tomato'},{label:'Bella',units:4,color:'sky',right:'?'}],total:'$56'},unit:'$',pre:true,a:32,ex:'7 units = $56, so 1 unit = $8. Bella = 4 units = 4 × $8 = <b>$32</b>.'},
+ {t:'num',q:'The ratio of boys to girls in a school hall is 5 : 3. There are 24 more boys than girls. How many students are in the hall?',unit:'students',a:96,ex:'Difference = 5 − 3 = 2 units = 24, so 1 unit = 12. Total = 8 units = 8 × 12 = <b>96</b>.'},
+ {t:'num',q:'A necklace has 63 beads. The ratio of red beads to blue beads is 2 : 7. How many red beads are there?',unit:'beads',a:14,ex:'Total units = 2 + 7 = 9. 1 unit = 63 ÷ 9 = 7. Red = 2 × 7 = <b>14</b>.'},
+ {t:'ratio',q:'Challenge: A : B = 3 : 5 and B : C = 2 : 3. Find A : C in simplest form.',a:[2,5],ex:'Make B the same in both: 3 : 5 = 6 : 10 and 2 : 3 = 10 : 15. So A : B : C = 6 : 10 : 15, and A : C = 6 : 15 = <b>2 : 5</b>.'},
+ {t:'num',q:'Tim and Sue had money in the ratio 4 : 7. Sue had $36 more than Tim. How much money did Tim have?',fig:{k:'bars',rows:[{label:'Tim',units:4,color:'butter'},{label:'Sue',units:7,color:'sky',right:'$36 more'}],u:38},unit:'$',pre:true,a:48,ex:'Difference = 7 − 4 = 3 units = $36, so 1 unit = $12. Tim = 4 × $12 = <b>$48</b>.'},
+ {t:'num',q:'Green paint is made by mixing blue and yellow paint in the ratio 3 : 2. How many litres of blue paint are needed to make 25 L of green paint?',unit:'L',a:15,ex:'5 units = 25 L, so 1 unit = 5 L. Blue = 3 × 5 = <b>15 L</b>.'},
+ {t:'num',q:'The ratio of Ken’s stamps to Joe’s stamps was 3 : 5. Joe’s stamps did not change. After Ken bought 12 more stamps, they had the same number. How many stamps does Joe have?',unit:'stamps',a:30,ex:'Joe stays at 5 units. Ken went from 3 units to 5 units, so 2 units = 12 and 1 unit = 6. Joe = 5 × 6 = <b>30</b>.'},
+ {t:'num',q:'The angles of a triangle are in the ratio 2 : 3 : 4. What is the size of the largest angle?',unit:'°',a:80,ex:'Angles in a triangle add up to 180°. 9 units = 180°, so 1 unit = 20°. Largest = 4 × 20° = <b>80°</b>.'},
+ {t:'num',q:'A rectangle has a perimeter of 60 cm. The ratio of its length to its width is 3 : 2. What is its area?',unit:'cm²',a:216,ex:'Length + width = 60 ÷ 2 = 30 cm. 5 units = 30, 1 unit = 6. Length = 18 cm, width = 12 cm. Area = 18 × 12 = <b>216 cm²</b>.'},
+ {t:'num',q:'The ratio of cats to dogs at an animal shelter is 7 : 4. There are 21 cats. How many cats and dogs are there altogether?',unit:'animals',a:33,ex:'7 units = 21 cats, so 1 unit = 3. Total = 11 units = 11 × 3 = <b>33</b>.'},
+ {t:'num',q:'Three friends share 90 stickers in the ratio 2 : 3 : 4. How many more stickers does the third friend get than the first friend?',unit:'stickers',a:20,ex:'9 units = 90, so 1 unit = 10. Third = 40, first = 20. Difference = <b>20</b> (or 4 − 2 = 2 units = 20).'},
+ {t:'num',q:'Fruit punch is made with juice and soda in the ratio 5 : 3. Sam uses 2 L of juice. How many millilitres of soda does he need?',unit:'mL',a:1200,ex:'2 L = 2000 mL. 5 units = 2000 mL, so 1 unit = 400 mL. Soda = 3 × 400 = <b>1200 mL</b>.'}
+],
+pct:[
+ {t:'num',q:'There are 80 students in Grade 6. 25% of them walk to school and 3/5 of the rest take the school bus. How many students take the school bus?',unit:'students',a:36,ex:'Walk: 25% of 80 = 20, so 80 − 20 = 60 students are left. Bus: 3/5 × 60 = <b>36</b>. (3/5 is of the <i>rest</i>, not of 80.)'},
+ {t:'num',q:'A shirt costs $40. It is sold at a 15% discount. What is the sale price?',unit:'$',pre:true,a:34,ex:'Discount = 15% × $40 = $6. Sale price = $40 − $6 = <b>$34</b>.'},
+ {t:'num',q:'Pat scored 42 marks out of 60 in a test. What percentage did Pat score?',unit:'%',a:70,ex:'42 ÷ 60 × 100% = <b>70%</b>.'},
+ {t:'num',q:'The price of a book went up from $50 to $60. What is the percentage increase?',unit:'%',a:20,ex:'Increase = $10. Compare with the <i>original</i> price: 10 ÷ 50 × 100% = <b>20%</b>. (10 ÷ 60 is the common mistake.)'},
+ {t:'num',q:'A garden is divided into 100 equal plots. The shaded plots are planted with tomatoes. What percentage of the garden is NOT planted with tomatoes?',fig:{k:'grid',r:10,c:10,s:36,sz:20},unit:'%',a:64,ex:'36 of the 100 plots are shaded, so 100 − 36 = 64 plots are not → <b>64%</b>.'},
+ {t:'num',q:'The ratio of boys to girls in a class is 3 : 2. What percentage of the class are girls?',unit:'%',a:40,ex:'Girls are 2 out of 5 units. 2/5 × 100% = <b>40%</b>.'},
+ {t:'num',q:'A meal costs $80. A 7% service tax is added. What is the total bill?',unit:'$',pre:true,a:85.6,ex:'Tax = 7% × $80 = $5.60. Total = $80 + $5.60 = <b>$85.60</b>.'},
+ {t:'num',q:'After a 20% discount, a bag costs $48. What was the original price?',unit:'$',pre:true,a:60,ex:'$48 is 80% of the original price. 1% = $48 ÷ 80 = $0.60, so 100% = <b>$60</b>.'},
+ {t:'num',q:'A school has 500 students. 48% of them are boys. How many girls are there?',unit:'girls',a:260,ex:'Girls = 100% − 48% = 52%. 52% of 500 = <b>260</b>.'},
+ {t:'num',q:'Mia had $250. She spent 30% of it on books, then 40% of the money left on clothes. How much money did she have left?',unit:'$',pre:true,a:105,ex:'Books: 30% × $250 = $75, so $175 is left. Clothes: 40% × $175 = $70. Money left = $175 − $70 = <b>$105</b>.'},
+ {t:'num',q:'A town had 2000 people. The population grew by 10% in one year, then by another 10% the next year. How many people live there now?',unit:'people',a:2420,ex:'Year 1: 2000 + 10% of 2000 = 2200. Year 2: 2200 + 10% of 2200 = 2200 + 220 = <b>2420</b>. (It is not 2400, because the second 10% is of 2200.)'},
+ {t:'mc',q:'Which is greater: 35% of 60 or 60% of 35?',opts:['35% of 60','60% of 35','They are equal.','It cannot be worked out.'],a:2,ex:'35% of 60 = 0.35 × 60 = 21 and 60% of 35 = 0.6 × 35 = 21. <b>They are equal</b> — x% of y is always the same as y% of x.'}
+]};
+
+const TEST=[
+ {tp:'idea',t:'ratio',q:'In the word PERCENTAGE, what is the ratio of vowels to consonants? Give your answer in simplest form.',a:[2,3],ex:'P-E-R-C-E-N-T-A-G-E has 10 letters. Vowels: E, E, A, E = 4. Consonants = 6. 4 : 6 = <b>2 : 3</b>.'},
+ {tp:'idea',t:'mc',q:'A bowl has 6 lemons and 9 limes. What fraction of the fruit are lemons?',opts:['2/3','3/5','6/9','2/5'],a:3,ex:'Total = 15. Lemons = 6/15 = <b>2/5</b>. 6/9 compares lemons with limes only.'},
+ {tp:'idea',t:'mc',q:'What is the ratio of circles to the total number of shapes, in simplest form?',fig:{k:'counters',g:[{n:5,color:'tomato',label:'triangles',shape:'tri'},{n:3,color:'sky',label:'circles'},{n:4,color:'butter',label:'squares',shape:'sq'}]},opts:['3 : 5','1 : 4','3 : 9','4 : 1'],a:1,ex:'Total shapes = 5 + 3 + 4 = 12. Circles : total = 3 : 12 = <b>1 : 4</b>.'},
+ {tp:'idea',t:'ratio',q:'The ratio of players to coaches in a team is 9 : 2. What is the ratio of coaches to everyone in the team?',a:[2,11],ex:'Everyone = 9 + 2 = 11 units. Coaches : everyone = <b>2 : 11</b>.'},
+ {tp:'equiv',t:'ratio',q:'Write 35 : 56 in simplest form.',a:[5,8],ex:'HCF of 35 and 56 is 7. 35 ÷ 7 = 5, 56 ÷ 7 = 8 → <b>5 : 8</b>.'},
+ {tp:'equiv',t:'num',q:'Find the missing number: 5 : 8 = ? : 48',a:30,ex:'8 × 6 = 48, so 5 × 6 = <b>30</b>.'},
+ {tp:'equiv',t:'ratio',q:'Find the ratio of 800 g to 2 kg in simplest form.',a:[2,5],ex:'2 kg = 2000 g. 800 : 2000 → divide by 400 → <b>2 : 5</b>.'},
+ {tp:'equiv',t:'ratio',q:'Write 16 : 40 : 24 in simplest form.',a:[2,5,3],ex:'HCF is 8. 16 ÷ 8 = 2, 40 ÷ 8 = 5, 24 ÷ 8 = 3 → <b>2 : 5 : 3</b>. Keep the order!'},
+ {tp:'scale',t:'num',q:'A map has a scale of 1 : 25 000. A path is 8 cm long on the map. How long is the real path in km?',unit:'km',a:2,ex:'8 × 25 000 = 200 000 cm = 2000 m = <b>2 km</b>.'},
+ {tp:'scale',t:'num',q:'The scale of a map is 1 cm : 250 m. A park is 1.5 km from a school. How far apart are they on the map?',unit:'cm',a:6,ex:'1.5 km = 1500 m. 1500 ÷ 250 = <b>6 cm</b>.'},
+ {tp:'scale',t:'num',q:'This floor plan of a bedroom is drawn to a scale of 1 : 50. What is the real floor area?',fig:{k:'plan',w:5,h:4,lw:'10 cm',lh:'8 cm',title:'Bedroom',scale:'1 : 50'},unit:'m²',a:20,ex:'10 × 50 = 500 cm = 5 m, and 8 × 50 = 400 cm = 4 m. Area = 5 × 4 = <b>20 m²</b>.'},
+ {tp:'scale',t:'num',q:'On a map, 1 cm represents 15 km. Two cities are 105 km apart. How far apart are they on the map?',unit:'cm',a:7,ex:'105 ÷ 15 = <b>7 cm</b>.'},
+ {tp:'wp',t:'num',q:'$120 is shared between Leo and Max in the ratio 5 : 3. How much more does Leo get than Max?',unit:'$',pre:true,a:30,ex:'8 units = $120, so 1 unit = $15. Difference = 5 − 3 = 2 units = <b>$30</b>.'},
+ {tp:'wp',t:'num',q:'Two numbers are in the ratio 3 : 5. Their sum is 64. What is the larger number?',a:40,ex:'8 units = 64, 1 unit = 8. Larger = 5 × 8 = <b>40</b>.'},
+ {tp:'wp',t:'num',q:'Ali and Ben had marbles in the ratio 5 : 2. After Ali gave Ben 15 marbles, they had the same number. How many marbles did they have altogether?',unit:'marbles',a:70,ex:'The total never changes. To be equal, each must have 3.5 units, so Ali gave away 1.5 units = 15 → 1 unit = 10. Total = 7 units = <b>70</b>. (Check: 50 and 20 → 35 and 35 ✓)'},
+ {tp:'wp',t:'num',q:'Concrete is made from cement, sand and gravel in the ratio 1 : 2 : 4. How many kg of sand are in 35 kg of concrete?',unit:'kg',a:10,ex:'7 units = 35 kg, 1 unit = 5 kg. Sand = 2 × 5 = <b>10 kg</b>.'},
+ {tp:'pct',t:'num',q:'A library has 360 books. 15% of them are comics. How many books are NOT comics?',unit:'books',a:306,ex:'Comics: 10% of 360 = 36 and 5% = 18, so 15% = 54. Not comics = 360 − 54 = <b>306</b>. (Or 85% × 360 = 306.)'},
+ {tp:'pct',t:'num',q:'A TV costs $800. The price increases by 12.5%. What is the new price?',unit:'$',pre:true,a:900,ex:'12.5% of $800 = $100. New price = $800 + $100 = <b>$900</b>.'},
+ {tp:'pct',t:'num',q:'Nina answered 18 out of 24 questions correctly. What percentage did she get right?',unit:'%',a:75,ex:'18 ÷ 24 × 100% = <b>75%</b>.'},
+ {tp:'pct',t:'num',q:'A jacket costs $63 after a 30% discount. What was the original price?',unit:'$',pre:true,a:90,ex:'$63 is 70% of the original. 1% = $0.90, so 100% = <b>$90</b>.'}
+];
+
+/* ============ STATE ============ */
+let S={ans:{},test:{}};
+try{const s=JSON.parse(localStorage.getItem('be-u6-ratio'));if(s&&s.ans)S=s;}catch(e){}
+function save(){try{localStorage.setItem('be-u6-ratio',JSON.stringify(S));}catch(e){}}
+let view={name:'home'};
+
+/* ============ CHECKING ============ */
+function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b];}return a;}
+function parseNum(s){s=String(s).replace(/[$,\s%°]/g,'').replace(/[a-zA-Z²]+$/,'');if(s==='')return NaN;return Number(s);}
+function check(q,v){
+  if(q.t==='mc') return {ok:v===q.a};
+  if(q.t==='num'){const n=parseNum(v);if(isNaN(n))return {bad:true};return {ok:Math.abs(n-q.a)<1e-6};}
+  if(q.t==='ratio'){
+    const parts=String(v).split(/\s*(?::|to)\s*/i).map(x=>x.trim()).filter(x=>x!=='').map(Number);
+    if(parts.length!==q.a.length||parts.some(x=>isNaN(x)||x<=0))return {bad:true};
+    if(parts.every((x,i)=>x===q.a[i]))return {ok:true};
+    const k=parts[0]/q.a[0];
+    if(parts.every((x,i)=>Math.abs(x/q.a[i]-k)<1e-9))return {ok:false,note:'Your ratio is equivalent, but it is not in simplest form.'};
+    return {ok:false};
+  }
+}
+function ansText(q){
+  if(q.t==='mc')return q.opts[q.a];
+  if(q.t==='ratio')return q.a.join(' : ');
+  const n=q.unit==='$'&&!Number.isInteger(q.a)?q.a.toFixed(2):q.a;
+  return q.pre?('$'+n):(n+(q.unit?(q.unit==='°'||q.unit==='%'?'':' ')+q.unit:''));
+}
+
+/* ============ RENDER ============ */
+const app=document.getElementById('app');
+function go(name,extra){view=Object.assign({name},extra||{});render();window.scrollTo(0,0);}
+function topicStats(id){const a=S.ans[id]||{};const done=Object.keys(a).length;const ok=Object.values(a).filter(x=>x.ok).length;return {done,ok,n:Q[id].length};}
+
+function render(){
+  if(view.name==='home')return renderHome();
+  if(view.name==='topic')return renderTopic();
+  if(view.name==='test')return renderTest();
+  if(view.name==='key')return renderKey();
+}
+function renderHome(){
+  let totalOk=0,totalDone=0;
+  const cards=TOPICS.map((t,i)=>{const s=topicStats(t.id);totalOk+=s.ok;totalDone+=s.done;
+    return `<article class="tcard"><span class="tab-strip" style="background:${C[t.color]}"></span>
+      <div class="num">Topic ${i+1} · <span class="pages">${t.pages}</span></div>
+      <h3>${t.title}</h3><p>${t.blurb}</p>
+      <div class="bar" role="progressbar" aria-valuenow="${s.done}" aria-valuemax="${s.n}"><i style="width:${s.done/s.n*100}%"></i></div>
+      <div class="row"><span>${s.done}/${s.n} answered</span><span>${s.done?`${s.ok} correct`:'Not started'}</span></div>
+      <div class="actions"><button class="btn ghost small" onclick="go('topic',{id:'${t.id}',tab:'lesson'})">Lesson</button>
+      <button class="btn small" onclick="go('topic',{id:'${t.id}',tab:'practice',i:${Math.min(s.done,s.n-1)}})">${s.done===s.n?'Review':s.done?'Continue':'Practise'}</button></div></article>`;}).join('');
+  const tb=S.testBest;
+  app.innerHTML=`
+  <section class="hero">
+    <div><div class="eyebrow">Grade 6 Maths · Unit 6 Review &amp; Practice</div>
+      <h1>Ratio &amp; <em>Percentage</em> Review Kitchen</h1>
+      <p class="lead">Mix the right amounts! Learn each idea, practise 60 questions with instant explained answers, then take the 20-question Unit Test.</p>
+      <div class="meta"><span>Grade 6</span><span>5 topics</span><span>60 practice Qs</span><span>20-Q unit test</span><span>Full answer key</span></div>
+      <button class="btn" onclick="go('topic',{id:'idea',tab:'lesson'})">Start with Topic 1</button></div>
+    <div class="recipe"><h3>Today’s recipe</h3>
+      <ul><li>Read the <b>Lesson</b> card</li><li>Try the 12 <b>Practice</b> questions</li><li>Read every explanation</li><li>Take the <b>Unit Test</b></li></ul>
+      <div class="hand" style="text-align:right;margin-top:4px">— serves one super mathematician</div></div>
+  </section>
+  <div class="sectionhead"><h2>Your topics</h2><span class="overall">${totalDone}/60 answered · ${totalOk} correct</span></div>
+  <div class="grid5">${cards}
+    <article class="tcard testcard"><div><div class="num" style="color:#F2C14E">Final check</div><h3>Unit 6 Test · 20 questions</h3>
+      <p>Four new questions from every topic, with a score breakdown at the end.${tb!=null?` Best score: <b style="color:#fff">${tb}/20</b>`:''}</p></div>
+      <button class="btn" onclick="startTest()">${S.test&&S.test.done&&Object.keys(S.test.done).length&&Object.keys(S.test.done).length<20?'Continue test':'Start test'}</button></article>
+  </div>
+  <p class="noprint" style="text-align:right;margin-top:14px"><button class="btn ghost small" onclick="resetAll()">Reset all progress</button></p>`;
+}
+function resetAll(){if(confirmReset()){S={ans:{},test:{}};save();render();}}
+let resetArmed=false;
+function confirmReset(){ // inline two-tap confirm, no browser dialogs
+  if(resetArmed){resetArmed=false;return true;}
+  resetArmed=true;const b=event.target;b.textContent='Tap again to confirm reset';setTimeout(()=>{resetArmed=false;if(b.isConnected)b.textContent='Reset all progress';},3000);return false;
+}
+
+function qBlock(q,rec,num,total,label){
+  const done=!!rec;
+  let body='';
+  if(q.t==='mc'){
+    body=`<div class="opts" role="group">${q.opts.map((o,i)=>{
+      let cls='opt'; if(done){if(i===q.a)cls+=' right';else if(i===rec.v)cls+=' wrong';}
+      const mark=done&&i===q.a?' ✓':done&&i===rec.v?' ✗':'';
+      return `<button class="${cls}" ${done?'disabled':''} onclick="answer(${i})"><span class="l">${'ABCD'[i]}</span><span>${o}${mark}</span></button>`;}).join('')}</div>`;
+  } else {
+    const ph=q.t==='ratio'?(q.a.length===3?'e.g. 1 : 2 : 3':'e.g. 2 : 5'):'Your answer';
+    body=`<div class="ansrow">${q.pre?'<span class="unit">$</span>':''}<input id="inp" inputmode="${q.t==='ratio'?'text':'decimal'}" autocomplete="off" placeholder="${ph}" value="${done?String(rec.v).replace(/"/g,'&quot;'):''}" ${done?'disabled':''} onkeydown="if(event.key==='Enter')answer()">${q.unit&&!q.pre?`<span class="unit">${q.unit}</span>`:''}
+      ${done?'':'<button class="btn sage" onclick="answer()">Check answer</button>'}</div>
+      <div class="fmt">${q.t==='ratio'?'Type the ratio with a colon, e.g. 3 : 4.':'Type a number only.'}</div><div id="warn" class="fmt" style="color:#D9482E"></div>`;
+  }
+  let fb='';
+  if(done){
+    fb=`<div class="fb ${rec.ok?'ok':'no'}" role="status"><div class="t">${rec.ok?'✓ Correct!':'✗ Not quite.'} ${rec.ok?'':`<span style="font-weight:700">Answer: ${ansText(q)}</span>`}</div>
+      ${rec.note?`<div style="font-weight:700;margin-top:4px">${rec.note}</div>`:''}<div class="ex"><b>Why:</b> ${q.ex}</div></div>`;
+  }
+  return `<div class="qhead"><span>${label}</span><span>Question ${num} of ${total}</span></div>
+    <div class="qtext">${num}. ${q.q}</div>${fig(q.fig)}${body}${fb}`;
+}
+
+function renderTopic(){
+  const t=TOPICS.find(x=>x.id===view.id), ti=TOPICS.indexOf(t);
+  const s=topicStats(t.id);
+  let inner='';
+  if(view.tab==='lesson'){
+    inner=`<div class="lesson">${t.lesson}</div><div class="qactions"><span></span><button class="btn" onclick="go('topic',{id:'${t.id}',tab:'practice',i:0})">Practise 12 questions →</button></div>`;
+  } else {
+    const qs=Q[t.id], rec=S.ans[t.id]||{};
+    if(view.i==null)view.i=0;
+    if(view.i==='done'){
+      const pct=Math.round(s.ok/s.n*100);
+      const next=ti<4?`<button class="btn" onclick="go('topic',{id:'${TOPICS[ti+1].id}',tab:'lesson'})">Next topic: ${TOPICS[ti+1].title} →</button>`:`<button class="btn" onclick="startTest()">Take the Unit Test →</button>`;
+      inner=`<div class="done">${pct>=80?'<div class="stamp">Chef’s approval</div>':''}<div class="score">${s.ok}/${s.n}</div>
+        <p>${pct>=80?'Excellent work! You are ready to move on.':pct>=50?'Good effort. Re-read the lesson card and review the questions marked in red.':'Keep going! Read the lesson again, then reset and try the practice once more.'}</p>
+        <div class="qactions" style="justify-content:center">${next}<button class="btn ghost" onclick="resetTopic('${t.id}')">Try again</button><button class="btn ghost" onclick="go('topic',{id:'${t.id}',tab:'practice',i:0})">Review answers</button></div></div>`;
+    } else {
+      const i=view.i,q=qs[i];
+      const dots=qs.map((_,k)=>{const r=rec[k];return `<button class="dot ${k===i?'cur':''} ${r?(r.ok?'ok':'no'):''}" aria-label="Question ${k+1}${r?(r.ok?', correct':', incorrect'):''}" onclick="go('topic',{id:'${t.id}',tab:'practice',i:${k}})">${k+1}</button>`;}).join('');
+      const last=i===qs.length-1;
+      inner=`<div class="dots">${dots}</div>${qBlock(q,rec[i],i+1,qs.length,t.title)}
+        <div class="qactions"><button class="btn ghost" ${i===0?'disabled':''} onclick="go('topic',{id:'${t.id}',tab:'practice',i:${i-1}})">← Back</button>
+        ${rec[i]?(last?`<button class="btn" onclick="go('topic',{id:'${t.id}',tab:'practice',i:'done'})">Finish</button>`:`<button class="btn" onclick="go('topic',{id:'${t.id}',tab:'practice',i:${i+1}})">Next →</button>`):''}</div>`;
+    }
+  }
+  app.innerHTML=`<div class="crumbs"><a onclick="go('home')">Home</a> / Topic ${ti+1}</div>
+   <div class="pagehead"><div><div class="eyebrow">Topic ${ti+1} · ${t.pages}</div><h2>${t.title}</h2></div><span class="overall">${s.ok} correct · ${s.done}/${s.n} answered</span></div>
+   <div class="tabs" role="tablist"><button class="tab" role="tab" aria-selected="${view.tab==='lesson'}" onclick="go('topic',{id:'${t.id}',tab:'lesson'})">Lesson</button>
+   <button class="tab" role="tab" aria-selected="${view.tab==='practice'}" onclick="go('topic',{id:'${t.id}',tab:'practice',i:0})">Practice (12)</button></div>
+   <section class="panel">${inner}</section>`;
+  const inp=document.getElementById('inp'); if(inp&&!inp.disabled)inp.focus({preventScroll:true});
+}
+function resetTopic(id){delete S.ans[id];save();go('topic',{id,tab:'practice',i:0});}
+
+function readAnswer(q,v){
+  if(q.t!=='mc'){v=document.getElementById('inp').value.trim();}
+  const r=check(q,v);
+  if(r.bad){const w=document.getElementById('warn');if(w)w.textContent=v===''?'Please type an answer first.':(q.t==='ratio'?`Please type ${q.a.length} numbers separated by colons, e.g. ${q.a.length===3?'1 : 2 : 3':'3 : 4'}.`:'Please type a number, e.g. 12 or 3.5.');return null;}
+  return {v,ok:r.ok,note:r.note};
+}
+function answer(v){
+  if(view.name==='topic'){
+    const q=Q[view.id][view.i]; const r=readAnswer(q,v); if(!r)return;
+    S.ans[view.id]=S.ans[view.id]||{}; S.ans[view.id][view.i]=r; save(); render();
+  } else if(view.name==='test'){
+    const q=TEST[view.i]; const r=readAnswer(q,v); if(!r)return;
+    S.test.done=S.test.done||{}; S.test.done[view.i]=r; save(); render();
+  }
+}
+
+function startTest(){
+  if(!S.test||!S.test.done||Object.keys(S.test.done).length>=20){S.test={done:{}};save();}
+  const d=S.test.done; let i=0; while(d[i]&&i<19)i++;
+  go('test',{i});
+}
+function renderTest(){
+  const d=S.test.done||{};
+  if(view.i==='done'){
+    const ok=Object.values(d).filter(x=>x.ok).length;
+    if(S.testBest==null||ok>S.testBest){S.testBest=ok;save();}
+    const rows=TOPICS.map(t=>{const idx=TEST.map((q,k)=>q.tp===t.id?k:-1).filter(k=>k>=0);const c=idx.filter(k=>d[k]&&d[k].ok).length;
+      return `<div class="r"><span>${t.title}</span><div class="bar"><i style="width:${c/idx.length*100}%"></i></div><span>${c}/${idx.length}</span></div>`;}).join('');
+    const weak=TOPICS.filter(t=>TEST.filter((q,k)=>q.tp===t.id&&!(d[k]&&d[k].ok)).length>=2).map(t=>t.title);
+    app.innerHTML=`<div class="crumbs"><a onclick="go('home')">Home</a> / Unit Test</div><section class="panel"><div class="done">
+      ${ok>=16?'<div class="stamp">Master chef</div>':''}<div class="score">${ok}/20</div><p>${Math.round(ok/20*100)}% · ${ok>=16?'Outstanding! You have mastered Unit 6.':ok>=12?'Well done — a little more practice and you will be there.':'Keep practising — go back to the lessons for the topics below.'}</p>
+      <div class="breakdown">${rows}</div>
+      ${weak.length?`<p><b>Review next:</b> ${weak.join(', ')}</p>`:''}
+      <div class="qactions" style="justify-content:center"><button class="btn" onclick="go('test',{i:0,review:true})">Review my answers</button><button class="btn ghost" onclick="S.test={done:{}};save();go('test',{i:0})">Retake test</button><button class="btn ghost" onclick="go('home')">Home</button></div></div></section>`;
+    return;
+  }
+  const i=view.i,q=TEST[i];
+  const tname=TOPICS.find(t=>t.id===q.tp).title;
+  const dots=TEST.map((_,k)=>{const r=d[k];return `<button class="dot ${k===i?'cur':''} ${r?(r.ok?'ok':'no'):''}" aria-label="Question ${k+1}" onclick="go('test',{i:${k}})">${k+1}</button>`;}).join('');
+  const all=Object.keys(d).length===20;
+  let nextBtn='';
+  if(d[i]){ if(i<19) nextBtn=`<button class="btn" onclick="go('test',{i:${i+1}})">Next →</button>`; }
+  if(all) nextBtn+=` <button class="btn sage" onclick="go('test',{i:'done'})">See my score</button>`;
+  else if(d[i]&&i===19) nextBtn=`<span class="fmt">Answer the questions left in white to finish.</span>`;
+  app.innerHTML=`<div class="crumbs"><a onclick="go('home')">Home</a> / Unit Test</div>
+    <div class="pagehead"><div><div class="eyebrow">Unit 6 Test</div><h2>Ratio &amp; Percentage</h2></div><span class="overall">${Object.keys(d).length}/20 answered · ${Object.values(d).filter(x=>x.ok).length} correct</span></div>
+    <section class="panel"><div class="dots">${dots}</div>${qBlock(q,d[i],i+1,20,'Test · '+tname)}
+    <div class="qactions"><button class="btn ghost" ${i===0?'disabled':''} onclick="go('test',{i:${i-1}})">← Back</button><span>${nextBtn}</span></div></section>`;
+  const inp=document.getElementById('inp'); if(inp&&!inp.disabled)inp.focus({preventScroll:true});
+}
+
+function renderKey(){
+  const sec=(title,list,off)=>`<h3>${title}</h3>`+list.map((q,k)=>`<div class="kq"><div class="qq">${k+1}. ${q.q}${q.t==='mc'?' <span style="color:#5E4E47;font-weight:500">('+q.opts.map((o,j)=>'ABCD'[j]+') '+o).join('  ')+')</span>':''}</div>
+    <div class="aa">Answer: ${q.t==='mc'?'ABCD'[q.a]+') ':''}${ansText(q)}</div><div class="ee">${q.ex}</div></div>`).join('');
+  app.innerHTML=`<div class="crumbs"><a onclick="go('home')">Home</a> / Answer key</div>
+   <div class="pagehead"><div><div class="eyebrow">For teachers</div><h2>Answer Key with Explanations</h2></div><button class="btn ghost small noprint" onclick="window.print()">Print answer key</button></div>
+   <section class="panel key">${TOPICS.map((t,i)=>sec(`Topic ${i+1}: ${t.title} (${t.pages})`,Q[t.id])).join('')}${sec('Unit 6 Test',TEST)}</section>`;
+}
+render();
+</script>
+</body>
+</html>

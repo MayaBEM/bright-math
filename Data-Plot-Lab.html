@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data Plot Lab · Statistics Made Visual · Bright EngMath</title>
+<meta name="description" content="Data Plot Lab — an offline statistics lab for Grades 6–7: dot plots, histograms, box plots, mean, median, MAD, IQR, sampling and comparing groups.">
+<style>
+:root{
+  --font:"Avenir Next","Nunito","Segoe UI",system-ui,-apple-system,sans-serif;
+  --head:"Arial Rounded MT Bold","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --mono:"SF Mono",Menlo,Consolas,monospace;
+  --ink:#1B2430; --ink2:#5A6675; --line:#1B2430; --bw:2px; --r:16px;
+  --card:#FFFFFF; --card2:#F6F8F7;
+  --pink:#FFD3DE; --yellow:#FFF0B3; --sky:#CFE8FF; --mint:#CDF3DA; --peach:#FFDCC2; --lilac:#E7E1FF;
+  --shadow:3px 3px 0 var(--line);
+  --good:#1F8A4C; --good-bg:#DDF5E4; --bad:#C62828; --bad-bg:#FFE0E0;
+}
+[data-theme="sky"]{   --bg1:#D6ECFF; --bg2:#A9D3F7; --btn:#FF8A5B; --dot:#1B2430; --dot-hi:#FF8A5B; --fill:#CFE8FF; --fill2:#A9D3F7; --mean:#E8562E; --med:#1F8A4C; --chip:var(--sky); --hl:#FFD23F; --hl2:#7FC8FF }
+[data-theme="meadow"]{ --bg1:#CBEFE3; --bg2:#9ED9C6; --btn:#5BDC7B; --dot:#1B2430; --dot-hi:#FF6B8A; --fill:#CDF3DA; --fill2:#9ED9C6; --mean:#E8456B; --med:#2E86DE; --chip:var(--mint); --hl:#FFD23F; --hl2:#7FE0B0 }
+[data-theme="lemon"]{  --bg1:#FFF4C2; --bg2:#FFE38A; --btn:#5BDC7B; --dot:#1B2430; --dot-hi:#E8562E; --fill:#FFF0B3; --fill2:#FFE38A; --mean:#E8562E; --med:#2E86DE; --chip:var(--yellow); --hl:#FF9F43; --hl2:#FFD23F }
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.45}
+body{background:linear-gradient(180deg,var(--bg1) 0%,var(--bg2) 100%);min-height:100vh;position:relative;background-attachment:fixed}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background-image:radial-gradient(rgba(27,36,48,.14) 1.2px,transparent 1.3px);background-size:22px 22px}
+body::after{content:"";position:fixed;left:0;right:0;bottom:0;height:46px;z-index:0;pointer-events:none;opacity:.55;background:repeating-linear-gradient(-45deg,var(--fill2) 0 14px,transparent 14px 28px)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+h1,h2,h3{font-family:var(--head);margin:0;line-height:1.15;font-weight:700}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+.app{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:18px 20px 70px}
+
+/* top bar */
+.top{display:flex;align-items:center;gap:14px;background:var(--card);border:var(--bw) solid var(--line);border-radius:999px;box-shadow:var(--shadow);padding:8px 10px 8px 16px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--head);font-size:20px}
+.brand .mark{width:30px;height:30px;border-radius:50%;background:var(--btn);border:var(--bw) solid var(--line);display:grid;place-items:center;font-size:12px}
+.brand small{display:block;font:600 10.5px var(--font);letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);line-height:1}
+.brand b{display:block;line-height:1.1}
+.modes{display:flex;gap:6px;margin:0 auto}
+.modes button{border:var(--bw) solid transparent;background:transparent;padding:7px 16px;border-radius:999px;font-weight:700;color:var(--ink2)}
+.modes button.on{background:var(--card);border-color:var(--line);box-shadow:2px 2px 0 var(--line);color:var(--ink)}
+.themes{display:flex;gap:6px;align-items:center;border:var(--bw) solid var(--line);border-radius:999px;padding:5px 10px;font-size:13px;font-weight:700}
+.themes button{width:20px;height:20px;border-radius:50%;border:var(--bw) solid var(--line);padding:0}
+.themes button.on{box-shadow:0 0 0 2px var(--card),0 0 0 4px var(--line)}
+
+/* chips */
+.chips{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:0 0 20px;padding:0 10px}
+.chip{position:relative;margin-top:18px;border:var(--bw) solid var(--line);border-radius:999px;padding:5px 14px 5px 8px;background:var(--card);box-shadow:2px 2px 0 var(--line);font-size:13.5px;font-weight:700;display:flex;align-items:center;gap:7px}
+.chip::before{content:"";position:absolute;left:50%;top:-18px;width:2px;height:16px;background:var(--line)}
+.chip::after{content:"";position:absolute;left:calc(50% - 3px);top:-21px;width:6px;height:6px;border-radius:50%;background:var(--line)}
+.chip i{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--line);display:inline-block}
+.chip.on{background:var(--chip)}
+.chips.flat{margin:14px 0 16px}.chips.flat .chip{margin-top:0}.chips.flat .chip::before,.chips.flat .chip::after{display:none}
+
+/* cards */
+.grid{display:grid;grid-template-columns:340px 1fr;gap:22px;align-items:start}
+.grid>*,.card{min-width:0}
+.card{background:var(--card);border:var(--bw) solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.card h2{font-size:17px;padding:12px 16px;display:flex;align-items:center;gap:8px;border-bottom:var(--bw) solid var(--line)}
+.tag{margin-left:auto;font:700 11.5px var(--font);border:1.5px solid var(--line);border-radius:999px;padding:2px 9px;background:var(--yellow);white-space:nowrap}
+.in{padding:14px 16px}
+label.lbl{display:block;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);margin:0 0 6px}
+.field{border:var(--bw) solid var(--line);border-radius:12px;padding:10px 12px;background:var(--card)}
+.field textarea{width:100%;border:0;outline:0;background:transparent;font-family:var(--mono);font-size:15px;line-height:1.5;resize:vertical;min-height:64px;padding:0}
+.field .sub{font-size:12.5px;color:var(--ink2);margin-top:4px}
+.row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;align-items:center}
+.btn{border:var(--bw) solid var(--line);background:var(--card);padding:9px 14px;border-radius:999px;font-weight:700;box-shadow:2px 2px 0 var(--line)}
+.btn:active{transform:translate(2px,2px);box-shadow:none}
+.btn.primary{background:var(--btn);border-radius:12px}
+.btn.big{padding:12px 22px;font-size:17px}
+.btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+.hint{font-size:13px;color:var(--ink2);margin-top:10px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{border:var(--bw) solid var(--line);border-radius:12px;padding:9px 11px;position:relative;overflow:hidden;background:var(--card)}
+.ico{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line);display:inline-grid;place-items:center;vertical-align:middle;margin-right:6px;font-size:11px;font-weight:800}
+.stat .k{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink2);font-weight:700;display:flex;align-items:center}
+.stat .v{font-family:var(--head);font-size:24px;margin-top:3px;font-variant-numeric:tabular-nums}
+.stat .d{font-size:12px;color:var(--ink2);min-height:16px}
+.stat.flash::after{content:"";position:absolute;inset:0;background:var(--hl);opacity:.6;animation:flash .5s ease-out forwards;pointer-events:none}
+@keyframes flash{to{opacity:0}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.fivenum{display:flex;gap:6px;margin-top:8px}
+.fivenum div{flex:1;text-align:center;border:1.5px solid var(--line);border-radius:10px;padding:6px 2px;background:var(--card2)}
+.fivenum b{display:block;font-size:17px;font-family:var(--head)}
+.fivenum span{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink2);font-weight:700}
+.ctabs{display:flex;border-bottom:var(--bw) solid var(--line)}
+.ctabs button{flex:1;border:0;background:transparent;padding:11px;font-weight:700;color:var(--ink2);border-right:var(--bw) solid var(--line)}
+.ctabs button:last-child{border-right:0}
+.ctabs button.on{background:var(--yellow);color:var(--ink)}
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:13.5px;color:var(--ink2);padding:10px 16px 0}
+.toolbar select,select.sel{border:1.5px solid var(--line);border-radius:999px;padding:3px 8px;background:var(--card);font-size:13px}
+.toolbar label{display:flex;gap:6px;align-items:center;cursor:pointer}
+.legend{display:flex;gap:14px;font-size:13px;color:var(--ink2)}
+.legend i{display:inline-block;width:18px;border-top:2.5px dashed var(--mean);vertical-align:middle;margin-right:5px}
+.legend i.s{border-top:2.5px solid var(--med)}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+.tile{border:var(--bw) solid var(--line);border-radius:14px;background:var(--card);box-shadow:var(--shadow);padding:12px 14px}
+.tile .ico{width:30px;height:30px;font-size:13px;margin-bottom:8px;border-width:2px}
+.tile .k{font-size:12.5px;color:var(--ink2);font-weight:700}
+.tile .v{font-family:var(--head);font-size:26px}
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px}
+th{text-align:left;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink2);padding:8px 10px;border-bottom:1.5px solid var(--line)}
+td{padding:7px 10px;border-bottom:1px solid #DCE2E0;vertical-align:top}
+tr:last-child td{border-bottom:0}
+.pill{display:inline-block;border:1.5px solid var(--line);border-radius:999px;padding:0 8px;font-size:12px;font-weight:700;background:var(--mint)}
+.pill.lo{background:var(--sky)} .pill.hi{background:var(--pink)} .pill.y{background:var(--yellow)}
+.foot{display:flex;justify-content:space-between;gap:12px;margin-top:22px;font-size:13px;color:var(--ink2);font-weight:600;flex-wrap:wrap}
+.foot span:last-child{border:1.5px solid var(--line);border-radius:999px;padding:2px 10px;background:var(--card)}
+
+/* charts */
+svg{display:block;width:100%;height:auto;overflow:visible}
+.axis line{stroke:var(--ink);stroke-width:1.5}
+.tick{fill:var(--ink);font-size:13px;font-family:var(--font)}
+.axtitle{fill:var(--ink2);font-size:12.5px}
+.dot{fill:var(--dot);stroke:var(--card);stroke-width:2}
+.dot.drag{fill:var(--dot-hi)}
+.draggable .dot{cursor:grab}.draggable .dot:hover{fill:var(--dot-hi)}
+.dot.hl{fill:var(--hl);stroke:var(--line)}
+.dot.hl2{fill:var(--hl2);stroke:var(--line)}
+.dot.dim{fill:#C9D0D8}
+.meanline{stroke:var(--mean);stroke-width:2.5;stroke-dasharray:6 5}
+.medline{stroke:var(--med);stroke-width:2.5}
+.lab{font-size:12.5px;font-weight:700}
+.bar{fill:var(--fill);stroke:var(--line);stroke-width:2}
+.bar.hl{fill:var(--hl)}
+.barlab{fill:var(--ink);font-size:12.5px;text-anchor:middle;font-weight:700}
+.boxrect{fill:var(--fill);stroke:var(--line);stroke-width:2}
+.boxrect.b{fill:var(--peach)}
+.whisk{stroke:var(--line);stroke-width:2}
+.outl{fill:var(--card);stroke:var(--dot-hi);stroke-width:2.5}
+.boxlab{font-size:12.5px;fill:var(--ink);text-anchor:middle;font-weight:700}
+.ghost{fill:none;stroke:var(--ink2);stroke-dasharray:4 4;stroke-width:1.5}
+.clickzone{fill:transparent;cursor:crosshair}
+
+/* intro strip */
+.intro{display:flex;gap:14px;align-items:center;flex-wrap:wrap;background:var(--card);border:var(--bw) solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:10px 14px;margin:0 0 18px}
+.intro .n{width:26px;height:26px;border-radius:50%;border:var(--bw) solid var(--line);display:grid;place-items:center;font-weight:800;font-size:13px;background:var(--yellow)}
+.intro .s{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px}
+.intro .x{margin-left:auto;border:0;background:transparent;font-size:20px;line-height:1;color:var(--ink2)}
+
+/* learn */
+.steps{list-style:none;margin:0;padding:0}
+.step{border:var(--bw) solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:10px;background:var(--card);display:flex;gap:10px;align-items:flex-start}
+.step .n{flex:none;width:26px;height:26px;border-radius:50%;border:var(--bw) solid var(--line);display:grid;place-items:center;font-weight:800;font-size:13px;background:var(--sky)}
+.step.cur{background:var(--yellow)}
+.step .t{font-weight:700;margin-bottom:2px}
+.step .h{font-size:14.5px}
+.step .h .m{font-family:var(--mono);font-size:14px;background:var(--card2);border:1px solid #DCE2E0;border-radius:6px;padding:1px 6px;overflow-wrap:anywhere}
+.step table{font-size:13.5px;margin-top:6px;width:auto}
+.step .h{overflow-wrap:anywhere}
+.step td,.step th{padding:3px 8px}
+.topics{display:flex;flex-direction:column;gap:8px}
+.topics button{text-align:left;border:var(--bw) solid var(--line);background:var(--card);border-radius:12px;padding:9px 12px;font-weight:700;display:flex;align-items:center;gap:8px}
+.topics button.on{background:var(--chip);box-shadow:2px 2px 0 var(--line)}
+.topics button .ico{margin:0}
+
+/* practice & test */
+.q{font-size:18px;font-weight:600;line-height:1.4}
+.q .m{font-family:var(--mono);background:var(--card2);border:1px solid #DCE2E0;border-radius:6px;padding:1px 6px;overflow-wrap:anywhere;font-size:16px}
+.choices{display:grid;gap:10px;margin-top:14px}
+.choice{text-align:left;border:var(--bw) solid var(--line);background:var(--card);border-radius:12px;padding:11px 14px;font-weight:600;display:flex;gap:10px;align-items:center}
+.choice .k{flex:none;width:26px;height:26px;border-radius:50%;border:var(--bw) solid var(--line);display:grid;place-items:center;font-size:13px;font-weight:800;background:var(--card2)}
+.choice:hover{background:var(--card2)}
+.choice.sel{background:var(--chip);box-shadow:2px 2px 0 var(--line)}
+.choice.ok{background:var(--good-bg);border-color:var(--good)}
+.choice.no{background:var(--bad-bg);border-color:var(--bad)}
+.choice:disabled{cursor:default}
+.numin{display:flex;gap:10px;align-items:center;margin-top:14px;flex-wrap:wrap}
+.numin input{border:var(--bw) solid var(--line);border-radius:12px;padding:10px 12px;font-size:20px;width:150px;font-family:var(--head)}
+.five{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}
+.five label{font-size:11px;font-weight:700;text-transform:uppercase;color:var(--ink2);letter-spacing:.05em}
+.five input{width:100%;border:var(--bw) solid var(--line);border-radius:10px;padding:8px;font-size:18px;font-family:var(--head);text-align:center}
+.fb{border:var(--bw) solid var(--line);border-radius:12px;padding:12px 14px;margin-top:14px;font-size:15px}
+.fb.ok{background:var(--good-bg);border-color:var(--good)}
+.fb.no{background:var(--bad-bg);border-color:var(--bad)}
+.fb b.t{display:block;font-family:var(--head);font-size:17px;margin-bottom:4px}
+.pbar{height:14px;border:var(--bw) solid var(--line);border-radius:999px;background:var(--card);overflow:hidden}
+.pbar i{display:block;height:100%;background:var(--btn);width:0;transition:width .3s}
+.scorebox{display:flex;gap:10px;flex-wrap:wrap}
+.scorebox div{flex:1;min-width:90px;border:var(--bw) solid var(--line);border-radius:12px;padding:8px 10px;background:var(--card2);text-align:center}
+.scorebox b{display:block;font-family:var(--head);font-size:22px}
+.scorebox span{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);font-weight:700}
+.big-score{font-family:var(--head);font-size:56px;line-height:1;text-align:center;margin:10px 0}
+.mastery{display:grid;gap:8px}
+.mastery .m{display:grid;grid-template-columns:160px 1fr 60px;gap:10px;align-items:center;font-size:14px;font-weight:600}
+.mastery .pbar i{background:var(--med)}
+.textin{border:var(--bw) solid var(--line);border-radius:12px;padding:9px 12px;font-size:16px;width:100%;max-width:320px}
+.empty{color:var(--ink2);font-size:14px;text-align:center;padding:20px}
+.kbd{font:600 12px var(--mono);border:1.5px solid var(--line);border-radius:6px;padding:0 5px;background:var(--card2)}
+
+@media (max-width:900px){
+  .app{padding:12px 12px 70px}
+  .top{border-radius:22px;flex-wrap:wrap;gap:8px;padding:10px 12px}
+  .modes{order:3;width:100%;justify-content:space-between;margin:4px 0 0}
+  .modes button{flex:1;padding:7px 4px;font-size:13.5px}
+  .themes{margin-left:auto}
+  .grid{grid-template-columns:1fr}
+  .tiles{grid-template-columns:1fr 1fr 1fr;gap:8px}
+  .tile .v{font-size:20px}
+  .chip{font-size:12.5px;margin-top:14px}
+  .mastery .m{grid-template-columns:110px 1fr 50px}
+  .five{grid-template-columns:repeat(5,1fr);gap:5px}
+  .five input{font-size:15px;padding:6px 2px}
+}
+@media print{
+  body{background:#fff}body::before,body::after{display:none}
+  .top,.chips,.foot,.noprint{display:none!important}
+  .card{box-shadow:none}
+  .app{padding:0}
+}
+</style>
+</head>
+<body data-theme="sky">
+<div class="app">
+
+<header class="top">
+  <div class="brand"><div class="mark">BE</div><div><small>Bright EngMath</small><b>Data Plot Lab</b></div></div>
+  <nav class="modes" aria-label="Mode" id="modes">
+    <button data-m="lab" class="on">Lab</button><button data-m="learn">Learn</button><button data-m="practice">Practice</button><button data-m="test">Test</button><button data-m="dash">Dashboard</button>
+  </nav>
+  <div class="themes" aria-label="Theme">Theme
+    <button data-set="sky" class="on" title="Sky" aria-label="Sky theme" style="background:#A9D3F7"></button>
+    <button data-set="meadow" title="Meadow" aria-label="Meadow theme" style="background:#9ED9C6"></button>
+    <button data-set="lemon" title="Lemonade" aria-label="Lemonade theme" style="background:#FFE38A"></button>
+  </div>
+</header>
+
+<!-- ================= LAB ================= -->
+<section id="m-lab">
+  <div class="chips" id="chips">
+    <button class="chip on" data-p="phone"><i style="background:var(--pink)"></i>Phone time</button>
+    <button class="chip" data-p="goals"><i style="background:var(--yellow)"></i>Goals scored</button>
+    <button class="chip" data-p="songs"><i style="background:var(--sky)"></i>Playlist songs</button>
+    <button class="chip" data-p="pets"><i style="background:var(--peach)"></i>Pet weights</button>
+    <button class="chip" data-p="sleep"><i style="background:var(--mint)"></i>Hours of sleep</button>
+    <button class="chip" data-p="custom"><i style="background:var(--card2)"></i>My own data</button>
+  </div>
+  <div class="intro" id="intro">
+    <div class="s"><span class="n">1</span>Pick a scenario or type your own data</div>
+    <div class="s"><span class="n">2</span>Drag dots on the dot plot</div>
+    <div class="s"><span class="n">3</span>Watch which measures move, and which don't</div>
+    <button class="x" aria-label="Dismiss" id="introX">×</button>
+  </div>
+  <main class="grid">
+    <aside>
+      <div class="card">
+        <h2>Your data <span class="tag" id="nTag">n = 0</span></h2>
+        <div class="in">
+          <label class="lbl" for="data" id="dataLbl">Minutes on phone before school</label>
+          <div class="field"><textarea id="data" spellcheck="false"></textarea><div class="sub">Separate values with commas or spaces · 3 to 60 values</div></div>
+          <div class="row"><button class="btn primary" id="plot" style="flex:1">Plot it</button><button class="btn" id="rand">Random</button><button class="btn" id="sort">Sort</button></div>
+          <p class="hint">Tip: drag any dot. The mean, MAD and range react to every dot; the median and IQR only move when the middle of the data moves.</p>
+        </div>
+        <h2 style="border-top:var(--bw) solid var(--line)">Measures <span class="tag" style="background:var(--mint)">live</span></h2>
+        <div class="in">
+          <div class="stats">
+            <div class="stat" id="s-mean"><div class="k"><i class="ico" style="background:var(--pink)"></i>Mean</div><div class="v">–</div><div class="d"></div></div>
+            <div class="stat" id="s-median"><div class="k"><i class="ico" style="background:var(--sky)"></i>Median</div><div class="v">–</div><div class="d"></div></div>
+            <div class="stat" id="s-mode"><div class="k"><i class="ico" style="background:var(--yellow)"></i>Mode</div><div class="v">–</div><div class="d"></div></div>
+            <div class="stat" id="s-range"><div class="k"><i class="ico" style="background:var(--peach)"></i>Range</div><div class="v">–</div><div class="d"></div></div>
+            <div class="stat" id="s-mad"><div class="k"><i class="ico" style="background:var(--mint)"></i>MAD</div><div class="v">–</div><div class="d"></div></div>
+            <div class="stat" id="s-iqr"><div class="k"><i class="ico" style="background:var(--lilac)"></i>IQR</div><div class="v">–</div><div class="d"></div></div>
+          </div>
+          <label class="lbl" style="margin-top:14px">Five-number summary</label>
+          <div class="fivenum"><div><b id="f-min">–</b><span>Min</span></div><div><b id="f-q1">–</b><span>Q1</span></div><div><b id="f-med">–</b><span>Med</span></div><div><b id="f-q3">–</b><span>Q3</span></div><div><b id="f-max">–</b><span>Max</span></div></div>
+          <p class="hint" id="outHint"></p>
+          <p class="hint" id="shapeHint"></p>
+        </div>
+      </div>
+    </aside>
+    <section>
+      <div class="card">
+        <div class="ctabs" id="ctabs"><button class="on" data-c="dot">Dot plot</button><button data-c="hist">Histogram</button><button data-c="box">Box plot</button><button data-c="all">All three</button></div>
+        <div class="toolbar" id="tb-dot"><span class="legend"><span><i></i>mean</span><span><i class="s"></i>median</span></span><span style="margin-left:auto">Drag a dot to change its value</span></div>
+        <div class="in" id="p-dot"><svg id="dotplot" viewBox="0 0 900 230" aria-label="Dot plot" class="draggable"></svg></div>
+        <div class="toolbar" id="tb-hist" hidden>Bin width <select id="bin"><option value="auto">Auto</option><option value="1">1</option><option value="2">2</option><option value="5">5</option><option value="10">10</option></select></div>
+        <div class="in" id="p-hist" hidden><svg id="hist" viewBox="0 0 900 250" aria-label="Histogram"></svg></div>
+        <div class="toolbar" id="tb-box" hidden><label><input type="checkbox" id="outliers"> Mark outliers (1.5 × IQR rule)</label></div>
+        <div class="in" id="p-box" hidden><svg id="box" viewBox="0 0 900 170" aria-label="Box plot"></svg></div>
+      </div>
+      <div class="tiles">
+        <div class="tile"><div class="ico" style="background:var(--pink)">x̄</div><div class="k">Center · mean</div><div class="v" id="t-mean">–</div></div>
+        <div class="tile"><div class="ico" style="background:var(--sky)">M</div><div class="k">Center · median</div><div class="v" id="t-med">–</div></div>
+        <div class="tile"><div class="ico" style="background:var(--yellow)">↔</div><div class="k">Spread · IQR</div><div class="v" id="t-iqr">–</div></div>
+      </div>
+      <div class="card" style="margin-top:18px">
+        <h2>Data table <span class="tag" style="background:var(--sky)">sorted</span></h2>
+        <div class="in" style="padding-top:4px;overflow-x:auto"><table><thead><tr><th>#</th><th>Value</th><th>Distance from mean</th><th>Position</th></tr></thead><tbody id="tbody"></tbody></table></div>
+      </div>
+    </section>
+  </main>
+</section>
+
+<!-- ================= LEARN ================= -->
+<section id="m-learn" hidden>
+  <main class="grid" style="margin-top:18px">
+    <aside class="card">
+      <h2>Learn step by step <span class="tag" style="background:var(--sky)">8 topics</span></h2>
+      <div class="in">
+        <div class="topics" id="topics"></div>
+        <div class="row" style="margin-top:14px"><button class="btn" id="learnLab">Use my Lab data</button><button class="btn" id="learnRand">New random data</button></div>
+        <p class="hint" id="learnDataInfo"></p>
+      </div>
+    </aside>
+    <section>
+      <div class="card">
+        <h2 id="learnTitle">Mean <span class="tag" id="learnStd"></span></h2>
+        <div class="in"><svg id="learnSvg" viewBox="0 0 900 230" aria-label="Learn chart"></svg><div id="learnExtra"></div></div>
+      </div>
+      <div class="card" style="margin-top:18px">
+        <h2>Steps <span class="tag" id="stepTag">step 0</span></h2>
+        <div class="in">
+          <ol class="steps" id="steps"></ol>
+          <div class="row"><button class="btn primary" id="nextStep">Show next step</button><button class="btn" id="allSteps">Show all</button><button class="btn" id="restartSteps">Start over</button></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</section>
+
+<!-- ================= PRACTICE ================= -->
+<section id="m-practice" hidden>
+  <div class="chips flat" id="skillChips"></div>
+  <main class="grid">
+    <aside class="card">
+      <h2>Practice <span class="tag" id="prTag">unlimited</span></h2>
+      <div class="in">
+        <div class="scorebox"><div><b id="prCorrect">0</b><span>correct</span></div><div><b id="prTotal">0</b><span>answered</span></div><div><b id="prStreak">0</b><span>streak</span></div></div>
+        <p class="hint">Pick a skill above or leave <b>All skills</b> on. Each question explains its answer, so read the feedback even when you're right.</p>
+        <div class="row"><button class="btn" id="prReset">Reset counter</button></div>
+      </div>
+    </aside>
+    <section class="card" id="prCard">
+      <h2><span id="prSkill">Question</span> <span class="tag" id="prType"></span></h2>
+      <div class="in" id="prBody"></div>
+    </section>
+  </main>
+</section>
+
+<!-- ================= TEST ================= -->
+<section id="m-test" hidden>
+  <main class="grid" style="margin-top:18px">
+    <aside class="card">
+      <h2>Unit check <span class="tag">12 questions</span></h2>
+      <div class="in" id="testSide">
+        <label class="lbl" for="studentName">Student name (optional)</label>
+        <input class="textin" id="studentName" placeholder="e.g. Jordan P." maxlength="40">
+        <p class="hint">Every attempt uses fresh numbers. You'll see your score and a skill breakdown at the end, and the result is saved to the Dashboard on this device.</p>
+        <div class="pbar" style="margin-top:12px"><i id="testBar"></i></div>
+        <p class="hint" id="testProg">Not started</p>
+        <div class="row"><button class="btn primary big" id="testStart">Start test</button></div>
+      </div>
+    </aside>
+    <section class="card" id="testCard">
+      <h2><span id="tSkill">Ready?</span> <span class="tag" id="tNum"></span></h2>
+      <div class="in" id="tBody"><p class="empty">Press <b>Start test</b> when you're ready. Twelve questions, mixed skills, no time limit.</p></div>
+    </section>
+  </main>
+</section>
+
+<!-- ================= DASHBOARD ================= -->
+<section id="m-dash" hidden>
+  <main class="grid" style="margin-top:18px">
+    <aside class="card">
+      <h2>Dashboard <span class="tag" style="background:var(--mint)">this device</span></h2>
+      <div class="in">
+        <div class="scorebox"><div><b id="dBest">–</b><span>best test</span></div><div><b id="dAttempts">0</b><span>tests</span></div><div><b id="dPractice">0</b><span>practice Qs</span></div></div>
+        <div class="row noprint"><button class="btn" id="dPrint">Print summary</button><button class="btn" id="dClear">Clear all data</button></div>
+        <p class="hint">Progress is stored only in this browser (nothing is sent anywhere). Clearing data cannot be undone.</p>
+      </div>
+    </aside>
+    <section>
+      <div class="card"><h2>Skill mastery <span class="tag" id="dMasteryTag">practice + tests</span></h2><div class="in mastery" id="dMastery"></div></div>
+      <div class="card" style="margin-top:18px"><h2>Test attempts</h2><div class="in" style="padding-top:4px;overflow-x:auto"><table><thead><tr><th>Date</th><th>Name</th><th>Score</th><th>Weakest skill</th></tr></thead><tbody id="dAttemptsBody"></tbody></table></div></div>
+    </section>
+  </main>
+</section>
+
+<footer class="foot"><span>Bright EngMath · Statistics Made Visual · Grades 6–7 · works offline</span><span>For single classroom use only</span></footer>
+</div>
+
+<script>
+'use strict';
+/* =============== STATISTICS (single source of truth; same rules as the worksheets) =============== */
+const S = {
+  sorted: a => [...a].sort((x,y)=>x-y),
+  sum: a => a.reduce((p,c)=>p+c,0),
+  mean: a => S.sum(a)/a.length,
+  median(a){ const s=S.sorted(a), n=s.length; return n%2 ? s[(n-1)/2] : (s[n/2-1]+s[n/2])/2; },
+  freq(a){ const m=new Map(); S.sorted(a).forEach(v=>m.set(v,(m.get(v)||0)+1)); return m; },
+  mode(a){ const m=S.freq(a); const mx=Math.max(...m.values()); if(mx===1) return {vals:[],label:'none',count:1};
+    const vals=[...m.entries()].filter(e=>e[1]===mx).map(e=>e[0]); return {vals,label:vals.join(', '),count:mx}; },
+  range: a => Math.max(...a)-Math.min(...a),
+  mad(a){ const m=S.mean(a); return S.mean(a.map(v=>Math.abs(v-m))); },
+  halves(a){ const s=S.sorted(a), n=s.length, h=Math.floor(n/2); return {lower:s.slice(0,h), upper:s.slice(n-h), mid: n%2? s[h] : null}; },
+  // Quartiles: Q1 = median of lower half, Q3 = median of upper half; the median is EXCLUDED when n is odd.
+  quartiles(a){ const s=S.sorted(a), h=S.halves(s); return {min:s[0], q1:S.median(h.lower), med:S.median(s), q3:S.median(h.upper), max:s[s.length-1]}; },
+  iqr: a => { const q=S.quartiles(a); return q.q3-q.q1; },
+  outliers(a){ const q=S.quartiles(a), iqr=q.q3-q.q1, lo=q.q1-1.5*iqr, hi=q.q3+1.5*iqr; return {lo,hi,iqr,out:S.sorted(a).filter(v=>v<lo||v>hi)}; },
+  shape(a){ const m=S.mean(a), md=S.median(a), r=S.range(a)||1, d=(m-md)/r; if(Math.abs(d)<0.04) return 'roughly symmetric'; return d>0 ? 'skewed right (a tail toward larger values)' : 'skewed left (a tail toward smaller values)'; }
+};
+const fmt = v => Number.isInteger(v) ? String(v) : (Math.round(v*100)/100).toString();
+const r2 = v => Math.round(v*100)/100;
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ri = (a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const pick = a => a[Math.floor(Math.random()*a.length)];
+const shuffle = a => { const b=[...a]; for(let i=b.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [b[i],b[j]]=[b[j],b[i]]; } return b; };
+const nth = n => n+(['th','st','nd','rd'][(n%100>>3^1&&n%10)||0]||'th');
+
+/* =============== SCENARIOS & RANDOM DATA =============== */
+const SCEN = [
+  {key:'phone', label:'Minutes on phone before school', unit:'minutes', who:'students', c:[15,45], sp:[5,12], step:5, d:[15,30,45,0,20,60,30,10,25,90,30,40]},
+  {key:'goals', label:'Goals scored this season', unit:'goals', who:'players', c:[2,6], sp:[1,3], step:1, d:[2,0,5,1,3,1,7,2,4,1,12]},
+  {key:'songs', label:'Songs on a playlist', unit:'songs', who:'friends', c:[40,90], sp:[8,20], step:5, d:[48,120,35,62,80,55,210,70,66,90]},
+  {key:'pets', label:'Pet weights', unit:'pounds', who:'pets', c:[8,30], sp:[3,8], step:1, d:[12,8,45,15,10,62,9,14,11]},
+  {key:'sleep', label:'Hours of sleep last night', unit:'hours', who:'students', c:[7,9], sp:[1,1], step:1, d:[8,7,9,6,8,8,10,7,5,8,9,7,8]},
+  {key:'games', label:'Minutes of video games yesterday', unit:'minutes', who:'students', c:[30,90], sp:[10,25], step:10},
+  {key:'texts', label:'Text messages sent today', unit:'texts', who:'students', c:[10,40], sp:[4,12], step:1},
+  {key:'points', label:'Points scored per basketball game', unit:'points', who:'games', c:[6,18], sp:[2,5], step:1},
+  {key:'books', label:'Books read this summer', unit:'books', who:'students', c:[2,8], sp:[1,3], step:1},
+  {key:'laps', label:'Laps swum at practice', unit:'laps', who:'swimmers', c:[10,30], sp:[3,8], step:2},
+  {key:'shoes', label:'Shoe sizes in a class', unit:'size', who:'students', c:[5,8], sp:[1,2], step:1},
+  {key:'snacks', label:'Snacks eaten per week', unit:'snacks', who:'students', c:[6,14], sp:[2,4], step:1}
+];
+const gauss = () => (Math.random()+Math.random()+Math.random()-1.5);
+function gen(o={}){
+  const sc = o.scen || pick(SCEN), n = o.n || ri(8,13), c = ri(sc.c[0],sc.c[1]), sp = ri(sc.sp[0],sc.sp[1]), st=sc.step;
+  const snap = v => Math.max(0, Math.round(v/st)*st);
+  let d = Array.from({length:n}, ()=>snap(c+gauss()*sp*1.6));
+  if(o.outlier){ d[ri(0,n-1)] = snap(c + sp*ri(5,7)); }
+  if(o.noOutlier){ const q=S.outliers(d); if(q.out.length){ d = d.map(v=> v<q.lo? snap(q.lo+st) : v>q.hi? snap(q.hi-st) : v); } }
+  if(o.spreadMin && S.range(d)<o.spreadMin){ d[0]=snap(c-sp*2); d[n-1]=snap(c+sp*2); }
+  return {label:sc.label, unit:sc.unit, who:sc.who, d, scen:sc};
+}
+
+/* =============== CHARTS =============== */
+const NS='http://www.w3.org/2000/svg';
+function el(t,attrs,parent){ const e=document.createElementNS(NS,t); for(const k in attrs) e.setAttribute(k,attrs[k]); parent&&parent.appendChild(e); return e; }
+function txt(parent,x,y,s,attrs={}){ const t=el('text',Object.assign({x,y},attrs),parent); t.textContent=s; return t; }
+function niceDomain(a, forceStep){ let lo=Math.min(...a), hi=Math.max(...a); if(lo===hi){lo-=2;hi+=2;}
+  const span=hi-lo, step= forceStep || (span<=12?1: span<=30?2: span<=60?5: span<=130?10: span<=300?25:50);
+  lo=Math.floor(lo/step)*step-(lo%step===0?step:0); if(lo<0&&Math.min(...a)>=0) lo=0; hi=Math.ceil(hi/step)*step+(hi%step===0?step:0); return {lo,hi,step}; }
+function axis(svg,x,y,dom,title){ const g=el('g',{class:'axis'},svg); el('line',{x1:x(dom.lo),y1:y,x2:x(dom.hi),y2:y},g);
+  for(let v=dom.lo; v<=dom.hi+1e-9; v+=dom.step){ el('line',{x1:x(v),y1:y,x2:x(v),y2:y+7},g); txt(g,x(v),y+24,fmt(v),{'text-anchor':'middle',class:'tick'}); }
+  if(title) txt(g,x(dom.hi),y+44,title,{'text-anchor':'end',class:'axtitle'}); }
+const CW = () => window.innerWidth<700 ? 560 : 900;
+function setVB(svg,W,H){ svg.setAttribute('viewBox',`0 0 ${W} ${H}`); }
+function scaleFor(W,dom){ const PL=40, PR=30; return v=>PL+(v-dom.lo)/(dom.hi-dom.lo)*(W-PL-PR); }
+
+/** Dot plot. opts: {unit, mean, med, hl:{values or indexFn}, dim, dom, onDrag(i,v)} */
+function dotPlot(svg, data, o={}){
+  const W=CW(), H=o.H||230; setVB(svg,W,H); svg.innerHTML='';
+  const dom=o.dom||niceDomain(data), x=scaleFor(W,dom), base=H-65, r=o.r||9, gap=2*r+1, counts={};
+  const items=data.map((v,i)=>({v,i})).sort((a,b)=>a.v-b.v);
+  items.forEach((d,si)=>{ const k=counts[d.v]||0; counts[d.v]=k+1;
+    const cls=['dot']; if(o.cls){ const c=o.cls(d.v,si,d.i); if(c) cls.push(c); }
+    el('circle',{cx:x(d.v),cy:base-r-k*gap,r,class:cls.join(' '),'data-i':d.i},svg); });
+  if(o.med!==undefined){ el('line',{x1:x(o.med),y1:base-150,x2:x(o.med),y2:base+2,class:'medline'},svg); const t=txt(svg,x(o.med)+6,base-122,'median '+fmt(o.med),{class:'lab',style:'fill:var(--med)'}); if(o.mean!==undefined && Math.abs(x(o.mean)-x(o.med))<80){ t.setAttribute('x',x(o.med)-6); t.setAttribute('text-anchor','end'); } }
+  if(o.mean!==undefined){ el('line',{x1:x(o.mean),y1:base-150,x2:x(o.mean),y2:base+2,class:'meanline'},svg); txt(svg,x(o.mean)+6,base-140,'mean '+fmt(o.mean),{class:'lab',style:'fill:var(--mean)'}); }
+  axis(svg,x,base,dom,o.unit||'');
+  if(o.onDrag){ let cur=null; svg.classList.add('draggable');
+    const toVal=cx=>{ const pt=svg.createSVGPoint(); pt.x=cx; pt.y=0; const p=pt.matrixTransform(svg.getScreenCTM().inverse()); const v=dom.lo+(p.x-40)/(W-70)*(dom.hi-dom.lo); return Math.max(dom.lo,Math.min(dom.hi,Math.round(v))); };
+    svg.onpointerdown=e=>{ if(!e.target.classList.contains('dot')) return; cur=+e.target.dataset.i; e.target.classList.add('drag'); svg.setPointerCapture(e.pointerId); };
+    svg.onpointermove=e=>{ if(cur===null) return; const v=toVal(e.clientX); if(v!==data[cur]) o.onDrag(cur,v); };
+    svg.onpointerup=svg.onpointercancel=()=>{ cur=null; svg.querySelectorAll('.dot.drag').forEach(d=>d.classList.remove('drag')); }; }
+  return {x,dom,base};
+}
+/** Histogram. opts: {bw, dom, hlBin:index, labels:true} returns bins */
+function histogram(svg, data, o={}){
+  const W=CW(), H=250; setVB(svg,W,H); svg.innerHTML=''; const base=190, top=20;
+  const dom=o.dom||niceDomain(data), x=scaleFor(W,dom); let bw=o.bw||dom.step*(dom.step===1?2:1);
+  const start=Math.floor(dom.lo/bw)*bw, end=Math.ceil((dom.hi+0.001)/bw)*bw, bins=[]; for(let b=start;b<end;b+=bw) bins.push({lo:b,hi:b+bw,c:0});
+  data.forEach(v=>{ bins[Math.min(bins.length-1,Math.floor((v-start)/bw))].c++; });
+  const maxc=Math.max(1,...bins.map(b=>b.c)), y=c=>base-(c/maxc)*(base-top-10);
+  const g=el('g',{class:'axis'},svg); el('line',{x1:40,y1:top,x2:40,y2:base},g);
+  for(let c=0;c<=maxc;c+=maxc>8?2:1){ el('line',{x1:34,y1:y(c),x2:40,y2:y(c)},g); txt(g,28,y(c)+4,c,{'text-anchor':'end',class:'tick',style:'font-size:12px'}); }
+  txt(svg,12,top+6,'Frequency',{class:'axtitle',transform:`rotate(-90 12 ${top+6})`,'text-anchor':'end'});
+  bins.forEach((b,i)=>{ if(!b.c) return; const x0=x(Math.max(b.lo,dom.lo)), x1=x(Math.min(b.hi,dom.hi)); el('rect',{x:x0,y:y(b.c),width:Math.max(0,x1-x0),height:base-y(b.c),class:'bar'+(o.hlBin===i?' hl':'')},svg); if(o.labels!==false) txt(svg,(x0+x1)/2,y(b.c)-6,b.c,{class:'barlab'}); });
+  axis(svg,x,base,{lo:dom.lo,hi:dom.hi,step:bw>=dom.step?bw:dom.step},o.unit||''); txt(svg,W-30,base+44,`bin width ${bw} · a value on a line belongs to the bar on its right`,{'text-anchor':'end',class:'axtitle'});
+  return bins;
+}
+/** Box plot(s). groups: [{d,label,cls}] opts:{outliers, dom, labels:true} */
+function boxPlot(svg, groups, o={}){
+  const W=CW(), n=groups.length, rowH=o.rowH||(n>1?130:110), H=rowH*n+60; setVB(svg,W,H); svg.innerHTML='';
+  const all=groups.flatMap(g=>g.d), dom=o.dom||niceDomain(all), x=scaleFor(W,dom), base=H-50;
+  groups.forEach((g,gi)=>{ const q=S.quartiles(g.d), ol=S.outliers(g.d), mid=30+gi*rowH+(n>1?60:40), h=44;
+    const inside=o.outliers? g.d.filter(v=>v>=ol.lo&&v<=ol.hi) : g.d, wmin=Math.min(...inside), wmax=Math.max(...inside);
+    el('line',{x1:x(wmin),y1:mid,x2:x(q.q1),y2:mid,class:'whisk'},svg); el('line',{x1:x(q.q3),y1:mid,x2:x(wmax),y2:mid,class:'whisk'},svg);
+    el('line',{x1:x(wmin),y1:mid-14,x2:x(wmin),y2:mid+14,class:'whisk'},svg); el('line',{x1:x(wmax),y1:mid-14,x2:x(wmax),y2:mid+14,class:'whisk'},svg);
+    el('rect',{x:x(q.q1),y:mid-h/2,width:Math.max(1,x(q.q3)-x(q.q1)),height:h,rx:4,class:'boxrect'+(g.cls?' '+g.cls:'')},svg);
+    el('line',{x1:x(q.med),y1:mid-h/2,x2:x(q.med),y2:mid+h/2,class:'whisk',style:'stroke-width:3.5'},svg);
+    if(o.outliers) ol.out.forEach(v=>el('circle',{cx:x(v),cy:mid,r:6,class:'outl'},svg));
+    if(g.label) txt(svg,x(dom.lo),mid+h/2+18,g.label,{class:'lab',style:'font-size:13.5px'});
+    if(o.labels!==false){ const rows=[-1e9,-1e9,-1e9], minGap=W<700?64:58; [[wmin,'min'],[q.q1,'Q1'],[q.med,'median'],[q.q3,'Q3'],[wmax,'max']].forEach(([v,l])=>{ const xx=x(v); let r=rows.findIndex(rx=>xx-rx>=minGap); if(r<0) r=0; rows[r]=xx; txt(svg,xx,mid-h/2-10-r*17,`${l} ${fmt(v)}`,{class:'boxlab'}); }); }
+  });
+  axis(svg,x,base,dom,o.unit||''); return {x,dom};
+}
+
+/* =============== LOCAL STORAGE =============== */
+const store = { get(k,d){ try{ const v=localStorage.getItem('dpl.'+k); return v? JSON.parse(v) : d; }catch(e){ return d; } }, set(k,v){ try{ localStorage.setItem('dpl.'+k, JSON.stringify(v)); }catch(e){} }, del(k){ try{ localStorage.removeItem('dpl.'+k); }catch(e){} } };
+const SKILLS = { statq:'Statistical questions', read:'Reading graphs', build:'Building graphs', measure:'Center & spread', sample:'Sampling & inference', compare:'Comparing groups' };
+function recordSkill(skill, ok){ const m=store.get('skills',{}); m[skill]=m[skill]||{c:0,t:0}; m[skill].t++; if(ok) m[skill].c++; store.set('skills',m); }
+
+/* =============== MODE SWITCH & THEME =============== */
+function setMode(m){ $$('#modes button').forEach(b=>b.classList.toggle('on',b.dataset.m===m)); ['lab','learn','practice','test','dash'].forEach(k=>$('#m-'+k).hidden=(k!==m)); if(m==='dash') renderDash(); if(m==='learn'&&!learnState.topic) selectTopic('mean'); if(m==='practice'&&!prState.q) nextPractice(); window.scrollTo({top:0}); }
+$$('#modes button').forEach(b=>b.onclick=()=>setMode(b.dataset.m));
+$$('.themes button').forEach(b=>b.onclick=()=>{ document.body.dataset.theme=b.dataset.set; $$('.themes button').forEach(x=>x.classList.toggle('on',x===b)); store.set('theme',b.dataset.set); });
+(function(){ const t=store.get('theme','sky'); const b=$(`.themes button[data-set="${t}"]`); b&&b.click(); if(store.get('introSeen',false)) $('#intro').hidden=true; })();
+$('#introX').onclick=()=>{ $('#intro').hidden=true; store.set('introSeen',true); };
+
+/* =============== LAB =============== */
+let preset='phone', data=[...SCEN[0].d];
+const ta=$('#data'); ta.value=data.join(', ');
+function labUnit(){ const s=SCEN.find(s=>s.key===preset); return s? s.unit : ''; }
+function parse(){ const v=ta.value.split(/[\s,;]+/).filter(Boolean).map(Number).filter(x=>!isNaN(x)); if(v.length>=3&&v.length<=60){ data=v; renderLab(); } else { ta.focus(); alert('Please enter between 3 and 60 numbers.'); } }
+$('#plot').onclick=parse; ta.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); parse(); } });
+$$('#chips .chip').forEach(c=>c.onclick=()=>{ preset=c.dataset.p; $$('#chips .chip').forEach(x=>x.classList.toggle('on',x===c)); const sc=SCEN.find(s=>s.key===preset);
+  $('#dataLbl').textContent = sc? sc.label : 'My own data'; if(sc){ data=[...sc.d]; ta.value=data.join(', '); renderLab(); } else { ta.value=''; ta.focus(); } });
+$('#rand').onclick=()=>{ const sc=SCEN.find(s=>s.key===preset)||pick(SCEN); const g=gen({scen:sc, outlier:Math.random()<.4}); data=g.d; ta.value=data.join(', '); renderLab(); };
+$('#sort').onclick=()=>{ data=S.sorted(data); ta.value=data.join(', '); renderLab(); };
+$('#bin').onchange=renderLab; $('#outliers').onchange=renderLab;
+$$('#ctabs button').forEach(b=>b.onclick=()=>{ $$('#ctabs button').forEach(x=>x.classList.toggle('on',x===b)); const c=b.dataset.c; ['dot','hist','box'].forEach(k=>{ const show=c==='all'||c===k; $('#tb-'+k).hidden=!show; $('#p-'+k).hidden=!show; }); renderLab(); });
+let rT; window.addEventListener('resize',()=>{ clearTimeout(rT); rT=setTimeout(()=>{ renderLab(); if(learnState.topic) renderLearn(); },120); });
+
+function renderLab(){
+  const n=data.length; $('#nTag').textContent='n = '+n;
+  const q=S.quartiles(data), mean=S.mean(data), mode=S.mode(data), mad=S.mad(data), iqr=q.q3-q.q1, o=S.outliers(data);
+  const set=(id,v,d)=>{ const c=$(id), vv=c.querySelector('.v'), t=fmt(v); if(vv.textContent!==t){ c.classList.remove('flash'); void c.offsetWidth; c.classList.add('flash'); } vv.textContent=t; c.querySelector('.d').textContent=d; };
+  set('#s-mean',mean,`${fmt(S.sum(data))} ÷ ${n}`); set('#s-median',q.med, n%2?`${nth((n+1)/2)} value of ${n}`:`average of ${nth(n/2)} & ${nth(n/2+1)}`);
+  $('#s-mode .v').textContent=mode.label; $('#s-mode .d').textContent=mode.vals.length>1?'more than one mode':mode.vals.length?`appears ${mode.count} times`:'every value appears once';
+  set('#s-range',S.range(data),`${fmt(q.max)} − ${fmt(q.min)}`); set('#s-mad',mad,'average distance from the mean'); set('#s-iqr',iqr,`${fmt(q.q3)} − ${fmt(q.q1)}`);
+  ['min','q1','med','q3','max'].forEach(k=>$('#f-'+k).textContent=fmt(q[k]));
+  $('#t-mean').textContent=fmt(mean); $('#t-med').textContent=fmt(q.med); $('#t-iqr').textContent=fmt(iqr);
+  $('#outHint').textContent = o.out.length ? `Outlier${o.out.length>1?'s':''} by the 1.5 × IQR rule: ${o.out.join(', ')} (fences ${fmt(o.lo)} and ${fmt(o.hi)}).` : `No outliers by the 1.5 × IQR rule (fences ${fmt(o.lo)} and ${fmt(o.hi)}).`;
+  $('#shapeHint').textContent = `Shape: ${S.shape(data)}. ${Math.abs(mean-q.med)>0.5? 'Mean and median differ, so the median is the safer "typical" value.' : 'Mean and median are close, so either describes a typical value.'}`;
+  if(!$('#p-dot').hidden) dotPlot($('#dotplot'),data,{unit:labUnit(),mean,med:q.med,onDrag:(i,v)=>{ data[i]=v; ta.value=data.join(', '); renderLab(); const d=$('#dotplot').querySelector(`.dot[data-i="${i}"]`); d&&d.classList.add('drag'); }});
+  if(!$('#p-hist').hidden){ const bw=$('#bin').value; histogram($('#hist'),data,{bw: bw==='auto'?0:+bw, unit:labUnit()}); }
+  if(!$('#p-box').hidden) boxPlot($('#box'),[{d:data}],{outliers:$('#outliers').checked, unit:labUnit()});
+  const tb=$('#tbody'); tb.innerHTML=''; S.sorted(data).forEach((v,i)=>{ const tr=document.createElement('tr');
+    const pos = o.out.includes(v) ? '<span class="pill hi">outlier</span>' : v<q.q1 ? '<span class="pill lo">below Q1</span>' : v>q.q3 ? '<span class="pill lo">above Q3</span>' : '<span class="pill">in the box</span>';
+    tr.innerHTML=`<td>${i+1}</td><td><b>${fmt(v)}</b></td><td>${fmt(Math.abs(v-mean))}</td><td>${pos}</td>`; tb.appendChild(tr); });
+}
+renderLab();
+
+/* =============== LEARN =============== */
+const TOPICS = [
+  {k:'mean', n:'Mean', std:'6.SP.B.5c', ico:'x̄', bg:'var(--pink)'},
+  {k:'median', n:'Median', std:'6.SP.B.5c', ico:'M', bg:'var(--sky)'},
+  {k:'moderange', n:'Mode & range', std:'6.SP.B.5c', ico:'#', bg:'var(--yellow)'},
+  {k:'quart', n:'Quartiles & IQR', std:'6.SP.B.5c', ico:'Q', bg:'var(--lilac)'},
+  {k:'box', n:'Box plot', std:'6.SP.B.4', ico:'▭', bg:'var(--mint)'},
+  {k:'mad', n:'MAD', std:'6.SP.B.5c', ico:'±', bg:'var(--peach)'},
+  {k:'outlier', n:'Outliers & choosing a center', std:'6.SP.B.5d', ico:'!', bg:'var(--pink)'},
+  {k:'shape', n:'Shape, center, spread', std:'6.SP.A.2', ico:'⌒', bg:'var(--sky)'}
+];
+const learnState = { topic:null, data:null, unit:'', label:'', shown:0, steps:[] };
+$('#topics').innerHTML = TOPICS.map(t=>`<button data-k="${t.k}"><span class="ico" style="background:${t.bg}">${t.ico}</span>${t.n}</button>`).join('');
+$$('#topics button').forEach(b=>b.onclick=()=>selectTopic(b.dataset.k));
+$('#learnLab').onclick=()=>{ learnState.data=[...data]; learnState.unit=labUnit(); learnState.label=$('#dataLbl').textContent; selectTopic(learnState.topic||'mean'); };
+$('#learnRand').onclick=()=>{ const g=gen({n:ri(7,11), outlier:learnState.topic==='outlier'||Math.random()<.3}); learnState.data=g.d; learnState.unit=g.unit; learnState.label=g.label; selectTopic(learnState.topic||'mean'); };
+function selectTopic(k){ if(!learnState.data){ learnState.data=[...data]; learnState.unit=labUnit(); learnState.label=$('#dataLbl').textContent; }
+  learnState.topic=k; $$('#topics button').forEach(b=>b.classList.toggle('on',b.dataset.k===k)); const t=TOPICS.find(t=>t.k===k); $('#learnTitle').firstChild.textContent=t.n+' '; $('#learnStd').textContent=t.std;
+  $('#learnDataInfo').textContent=`Using: ${learnState.label} — ${learnState.data.join(', ')}`;
+  learnState.steps=LEARN[k](learnState.data, learnState.unit); learnState.shown=1; renderLearn(); }
+$('#nextStep').onclick=()=>{ if(learnState.shown<learnState.steps.length){ learnState.shown++; renderLearn(); } };
+$('#allSteps').onclick=()=>{ learnState.shown=learnState.steps.length; renderLearn(); };
+$('#restartSteps').onclick=()=>{ learnState.shown=1; renderLearn(); };
+function renderLearn(){ const st=learnState, steps=st.steps, cur=steps[st.shown-1];
+  $('#steps').innerHTML = steps.slice(0,st.shown).map((s,i)=>`<li class="step${i===st.shown-1?' cur':''}"><span class="n">${i+1}</span><div><div class="t">${s.t}</div><div class="h">${s.h}</div></div></li>`).join('');
+  $('#stepTag').textContent=`step ${st.shown} of ${steps.length}`; $('#nextStep').disabled = st.shown>=steps.length;
+  const svg=$('#learnSvg'), ex=$('#learnExtra'); ex.innerHTML='';
+  const d=st.data, q=S.quartiles(d), mean=S.mean(d);
+  const v = cur.view||{};
+  if(v.type==='box'){ boxPlot(svg,[{d}],{outliers:!!v.outliers, unit:st.unit, labels:v.labels!==false}); }
+  else if(v.type==='hist'){ histogram(svg,d,{unit:st.unit}); }
+  else { dotPlot(svg,d,{unit:st.unit, mean:v.mean?mean:undefined, med:v.med?q.med:undefined, cls:v.cls}); }
+  if(cur.extra) ex.innerHTML=cur.extra;
+  const li=$('#steps .step.cur'); if(li && st.shown>1) li.scrollIntoView({block:'nearest',behavior:'smooth'});
+}
+const m = s => `<span class="m">${s}</span>`;
+const LEARN = {
+  mean(d){ const s=S.sorted(d), sum=S.sum(d), n=d.length, mean=sum/n; return [
+    {t:'What the mean tells you', h:`The <b>mean</b> is the "fair share" value: if every value were made equal, each would get the mean. It uses <b>every</b> value, so one extreme value can pull it.`, view:{}},
+    {t:'Add all the values', h:`${m(d.join(' + '))} = ${m(fmt(sum))}`, view:{}},
+    {t:'Count the values', h:`There are ${m('n = '+n)} values.`, view:{}},
+    {t:'Divide the sum by the count', h:`${m(fmt(sum)+' ÷ '+n)} = <b>${fmt(mean)}</b>${mean!==r2(mean)?' (rounded to the nearest hundredth)':''}`, view:{mean:true}},
+    {t:'Check it on the plot', h:`The dashed line is the mean, <b>${fmt(mean)}</b>. It sits at the balance point of the dots: the total distance of dots on the left equals the total distance on the right.`, view:{mean:true}} ]; },
+  median(d){ const s=S.sorted(d), n=d.length, med=S.median(d), odd=n%2===1, i1=odd?(n-1)/2:n/2-1, i2=odd?i1:n/2; return [
+    {t:'What the median tells you', h:`The <b>median</b> is the middle value when the data are in order. Half the values are at or below it, half at or above. Extreme values barely move it.`, view:{}},
+    {t:'Put the values in order', h:`${m(s.join(', '))}`, view:{}},
+    {t:odd?'Odd number of values: find the middle one':'Even number of values: find the two middle ones', h: odd? `${n} values, so the middle is the ${m(nth((n+1)/2))} value: <b>${fmt(s[i1])}</b> (${(n-1)/2} values on each side).` : `${n} values, so the middle two are the ${m(nth(n/2))} and ${m(nth(n/2+1))} values: <b>${fmt(s[i1])}</b> and <b>${fmt(s[i2])}</b>.`, view:{cls:(v,si)=>si===i1||si===i2?'hl':''}},
+    {t:'Median', h: odd? `Median = <b>${fmt(med)}</b>` : `Average the two middle values: ${m('('+fmt(s[i1])+' + '+fmt(s[i2])+') ÷ 2')} = <b>${fmt(med)}</b>`, view:{med:true,cls:(v,si)=>si===i1||si===i2?'hl':''}},
+    {t:'Compare with the mean', h:`Mean = ${fmt(S.mean(d))}, median = ${fmt(med)}. ${Math.abs(S.mean(d)-med)>0.5?'They differ, which hints at a skew or an unusually large or small value.':'They are close, which suggests a fairly balanced data set.'}`, view:{med:true,mean:true}} ]; },
+  moderange(d){ const f=S.freq(d), mo=S.mode(d), mn=Math.min(...d), mx=Math.max(...d); const rows=[...f.entries()].map(([v,c])=>`<tr><td>${fmt(v)}</td><td>${'●'.repeat(c)} ${c}</td></tr>`).join(''); return [
+    {t:'Mode: the most frequent value', h:`Count how many times each value appears.<table><tr><th>Value</th><th>Frequency</th></tr>${rows}</table>`, view:{}},
+    {t:'Read off the mode', h: mo.vals.length? `The highest frequency is ${mo.count}, so the mode is <b>${mo.label}</b>${mo.vals.length>1?' (two or more modes)':''}. On a dot plot, the mode is the tallest stack.` : `Every value appears once, so there is <b>no mode</b>.`, view:{cls:v=>mo.vals.includes(v)?'hl':''}},
+    {t:'Range: how far the data stretch', h:`Range = maximum − minimum = ${m(fmt(mx)+' − '+fmt(mn))} = <b>${fmt(mx-mn)}</b>`, view:{cls:v=>v===mn||v===mx?'hl2':''}},
+    {t:'Why range is a rough measure', h:`The range uses only the two end values. One unusual value changes it a lot, which is why we also use the <b>IQR</b> and the <b>MAD</b>.`, view:{cls:v=>v===mn||v===mx?'hl2':''}} ]; },
+  quart(d){ const s=S.sorted(d), n=d.length, h=S.halves(d), q=S.quartiles(d), odd=n%2===1; const low=h.lower, up=h.upper; return [
+    {t:'Order the data', h:`${m(s.join(', '))} (${n} values)`, view:{}},
+    {t:'Find the median', h:`Median = <b>${fmt(q.med)}</b>. ${odd? `Because ${n} is odd, the middle value <b>${fmt(h.mid)} is left out</b> of both halves.` : `Because ${n} is even, the data split into two equal halves of ${n/2}.`}`, view:{med:true, cls:(v,si)=> odd&&si===(n-1)/2 ? 'dim' : ''}},
+    {t:'Lower half and upper half', h:`Lower half: ${m(low.join(', '))} &nbsp; Upper half: ${m(up.join(', '))}`, view:{med:true, cls:(v,si)=> si<low.length?'hl':(si>=n-up.length?'hl2':'dim')}},
+    {t:'Q1 = median of the lower half', h:`${m(low.join(', '))} → Q1 = <b>${fmt(q.q1)}</b>`, view:{cls:(v,si)=> si<low.length?'hl':'dim'}},
+    {t:'Q3 = median of the upper half', h:`${m(up.join(', '))} → Q3 = <b>${fmt(q.q3)}</b>`, view:{cls:(v,si)=> si>=n-up.length?'hl2':'dim'}},
+    {t:'IQR = Q3 − Q1', h:`${m(fmt(q.q3)+' − '+fmt(q.q1))} = <b>${fmt(q.q3-q.q1)}</b>. The IQR is the width of the middle 50% of the data. It ignores the extremes, so outliers don't change it much.`, view:{type:'box'}} ]; },
+  box(d){ const q=S.quartiles(d); return [
+    {t:'A box plot shows five numbers', h:`Minimum, Q1, median, Q3, maximum: the <b>five-number summary</b>. For this data: ${m([q.min,q.q1,q.med,q.q3,q.max].map(fmt).join(' · '))}`, view:{type:'box',labels:true}},
+    {t:'Draw the box from Q1 to Q3', h:`The box covers the <b>middle half</b> of the data, from Q1 = ${fmt(q.q1)} to Q3 = ${fmt(q.q3)}. Its width is the IQR = ${fmt(q.q3-q.q1)}.`, view:{type:'box'}},
+    {t:'Mark the median inside the box', h:`The line at ${fmt(q.med)} splits the data in half. If it is not in the middle of the box, the middle half of the data is lopsided.`, view:{type:'box'}},
+    {t:'Whiskers reach the minimum and maximum', h:`Left whisker to ${fmt(q.min)}, right whisker to ${fmt(q.max)}. Each whisker holds about 25% of the data, and so does each half of the box.`, view:{type:'box'}},
+    {t:'Reading it', h:`About 50% of values are inside the box, 25% below Q1, 25% above Q3. A long whisker or a long half-box means that part of the data is spread out.`, view:{type:'box'}} ]; },
+  mad(d){ const mean=S.mean(d), s=S.sorted(d), devs=s.map(v=>Math.abs(v-mean)), sum=S.sum(devs), mad=sum/d.length; const rows=s.map((v,i)=>`<tr><td>${fmt(v)}</td><td>|${fmt(v)} − ${fmt(mean)}| = ${fmt(devs[i])}</td></tr>`).join(''); return [
+    {t:'What the MAD tells you', h:`The <b>mean absolute deviation</b> is the average distance of the values from the mean. Small MAD = values huddle near the mean. Large MAD = values are spread out.`, view:{mean:true}},
+    {t:'Find the mean', h:`Mean = ${m(fmt(S.sum(d))+' ÷ '+d.length)} = <b>${fmt(mean)}</b>`, view:{mean:true}},
+    {t:'Find each distance from the mean', h:`Distance = |value − mean| (always positive).<table><tr><th>Value</th><th>Distance</th></tr>${rows}</table>`, view:{mean:true}},
+    {t:'Add the distances', h:`${m(devs.map(fmt).join(' + '))} = ${m(fmt(sum))}`, view:{mean:true}},
+    {t:'Divide by the number of values', h:`MAD = ${m(fmt(sum)+' ÷ '+d.length)} = <b>${fmt(mad)}</b>. A typical value is about ${fmt(mad)} away from the mean of ${fmt(mean)}.`, view:{mean:true}} ]; },
+  outlier(d){ const q=S.quartiles(d), o=S.outliers(d), mean=S.mean(d), noOut=d.filter(v=>!o.out.includes(v)); return [
+    {t:'Find the IQR', h:`Q1 = ${fmt(q.q1)}, Q3 = ${fmt(q.q3)}, IQR = ${m(fmt(q.q3)+' − '+fmt(q.q1))} = <b>${fmt(o.iqr)}</b>`, view:{type:'box'}},
+    {t:'Build the fences: 1.5 × IQR beyond the box', h:`1.5 × IQR = ${m('1.5 × '+fmt(o.iqr))} = ${fmt(1.5*o.iqr)}<br>Lower fence = ${m(fmt(q.q1)+' − '+fmt(1.5*o.iqr))} = <b>${fmt(o.lo)}</b> &nbsp; Upper fence = ${m(fmt(q.q3)+' + '+fmt(1.5*o.iqr))} = <b>${fmt(o.hi)}</b>`, view:{type:'box'}},
+    {t:'Any value outside the fences is an outlier', h: o.out.length? `Outlier${o.out.length>1?'s':''}: <b>${o.out.join(', ')}</b>. On the box plot it is drawn as a separate point.` : `No value is below ${fmt(o.lo)} or above ${fmt(o.hi)}, so there are <b>no outliers</b>.`, view:{type:'box',outliers:true}},
+    {t:'How an outlier affects the center', h: o.out.length? `With the outlier: mean = ${fmt(mean)}, median = ${fmt(q.med)}. Without it: mean = ${fmt(S.mean(noOut))}, median = ${fmt(S.median(noOut))}. The <b>mean moves much more</b>.` : `Mean = ${fmt(mean)}, median = ${fmt(q.med)}. With no outliers, the two are usually close.`, view:{mean:true,med:true,cls:v=>o.out.includes(v)?'hl':''}},
+    {t:'Choosing a measure of center', h: o.out.length? `Because an outlier pulls the mean, the <b>median</b> describes a typical value better here.` : `No outliers and a fairly balanced shape: the <b>mean</b> works well, and the median agrees with it.`, view:{mean:true,med:true,cls:v=>o.out.includes(v)?'hl':''}} ]; },
+  shape(d){ const mean=S.mean(d), q=S.quartiles(d), sh=S.shape(d), f=S.freq(d), peaks=[...f.entries()].filter(([v,c],i,a)=>c>=2&&(i===0||a[i-1][1]<c)&&(i===a.length-1||a[i+1][1]<=c)).length; return [
+    {t:'Three things to say about any data set', h:`<b>Shape</b> (symmetric or skewed, peaks, gaps), <b>center</b> (mean or median), and <b>spread</b> (range, IQR, MAD).`, view:{}},
+    {t:'Shape', h:`This data set is <b>${sh}</b>. ${peaks>1?'It has more than one peak (cluster).':'It has one main cluster.'} Look for gaps and for values far from the rest.`, view:{type:'hist'}},
+    {t:'Center', h:`Mean = ${fmt(mean)}, median = ${fmt(q.med)}. ${sh.startsWith('roughly')?'They agree, so the mean is a fine summary.':'In a skewed data set the mean is pulled toward the tail, so report the median.'}`, view:{mean:true,med:true}},
+    {t:'Spread', h:`Range = ${fmt(S.range(d))}, IQR = ${fmt(q.q3-q.q1)}, MAD = ${fmt(S.mad(d))}. A small IQR compared with the range means most values are packed together with a few far away.`, view:{type:'box'}},
+    {t:'Write it in a sentence', h:`"The ${esc(learnState.label).toLowerCase()} data are ${sh.split(' (')[0]}, centered near ${fmt(q.med)} ${esc(learnState.unit)}, with a middle half spanning ${fmt(q.q1)} to ${fmt(q.q3)}."`, view:{type:'box'}} ]; }
+};
+
+/* =============== QUESTION GENERATORS =============== */
+const STATQ = [
+  ['How many minutes do students in our class spend on their phones before school?',true],['How many minutes did I spend on my phone this morning?',false],
+  ['What is the most common shoe size in 7th grade?',true],['What shoe size do you wear?',false],
+  ['How tall is the principal?',false],['How tall are the students on the basketball team?',true],
+  ['How many pets do families in our town have?',true],['Does Ms. Rivera have a dog?',false],
+  ['What time does school start?',false],['How long does it take students to get to school?',true],
+  ['How many songs are on my playlist?',false],['How many songs are on 6th graders\' playlists?',true],
+  ['How old is the oldest student in this school?',false],['How old are the students in this school?',true],
+  ['What is the capital of Texas?',false],['How many hours do middle schoolers sleep on school nights?',true],
+  ['How many goals did Maya score this season?',false],['How many goals did each player on the team score this season?',true],
+  ['What was the temperature at noon today?',false],['What was the noon temperature each day in May?',true],
+  ['How many pages is this book?',false],['How many pages are the books in the class library?',true]
+];
+const SAMPLES = [
+  {s:'A school wants to know how many hours its 800 students sleep on school nights.', o:[['Pick 50 students at random from the whole school list','ok'],['Ask the 50 students who stay for after-school sports','Those students may sleep differently from others; the sample is not random.'],['Ask the first 50 students who arrive early','Early arrivers may be unusual sleepers; the sample is not random.'],['Ask everyone in one 8th-grade homeroom','One homeroom does not represent all grades.']]},
+  {s:'A city wants to estimate how many of its residents ride bikes to work.', o:[['Phone 200 residents chosen at random from the city list','ok'],['Survey 200 people at a bike shop','People at a bike shop are far more likely to ride; biased sample.'],['Survey 200 drivers at a gas station','Drivers are less likely to bike; biased sample.'],['Post a poll on the bike club\'s website','Only bike fans would answer; biased sample.']]},
+  {s:'A librarian wants to know the favorite book genre of all students at the school.', o:[['Draw 40 names at random from the student roster','ok'],['Ask the 40 students in the fantasy book club','Club members favor one genre; biased sample.'],['Ask the first 40 students who check out a book','Frequent readers may differ from everyone else.'],['Ask the 7th-grade honors English class','One class does not represent the whole school.']]},
+  {s:'A game studio wants to estimate how many minutes its players play per day.', o:[['Randomly select 500 player accounts and check their logs','ok'],['Ask players who post on the game\'s forum','Forum posters are usually the most active players.'],['Ask the top 500 ranked players','Top players play far more than typical players.'],['Ask friends of the designers','Friends are not a random sample of players.']]},
+  {s:'A cafeteria manager wants to know how students feel about the new lunch menu.', o:[['Survey every 10th student in the lunch line on three different days','ok'],['Survey the students who complained to the office','Complainers are not a representative group.'],['Survey only students who bought lunch on pizza day','Pizza day may attract students who like that menu.'],['Survey the student council','A small chosen group may not match the whole school.']]},
+  {s:'A town wants to know how many households own a cat.', o:[['Mail a survey to 300 addresses picked at random','ok'],['Hand out surveys at the pet store','Pet-store shoppers are more likely to own pets.'],['Ask people who call the animal shelter','Shelter callers are not typical households.'],['Survey the houses on one street','One street may not represent the town.']]}
+];
+function groupData(){ const sc=pick(SCEN), shift=ri(0,2)*sc.step*ri(1,3); const A=gen({scen:sc,n:ri(9,13),noOutlier:true}).d, B=gen({scen:sc,n:ri(9,13),noOutlier:true}).d.map(v=>v+shift); return {sc,A,B}; }
+function nearInt(a,b){ return Math.abs(a-b)<0.011; }
+const num = (label='Your answer') => `<div class="numin"><label for="numAns" style="font-weight:700">${label}</label><input id="numAns" inputmode="decimal" autocomplete="off"><button class="btn primary" id="numGo">Check</button></div>`;
+
+const Q = {
+  statq(){ const [s,ok]=pick(STATQ); return {skill:'statq', type:'mcq', prompt:`Is this a <b>statistical question</b>?<br><span class="q" style="font-size:20px">"${s}"</span>`, choices:['Yes, it is a statistical question','No, it is not a statistical question'], answer: ok?0:1,
+    explain: ok? `Yes. The answer <b>varies</b> from person to person (or day to day), so you need to collect data and expect variability.` : `No. It has <b>one answer</b> with no variability, so there is nothing to summarize with statistics.` }; },
+  read(){ const kind=pick(['dot','dot','hist','box','box']); const g=gen({n:ri(9,14), noOutlier:kind!=='box'}); const d=g.d, q=S.quartiles(d), mo=S.mode(d);
+    if(kind==='dot'){ const opts=[]; if(mo.vals.length===1) opts.push({p:'What is the <b>mode</b>?',a:mo.vals[0],e:`The tallest stack is at ${mo.vals[0]} (${mo.count} dots).`});
+      opts.push({p:'How many values are in the data set?',a:d.length,e:`Count every dot: ${d.length}.`});
+      opts.push({p:'What is the <b>range</b>?',a:S.range(d),e:`Range = max − min = ${q.max} − ${q.min} = ${S.range(d)}.`});
+      opts.push({p:'What is the <b>median</b>?',a:q.med,e:`Count ${d.length} dots from the left to the middle: ${S.sorted(d).join(', ')} → median ${fmt(q.med)}.`});
+      const cut=S.sorted(d)[ri(2,d.length-3)]; opts.push({p:`How many values are <b>greater than ${cut}</b>?`,a:d.filter(v=>v>cut).length,e:`Count the dots to the right of ${cut}: ${d.filter(v=>v>cut).length}.`});
+      const o=pick(opts); return {skill:'read', type:'num', prompt:`This dot plot shows <i>${g.label.toLowerCase()}</i> for ${d.length} ${g.who}.<br>${o.p}`, draw:svg=>dotPlot(svg,d,{unit:g.unit}), answer:o.a, explain:o.e}; }
+    if(kind==='hist'){ const dom=niceDomain(d), bw=dom.step===1?2:dom.step; const tmp=document.createElementNS(NS,'svg'); const bins=histogram(tmp,d,{bw,dom}).filter(b=>b.c>0);
+      const b=pick(bins), lab=`${b.lo} up to ${b.hi}`; const opts=[{p:`How many values are in the bar from <b>${lab}</b> (${b.hi} not included)?`,a:b.c,e:`Read the height of the bar that starts at ${b.lo}: ${b.c}.`},
+        {p:`How many values are <b>${b.lo} or greater</b>?`,a:d.filter(v=>v>=b.lo).length,e:`Add the heights of the bars from ${b.lo} to the right: ${d.filter(v=>v>=b.lo).length}.`},
+        {p:`How many values are <b>less than ${b.lo}</b>?`,a:d.filter(v=>v<b.lo).length,e:`Add the heights of the bars to the left of ${b.lo}: ${d.filter(v=>v<b.lo).length}.`},
+        {p:'How many values are in the data set altogether?',a:d.length,e:`Add all bar heights: ${d.length}.`}];
+      const o=pick(opts); return {skill:'read', type:'num', prompt:`This histogram shows <i>${g.label.toLowerCase()}</i> for a group of ${g.who}.<br>${o.p}`, draw:svg=>histogram(svg,d,{bw,dom,unit:g.unit,labels:false}), answer:o.a, explain:o.e}; }
+    const opts=[{p:'What is the <b>median</b>?',a:q.med,e:`The line inside the box is the median: ${fmt(q.med)}.`},{p:'What is <b>Q1</b> (the first quartile)?',a:q.q1,e:`The left edge of the box is Q1: ${fmt(q.q1)}.`},{p:'What is <b>Q3</b> (the third quartile)?',a:q.q3,e:`The right edge of the box is Q3: ${fmt(q.q3)}.`},
+      {p:'What is the <b>IQR</b>?',a:q.q3-q.q1,e:`IQR = Q3 − Q1 = ${fmt(q.q3)} − ${fmt(q.q1)} = ${fmt(q.q3-q.q1)}.`},{p:'What is the <b>range</b>?',a:q.max-q.min,e:`Range = max − min = ${fmt(q.max)} − ${fmt(q.min)} = ${fmt(q.max-q.min)}.`},{p:'What is the <b>minimum</b>?',a:q.min,e:`The left whisker ends at the minimum: ${fmt(q.min)}.`}];
+    if(Math.random()<.3){ const pc=pick([['between Q1 and Q3',50,'The box holds the middle half of the data: about 50%.'],['greater than the median',50,'The median splits the data in half: about 50% are above it.'],['less than Q3',75,'Everything below Q3: the lower whisker (25%) plus the box (50%) = about 75%.'],['greater than Q1',75,'Everything above Q1: the box (50%) plus the upper whisker (25%) = about 75%.'],['less than Q1',25,'The lower whisker holds about 25% of the data.']]);
+      return {skill:'read', type:'mcq', prompt:`This box plot shows <i>${g.label.toLowerCase()}</i> for ${d.length} ${g.who}.<br>About what <b>percent</b> of the values are ${pc[0]}?`, draw:svg=>boxPlot(svg,[{d}],{unit:g.unit,labels:false}), choices:['25%','50%','75%','100%'], answer:[25,50,75,100].indexOf(pc[1]), explain:pc[2]}; }
+    const o=pick(opts); return {skill:'read', type:'num', prompt:`This box plot shows <i>${g.label.toLowerCase()}</i> for ${d.length} ${g.who}. Read the value from the plot.<br>${o.p}`, draw:svg=>boxPlot(svg,[{d}],{unit:g.unit,labels:false}), answer:o.a, explain:o.e}; },
+  build(){ if(Math.random()<.5){ const sc=pick(SCEN.filter(s=>s.step===1)); const lo=ri(0,4), n=ri(6,9); const d=Array.from({length:n},()=>lo+ri(0,6));
+      return {skill:'build', type:'builddot', prompt:`Build the <b>dot plot</b> for these ${g2(sc).label.toLowerCase()} values. Click above a number to add a dot; click a dot to remove it.<br><span class="m">${d.join(', ')}</span>`, data:d, dom:{lo:lo, hi:lo+6, step:1}, unit:sc.unit, explain:`Each value becomes one dot above its number. Stack repeated values.`}; }
+    const g=gen({n:ri(7,11),noOutlier:true}); const q=S.quartiles(g.d);
+    return {skill:'build', type:'buildbox', prompt:`Find the <b>five-number summary</b> for these ${g.label.toLowerCase()} values and build the box plot.<br><span class="m">${g.d.join(', ')}</span>`, data:g.d, unit:g.unit, answer:q, explain:(()=>{ const h=S.halves(g.d); return `Ordered: ${S.sorted(g.d).join(', ')}. Median = ${fmt(q.med)}${g.d.length%2?` (middle value ${h.mid} is left out of the halves)`:''}. Lower half ${h.lower.join(', ')} → Q1 = ${fmt(q.q1)}. Upper half ${h.upper.join(', ')} → Q3 = ${fmt(q.q3)}. Min = ${q.min}, max = ${q.max}.`; })()}; },
+  measure(){ const kind=pick(['center','center','mean','median','mad','iqr']);
+    if(kind==='center'){ const withOut=Math.random()<.5; const g=gen({n:ri(8,11), outlier:withOut, noOutlier:!withOut}); const o=S.outliers(g.d); const has=o.out.length>0; const mean=S.mean(g.d), med=S.median(g.d);
+      return {skill:'measure', type:'mcq', prompt:`Here are ${g.label.toLowerCase()} for ${g.d.length} ${g.who}:<br><span class="m">${g.d.join(', ')}</span><br>Which measure of center best describes a <b>typical</b> value, and why?`, draw:svg=>dotPlot(svg,g.d,{unit:g.unit,mean,med}),
+        choices: has? ['Median, because the outlier pulls the mean','Mean, because it uses every value','Mean, because there is an outlier','Median, because the data are symmetric'] : ['Mean, because there are no outliers and the data are fairly balanced','Median, because there is an outlier','Mean, because it is always the best','Median, because the range is large'], answer:0,
+        explain: has? `The value ${o.out.join(', ')} is an outlier (outside the fences ${fmt(o.lo)} to ${fmt(o.hi)}). Mean = ${fmt(mean)} but median = ${fmt(med)}; the mean is pulled toward the outlier, so the median is more typical.` : `There are no outliers (fences ${fmt(o.lo)} to ${fmt(o.hi)}). Mean = ${fmt(mean)} and median = ${fmt(med)} are close, so the mean is a good description.`}; }
+    const g=gen({n:ri(5,8),noOutlier:true}); let d=g.d;
+    if(kind==='mean'){ const n=d.length; let s=S.sum(d); const rem=s%n; if(rem) d[n-1]+= (n-rem); const mean=S.mean(d); return {skill:'measure', type:'num', prompt:`Find the <b>mean</b> of these ${g.label.toLowerCase()} values:<br><span class="m">${d.join(', ')}</span>`, answer:mean, explain:`Sum = ${S.sum(d)}, count = ${d.length}, mean = ${S.sum(d)} ÷ ${d.length} = ${fmt(mean)}.`}; }
+    if(kind==='median'){ const med=S.median(d); return {skill:'measure', type:'num', prompt:`Find the <b>median</b> of these ${g.label.toLowerCase()} values:<br><span class="m">${d.join(', ')}</span>`, answer:med, explain:`Ordered: ${S.sorted(d).join(', ')}. ${d.length%2?`Middle value = ${fmt(med)}.`:`Middle two values ${S.halves(d).lower.slice(-1)} and ${S.halves(d).upper[0]}, average = ${fmt(med)}.`}`}; }
+    if(kind==='mad'){ d=d.slice(0,ri(4,6)); const n=d.length; const rem=S.sum(d)%n; if(rem) d[n-1]+=(n-rem); const mean=S.mean(d), devs=d.map(v=>Math.abs(v-mean)), mad=S.mean(devs);
+      return {skill:'measure', type:'num', prompt:`Find the <b>MAD</b> (mean absolute deviation) of:<br><span class="m">${d.join(', ')}</span><br><small>Round to the nearest hundredth if needed.</small>`, answer:mad, explain:`Mean = ${fmt(mean)}. Distances: ${devs.map(fmt).join(', ')}. Sum = ${fmt(S.sum(devs))}, MAD = ${fmt(S.sum(devs))} ÷ ${n} = ${fmt(mad)}.`}; }
+    const g3=gen({n:ri(7,11),noOutlier:true}); const q=S.quartiles(g3.d), h=S.halves(g3.d); return {skill:'measure', type:'num', prompt:`Find the <b>IQR</b> of these ${g3.label.toLowerCase()} values:<br><span class="m">${g3.d.join(', ')}</span>`, answer:q.q3-q.q1, explain:`Ordered: ${S.sorted(g3.d).join(', ')}. Lower half ${h.lower.join(', ')} → Q1 = ${fmt(q.q1)}; upper half ${h.upper.join(', ')} → Q3 = ${fmt(q.q3)}${g3.d.length%2?` (the median ${h.mid} is left out)`:''}. IQR = ${fmt(q.q3)} − ${fmt(q.q1)} = ${fmt(q.q3-q.q1)}.`}; },
+  sample(){ if(Math.random()<.5){ const s=pick(SAMPLES); const order=shuffle([0,1,2,3]); const choices=order.map(i=>s.o[i][0]); const ans=order.indexOf(0); const why=s.o.filter((o,i)=>i!==0).map(o=>`<br>• <i>${o[0]}</i>: ${o[1]}`).join('');
+      return {skill:'sample', type:'mcq', prompt:`${s.s}<br>Which sample is most likely to be <b>representative</b>?`, choices, answer:ans, explain:`A <b>random sample</b> gives every member an equal chance, so it tends to represent the whole group.${why}`}; }
+    const sc=pick([['students','have a pet at home'],['students','walk to school'],['players','prefer the blue team jersey'],['residents','recycle every week'],['teens','have watched the new movie'],['shoppers','would buy the new flavor']]);
+    const n=pick([20,25,40,50,100]), k=ri(Math.round(n*.1),Math.round(n*.6)), N=pick([200,300,400,500,600,800,1000]); const est=k/n*N;
+    if(!Number.isInteger(est)) return Q.sample();
+    return {skill:'sample', type:'num', prompt:`In a random sample of <b>${n}</b> ${sc[0]}, <b>${k}</b> ${sc[1]}. There are <b>${N}</b> ${sc[0]} in all. About how many of them ${sc[1]}?`, answer:est, explain:`Sample proportion = ${k}/${n} = ${fmt(k/n)}. Multiply by the population: ${fmt(k/n)} × ${N} = ${est}. (Because the sample is random, the proportion is a fair estimate.)`}; },
+  compare(){ const {sc,A,B}=groupData(); const qa=S.quartiles(A), qb=S.quartiles(B); const names=pick([['Class A','Class B'],['Team Red','Team Blue'],['Morning group','Afternoon group'],['6th grade','7th grade']]);
+    const kind=pick(['med','med','iqr','diff']);
+    if(kind==='diff'){ return {skill:'compare', type:'num', prompt:`The box plots show <i>${sc.label.toLowerCase()}</i> for two groups. By how much do the <b>medians</b> differ?`, draw:svg=>boxPlot(svg,[{d:A,label:names[0]},{d:B,label:names[1],cls:'b'}],{unit:sc.unit}), answer:Math.abs(qa.med-qb.med), explain:`${names[0]} median = ${fmt(qa.med)}, ${names[1]} median = ${fmt(qb.med)}. Difference = ${fmt(Math.abs(qa.med-qb.med))}.`}; }
+    if(kind==='iqr'){ const ia=qa.q3-qa.q1, ib=qb.q3-qb.q1; if(ia===ib) return Q.compare(); return {skill:'compare', type:'mcq', prompt:`The box plots show <i>${sc.label.toLowerCase()}</i> for two groups. Which group's data are <b>more spread out</b> in the middle (larger IQR)?`, draw:svg=>boxPlot(svg,[{d:A,label:names[0]},{d:B,label:names[1],cls:'b'}],{unit:sc.unit}), choices:[names[0],names[1]], answer: ia>ib?0:1, explain:`IQR is the width of the box. ${names[0]}: ${fmt(ia)}. ${names[1]}: ${fmt(ib)}. The wider box, ${ia>ib?names[0]:names[1]}, has more spread in the middle half.`}; }
+    if(qa.med===qb.med) return Q.compare(); return {skill:'compare', type:'mcq', prompt:`The box plots show <i>${sc.label.toLowerCase()}</i> for two groups. Which group has the <b>greater median</b>?`, draw:svg=>boxPlot(svg,[{d:A,label:names[0]},{d:B,label:names[1],cls:'b'}],{unit:sc.unit}), choices:[names[0],names[1]], answer: qa.med>qb.med?0:1, explain:`Compare the lines inside the boxes. ${names[0]} median = ${fmt(qa.med)}, ${names[1]} median = ${fmt(qb.med)}.`}; }
+};
+function g2(sc){ return sc; }
+
+/* =============== QUESTION RENDERER (shared by Practice & Test) =============== */
+function renderQuestion(host, q, onAnswer){
+  host.innerHTML = `<div class="q">${q.prompt}</div>` + (q.draw||q.type==='builddot'||q.type==='buildbox' ? `<svg id="qSvg" viewBox="0 0 900 230" aria-label="Question chart" style="margin-top:12px"></svg>` : '') + `<div id="qUI"></div><div id="qFb"></div>`;
+  const svg=host.querySelector('#qSvg'), ui=host.querySelector('#qUI'), fb=host.querySelector('#qFb');
+  if(q.draw) q.draw(svg);
+  const finish=(ok, userText)=>{ fb.innerHTML=`<div class="fb ${ok?'ok':'no'}"><b class="t">${ok?'Correct!':'Not quite.'}</b>${ok?'':`<div>Correct answer: <b>${q.type==='buildbox'? `min ${fmt(q.answer.min)}, Q1 ${fmt(q.answer.q1)}, median ${fmt(q.answer.med)}, Q3 ${fmt(q.answer.q3)}, max ${fmt(q.answer.max)}` : q.type==='mcq'? esc(q.choices[q.answer]) : q.type==='builddot'? 'see the dots now shown' : fmt(q.answer)}</b></div>`}<div style="margin-top:4px">${q.explain}</div></div>`; onAnswer(ok, userText); };
+  if(q.type==='mcq'){ ui.innerHTML=`<div class="choices">${q.choices.map((c,i)=>`<button class="choice" data-i="${i}"><span class="k">${'ABCD'[i]}</span><span>${c}</span></button>`).join('')}</div>`;
+    ui.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{ const i=+b.dataset.i; ui.querySelectorAll('.choice').forEach(x=>{ x.disabled=true; if(+x.dataset.i===q.answer) x.classList.add('ok'); }); if(i!==q.answer) b.classList.add('no'); finish(i===q.answer, q.choices[i]); }); }
+  else if(q.type==='num'){ ui.innerHTML=num(); const inp=ui.querySelector('#numAns'); const go=()=>{ const v=parseFloat(inp.value.replace(/,/g,'')); if(isNaN(v)){ inp.focus(); return; } inp.disabled=true; ui.querySelector('#numGo').disabled=true; finish(nearInt(v,q.answer)||Math.abs(v-q.answer)<=(q.tol||0), inp.value); }; ui.querySelector('#numGo').onclick=go; inp.onkeydown=e=>{ if(e.key==='Enter') go(); }; setTimeout(()=>inp.focus(),50); }
+  else if(q.type==='builddot'){ const placed=[]; const redraw=()=>{ const r=dotPlot(svg,placed.length?placed:[q.dom.lo],{unit:q.unit,dom:q.dom,cls:()=>placed.length?'':'dim'}); if(!placed.length) svg.querySelector('.dot').remove();
+      // click zones
+      for(let v=q.dom.lo; v<=q.dom.hi; v++){ const z=el('rect',{x:r.x(v)-r.x(q.dom.lo+1)/2+r.x(q.dom.lo)/2, y:0, width:(r.x(q.dom.lo+1)-r.x(q.dom.lo)), height:r.base, class:'clickzone','data-v':v},svg); svg.insertBefore(z, svg.firstChild); }
+      svg.querySelectorAll('.dot').forEach((d,i)=>{ d.style.cursor='pointer'; d.onclick=e=>{ e.stopPropagation(); const v=placed.indexOf(+d.getAttribute('cx')>=0 ? valueOfDot(d) : null); if(v>=0) placed.splice(v,1); redraw(); }; });
+      const valueOfDot=d=>{ const cx=+d.getAttribute('cx'); let best=q.dom.lo, bd=1e9; for(let v=q.dom.lo; v<=q.dom.hi; v++){ const dd=Math.abs(r.x(v)-cx); if(dd<bd){bd=dd;best=v;} } return best; };
+      svg.querySelectorAll('.clickzone').forEach(z=>z.onclick=()=>{ if(placed.length>=30) return; placed.push(+z.dataset.v); redraw(); });
+      ui.querySelector('#bdCount').textContent=`${placed.length} dot${placed.length===1?'':'s'} placed · ${q.data.length} needed`; };
+    ui.innerHTML=`<div class="row"><span id="bdCount" class="hint" style="margin:0"></span><button class="btn" id="bdClear">Clear</button><button class="btn primary" id="bdGo">Check</button></div>`; redraw();
+    ui.querySelector('#bdClear').onclick=()=>{ placed.length=0; redraw(); };
+    ui.querySelector('#bdGo').onclick=()=>{ const want=S.freq(q.data), got=S.freq(placed); let ok=want.size===got.size; want.forEach((c,v)=>{ if(got.get(v)!==c) ok=false; });
+      ui.querySelector('#bdGo').disabled=true; svg.querySelectorAll('.clickzone').forEach(z=>z.remove()); svg.querySelectorAll('.dot').forEach(d=>d.onclick=null);
+      if(!ok){ dotPlot(svg,q.data,{unit:q.unit,dom:q.dom}); } finish(ok, placed.join(', ')); }; }
+  else if(q.type==='buildbox'){ ui.innerHTML=`<div class="five">${['min','q1','med','q3','max'].map((k,i)=>`<div><label for="bb-${k}">${['Min','Q1','Median','Q3','Max'][i]}</label><input id="bb-${k}" inputmode="decimal"></div>`).join('')}</div><div class="row"><button class="btn" id="bbDraw">Draw my box plot</button><button class="btn primary" id="bbGo">Check</button></div>`;
+    const read=()=>{ const o={}; ['min','q1','med','q3','max'].forEach(k=>o[k]=parseFloat(ui.querySelector('#bb-'+k).value)); return o; };
+    const drawFrom=(o,cls)=>{ const vals=Object.values(o); if(vals.some(isNaN)) return false; const dom=niceDomain([...q.data,...vals]); const W=CW(); setVB(svg,W,170); svg.innerHTML=''; const x=scaleFor(W,dom), mid=60,h=44;
+      el('line',{x1:x(o.min),y1:mid,x2:x(o.q1),y2:mid,class:'whisk'},svg); el('line',{x1:x(o.q3),y1:mid,x2:x(o.max),y2:mid,class:'whisk'},svg); el('line',{x1:x(o.min),y1:mid-14,x2:x(o.min),y2:mid+14,class:'whisk'},svg); el('line',{x1:x(o.max),y1:mid-14,x2:x(o.max),y2:mid+14,class:'whisk'},svg);
+      el('rect',{x:x(Math.min(o.q1,o.q3)),y:mid-h/2,width:Math.max(1,Math.abs(x(o.q3)-x(o.q1))),height:h,rx:4,class:'boxrect '+(cls||'')},svg); el('line',{x1:x(o.med),y1:mid-h/2,x2:x(o.med),y2:mid+h/2,class:'whisk',style:'stroke-width:3.5'},svg); axis(svg,x,120,dom,q.unit); return true; };
+    setVB(svg,CW(),170); svg.innerHTML=''; { const dom=niceDomain(q.data); axis(svg,scaleFor(CW(),dom),120,dom,q.unit); }
+    ui.querySelector('#bbDraw').onclick=()=>{ if(!drawFrom(read())) alert('Fill in all five numbers first.'); };
+    ui.querySelector('#bbGo').onclick=()=>{ const o=read(); if(Object.values(o).some(isNaN)){ alert('Fill in all five numbers first.'); return; } const ok=['min','q1','med','q3','max'].every(k=>nearInt(o[k],q.answer[k])); ui.querySelectorAll('input,button').forEach(b=>b.disabled=true);
+      if(ok) drawFrom(o); else boxPlot(svg,[{d:q.data}],{unit:q.unit}); finish(ok, Object.values(o).join('/')); }; }
+}
+
+/* =============== PRACTICE =============== */
+const prState = { skill:'all', q:null, correct:0, total:0, streak:0 };
+$('#skillChips').innerHTML = `<button class="chip on" data-s="all"><i style="background:var(--yellow)"></i>All skills</button>` + Object.entries(SKILLS).map(([k,v],i)=>`<button class="chip" data-s="${k}"><i style="background:${['var(--pink)','var(--sky)','var(--mint)','var(--peach)','var(--lilac)','var(--yellow)'][i]}"></i>${v}</button>`).join('');
+$$('#skillChips .chip').forEach(c=>c.onclick=()=>{ prState.skill=c.dataset.s; $$('#skillChips .chip').forEach(x=>x.classList.toggle('on',x===c)); nextPractice(); });
+$('#prReset').onclick=()=>{ prState.correct=prState.total=prState.streak=0; updPr(); };
+function updPr(){ $('#prCorrect').textContent=prState.correct; $('#prTotal').textContent=prState.total; $('#prStreak').textContent=prState.streak; }
+function nextPractice(){ const k = prState.skill==='all' ? pick(Object.keys(SKILLS)) : prState.skill; const q=Q[k](); prState.q=q; $('#prSkill').textContent=SKILLS[q.skill]; $('#prType').textContent={mcq:'multiple choice',num:'type a number',builddot:'build it',buildbox:'build it'}[q.type];
+  renderQuestion($('#prBody'), q, ok=>{ prState.total++; if(ok){ prState.correct++; prState.streak++; } else prState.streak=0; updPr(); recordSkill(q.skill,ok); const pc=store.get('practiceCount',0)+1; store.set('practiceCount',pc);
+    const row=document.createElement('div'); row.className='row'; row.innerHTML=`<button class="btn primary big" id="prNext">Next question</button><span class="hint" style="margin:0">or press <span class="kbd">Enter</span></span>`; $('#prBody').appendChild(row); const nb=row.querySelector('#prNext'); nb.onclick=nextPractice; nb.focus();
+    const key=e=>{ if(e.key==='Enter'){ document.removeEventListener('keydown',key); nextPractice(); } }; setTimeout(()=>document.addEventListener('keydown',key),100); }); }
+
+/* =============== TEST =============== */
+const TEST_PLAN = ['statq','read','measure','sample','read','build','measure','compare','statq','read','measure','sample'];
+const testState = { i:-1, qs:[], results:[], running:false };
+$('#testStart').onclick=()=>{ testState.qs=TEST_PLAN.map(k=>Q[k]()); testState.i=0; testState.results=[]; testState.running=true; $('#testStart').textContent='Restart test'; showTestQ(); };
+function showTestQ(){ const i=testState.i, q=testState.qs[i]; $('#tSkill').textContent=SKILLS[q.skill]; $('#tNum').textContent=`question ${i+1} of 12`; $('#testBar').style.width=(i/12*100)+'%'; $('#testProg').textContent=`${i} of 12 answered`;
+  renderQuestion($('#tBody'), q, ok=>{ testState.results.push({skill:q.skill, ok}); recordSkill(q.skill,ok); const row=document.createElement('div'); row.className='row'; row.innerHTML=`<button class="btn primary big" id="tNext">${i<11?'Next question':'See my results'}</button>`; $('#tBody').appendChild(row); const nb=row.querySelector('#tNext'); nb.focus(); nb.onclick=()=>{ if(i<11){ testState.i++; showTestQ(); } else finishTest(); }; }); }
+function finishTest(){ const r=testState.results, score=r.filter(x=>x.ok).length; const by={}; r.forEach(x=>{ by[x.skill]=by[x.skill]||{c:0,t:0}; by[x.skill].t++; if(x.ok) by[x.skill].c++; });
+  const name=$('#studentName').value.trim(); const attempt={date:new Date().toISOString(), name, score, by}; const list=store.get('attempts',[]); list.unshift(attempt); store.set('attempts',list.slice(0,50));
+  $('#testBar').style.width='100%'; $('#testProg').textContent='Finished'; $('#tSkill').textContent='Results'; $('#tNum').textContent=name||'';
+  const weakest=Object.entries(by).sort((a,b)=>(a[1].c/a[1].t)-(b[1].c/b[1].t))[0];
+  $('#tBody').innerHTML=`<div class="big-score">${score} / 12</div><p style="text-align:center;font-weight:600">${score>=11?'Outstanding! You own this unit.':score>=9?'Strong work. One more look at your weakest skill and you are set.':score>=6?'Good progress. Use Learn and Practice on the skills below.':'Keep going. Start with Learn, then Practice one skill at a time.'}</p>
+    <div class="mastery" style="margin-top:12px">${Object.entries(by).map(([k,v])=>`<div class="m"><span>${SKILLS[k]}</span><div class="pbar"><i style="width:${v.c/v.t*100}%"></i></div><span>${v.c}/${v.t}</span></div>`).join('')}</div>
+    <div class="fb" style="margin-top:14px">Suggested next step: open <b>Learn</b> or <b>Practice → ${SKILLS[weakest[0]]}</b>.</div>
+    <div class="row"><button class="btn primary" id="tAgain">Take it again</button><button class="btn" id="tDash">Open dashboard</button></div>`;
+  $('#tAgain').onclick=()=>$('#testStart').click(); $('#tDash').onclick=()=>setMode('dash'); testState.running=false; }
+
+/* =============== DASHBOARD =============== */
+function renderDash(){ const at=store.get('attempts',[]), sk=store.get('skills',{});
+  $('#dBest').textContent = at.length? Math.max(...at.map(a=>a.score))+'/12' : '–'; $('#dAttempts').textContent=at.length; $('#dPractice').textContent=store.get('practiceCount',0);
+  $('#dMastery').innerHTML = Object.entries(SKILLS).map(([k,v])=>{ const s=sk[k]||{c:0,t:0}; const p=s.t? s.c/s.t*100 : 0; return `<div class="m"><span>${v}</span><div class="pbar"><i style="width:${p}%"></i></div><span>${s.t? Math.round(p)+'%' : '–'}</span></div>`; }).join('');
+  $('#dAttemptsBody').innerHTML = at.length? at.map(a=>{ const w=Object.entries(a.by).sort((x,y)=>(x[1].c/x[1].t)-(y[1].c/y[1].t))[0]; const d=new Date(a.date); return `<tr><td>${d.toLocaleDateString()} ${d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</td><td>${esc(a.name)||'—'}</td><td><b>${a.score}/12</b> <span class="pill ${a.score>=9?'':a.score>=6?'y':'hi'}">${Math.round(a.score/12*100)}%</span></td><td>${SKILLS[w[0]]} (${w[1].c}/${w[1].t})</td></tr>`; }).join('') : `<tr><td colspan="4" class="empty">No tests yet. Take the Test to see attempts here.</td></tr>`; }
+$('#dPrint').onclick=()=>window.print();
+$('#dClear').onclick=()=>{ if(confirm('Clear all saved progress on this device? This cannot be undone.')){ ['attempts','skills','practiceCount'].forEach(k=>store.del(k)); renderDash(); } };
+</script>
+</body>
+</html>

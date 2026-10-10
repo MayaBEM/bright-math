@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="paper">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Angle Lab – Everything About Angles</title>
+<style>
+:root{
+  /* Lime & Lavender (default): pastel playful, white cards with ink outlines and solid offset shadows */
+  --bg:#E6F2A8; --bg2:#D9EA8F; --surface:#FFFFFF; --ink:#1C1C28; --muted:#5B5F6E;
+  --accent:#B9AEF9; --accent-ink:#1C1C28; --accent2:#FF86B0; --line:#1C1C28; --soft:#FFF5B8; --soft2:#EDE9FF;
+  --ok:#2E9E5B; --bad:#E0477B; --warn:#E8A317;
+  --pairF:#FF6F9C; --pairZ:#6C5CE7; --pairC:#2EB872; --c3:#E8A317; --c4:#7B5EA7;
+  --proFill:rgba(255,245,184,.8); --proInk:#1C1C28; --proOuter:#1C1C28; --proInner:#E0477B; --proEdge:#1C1C28;
+  --grid:rgba(28,28,40,.05);
+  --radius:18px; --shadow:4px 4px 0 var(--line); --bshadow:3px 3px 0 var(--line); --bw:2px;
+  --font:"Avenir Next","Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif;
+  --head:"Avenir Next","Trebuchet MS","Segoe UI",system-ui,sans-serif;
+}
+html[data-theme="peach"]{
+  --bg:#FFE7D3; --bg2:#FFD9BC; --surface:#FFFFFF; --ink:#1C1C28; --muted:#5B5F6E;
+  --accent:#8BE0C7; --accent-ink:#1C1C28; --accent2:#FF8A65; --line:#1C1C28; --soft:#FFF4C2; --soft2:#E3F7F0;
+  --ok:#2E9E5B; --bad:#E0477B; --warn:#E8A317;
+  --pairF:#FF7A59; --pairZ:#3E8ED0; --pairC:#2EB872; --c3:#E8A317; --c4:#7B5EA7;
+  --proFill:rgba(255,244,194,.8); --proInk:#1C1C28; --proOuter:#1C1C28; --proInner:#D9480F; --proEdge:#1C1C28;
+  --grid:rgba(28,28,40,.05);
+}
+html[data-theme="blueprint"]{
+  --bg:#0E2138; --bg2:#0A1A2C; --surface:#163453; --ink:#EEF4FA; --muted:#A7B9CC;
+  --accent:#F4B52E; --accent-ink:#1A1A1A; --accent2:#5CC8F5; --line:#2C4F74; --soft:#1C3D5F; --soft2:#1C3D5F;
+  --ok:#5FD39A; --bad:#FF7A6B; --warn:#F4B52E;
+  --pairF:#F4B52E; --pairZ:#5CC8F5; --pairC:#7EE08A; --c3:#FF9F7A; --c4:#C9A6FF;
+  --proFill:rgba(92,200,245,.22); --proInk:#EEF4FA; --proOuter:#EEF4FA; --proInner:#F4B52E; --proEdge:#5CC8F5;
+  --grid:rgba(255,255,255,.07);
+  --shadow:0 2px 0 rgba(0,0,0,.25), 0 12px 30px rgba(0,0,0,.35); --bshadow:0 2px 0 rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:19px;line-height:1.45}
+body{background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:32px 32px;min-height:100vh;display:flex;flex-direction:column}
+button{font:inherit;cursor:pointer}
+input,select{font:inherit}
+h1,h2,h3{font-family:var(--head);line-height:1.15;margin:0 0 .4em}
+h1{font-size:2.4rem;letter-spacing:-.01em} h2{font-size:1.7rem} h3{font-size:1.25rem}
+p{margin:.35em 0 .7em}
+.muted{color:var(--muted)}
+.hidden{display:none!important}
+body:not(.th) .th{display:none!important}
+header.top{display:flex;align-items:center;gap:14px;padding:12px 20px;background:var(--surface);border-bottom:2px solid var(--line);position:sticky;top:0;z-index:20}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--head);font-weight:700;font-size:1.15rem;color:var(--ink);cursor:pointer;background:none;border:0;padding:0}
+.brand .logo{width:38px;height:38px}
+nav.main{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.navbtn{background:transparent;border:2px solid transparent;color:var(--ink);padding:8px 14px;border-radius:12px;font-weight:700}
+.navbtn:hover{border-color:var(--line);background:var(--soft)}
+.navbtn.active{background:var(--accent);color:var(--accent-ink);border-color:var(--line)}
+main{flex:1;width:100%;max-width:1180px;margin:0 auto;padding:22px 16px 40px}
+footer{padding:18px;text-align:center;color:var(--muted);font-size:.95rem;border-top:2px solid var(--line);background:var(--surface)}
+footer b{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--accent);color:var(--accent-ink);border:var(--bw) solid var(--line);border-radius:14px;padding:12px 22px;font-weight:700;font-size:1.05rem;min-height:50px;box-shadow:var(--bshadow);transition:transform .08s,box-shadow .08s,filter .12s}
+.btn:hover{filter:brightness(1.04)} .btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--line)}
+.btn:disabled{opacity:.45;cursor:not-allowed;filter:none}
+.btn.secondary{background:var(--surface);color:var(--ink)}
+.btn.secondary:hover{background:var(--soft)}
+.btn.ghost{background:var(--surface);color:var(--ink);box-shadow:none}
+.btn.ghost.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn.small{padding:8px 14px;min-height:40px;font-size:.95rem;border-radius:10px}
+.btn.big{font-size:1.2rem;padding:16px 28px}
+.card{background:var(--surface);border:2px solid var(--line);border-radius:var(--radius);padding:20px 22px;box-shadow:var(--shadow)}
+.row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.pill{display:inline-block;padding:4px 12px;border-radius:999px;font-size:.85rem;font-weight:700;background:var(--soft);color:var(--ink);border:2px solid var(--line)}
+.pill.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.pill.accent{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.thbtn{font-size:.85rem;padding:5px 11px;min-height:34px;border-radius:8px;letter-spacing:.05em}
+/* home */
+.hero{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:center;margin-bottom:28px}
+@media(max-width:860px){.hero{grid-template-columns:1fr}}
+.hero .kicker{display:inline-block;font-weight:700;color:var(--ink);background:var(--soft);border:2px solid var(--line);border-radius:999px;padding:4px 12px;letter-spacing:.06em;text-transform:uppercase;font-size:.8rem}
+.hero svg{width:100%;max-width:440px;display:block;margin:0 auto}
+.themes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:10px 0 26px}
+@media(max-width:700px){.themes{grid-template-columns:1fr}}
+.theme-card{border:3px solid var(--line);border-radius:14px;padding:12px;background:var(--surface);cursor:pointer;text-align:left;color:var(--ink)}
+.theme-card.on{box-shadow:var(--shadow);background:var(--soft2)}
+.theme-card .sw{display:flex;gap:6px;margin-bottom:8px}
+.theme-card .sw i{display:block;width:28px;height:28px;border-radius:7px;border:1px solid rgba(0,0,0,.15)}
+.theme-card b{display:block;font-size:1.05rem} .theme-card small{color:var(--muted)}
+.modlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.mod{display:flex;gap:12px;align-items:center;padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);text-align:left;cursor:pointer}
+.mod:hover{box-shadow:var(--bshadow);transform:translate(-1px,-1px)}
+.mod .num{width:40px;height:40px;border-radius:12px;background:var(--soft2);border:2px solid var(--line);display:grid;place-items:center;font-weight:800;flex:none}
+.mod.done .num{background:var(--ok);color:#fff}
+.mod b{display:block;font-size:1rem;line-height:1.2} .mod small{color:var(--muted)}
+.quick{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:10px 0 26px}
+.quick .card{padding:16px 18px;cursor:pointer}
+.quick .card:hover{border-color:var(--accent2)}
+.quick .card b{display:block;font-size:1.1rem;margin-bottom:4px}
+/* stage / figures */
+.lab{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:18px;align-items:start}
+@media(max-width:980px){.lab{grid-template-columns:1fr}}
+.stage{background:var(--surface);border:2px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:relative}
+.stage svg{display:block;width:100%;height:auto;touch-action:none;user-select:none;-webkit-user-select:none}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;padding:10px;border-top:2px solid var(--line);background:var(--soft);align-items:center}
+.toolbar .sep{width:2px;height:28px;background:var(--line);margin:0 4px}
+.fig{width:100%;height:auto;display:block}
+.fig text{font-family:var(--font);font-weight:700;fill:var(--ink)}
+.fig .ln{stroke:var(--ink);stroke-width:3;stroke-linecap:round;fill:none}
+.fig .thin{stroke:var(--ink);stroke-width:2;fill:none}
+.fig .arc{fill:none;stroke:var(--ink);stroke-width:2.5}
+.fig .lbl{font-size:20px;text-anchor:middle;dominant-baseline:middle}
+.fig .vlab{font-size:20px;text-anchor:middle;dominant-baseline:middle}
+.fig .pt{fill:var(--ink)}
+.fig .arrow{fill:var(--ink)}
+.fig .hl{stroke-width:14;stroke-linecap:round;stroke-linejoin:round;fill:none;opacity:.35}
+.fig .hlarc{opacity:.35;stroke:none}
+.fig .handle{fill:var(--accent2);stroke:var(--line);stroke-width:2.5;cursor:grab}
+.fig .handle2{fill:var(--accent);stroke:var(--line);stroke-width:2.5;cursor:grab}
+.anim .draw{stroke-dasharray:900;stroke-dashoffset:900;animation:drawln 1.2s ease forwards}
+.anim .fadein{opacity:0;animation:fadein .6s ease forwards;animation-delay:.9s}
+.anim .fadein2{opacity:0;animation:fadein .6s ease forwards;animation-delay:1.5s}
+.anim .sweep{transform-box:fill-box;transform-origin:center;animation:fadein .8s ease forwards}
+@keyframes drawln{to{stroke-dashoffset:0}} @keyframes fadein{to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.anim .draw,.anim .fadein,.anim .fadein2{animation:none;stroke-dashoffset:0;opacity:1}}
+.panel h3{margin-bottom:8px}
+.panel .ans{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.num-in{width:120px;font-size:1.4rem;padding:8px 12px;border:2px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);text-align:center}
+.num-in:focus{outline:3px solid var(--accent2);border-color:var(--accent2)}
+.txt-in{font-size:1.05rem;padding:8px 12px;border:2px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);width:100%}
+.fb{margin-top:12px;padding:12px 14px;border-radius:10px;border:2px solid var(--line);background:var(--soft);font-size:1rem;line-height:1.4}
+.fb.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,var(--surface))}
+.fb.bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,var(--surface))}
+.fb.warn{border-color:var(--warn);background:color-mix(in srgb,var(--warn) 14%,var(--surface))}
+.fb b.t{display:block;font-size:1.1rem;margin-bottom:4px}
+.th{display:block;margin-top:8px;padding:8px 10px;border-left:4px solid var(--accent2);background:var(--soft);border-radius:0 8px 8px 0;font-size:.98rem;font-weight:400}
+.steps{display:flex;gap:6px;margin:8px 0 14px;flex-wrap:wrap}
+.steps i{display:block;height:10px;flex:1;min-width:14px;border-radius:5px;background:var(--line)}
+.steps i.done{background:var(--ok)} .steps i.cur{background:var(--accent)} .steps i.wrong{background:var(--bad)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 18px}
+.tab{flex:1;min-width:120px;padding:12px 10px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink);font-weight:700;font-size:1.02rem;display:flex;align-items:center;justify-content:center;gap:8px}
+.tab .k{width:30px;height:30px;border-radius:9px;background:var(--soft);border:1.5px solid var(--line);display:grid;place-items:center;font-size:.9rem}
+.tab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--line);box-shadow:var(--bshadow)}
+.tab.active .k{background:var(--surface);color:var(--ink)}
+.tab.done .k{background:var(--ok);color:#fff}
+.reasons,.choices{display:grid;gap:8px;margin:8px 0}
+.reason,.choice{display:flex;gap:10px;align-items:center;padding:10px 12px;border:2px solid var(--line);border-radius:10px;background:var(--surface);cursor:pointer;font-size:1rem;line-height:1.3}
+.reason input,.choice input{width:22px;height:22px;flex:none;accent-color:var(--accent)}
+.reason.on,.choice.on{background:var(--soft2);box-shadow:var(--bshadow)}
+.reason.right,.choice.right{border-color:var(--ok);box-shadow:0 0 0 2px var(--ok) inset}
+.reason.wrongpick,.choice.wrongpick{border-color:var(--bad)}
+.hints{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.hintbox{margin-top:8px;padding:10px 12px;border-radius:10px;background:var(--soft);border:2px dashed var(--line);font-size:1rem}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.95rem;margin:8px 0}
+.legend span::before{content:"";display:inline-block;width:14px;height:14px;border-radius:4px;margin-right:6px;vertical-align:-2px;background:var(--c)}
+.values{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;font-size:.95rem;margin-top:8px}
+.values div{padding:6px 8px;border-radius:10px;background:var(--soft);border:1.5px solid var(--line);text-align:center}
+.values div b{display:block;font-size:1.15rem}
+.result{text-align:center;padding:30px 18px}
+.result .score{font-size:3.4rem;font-weight:800;font-family:var(--head);line-height:1}
+.review{margin-top:18px;text-align:left;display:grid;gap:8px}
+.review .item{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--surface);font-size:.98rem}
+.review .item.ok{border-color:var(--ok)} .review .item.bad{border-color:var(--bad)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 20px;border-radius:12px;font-weight:600;z-index:60;box-shadow:var(--shadow)}
+table.rep{width:100%;border-collapse:collapse;font-size:1rem;margin:10px 0}
+table.rep th,table.rep td{padding:8px 10px;border-bottom:1.5px solid var(--line);text-align:left}
+table.rep th{font-size:.9rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.gloss{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+.gloss .term{padding:12px 14px;border:2px solid var(--line);border-radius:10px;background:var(--surface)}
+.gloss .term b{display:block;font-size:1.05rem}
+.gloss .term small{display:block;color:var(--muted);font-size:.9rem}
+.rules{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.rules .rule{padding:12px 14px;border:2px solid var(--line);border-radius:10px;background:var(--surface);display:flex;gap:12px;align-items:center}
+.rules .rule svg{width:96px;height:72px;flex:none}
+.rules .rule b{display:block}
+.kbd{display:inline-block;padding:1px 7px;border:1.5px solid var(--line);border-radius:6px;background:var(--surface);font-size:.9em}
+.timer{font-variant-numeric:tabular-nums;font-weight:700}
+@media(max-width:640px){
+  header.top{flex-wrap:wrap;padding:10px 12px;gap:8px}
+  .brand{font-size:1.05rem}
+  nav.main{margin-left:0;width:100%;display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+  .thbtn{min-height:40px;padding:4px}
+  .navbtn{padding:8px 4px;font-size:.9rem;text-align:center;border-color:var(--line)}
+  html,body{font-size:17px} h1{font-size:2rem} h2{font-size:1.4rem}
+  .tab{min-width:0;padding:10px 6px;font-size:.95rem}
+}
+@media print{
+  header.top,footer,.noprint{display:none!important}
+  body{background:#fff;color:#000;font-size:14px}
+  main{padding:0;max-width:none}
+  .card{box-shadow:none;border-color:#999}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <button class="brand" data-go="home" aria-label="Angle Lab home">
+    <svg class="logo" viewBox="0 0 40 40" aria-hidden="true"><path d="M6 32 L34 32 L10 10 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M18 32 A12 12 0 0 0 14.5 22.5" fill="none" stroke="var(--accent)" stroke-width="3"/><circle cx="6" cy="32" r="3" fill="var(--accent)"/></svg>
+    <span>Angle Lab</span>
+  </button>
+  <nav class="main">
+    <button class="navbtn" data-go="home">Home</button>
+    <button class="navbtn" data-go="challenge">Challenge</button>
+    <button class="navbtn" data-go="report">My Report</button>
+    <button class="navbtn" data-go="glossary">Glossary</button>
+    <button class="btn small ghost thbtn" id="thToggle" title="Thai explanations">TH</button>
+  </nav>
+</header>
+<main id="app"></main>
+<footer>Made by <b>Bright EngMath</b> · Angle Lab – Everything About Angles · Works offline · No personal data stored</footer>
+<script>
+'use strict';
+/* ===================== core utilities ===================== */
+const $ = (s, el=document) => el.querySelector(s);
+const $$ = (s, el=document) => [...el.querySelectorAll(s)];
+const NS = 'http://www.w3.org/2000/svg';
+const DEG = Math.PI/180;
+const norm360 = a => { a %= 360; if (a < 0) a += 360; return a; };
+const norm180 = a => { a = norm360(a); return a > 180 ? a - 360 : a; };
+const angDiff = (a,b) => { const d = norm360(a-b); return d > 180 ? 360-d : d; };
+const rnd = (a,b) => a + Math.floor(Math.random()*(b-a+1));
+const pick = arr => arr[Math.floor(Math.random()*arr.length)];
+const shuffle = a => { a = a.slice(); for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+const el = (tag, attrs={}, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) if (attrs[k] !== undefined && attrs[k] !== null) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+const dist = (a,b) => Math.hypot(a.x-b.x, a.y-b.y);
+const polar = (cx, cy, r, a) => ({x: cx + r*Math.cos(a*DEG), y: cy - r*Math.sin(a*DEG)});   // math angle (anticlockwise)
+const dirOf = (from, to) => norm360(Math.atan2(-(to.y-from.y), to.x-from.x)/DEG);           // math angle from→to
+function toast(msg){ const t=document.createElement('div'); t.className='toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),1800); }
+const fmt = n => (Math.round(n*10)/10) + '°';
+/* angle colours (same meaning everywhere) */
+const COL = { blue:'#3B82C4', pink:'#E2558A', orange:'#F08A24', green:'#3C9D5A', purple:'#8B5CF6', teal:'#1FA3A3', x:'#F08A24' };
+const TYPE_COL = { acute:COL.blue, right:COL.green, obtuse:COL.orange, straight:COL.pink, reflex:COL.purple, full:COL.teal };
+const PAIR_COLOR = { corresponding:'var(--pairF)', alternate:'var(--pairZ)', cointerior:'var(--pairC)', vertical:COL.purple };
+
+/* ---------- settings & progress (local only) ---------- */
+const DEFAULTS = { theme:'lime', helper:false, th:false, name:'', cls:'' };
+const store = {
+  get(){ try { return Object.assign({}, DEFAULTS, JSON.parse(localStorage.getItem('anglelab.settings')||'{}')); } catch(e){ return {...DEFAULTS}; } },
+  set(obj){ const s = Object.assign(store.get(), obj); try { localStorage.setItem('anglelab.settings', JSON.stringify(s)); } catch(e){} return s; },
+  prog(){ try { return JSON.parse(localStorage.getItem('anglelab.progress')||'{}'); } catch(e){ return {}; } },
+  setProg(obj){ const p = Object.assign(store.prog(), obj); try { localStorage.setItem('anglelab.progress', JSON.stringify(p)); } catch(e){} return p; },
+  reset(){ try { localStorage.removeItem('anglelab.settings'); localStorage.removeItem('anglelab.progress'); } catch(e){} }
+};
+let settings = store.get();
+if (!['lime','peach','blueprint'].includes(settings.theme)) settings = store.set({theme:'lime'});
+document.documentElement.dataset.theme = settings.theme;
+document.body.classList.toggle('th', !!settings.th);
+const thSpan = th => th ? `<span class="th">${th}</span>` : '';
+
+/* ---------- SVG coordinate + drag helpers ---------- */
+function svgPoint(svg, ev){ const p = svg.createSVGPoint(); p.x = ev.clientX; p.y = ev.clientY; return p.matrixTransform(svg.getScreenCTM().inverse()); }
+function makeDraggable(svg, target, onMove, onEnd){
+  let active = null;
+  target.addEventListener('pointerdown', ev => { ev.preventDefault(); active = ev.pointerId; try { svg.setPointerCapture(ev.pointerId); } catch(e){} });
+  svg.addEventListener('pointermove', ev => { if (active !== ev.pointerId) return; onMove(svgPoint(svg, ev), ev); });
+  const end = ev => { if (active !== ev.pointerId) return; active = null; onEnd && onEnd(svgPoint(svg, ev)); };
+  svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+}
+
+/* ===================== PROTRACTOR ===================== */
+class Protractor {
+  constructor(svg, opts={}){
+    this.svg = svg; this.R = 230; this.x = opts.x||380; this.y = opts.y||480; this.rot = 0;
+    this.onChange = opts.onChange || (()=>{}); this.enabled = true;
+    this.g = el('g', {class:'protractor'}, svg);
+    this.build(); this.bind(); this.update();
+  }
+  build(){
+    const R = this.R, g = this.g, Rin = R - 100;
+    const c = a => Math.cos(a*DEG), s = a => Math.sin(a*DEG);
+    el('path', {d:`M ${-R} 0 A ${R} ${R} 0 0 1 ${R} 0 L ${R} 22 L ${-R} 22 Z M ${-Rin} 0 A ${Rin} ${Rin} 0 0 1 ${Rin} 0 Z`, 'fill-rule':'evenodd', fill:'var(--proFill)', stroke:'var(--proEdge)', 'stroke-width':3, 'stroke-linejoin':'round'}, g);
+    el('line', {x1:-R, y1:0, x2:R, y2:0, stroke:'var(--proInk)', 'stroke-width':2.4}, g);
+    let d1='', d5='', d10='';
+    for (let a=0; a<=180; a++){
+      const len = a%10===0 ? 32 : a%5===0 ? 19 : 11;
+      const seg = `M ${(R*c(a)).toFixed(2)} ${(-R*s(a)).toFixed(2)} L ${((R-len)*c(a)).toFixed(2)} ${(-(R-len)*s(a)).toFixed(2)} `;
+      if (a%10===0) d10 += seg; else if (a%5===0) d5 += seg; else d1 += seg;
+    }
+    el('path', {d:d1, stroke:'var(--proInk)', 'stroke-width':1.2, fill:'none', class:'tick1'}, g);
+    el('path', {d:d5, stroke:'var(--proInk)', 'stroke-width':2, fill:'none', class:'tick5'}, g);
+    el('path', {d:d10, stroke:'var(--proInk)', 'stroke-width':3.2, fill:'none', class:'tick10'}, g);
+    const rSep = R-64;
+    el('path', {d:`M ${-rSep} 0 A ${rSep} ${rSep} 0 0 1 ${rSep} 0`, fill:'none', stroke:'var(--proInk)', 'stroke-width':.8, opacity:.45}, g);
+    el('path', {d:`M ${-Rin} 0 A ${Rin} ${Rin} 0 0 1 ${Rin} 0`, fill:'none', stroke:'var(--proInner)', 'stroke-width':1.6}, g);
+    let di = '';
+    for (let a=0; a<=180; a+=10) di += `M ${(Rin*c(a)).toFixed(2)} ${(-Rin*s(a)).toFixed(2)} L ${((Rin+10)*c(a)).toFixed(2)} ${(-(Rin+10)*s(a)).toFixed(2)} `;
+    el('path', {d:di, stroke:'var(--proInner)', 'stroke-width':2, fill:'none', class:'tickInner'}, g);
+    for (let a=0; a<=180; a+=10){
+      const ro = R-48, ri = R-82;
+      const po = {x:(ro*c(a)).toFixed(2), y:(-ro*s(a)).toFixed(2)}, pi = {x:(ri*c(a)).toFixed(2), y:(-ri*s(a)).toFixed(2)};
+      const tOut = el('text', {x:po.x, y:po.y, 'font-size':15, 'font-weight':800, 'text-anchor':'middle', 'dominant-baseline':'middle', fill:'var(--proOuter)', transform:`rotate(${90-a} ${po.x} ${po.y})`, class:'numOuter'}, g);
+      tOut.textContent = 180 - a;
+      const tIn = el('text', {x:pi.x, y:pi.y, 'font-size':13, 'font-weight':700, 'text-anchor':'middle', 'dominant-baseline':'middle', fill:'var(--proInner)', transform:`rotate(${90-a} ${pi.x} ${pi.y})`, class:'numInner'}, g);
+      tIn.textContent = a;
+    }
+    el('circle', {cx:0, cy:0, r:6, fill:'none', stroke:'var(--proInk)', 'stroke-width':2}, g);
+    el('line', {x1:0, y1:-18, x2:0, y2:18, stroke:'var(--proInk)', 'stroke-width':1.6}, g);
+    el('line', {x1:-18, y1:0, x2:18, y2:0, stroke:'var(--proInk)', 'stroke-width':1.6}, g);
+    this.knob = el('g', {class:'knob', style:'cursor:grab'}, g);
+    el('line', {x1:0, y1:-R, x2:0, y2:-R-22, stroke:'var(--line)', 'stroke-width':3}, this.knob);
+    el('circle', {cx:0, cy:-R-32, r:15, fill:'var(--accent2)', stroke:'var(--line)', 'stroke-width':2.5}, this.knob);
+    el('path', {d:`M -5 ${-R-35} a 6 6 0 1 1 1 6`, fill:'none', stroke:'var(--accent-ink)', 'stroke-width':2}, this.knob);
+  }
+  update(){
+    this.g.setAttribute('transform', `translate(${this.x} ${this.y}) rotate(${this.rot})`);
+    this.g.style.pointerEvents = this.enabled ? '' : 'none';
+    this.g.style.opacity = this.enabled ? '1' : '.75';
+    this.onChange(this);
+  }
+  pt(ev){ return svgPoint(this.svg, ev); }
+  bind(){
+    const ptrs = new Map(); let mode = null, start = null;
+    const down = ev => {
+      if (!this.enabled) return; ev.preventDefault();
+      const p = this.pt(ev); ptrs.set(ev.pointerId, p);
+      try { this.g.setPointerCapture(ev.pointerId); } catch(e){}
+      if (ptrs.size === 1){ if (ev.target.closest('.knob')) mode = 'knob'; else { mode = 'drag'; start = {dx:this.x-p.x, dy:this.y-p.y}; } }
+      else if (ptrs.size === 2){ const [a,b] = [...ptrs.values()]; mode = 'two'; start = {ang:Math.atan2(b.y-a.y,b.x-a.x)/DEG, rot:this.rot, mx:(a.x+b.x)/2, my:(a.y+b.y)/2, x:this.x, y:this.y}; }
+    };
+    const move = ev => {
+      if (!ptrs.has(ev.pointerId)) return;
+      const p = this.pt(ev); ptrs.set(ev.pointerId, p);
+      if (mode === 'drag'){ this.x = p.x + start.dx; this.y = p.y + start.dy; }
+      else if (mode === 'knob'){ this.rot = Math.atan2(p.y - this.y, p.x - this.x)/DEG + 90; }
+      else if (mode === 'two' && ptrs.size === 2){ const [a,b] = [...ptrs.values()]; const ang = Math.atan2(b.y-a.y,b.x-a.x)/DEG; this.rot = start.rot + (ang - start.ang); this.x = start.x + ((a.x+b.x)/2 - start.mx); this.y = start.y + ((a.y+b.y)/2 - start.my); }
+      this.rot = norm180(this.rot); this.update();
+    };
+    const up = ev => { ptrs.delete(ev.pointerId); if (ptrs.size === 0){ mode = null; this.onRelease && this.onRelease(); } else if (ptrs.size === 1){ const p=[...ptrs.values()][0]; mode='drag'; start={dx:this.x-p.x, dy:this.y-p.y}; } };
+    this.g.addEventListener('pointerdown', down); this.g.addEventListener('pointermove', move);
+    this.g.addEventListener('pointerup', up); this.g.addEventListener('pointercancel', up);
+  }
+  rotateBy(d){ this.rot = norm180(this.rot + d); this.update(); }
+  reset(x,y){ this.x = x; this.y = y; this.rot = 0; this.update(); }
+  centreOn(v, tol=7){ return dist(this, v) <= tol; }
+  /* screen angles (clockwise, y down). inner 0 at local +x (rot), outer 0 at local -x */
+  readings(armA, armB){
+    const tol = 3;
+    const check = (base, other) => {
+      const onInner = angDiff(base, this.rot) <= tol, onOuter = angDiff(base, this.rot+180) <= tol;
+      if (!onInner && !onOuter) return null;
+      const lam = norm180(other - this.rot);
+      const inside = lam <= 0;
+      const inner = -lam, outer = 180 + lam;
+      return { base, other, onInner, onOuter, inside, inner, outer, correct: onInner ? inner : outer, wrong: onInner ? outer : inner };
+    };
+    return check(armA, armB) || check(armB, armA);
+  }
+}
+
+/* ---------- angle figure for the protractor canvas (screen angles) ---------- */
+function drawAngleFigure(g, V, dirA, dirC, len, opts={}){
+  const A = {x: V.x + len*Math.cos(dirA*DEG), y: V.y + len*Math.sin(dirA*DEG)};
+  const C = {x: V.x + len*Math.cos(dirC*DEG), y: V.y + len*Math.sin(dirC*DEG)};
+  if (opts.arc !== false && !opts.noArmC){
+    const cw = norm360(dirC - dirA); const useCW = opts.reflex ? cw > 180 : cw <= 180;
+    const sweep = useCW ? cw : 360 - cw; const a2 = useCW ? dirA + cw : dirA - (360-cw);
+    const r = 40;
+    const p1 = {x: V.x + r*Math.cos(dirA*DEG), y: V.y + r*Math.sin(dirA*DEG)}, p2 = {x: V.x + r*Math.cos(a2*DEG), y: V.y + r*Math.sin(a2*DEG)};
+    const col = opts.color || COL.blue;
+    el('path', {d:`M ${V.x} ${V.y} L ${p1.x} ${p1.y} A ${r} ${r} 0 ${sweep>180?1:0} ${useCW?1:0} ${p2.x} ${p2.y} Z`, fill:col, opacity:.35}, g);
+    el('path', {d:`M ${p1.x} ${p1.y} A ${r} ${r} 0 ${sweep>180?1:0} ${useCW?1:0} ${p2.x} ${p2.y}`, fill:'none', stroke:col, 'stroke-width':3}, g);
+  }
+  el('line', {x1:V.x, y1:V.y, x2:A.x, y2:A.y, class:'ln'}, g);
+  if (!opts.noArmC) el('line', {x1:V.x, y1:V.y, x2:C.x, y2:C.y, class:'ln'}, g);
+  el('circle', {cx:V.x, cy:V.y, r:5, class:'pt'}, g);
+  el('circle', {cx:A.x, cy:A.y, r:4, class:'pt'}, g);
+  if (!opts.noArmC) el('circle', {cx:C.x, cy:C.y, r:4, class:'pt'}, g);
+  const lab = (p, dir, t) => { const e = el('text', {x:(p.x + 22*Math.cos(dir*DEG)).toFixed(1), y:(p.y + 22*Math.sin(dir*DEG)).toFixed(1), class:'lbl'}, g); e.textContent = t; return e; };
+  lab(A, dirA, opts.names?.[0] ?? 'A');
+  if (!opts.noArmC) lab(C, dirC, opts.names?.[2] ?? 'C');
+  let bis = (dirA + norm180(dirC - dirA)/2); if (opts.reflex) bis += 180;
+  lab(V, bis + 180, opts.names?.[1] ?? 'B');
+  return {A, C};
+}
+function makeMeasureTask(opts={}){
+  const reflex = opts.reflex ?? (Math.random() < 0.3);
+  let m = rnd(14, 166); if (m%10===0) m += rnd(1,4);
+  if (reflex) m = rnd(25, 150);
+  if (m >= 87 && m <= 93) m = m < 90 ? 84 : 96;
+  const dirA = rnd(0, 359), dirC = norm360(dirA + (Math.random()<0.5 ? m : -m)), len = 260;
+  const oa = {x:len*Math.cos(dirA*DEG), y:len*Math.sin(dirA*DEG)}, oc = {x:len*Math.cos(dirC*DEG), y:len*Math.sin(dirC*DEG)};
+  const minx = Math.min(0,oa.x,oc.x), maxx = Math.max(0,oa.x,oc.x), miny = Math.min(0,oa.y,oc.y), maxy = Math.max(0,oa.y,oc.y);
+  const base = {x: 380 - (minx+maxx)/2, y: 300 - (miny+maxy)/2};
+  let V = base;
+  for (let i=0;i<40;i++){ const cand = {x: base.x + rnd(-120,120), y: base.y + rnd(-50,50)}; if ([cand,{x:cand.x+oa.x,y:cand.y+oa.y},{x:cand.x+oc.x,y:cand.y+oc.y}].every(p => p.x>36 && p.x<724 && p.y>36 && p.y<564)){ V = cand; break; } }
+  return {kind:'measure', V, dirA, dirC, m, reflex, value: reflex ? 360 - m : m, len};
+}
+function makeDrawTask(opts={}){
+  const t = makeMeasureTask({reflex:false});
+  t.kind = 'draw'; t.reflex = opts.reflex ?? (Math.random() < 0.25);
+  t.target = t.reflex ? rnd(195, 335) : rnd(15, 165);
+  t.mark = null; t.ray = null;
+  return t;
+}
+
+/* ---------- ProtractorStage: canvas + toolbar + protractor; used by modules 3, 4 and quizzes ---------- */
+class ProtractorStage {
+  constructor(container, opts={}){
+    this.opts = opts; this.mode = opts.mode || 'measure'; this.tool = 'protractor'; this.tries = 0;
+    container.innerHTML = `<div class="stage"><svg class="labSvg" viewBox="0 0 760 600" aria-label="Angle canvas"></svg>
+      <div class="toolbar">
+        <button class="btn small secondary" data-rot="-10" title="Rotate anticlockwise 10°">⟲ 10°</button>
+        <button class="btn small secondary" data-rot="-1">⟲ 1°</button>
+        <button class="btn small secondary" data-rot="1">1° ⟳</button>
+        <button class="btn small secondary" data-rot="10">10° ⟳</button>
+        <span class="sep"></span>
+        <button class="btn small secondary" data-zoom="-1">− Zoom</button><span class="zoomLbl" style="font-weight:700;min-width:40px;text-align:center">1×</span><button class="btn small secondary" data-zoom="1">+ Zoom</button>
+        <span class="sep"></span>
+        <button class="btn small ghost helperBtn">Helper: off</button>
+        <button class="btn small ghost resetBtn">Reset position</button>
+        <span class="drawTools hidden" style="display:contents"><span class="sep"></span><button class="btn small ghost on" data-tool="protractor">Move protractor</button><button class="btn small ghost" data-tool="draw">Mark &amp; draw</button></span>
+      </div></div>`;
+    this.root = container; this.svg = $('.labSvg', container);
+    this.figG = el('g', {class:'fig'}, this.svg); this.drawG = el('g', {class:'fig'}, this.svg);
+    this.pro = new Protractor(this.svg, {x:380, y:480});
+    this.zoomLevels = [1,1.5,2,2.5,3]; this.zi = 0;
+    $$('[data-rot]', container).forEach(b => b.onclick = () => this.pro.rotateBy(+b.dataset.rot));
+    $$('[data-zoom]', container).forEach(b => b.onclick = () => { this.zi = Math.min(this.zoomLevels.length-1, Math.max(0, this.zi + (+b.dataset.zoom))); this.applyZoom(); });
+    this.helperBtn = $('.helperBtn', container);
+    this.helperBtn.onclick = () => this.setHelper(!settings.helper);
+    this.setHelper(settings.helper);
+    $('.resetBtn', container).onclick = () => this.resetPro();
+    $$('[data-tool]', container).forEach(b => b.onclick = () => this.setTool(b.dataset.tool));
+    this.pro.onRelease = () => { if (settings.helper && this.task && dist(this.pro, this.task.V) < 30){ this.pro.x = this.task.V.x; this.pro.y = this.task.V.y; this.pro.update(); toast('Centre snapped to the vertex'); } };
+    this.bindDraw();
+  }
+  setHelper(v){ settings = store.set({helper:v}); this.helperBtn.textContent = 'Helper: ' + (v?'on':'off'); this.helperBtn.classList.toggle('on', v); }
+  setTool(t){ this.tool = t; $$('[data-tool]', this.root).forEach(x => x.classList.toggle('on', x.dataset.tool===t)); this.pro.enabled = (t==='protractor'); this.pro.update(); }
+  applyZoom(){ const z = this.zoomLevels[this.zi]; const cx = this.task ? this.task.V.x : 380, cy = this.task ? this.task.V.y : 300; const w = 760/z, h = 600/z; this.svg.setAttribute('viewBox', `${cx - w/2} ${cy - h/2} ${w} ${h}`); $('.zoomLbl', this.root).textContent = z + '×'; }
+  resetPro(){ const t = this.task; this.pro.reset(t && t.V.x < 380 ? 500 : 260, 520); }
+  setTask(task){
+    this.task = task; this.tries = 0; this.zi = 0; this.drawG.innerHTML = ''; this.figG.innerHTML = '';
+    this.mode = task.kind;
+    $('.drawTools', this.root).classList.toggle('hidden', this.mode !== 'draw');
+    this.setTool('protractor'); this.resetPro(); this.applyZoom();
+    if (this.mode === 'measure') drawAngleFigure(this.figG, task.V, task.dirA, task.dirC, task.len, {reflex:task.reflex, names:task.names || ['A','B','C'], color: task.reflex ? COL.purple : COL.blue});
+    else drawAngleFigure(this.figG, task.V, task.dirA, task.dirA, task.len, {noArmC:true, names:task.names || ['A','B']});
+  }
+  placementIssues(){
+    const t = this.task, issues = [];
+    if (!this.pro.centreOn(t.V, 7)) issues.push({t:'Centre is not on the vertex', d:'Move the protractor so the small cross is exactly on point B.', th:'จุดศูนย์กลางไม่อยู่ที่จุดยอด B'});
+    let rd = null;
+    if (t.kind === 'measure'){
+      rd = this.pro.readings(t.dirA, t.dirC);
+      if (!rd) issues.push({t:'Baseline is not on the arm', d:'Rotate the protractor so the 0° line lies exactly along one arm.', th:'เส้นฐาน 0° ไม่ทับแขนของมุม'});
+      else if (!rd.inside) issues.push({t:'The other arm is outside the protractor', d:'Flip the protractor (rotate 180°) so the other arm crosses the scale.', th:'แขนอีกข้างอยู่นอกโปรแทรกเตอร์ ให้หมุนกลับด้าน'});
+    } else if (angDiff(t.dirA, this.pro.rot) > 3 && angDiff(t.dirA, this.pro.rot+180) > 3) issues.push({t:'Baseline is not on the arm', d:'Rotate so the 0° line lies along BA.', th:'เส้นฐาน 0° ไม่ทับแขน BA'});
+    return {issues, rd};
+  }
+  /* returns {ok, cls, title, body, th} */
+  checkMeasure(ans){
+    const t = this.task;
+    if (ans === '' || ans === null || isNaN(Number(ans))) return {ok:false, cls:'warn', title:'Type your answer', body:'Enter the size of the angle in degrees.', pending:true};
+    ans = Number(ans); this.tries++;
+    const {issues} = this.placementIssues();
+    if (Math.abs(ans - t.value) <= 2){
+      return {ok:true, cls:'ok', title:`Correct! ∠${(t.names||'ABC').join ? (t.names||['A','B','C']).join('') : 'ABC'} = ${t.value}°`, body: issues.length ? `Your reading is right. Tip for next time: ${issues[0].t.toLowerCase()}.` : (t.reflex ? `${t.m}° measured, and 360° − ${t.m}° = ${t.value}°.` : 'Centre on the vertex, baseline on the arm, correct scale. Well done.')};
+    }
+    if (issues.length) return {ok:false, cls:'bad', title:issues[0].t, body:issues[0].d, th:issues[0].th};
+    if (Math.abs(ans - (180 - t.m)) <= 2) return {ok:false, cls:'bad', title:'You read the wrong scale', body:`Use the scale that starts at <b>0°</b> on the arm under the baseline. The other scale gives 180° − the angle. The angle is <b>${t.value}°</b>.`, th:'อ่านสเกลผิดด้าน ให้อ่านสเกลที่เริ่ม 0° บนแขนที่ทับเส้นฐาน'};
+    if (t.reflex && Math.abs(ans - t.m) <= 2) return {ok:false, cls:'bad', title:'That is the smaller angle', body:`You measured ${t.m}° correctly, but the marked angle is reflex. 360° − ${t.m}° = <b>${t.value}°</b>.`, th:'นี่คือมุมเล็ก มุมกลับต้องเอา 360° ลบ'};
+    if (t.reflex && Math.abs(ans - (360 - (180 - t.m))) <= 2) return {ok:false, cls:'bad', title:'You read the wrong scale', body:`The smaller angle is ${t.m}°, not ${180-t.m}°. Then 360° − ${t.m}° = <b>${t.value}°</b>.`, th:'อ่านสเกลผิดด้าน'};
+    return {ok:false, cls:'bad', title:'Not quite', body:`Count the small marks from the nearest 10. The angle is <b>${t.value}°</b>.`, th:'ยังไม่ถูก ลองนับขีดเล็กจากเลข 10 ที่ใกล้ที่สุด'};
+  }
+  checkDraw(){
+    const t = this.task;
+    if (!t.ray) return {ok:false, cls:'warn', title:'No arm drawn yet', body:'Switch to <b>Mark &amp; draw</b>, tap to make a dot, then drag from B through the dot.', pending:true};
+    const a = angDiff(t.ray, t.dirA); const drawn = t.reflex ? 360 - a : a;
+    const ok = Math.abs(drawn - t.target) <= 2; const {issues} = this.placementIssues();
+    if (ok){
+      this.drawG.appendChild(el('path', {d:this.arcScreen(t.V, t.dirA, t.ray, 44, t.reflex), fill:'none', stroke:COL.green, 'stroke-width':3}));
+      return {ok:true, cls:'ok', title:`Correct! Your angle is ${Math.round(drawn)}°`, body:`Target ${t.target}°. ${issues.length ? 'Tip: '+issues[0].t.toLowerCase()+'.' : 'Accurate drawing.'}`};
+    }
+    let why;
+    if (issues.length) why = issues[0].t + '. ' + issues[0].d;
+    else if (Math.abs(drawn - (180 - t.target)) <= 2 || (t.reflex && Math.abs(a - (180-(360-t.target)))<=2)) why = 'You used the wrong scale: your dot was at 180° − the angle you wanted.';
+    else if (t.reflex && Math.abs(a - t.target) <= 2) why = `You drew the smaller angle as ${t.target}°. For a reflex angle draw 360° − ${t.target}° = ${360-t.target}°; the reflex angle is on the other side.`;
+    else why = `Check that the dot is exactly at ${t.reflex ? 360-t.target : t.target}° and that your arm passes through it.`;
+    return {ok:false, cls:'bad', title:`Your angle is ${Math.round(drawn)}°, not ${t.target}°`, body:why};
+  }
+  arcScreen(V, d1, d2, r, reflex){
+    const cw = norm360(d2 - d1); const useCW = reflex ? cw > 180 : cw <= 180; const sweep = useCW ? cw : 360-cw; const a2 = useCW ? d1+cw : d1-(360-cw);
+    const p1={x:V.x+r*Math.cos(d1*DEG), y:V.y+r*Math.sin(d1*DEG)}, p2={x:V.x+r*Math.cos(a2*DEG), y:V.y+r*Math.sin(a2*DEG)};
+    return `M ${p1.x} ${p1.y} A ${r} ${r} 0 ${sweep>180?1:0} ${useCW?1:0} ${p2.x} ${p2.y}`;
+  }
+  bindDraw(){
+    const svg = this.svg; let dragStart = null;
+    svg.addEventListener('pointerdown', ev => { if (this.mode!=='draw' || this.tool!=='draw') return; ev.preventDefault(); const p = svgPoint(svg, ev); dragStart = {p, moved:false, fromVertex: dist(p, this.task.V) < 34}; try { svg.setPointerCapture(ev.pointerId); } catch(e){} });
+    svg.addEventListener('pointermove', ev => { if (!dragStart) return; const p = svgPoint(svg, ev); if (dist(p, dragStart.p) > 6) dragStart.moved = true; if (dragStart.fromVertex && dragStart.moved) this.renderRay(p, true); });
+    const end = ev => { if (!dragStart) return; const p = svgPoint(svg, ev); if (!dragStart.moved){ this.task.mark = p; this.renderDraw(); } else if (dragStart.fromVertex) this.renderRay(p, false); dragStart = null; };
+    svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', () => dragStart = null);
+  }
+  renderRay(p, preview){
+    const t = this.task; let dir = Math.atan2(p.y - t.V.y, p.x - t.V.x)/DEG;
+    if (t.mark && dist(p, t.mark) < 24) dir = Math.atan2(t.mark.y - t.V.y, t.mark.x - t.V.x)/DEG;
+    if (!preview) t.ray = norm360(dir);
+    this.renderDraw(preview ? dir : null);
+  }
+  setRay(d){ this.task.ray = norm360(d); this.renderDraw(); }
+  clearDraw(){ this.task.mark = null; this.task.ray = null; this.drawG.innerHTML = ''; }
+  renderDraw(previewDir){
+    const t = this.task, g = this.drawG; g.innerHTML = '';
+    const d = previewDir ?? t.ray;
+    if (d != null){
+      const C = {x: t.V.x + t.len*Math.cos(d*DEG), y: t.V.y + t.len*Math.sin(d*DEG)};
+      el('line', {x1:t.V.x, y1:t.V.y, x2:C.x, y2:C.y, class:'ln', stroke:COL.blue, 'stroke-dasharray': previewDir!=null ? '8 6' : null}, g);
+      el('circle', {cx:C.x, cy:C.y, r:4, fill:COL.blue}, g);
+      if (previewDir == null){ const e = el('text', {x:(C.x + 22*Math.cos(d*DEG)).toFixed(1), y:(C.y + 22*Math.sin(d*DEG)).toFixed(1), class:'lbl'}, g); e.textContent = 'C'; }
+    }
+    if (t.mark) el('path', {d:`M ${t.mark.x-7} ${t.mark.y-7} L ${t.mark.x+7} ${t.mark.y+7} M ${t.mark.x-7} ${t.mark.y+7} L ${t.mark.x+7} ${t.mark.y-7}`, stroke:COL.blue, 'stroke-width':3, 'stroke-linecap':'round'}, g);
+  }
+}
+/* ===================== FIGURE HELPERS (math angles: anticlockwise, y up) ===================== */
+function arcPath(cx, cy, r, a1, a2){ const sweep = norm360(a2 - a1); const p1 = polar(cx,cy,r,a1), p2 = polar(cx,cy,r,a2); return `M ${p1.x.toFixed(2)} ${p1.y.toFixed(2)} A ${r} ${r} 0 ${sweep>180?1:0} 0 ${p2.x.toFixed(2)} ${p2.y.toFixed(2)}`; }
+function label(parent, x, y, text, cls='lbl', attrs={}){ const t = el('text', Object.assign({x:(+x).toFixed(1), y:(+y).toFixed(1), class:cls}, attrs), parent); t.textContent = text; return t; }
+/* radius along a wedge bisector so that a text box (diagonal) clears both arms of a wedge of theta degrees */
+function labelRadiusFor(txt, fs, theta){ const halfW = txt.length * fs * 0.31 + 3, halfH = fs * 0.62; const d = Math.hypot(halfW + 2, halfH + 2); return d / Math.sin(Math.max(6, theta)/2*DEG) + 6; }
+/* best direction for a point label at a vertex with the given ray directions: the bisector of the largest free gap */
+function freeDir(dirs){ const a = dirs.map(norm360).sort((x,y)=>x-y); let best = {gap:-1, mid:0}; for (let i=0;i<a.length;i++){ const nxt = i===a.length-1 ? a[0]+360 : a[i+1]; const gap = nxt - a[i]; if (gap > best.gap) best = {gap, mid: a[i] + gap/2}; } return best; }
+function vertexLabelPos(P, dirs, txt, fs=20, minR=24){ const f = freeDir(dirs); const r = Math.max(minR, labelRadiusFor(txt, fs, Math.min(f.gap, 180)) - 4); const p = polar(P.x, P.y, Math.min(r, 120), f.mid); p.dir = f.mid; return p; }
+function anchoredLabel(g, P, lp, txt){ const t = label(g, lp.x, lp.y, txt); t.dataset.px = P.x; t.dataset.py = P.y; t.dataset.dir = lp.dir; return t; }
+/* final pass: push any anchored label outward along its direction until its real bounding box clears every line */
+function fixLabelOverlaps(svg){
+  const segs = [];
+  svg.querySelectorAll('line').forEach(l => { if (l.closest('.protractor')) return; segs.push([+l.getAttribute('x1'),+l.getAttribute('y1'),+l.getAttribute('x2'),+l.getAttribute('y2')]); });
+  svg.querySelectorAll('path.ln').forEach(p => { const nums = (p.getAttribute('d').match(/-?[\d.]+/g)||[]).map(Number); const pts=[]; for (let i=0;i<nums.length;i+=2) pts.push([nums[i],nums[i+1]]); for (let i=0;i<pts.length;i++){ const a=pts[i], b=pts[(i+1)%pts.length]; segs.push([a[0],a[1],b[0],b[1]]); } });
+  const texts = [...svg.querySelectorAll('text')].filter(t => !t.closest('.protractor') && !t.getAttribute('transform'));
+  const rectOf = t => { let b; try { b = t.getBBox(); } catch(e){ return null; } if (!b || !b.width) return null; const x = +t.getAttribute('x'), y = +t.getAttribute('y'); return {x: x - b.width/2 - 2, y: y - b.height/2 - 2, w: b.width + 4, h: b.height + 4}; };
+  const overlap = (a, b) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
+  for (let pass = 0; pass < 2; pass++) texts.filter(t => t.dataset.dir != null).forEach(t => {
+    const P = {x:+t.dataset.px, y:+t.dataset.py}, dir = +t.dataset.dir;
+    let r = dist(P, {x:+t.getAttribute('x'), y:+t.getAttribute('y')});
+    for (let k=0; k<16; k++){
+      const rect = rectOf(t); if (!rect) return;
+      const bad = segs.some(sg => segHitsRect(sg, rect)) || texts.some(o => { if (o === t) return false; const ro = rectOf(o); return ro && overlap(rect, ro); });
+      if (!bad) break;
+      r += 7; const np = polar(P.x, P.y, r, dir); t.setAttribute('x', np.x.toFixed(1)); t.setAttribute('y', np.y.toFixed(1));
+    }
+  });
+}
+function segHitsRect(sg, r){ let t0=0,t1=1; const dx=sg[2]-sg[0], dy=sg[3]-sg[1]; const chk=(p,q)=>{ if(p===0) return q>=0; const t=q/p; if(p<0){ if(t>t1) return false; if(t>t0) t0=t; } else { if(t<t0) return false; if(t<t1) t1=t; } return true; }; return chk(-dx, sg[0]-r.x) && chk(dx, r.x+r.w-sg[0]) && chk(-dy, sg[1]-r.y) && chk(dy, r.y+r.h-sg[1]); }
+function textRect(cx, cy, txt, fs=20){ const hw = String(txt).length*fs*0.31+6, hh = fs*0.75; return {x:cx-hw, y:cy-hh, w:2*hw, h:2*hh}; }
+/* filled sector + arc + label for the angle from a1 anticlockwise to a2 at centre P */
+function angleMark(g, P, a1, a2, opts={}){
+  let size = norm360(a2 - a1); if (size === 0 && Math.abs(a2 - a1) >= 359) size = 360; const r = opts.r || 38; const col = opts.color || COL.blue;
+  if (Math.abs(size - 90) < 0.01 && opts.rightBox !== false){
+    const s = r*0.6; const p = polar(P.x,P.y,s,a1), q = polar(P.x,P.y,s*Math.SQRT2,a1+45), t = polar(P.x,P.y,s,a2);
+    el('path', {d:`M ${P.x} ${P.y} L ${p.x} ${p.y} L ${q.x} ${q.y} L ${t.x} ${t.y} Z`, fill:col, opacity:.35}, g);
+    el('path', {d:`M ${p.x} ${p.y} L ${q.x} ${q.y} L ${t.x} ${t.y}`, fill:'none', stroke:col, 'stroke-width':2.5}, g);
+  } else if (size >= 359){
+    el('circle', {cx:P.x, cy:P.y, r:r, fill:col, opacity: opts.fillOpacity ?? .35}, g);
+    el('circle', {cx:P.x, cy:P.y, r:r, fill:'none', stroke:col, 'stroke-width':2.5}, g);
+  } else {
+    const p1 = polar(P.x,P.y,r,a1), p2 = polar(P.x,P.y,r,a2);
+    el('path', {d:`M ${P.x} ${P.y} L ${p1.x.toFixed(2)} ${p1.y.toFixed(2)} A ${r} ${r} 0 ${size>180?1:0} 0 ${p2.x.toFixed(2)} ${p2.y.toFixed(2)} Z`, fill:col, opacity: opts.fillOpacity ?? .35, class: opts.cls || null}, g);
+    el('path', {d:arcPath(P.x,P.y,r,a1,a2), fill:'none', stroke:col, 'stroke-width':2.5, class: opts.cls || null}, g);
+  }
+  if (opts.label != null){
+    // keep the label inside the wedge, clear of both arms: radius >= half text width / sin(angle/2)
+    const txt = String(opts.label), fs = opts.fontSize || 20;
+    const theta = Math.max(6, Math.min(size, 180)); const need = labelRadiusFor(txt, fs, theta);
+    let lr = opts.lr || (r + (size < 40 ? 30 : 22)); if (!opts.lrFixed) lr = Math.max(lr, Math.min(need, 210));
+    const frac = opts.labelAt ?? 0.5;
+    const lp = polar(P.x, P.y, lr, a1 + size*frac);
+    const t = label(g, lp.x, lp.y, opts.label, 'vlab'); t.setAttribute('fill', opts.labelColor || col); if (opts.fontSize) t.setAttribute('font-size', opts.fontSize);
+    t.dataset.px = P.x; t.dataset.py = P.y; t.dataset.dir = a1 + size*frac;
+  }
+}
+/* rays from a point. cfg: {O, rays:[{a,label,len,line}], angles:[{from,to,label,color,r}], viewBox} */
+function rayFigure(svg, cfg){
+  svg.innerHTML = ''; svg.setAttribute('viewBox', cfg.viewBox || '0 0 600 360'); svg.classList.add('fig');
+  const g = el('g', {}, svg); if (cfg.anim) g.classList.add('anim');
+  const O = cfg.O || {x:300, y:200};
+  (cfg.angles||[]).forEach(a => angleMark(g, O, a.from, a.to, a));
+  cfg.rays.forEach(r => {
+    const len = r.len || 210; const e = polar(O.x,O.y,len,r.a);
+    if (r.line){ const s = polar(O.x,O.y,len,r.a+180); el('line', {x1:s.x, y1:s.y, x2:e.x, y2:e.y, class:'ln'}, g); if (r.label2){ el('circle',{cx:s.x,cy:s.y,r:4,class:'pt'},g); const lp = polar(O.x,O.y,len+22,r.a+180); label(g, lp.x, lp.y, r.label2); } }
+    else el('line', {x1:O.x, y1:O.y, x2:e.x, y2:e.y, class:'ln'}, g);
+    if (r.arrow){ const t = polar(O.x,O.y,len,r.a), bm = polar(O.x,O.y,len-16,r.a); const px = Math.sin(r.a*DEG)*7, py = Math.cos(r.a*DEG)*7; el('path',{d:`M ${t.x} ${t.y} L ${bm.x+px} ${bm.y+py} L ${bm.x-px} ${bm.y-py} Z`, class:'arrow'},g); }
+    else el('circle', {cx:e.x, cy:e.y, r:4, class:'pt'}, g);
+    if (r.label){ const lp = polar(O.x,O.y,len+22,r.a); label(g, lp.x, lp.y, r.label); }
+  });
+  el('circle', {cx:O.x, cy:O.y, r:5, class:'pt'}, g);
+  if (cfg.Olabel){ const dirs = []; cfg.rays.forEach(r => { dirs.push(r.a); if (r.line) dirs.push(r.a+180); }); const lp = cfg.OlabelDir != null ? Object.assign(polar(O.x,O.y,24,cfg.OlabelDir), {dir:cfg.OlabelDir}) : vertexLabelPos(O, dirs, cfg.Olabel); anchoredLabel(g, O, lp, cfg.Olabel); }
+  fixLabelOverlaps(svg);
+  return g;
+}
+/* polygon helpers */
+function fitPoints(pts, box={x:40,y:30,w:520,h:300}){
+  const xs = pts.map(p=>p.x), ys = pts.map(p=>p.y);
+  const minx=Math.min(...xs), maxx=Math.max(...xs), miny=Math.min(...ys), maxy=Math.max(...ys);
+  const s = Math.min(box.w/(maxx-minx), box.h/(maxy-miny));
+  const ox = box.x + (box.w - (maxx-minx)*s)/2 - minx*s, oy = box.y + (box.h - (maxy-miny)*s)/2 - miny*s;
+  return pts.map(p => ({x: p.x*s + ox, y: p.y*s + oy}));
+}
+function rotatePts(pts, deg){ const c = Math.cos(deg*DEG), s = Math.sin(deg*DEG); return pts.map(p => ({x: p.x*c - p.y*s, y: p.x*s + p.y*c})); }
+/* triangle with interior angles A,B,C (at pts[0],[1],[2]); returns screen points */
+function trianglePts(A, B, C, rot=0, box){
+  const L = 100; const Bp = {x:0, y:0}, Cp = {x:L, y:0};
+  // y-up math: A = intersection of ray from B at angle B and ray from C at angle 180-C
+  const dB = {x:Math.cos(B*DEG), y:Math.sin(B*DEG)}, dC = {x:Math.cos((180-C)*DEG), y:Math.sin((180-C)*DEG)};
+  const det = dB.x*(-dC.y) - dB.y*(-dC.x); const t = ((Cp.x-Bp.x)*(-dC.y) - (Cp.y-Bp.y)*(-dC.x))/det;
+  const Ap = {x: Bp.x + t*dB.x, y: Bp.y + t*dB.y};
+  let pts = [Ap, Bp, Cp].map(p => ({x:p.x, y:-p.y}));           // to screen (y down)
+  pts = rotatePts(pts, rot);
+  return fitPoints(pts, box || {x:60, y:40, w:480, h:280});
+}
+/* quadrilateral with interior angles A,B,C at P0,P1,P2 (D = 360-A-B-C at P3); anticlockwise in math coords */
+function quadPts(A, B, C, rot=0){
+  for (let tries=0; tries<40; tries++){
+    const a = rnd(80,120), b = rnd(70,120);
+    const P0 = {x:0,y:0}, P1 = {x:a,y:0};
+    const d12 = 180 - B; const P2 = {x: P1.x + b*Math.cos(d12*DEG), y: P1.y + b*Math.sin(d12*DEG)};
+    const d23 = 360 - B - C; const d03 = A;
+    const u = {x:Math.cos(d23*DEG), y:Math.sin(d23*DEG)}, v = {x:Math.cos(d03*DEG), y:Math.sin(d03*DEG)};
+    const det = u.x*(-v.y) - u.y*(-v.x); if (Math.abs(det) < 1e-6) continue;
+    const t = ((P0.x-P2.x)*(-v.y) - (P0.y-P2.y)*(-v.x))/det; const s = (u.x*(P0.y-P2.y) - u.y*(P0.x-P2.x))/det;
+    if (t <= 10 || s <= 10) continue;
+    const P3 = {x: P2.x + t*u.x, y: P2.y + t*u.y};
+    const pts = [P0,P1,P2,P3];
+    const cross = pts.map((p,i) => { const q = pts[(i+1)%4], r = pts[(i+2)%4]; return (q.x-p.x)*(r.y-q.y) - (q.y-p.y)*(r.x-q.x); });
+    if (!cross.every(c => c > 0)) continue;
+    const sides = pts.map((p,i) => dist(p, pts[(i+1)%4])); if (Math.min(...sides) < 35) continue;
+    let scr = pts.map(p => ({x:p.x, y:-p.y})); scr = rotatePts(scr, rot);
+    return fitPoints(scr, {x:60, y:40, w:480, h:280});
+  }
+  return null;
+}
+/* draw a polygon with interior angle marks. pts in screen coords (any orientation). marks: {i:{label,color,r}} ; ext: {i, label, color} exterior angle at vertex i extending side (i-1 → i) */
+function polygonFigure(svg, pts, cfg={}){
+  svg.innerHTML = ''; svg.setAttribute('viewBox', cfg.viewBox || '0 0 600 360'); svg.classList.add('fig');
+  const g = el('g', {}, svg); if (cfg.anim) g.classList.add('anim');
+  const n = pts.length;
+  if (cfg.ext && cfg.fitExt !== false){   // re-fit so the extended side and its label stay inside the canvas
+    const i = cfg.ext.i, V = pts[i], from = cfg.ext.side === 'next' ? pts[(i+1)%n] : pts[(i-1+n)%n];
+    const E = polar(V.x, V.y, 150, dirOf(from, V));
+    pts = fitPoints([...pts, E], cfg.box || {x:60, y:40, w:480, h:280}).slice(0, n);
+  }
+  // orientation: ensure anticlockwise in screen-math sense for interior arcs
+  const area = pts.reduce((s,p,i) => { const q = pts[(i+1)%n]; return s + (p.x*q.y - q.x*p.y); }, 0);
+  const ccw = area < 0;   // in y-down coords, negative shoelace = anticlockwise visually
+  const next = i => pts[(i+1)%n], prev = i => pts[(i-1+n)%n];
+  const interior = i => { const V = pts[i]; const d1 = dirOf(V, next(i)), d2 = dirOf(V, prev(i)); return ccw ? [d1, d2] : [d2, d1]; };
+  // exterior angle
+  if (cfg.ext){
+    const i = cfg.ext.i, V = pts[i], from = cfg.ext.side === 'next' ? next(i) : prev(i);
+    const d = dirOf(from, V); const E = polar(V.x, V.y, 90, d);
+    el('line', {x1:V.x, y1:V.y, x2:E.x, y2:E.y, class:'ln', 'stroke-dasharray': cfg.ext.dashed ? '8 6' : null}, g);
+    if (cfg.ext.pointLabel){ el('circle',{cx:E.x,cy:E.y,r:4,class:'pt'},g); const lp = polar(V.x,V.y,112,d); label(g, lp.x, lp.y, cfg.ext.pointLabel); }
+    const other = cfg.ext.side === 'next' ? prev(i) : next(i); const dOther = dirOf(V, other);
+    const sweepA = norm360(dOther - d), [a1,a2] = sweepA <= 180 ? [d, dOther] : [dOther, d];
+    const segsAll = [[from.x,from.y,V.x,V.y],[V.x,V.y,E.x,E.y],[V.x,V.y,other.x,other.y]]; for (let k=0;k<n;k++){ const p1 = pts[k], p2 = pts[(k+1)%n]; segsAll.push([p1.x,p1.y,p2.x,p2.y]); }
+    const mid = a1 + norm360(a2-a1)/2; let lrE = Math.max(48, labelRadiusFor(String(cfg.ext.label||''), 20, Math.min(norm360(a2-a1),180)));
+    for (const cand of [lrE, lrE+14, lrE+28, lrE+44, lrE+60]){ const lp = polar(V.x, V.y, cand, mid); if (!segsAll.some(sg => segHitsRect(sg, textRect(lp.x, lp.y, cfg.ext.label||'')))){ lrE = cand; break; } }
+    angleMark(g, V, a1, a2, {color: cfg.ext.color || COL.pink, label: cfg.ext.label, r: 26, lr: lrE, lrFixed:true});
+  }
+  const marks = cfg.marks || {};
+  Object.keys(marks).forEach(k => { const i = +k; const [a1,a2] = interior(i); angleMark(g, pts[i], a1, a2, Object.assign({r:34}, marks[k])); });
+  el('path', {d: pts.map((p,i) => (i?'L':'M') + ` ${p.x.toFixed(1)} ${p.y.toFixed(1)} `).join('') + 'Z', class:'ln', fill: cfg.fill || 'none'}, g);
+  pts.forEach((p,i) => { el('circle', {cx:p.x, cy:p.y, r:4.5, class:'pt'}, g); if (cfg.labels && cfg.labels[i]){ const dirs = [dirOf(p, next(i)), dirOf(p, prev(i))]; if (cfg.ext && cfg.ext.i === i){ const from = cfg.ext.side === 'next' ? next(i) : prev(i); dirs.push(dirOf(from, p)); } if (cfg.extraRays && cfg.extraRays[i]) dirs.push(...cfg.extraRays[i]); const lp = vertexLabelPos(p, dirs, cfg.labels[i]); anchoredLabel(g, p, lp, cfg.labels[i]); } });
+  fixLabelOverlaps(svg);
+  return g;
+}
+/* interior angles of a polygon (screen pts) in degrees */
+function polyAngles(pts){ const n = pts.length; return pts.map((V,i) => { const a = dirOf(V, pts[(i+1)%n]), b = dirOf(V, pts[(i-1+n)%n]); return angDiff(a,b); }); }
+
+/* ---------- transversal figure ---------- */
+function transversalGeom(phi, psi=0, gap=140){
+  const cx=300, cy=180, yTop = cy - gap/2;
+  const dT = {x:Math.cos(phi*DEG), y:-Math.sin(phi*DEG)};
+  const t1 = (yTop - cy)/dT.y; const P1 = {x: cx + t1*dT.x, y: yTop};
+  const B0 = {x:cx, y:cy+gap/2}; const dB = {x:Math.cos(psi*DEG), y:-Math.sin(psi*DEG)};
+  const det = dT.x*(-dB.y) - dT.y*(-dB.x); const rx = B0.x - cx, ry = B0.y - cy;
+  const t2 = (rx*(-dB.y) - ry*(-dB.x))/det; const P2 = {x: cx + t2*dT.x, y: cy + t2*dT.y};
+  const regions = L => { const d = norm360(phi - L); return [d, 180-d, d, 180-d]; };
+  const mids = L => { const d = norm360(phi - L); return [L + d/2, L + d + (180-d)/2, L + 180 + d/2, L + 360 - (180-d)/2]; };
+  const rays = L => [[L, phi],[phi, L+180],[L+180, phi+180],[phi+180, L+360]];
+  return { phi, psi, gap, P1, P2, yTop, B0, dB, top:{P:P1, L:0, sizes:regions(0), mids:mids(0), rays:rays(0)}, bot:{P:P2, L:psi, sizes:regions(psi), mids:mids(psi), rays:rays(psi)} };
+}
+const PAIRS = { corresponding:[['t0','b0'],['t1','b1'],['t2','b2'],['t3','b3']], alternate:[['t2','b0'],['t3','b1']], cointerior:[['t2','b1'],['t3','b0']], vertical:[['t0','t2'],['t1','t3'],['b0','b2'],['b1','b3']] };
+function posInfo(G, key){ const side = key[0]==='t' ? G.top : G.bot; const i = +key[1]; return {side, i, P:side.P, size:side.sizes[i], mid:side.mids[i], rays:side.rays[i]}; }
+function renderTransversal(svg, cfg){
+  svg.innerHTML = ''; svg.setAttribute('viewBox','0 0 600 360'); svg.classList.add('fig');
+  const G = transversalGeom(cfg.phi, cfg.psi||0, cfg.gap||140);
+  const g = el('g', {}, svg); if (cfg.anim) g.classList.add('anim');
+  if (cfg.highlight && cfg.highlight.keys.length){
+    const hg = el('g', {}, g); const col = cfg.highlight.color;
+    cfg.highlight.keys.forEach(k => { const info = posInfo(G,k); if (cfg.letter !== false) info.rays.forEach(a => { const e = polar(info.P.x, info.P.y, 125, a); el('line', {x1:info.P.x, y1:info.P.y, x2:e.x, y2:e.y, stroke:col, class:'hl ' + (cfg.anim?'draw':'')}, hg); }); });
+  }
+  const extend = (P, dir, len) => ({x:P.x + len*Math.cos(dir*DEG), y:P.y - len*Math.sin(dir*DEG)});
+  const line = (P, dir, len) => { const a = extend(P, dir, -len), b = extend(P, dir, len); el('line', {x1:a.x, y1:a.y, x2:b.x, y2:b.y, class:'ln'}, g); };
+  // angle marks first (under lines)
+  const keys = Object.keys(cfg.labels || {});
+  keys.forEach(k => { const info = posInfo(G,k); const txt = cfg.labels[k]; if (txt === null) return; const col = cfg.colors?.[k] || (cfg.highlight && cfg.highlight.keys.includes(k) ? cfg.highlight.color : COL.blue); angleMark(g, info.P, info.rays[0], info.rays[1], {color:col, label:txt, r:30, lr: cfg.labelRadius || 56, fillOpacity: cfg.fillOpacities?.[k], cls: cfg.anim && cfg.highlight && cfg.highlight.keys.includes(k) ? 'fadein' : null}); });
+  line({x:300, y:G.yTop}, 0, 285); line(G.B0, G.psi, 285);
+  line({x:300,y:180}, G.phi, Math.min(300, 165/Math.max(.25, Math.abs(Math.sin(G.phi*DEG)))));
+  if (cfg.parallelMarks !== false && !G.psi){ [G.yTop, G.B0.y].forEach(y => { const ax = 480; el('path', {d:`M ${ax-8} ${y-7} L ${ax+4} ${y} L ${ax-8} ${y+7} Z`, class:'arrow'}, g); }); }
+  el('circle', {cx:G.P1.x, cy:G.P1.y, r:4.5, class:'pt'}, g); el('circle', {cx:G.P2.x, cy:G.P2.y, r:4.5, class:'pt'}, g);
+  fixLabelOverlaps(svg);
+  return G;
+}
+
+/* ===================== REASONS, GLOSSARY, RULES ===================== */
+const REASONS = {
+  corr: {en:'Corresponding angles are equal', th:'มุมที่สมนัยกันมีขนาดเท่ากัน'},
+  alt:  {en:'Alternate angles are equal', th:'มุมแย้งมีขนาดเท่ากัน'},
+  coin: {en:'Co-interior angles add up to 180°', th:'มุมภายในที่อยู่บนข้างเดียวกันของเส้นตัดรวมกันได้ 180°'},
+  vert: {en:'Vertically opposite angles are equal', th:'มุมตรงข้ามมีขนาดเท่ากัน'},
+  line: {en:'Angles on a straight line add up to 180°', th:'มุมบนเส้นตรงรวมกันได้ 180°'},
+  pt:   {en:'Angles around a point add up to 360°', th:'มุมรอบจุดรวมกันได้ 360°'},
+  comp: {en:'Complementary angles add up to 90°', th:'มุมประกอบมุมฉากรวมกันได้ 90°'},
+  supp: {en:'Supplementary angles add up to 180°', th:'มุมประกอบสองมุมฉากรวมกันได้ 180°'},
+  tri:  {en:'Angles in a triangle add up to 180°', th:'มุมภายในของสามเหลี่ยมรวมกันได้ 180°'},
+  ext:  {en:'Exterior angle of a triangle = sum of the two interior opposite angles', th:'มุมภายนอกของสามเหลี่ยมเท่ากับผลบวกของมุมภายในที่ไม่ใช่มุมประชิด'},
+  quad: {en:'Angles in a quadrilateral add up to 360°', th:'มุมภายในของสี่เหลี่ยมรวมกันได้ 360°'},
+  right:{en:'A right angle is 90°', th:'มุมฉากมีขนาด 90°'},
+  parYes_corr: {en:'Corresponding angles are equal, so the lines are parallel', th:'มุมที่สมนัยกันเท่ากัน ดังนั้นเส้นขนานกัน'},
+  parNo_corr:  {en:'Corresponding angles are not equal, so the lines are not parallel', th:'มุมที่สมนัยกันไม่เท่ากัน ดังนั้นเส้นไม่ขนานกัน'},
+  parYes_alt:  {en:'Alternate angles are equal, so the lines are parallel', th:'มุมแย้งเท่ากัน ดังนั้นเส้นขนานกัน'},
+  parNo_alt:   {en:'Alternate angles are not equal, so the lines are not parallel', th:'มุมแย้งไม่เท่ากัน ดังนั้นเส้นไม่ขนานกัน'},
+  parYes_coin: {en:'Co-interior angles add up to 180°, so the lines are parallel', th:'มุมภายในบนข้างเดียวกันรวมได้ 180° ดังนั้นเส้นขนานกัน'},
+  parNo_coin:  {en:'Co-interior angles do not add up to 180°, so the lines are not parallel', th:'มุมภายในบนข้างเดียวกันรวมไม่ได้ 180° ดังนั้นเส้นไม่ขนานกัน'},
+  mx_corr_line: {en:'Corresponding angles (F) + angles on a straight line (180°)', th:'มุมที่สมนัยกัน + มุมบนเส้นตรง 180°'},
+  mx_alt_vert:  {en:'Alternate angles (Z) + vertically opposite angles', th:'มุมแย้ง + มุมตรงข้าม'},
+  mx_coin_line: {en:'Co-interior angles (C) + angles on a straight line (180°)', th:'มุมภายในบนข้างเดียวกัน + มุมบนเส้นตรง'},
+  mx_vert_tri:  {en:'Vertically opposite angles + angles in a triangle (180°)', th:'มุมตรงข้าม + มุมในสามเหลี่ยม 180°'},
+  mx_line_quad: {en:'Angles on a straight line (180°) + angles in a quadrilateral (360°)', th:'มุมบนเส้นตรง + มุมในสี่เหลี่ยม 360°'},
+  mx_line_tri:  {en:'Angles on a straight line (180°) + angles in a triangle (180°)', th:'มุมบนเส้นตรง + มุมในสามเหลี่ยม'},
+  mx_right_pt:  {en:'Right angle (90°) + angles around a point (360°)', th:'มุมฉาก 90° + มุมรอบจุด 360°'},
+  mx_vert_pt:   {en:'Vertically opposite angles + angles around a point (360°)', th:'มุมตรงข้าม + มุมรอบจุด'},
+  mx_tri_line:  {en:'Angles in a triangle (180°) + angles on a straight line (180°)', th:'มุมในสามเหลี่ยม + มุมบนเส้นตรง'},
+};
+const PAIRNAME = { corresponding:{en:'corresponding', th:'มุมที่สมนัยกัน', shape:'F'}, alternate:{en:'alternate', th:'มุมแย้ง', shape:'Z'}, cointerior:{en:'co-interior', th:'มุมภายในที่อยู่บนข้างเดียวกันของเส้นตัด', shape:'C'} };
+const REASON_OF = { corresponding:'corr', alternate:'alt', cointerior:'coin' };
+const TYPES = [
+  {k:'acute', en:'Acute', th:'มุมแหลม', rule:'less than 90°', test:a => a>0 && a<90},
+  {k:'right', en:'Right', th:'มุมฉาก', rule:'exactly 90°', test:a => a===90},
+  {k:'obtuse', en:'Obtuse', th:'มุมป้าน', rule:'between 90° and 180°', test:a => a>90 && a<180},
+  {k:'straight', en:'Straight', th:'มุมตรง', rule:'exactly 180°', test:a => a===180},
+  {k:'reflex', en:'Reflex', th:'มุมกลับ', rule:'between 180° and 360°', test:a => a>180 && a<360},
+  {k:'full', en:'Full turn', th:'มุมรอบจุด (หนึ่งรอบ)', rule:'exactly 360°', test:a => a===360},
+];
+const typeOf = a => TYPES.find(t => t.test(a));
+const GLOSSARY = [
+  ['Angle','มุม','The amount of turn between two arms that meet at a vertex.'],
+  ['Vertex','จุดยอด','The point where the two arms of an angle meet. It is the middle letter in ∠ABC.'],
+  ['Arm','แขนของมุม','One of the two rays (lines) that form an angle.'],
+  ['Degree (°)','องศา','The unit for measuring angles. A full turn is 360°.'],
+  ['Acute angle','มุมแหลม','An angle less than 90°.'],
+  ['Right angle','มุมฉาก','An angle of exactly 90°, marked with a small square.'],
+  ['Obtuse angle','มุมป้าน','An angle between 90° and 180°.'],
+  ['Straight angle','มุมตรง','An angle of exactly 180°; the arms form a straight line.'],
+  ['Reflex angle','มุมกลับ','An angle between 180° and 360°.'],
+  ['Full turn','มุมรอบจุด','An angle of 360°.'],
+  ['Protractor','โปรแทรกเตอร์','A tool for measuring and drawing angles, with an inner and an outer scale.'],
+  ['Baseline','เส้นฐาน (เส้น 0°)','The 0°–180° line of a protractor. It goes through the centre.'],
+  ['Centre (of a protractor)','จุดศูนย์กลาง','The small cross you place on the vertex.'],
+  ['Inner / outer scale','สเกลใน / สเกลนอก','The two number rows on a protractor. Read the one that starts at 0° on the baseline arm.'],
+  ['Adjacent angles','มุมประชิด','Angles that share a vertex and one arm.'],
+  ['Complementary angles','มุมประกอบมุมฉาก','Two angles that add up to 90°.'],
+  ['Supplementary angles','มุมประกอบสองมุมฉาก','Two angles that add up to 180°.'],
+  ['Angles on a straight line','มุมบนเส้นตรง','Add up to 180°.'],
+  ['Angles around a point','มุมรอบจุด','Add up to 360°.'],
+  ['Vertically opposite angles','มุมตรงข้าม','The opposite angles where two lines cross. They are equal.'],
+  ['Parallel lines','เส้นขนาน','Lines that never meet. Marked with matching arrows.'],
+  ['Transversal','เส้นตัด','A line that crosses two or more other lines.'],
+  ['Corresponding angles','มุมที่สมนัยกัน','Angles in the same position at each crossing (F shape). Equal when lines are parallel.'],
+  ['Alternate angles','มุมแย้ง','Angles between the parallel lines on opposite sides of the transversal (Z shape). Equal.'],
+  ['Co-interior (allied) angles','มุมภายในที่อยู่บนข้างเดียวกันของเส้นตัด','Angles between the parallel lines on the same side (C shape). Add up to 180°.'],
+  ['Interior angle','มุมภายใน','An angle inside a shape.'],
+  ['Exterior angle','มุมภายนอก','The angle between one side of a shape and the extension of the next side.'],
+  ['Triangle','สามเหลี่ยม','A shape with three sides. Its angles add up to 180°.'],
+  ['Quadrilateral','สี่เหลี่ยม','A shape with four sides. Its angles add up to 360°.'],
+];
+/* ===================== MODULES 1–5 ===================== */
+const MODULES = [];
+const LETTERS = [['A','B','C'],['P','Q','R'],['X','Y','Z'],['D','E','F'],['K','L','M'],['S','T','U']];
+const ang = (n) => n + '°';
+const ex = (steps) => steps.map(s => `<div>• ${s}</div>`).join('');
+/* a random angle figure for naming/type questions: vertex V, two arms, math angles */
+function simpleAngleFig(svg, size, letters, opts={}){
+  const a1 = rnd(0,359), a2 = a1 + size;
+  const reflex = size > 180; let len = 165;
+  const extent = L => { const e = [a1, a2].map(a => polar(0,0, L+26, a)); return {minx:Math.min(0,...e.map(p=>p.x)), maxx:Math.max(0,...e.map(p=>p.x)), miny:Math.min(0,...e.map(p=>p.y)), maxy:Math.max(0,...e.map(p=>p.y))}; };
+  let ex = extent(len); const h = ex.maxy-ex.miny, w = ex.maxx-ex.minx;
+  if (h > 330 || w > 570){ len = Math.floor(len * Math.min(330/h, 570/w)); ex = extent(len); }
+  const O = {x: 300-(ex.minx+ex.maxx)/2, y: 180-(ex.miny+ex.maxy)/2};
+  const r = opts.r || (size < 25 ? 70 : size < 40 ? 55 : 40);
+  const cfg = {O, rays:[{a:a1, label:letters[0], len},{a:a2, label:letters[2], len}], angles:[{from:a1, to:a2, color: opts.color || (opts.typeColor ? TYPE_COL[typeOf(size).k] : COL.blue), label: opts.label, r}], Olabel: letters[1]};
+  rayFigure(svg, cfg);
+  return {a1, a2, reflex, O};
+}
+
+/* ---------- MODULE 1: Parts & Naming ---------- */
+MODULES.push({
+  id:1, title:'Parts & Naming', short:'Vertex, arms and ∠ABC', th:'ส่วนประกอบและการเรียกชื่อมุม',
+  learn:[
+    {title:'What is an angle?', en:'An <b>angle</b> is the amount of turn between two <b>arms</b> that meet at a point called the <b>vertex</b>. We measure angles in <b>degrees (°)</b>.', th:'มุม (angle) คือปริมาณการหมุนระหว่างแขน (arms) สองข้างที่มาพบกันที่จุดยอด (vertex) หน่วยวัดคือองศา (°)',
+      fig: svg => rayFigure(svg, {O:{x:280,y:230}, rays:[{a:0,label:'C'},{a:55,label:'A'}], angles:[{from:0,to:55,color:COL.blue,label:'angle'}], Olabel:'B', OlabelDir:210, anim:true})},
+    {title:'The vertex and the arms', en:'The <b>vertex</b> is where the arms meet: point <b>B</b>. The two <b>arms</b> are <b>BA</b> and <b>BC</b>. The size of the angle does not change if you make the arms longer.', th:'จุดยอดคือจุดที่แขนพบกัน (จุด B) แขนสองข้างคือ BA และ BC ขนาดของมุมไม่เปลี่ยนแม้ต่อแขนให้ยาวขึ้น',
+      fig: svg => { rayFigure(svg, {O:{x:280,y:230}, rays:[{a:0,label:'C',len:240},{a:55,label:'A',len:240}], angles:[{from:0,to:55,color:COL.blue}], Olabel:'B', OlabelDir:200}); const g = svg.firstChild; label(g, 280, 300, 'vertex', 'vlab', {fill:COL.pink}); label(g, 430, 268, 'arm BC', 'vlab', {fill:COL.green}); label(g, 250, 120, 'arm BA', 'vlab', {fill:COL.green}); }},
+    {title:'Naming with three letters', en:'We name an angle with <b>three letters</b> and the symbol <b>∠</b>. The <b>vertex is always the middle letter</b>: this angle is <b>∠ABC</b> or <b>∠CBA</b>. Never ∠BAC – that would put A at the vertex.', th:'เรียกชื่อมุมด้วยตัวอักษร 3 ตัวและสัญลักษณ์ ∠ โดยตัวกลางต้องเป็นจุดยอดเสมอ มุมนี้คือ ∠ABC หรือ ∠CBA ห้ามเขียน ∠BAC',
+      fig: svg => { rayFigure(svg, {O:{x:340,y:290}, rays:[{a:0,label:'C',len:200},{a:55,label:'A',len:200}], angles:[{from:0,to:55,color:COL.blue}], Olabel:'B', OlabelDir:200}); const g = svg.firstChild; const t = label(g, 150, 70, '∠ABC = ∠CBA', 'vlab'); t.setAttribute('font-size','30'); label(g, 150, 108, 'middle letter = vertex', 'vlab', {fill:COL.pink, 'font-size':18}); }},
+    {title:'Choosing the right angle in a figure', en:`When several angles share a vertex, the three letters tell you <b>which</b> angle. <b style="color:${COL.blue}">∠POQ</b> is between arms OP and OQ. <b style="color:${COL.pink}">∠QOR</b> is between OQ and OR. <b style="color:${COL.orange}">∠POR</b> is the big angle from OP all the way to OR.`, th:'เมื่อมีหลายมุมที่จุดยอดเดียวกัน ตัวอักษร 3 ตัวบอกว่าเป็นมุมไหน ∠POQ อยู่ระหว่าง OP กับ OQ, ∠QOR อยู่ระหว่าง OQ กับ OR และ ∠POR คือมุมใหญ่จาก OP ถึง OR',
+      fig: svg => { svg.innerHTML=''; svg.setAttribute('viewBox','0 0 600 360'); svg.classList.add('fig'); const g = el('g',{},svg);
+        [[95,'∠POQ',50,110,COL.blue],[290,'∠QOR',0,50,COL.pink],[470,'∠POR',0,110,COL.orange]].forEach(([x,name,f0,t0,col]) => { const O={x,y:235}; angleMark(g,O,f0,t0,{color:col,r: name==='∠POR'?36:40, label:null});
+          [[0,'R'],[50,'Q'],[110,'P']].forEach(([a,l]) => { const e = polar(O.x,O.y,100,a); el('line',{x1:O.x,y1:O.y,x2:e.x,y2:e.y,class:'ln'},g); el('circle',{cx:e.x,cy:e.y,r:4,class:'pt'},g); const lp = polar(O.x,O.y,118,a); label(g, lp.x, lp.y, l); });
+          el('circle',{cx:O.x,cy:O.y,r:5,class:'pt'},g); label(g, x+8, 262, 'O'); const t = label(g, x, 318, name, 'vlab', {fill:col}); t.setAttribute('font-size','26'); }); }},
+  ],
+  explore(body){
+    body.innerHTML = `<div class="lab"><div class="stage"><svg id="exSvg" class="fig" viewBox="0 0 600 360"></svg></div>
+      <div class="card panel"><h3>Explore: name the angle</h3><p style="font-size:1rem">Drag the three points. The name updates. The <b style="color:${COL.pink}">vertex</b> is always the middle letter.</p>${thSpan('ลากจุดทั้งสาม ชื่อมุมจะเปลี่ยนตาม ตัวกลางคือจุดยอดเสมอ')}
+      <div class="fb" id="exMsg"></div><div class="row" style="margin-top:12px"><button class="btn small ghost" id="swap">Swap letters</button></div></div></div>`;
+    const svg = $('#exSvg'); let P = [{x:120,y:120,l:'A'},{x:300,y:250,l:'B'},{x:480,y:150,l:'C'}];
+    function draw(){
+      svg.innerHTML=''; const g = el('g',{},svg); const V = P[1];
+      const a1 = dirOf(V,P[0]), a2 = dirOf(V,P[2]); const sweep = norm360(a2-a1); const [f,t] = sweep<=180 ? [a1,a2] : [a2,a1];
+      angleMark(g, V, f, t, {color:COL.blue, r:40, label: fmt(angDiff(a1,a2))});
+      el('line',{x1:V.x,y1:V.y,x2:P[0].x,y2:P[0].y,class:'ln'},g); el('line',{x1:V.x,y1:V.y,x2:P[2].x,y2:P[2].y,class:'ln'},g);
+      P.forEach((p,i)=>{ const c = el('circle',{cx:p.x,cy:p.y,r:14,class:i===1?'handle':'handle2'},g); c.dataset.i=i; const lp = i===1 ? polar(V.x,V.y,30,(f+sweep/2)+180) : polar(V.x,V.y,dist(V,p)+26,dirOf(V,p)); label(g, lp.x, lp.y, p.l); });
+      $('#exMsg').innerHTML = `<b style="font-size:1.3rem">∠${P[0].l}${P[1].l}${P[2].l}</b> or <b style="font-size:1.3rem">∠${P[2].l}${P[1].l}${P[0].l}</b><br>Vertex: <b style="color:${COL.pink}">${P[1].l}</b> · Arms: ${P[1].l}${P[0].l} and ${P[1].l}${P[2].l} · Size: ${fmt(angDiff(a1,a2))}`;
+    }
+    let drag=null;
+    svg.addEventListener('pointerdown', ev => { const i = ev.target.dataset && ev.target.dataset.i; if (i==null) return; ev.preventDefault(); drag=+i; try{svg.setPointerCapture(ev.pointerId);}catch(e){} });
+    svg.addEventListener('pointermove', ev => { if (drag==null) return; const p = svgPoint(svg,ev); P[drag].x = Math.min(570,Math.max(30,p.x)); P[drag].y = Math.min(330,Math.max(30,p.y)); draw(); });
+    const end=()=>drag=null; svg.addEventListener('pointerup',end); svg.addEventListener('pointercancel',end);
+    $('#swap').onclick = () => { const L = pick(LETTERS); P.forEach((p,i)=>p.l=L[i]); draw(); };
+    draw();
+  },
+  quiz(){
+    const qs = [];
+    const mk = kind => {
+      const L = pick(LETTERS); const [A,B,C] = L;
+      if (kind==='vertex'){ const size = rnd(30,150); return {type:'choice', prompt:`Which point is the <b>vertex</b> of this angle?`, fig:svg=>simpleAngleFig(svg,size,L), options:shuffle(L).map(l=>({k:l,text:'Point '+l})), answer:B, explain:`The vertex is where the two arms meet: point <b>${B}</b>. The arms are ${B}${A} and ${B}${C}.`, th:`จุดยอดคือจุดที่แขนสองข้างพบกัน คือจุด ${B}`, hints:[{en:'The vertex is the corner point where the two arms meet.',th:'จุดยอดคือจุดมุมที่แขนสองข้างมาพบกัน'},{en:`Which point touches both arms? That is ${B}.`}]}; }
+      if (kind==='name'){ const size = rnd(30,150); const opts = shuffle([{k:'ok',text:`∠${A}${B}${C}`},{k:'w1',text:`∠${B}${A}${C}`},{k:'w2',text:`∠${A}${C}${B}`},{k:'w3',text:`∠${C}${A}${B}`}]); return {type:'choice', prompt:`Which is a <b>correct name</b> for this angle?`, fig:svg=>simpleAngleFig(svg,size,L), options:opts, answer:'ok', explain:`The vertex <b>${B}</b> must be the <b>middle</b> letter: ∠${A}${B}${C} (or ∠${C}${B}${A}).`, th:`จุดยอด ${B} ต้องเป็นตัวกลาง: ∠${A}${B}${C} หรือ ∠${C}${B}${A}`, hints:[{en:'The middle letter must be the vertex.',th:'ตัวกลางต้องเป็นจุดยอด'},{en:`The vertex here is ${B}.`}]}; }
+      if (kind==='arms'){ const size = rnd(30,150); const opts = shuffle([{k:'ok',text:`${B}${A} and ${B}${C}`},{k:'w1',text:`${B}${A} and ${A}${C}`},{k:'w2',text:`${A}${C} and ${B}${C}`},{k:'w3',text:`${A}${C} and ${A}${B}`}]); return {type:'choice', prompt:`Which two lines are the <b>arms</b> of ∠${A}${B}${C}?`, fig:svg=>simpleAngleFig(svg,size,L), options:opts, answer:'ok', explain:`Both arms start at the vertex ${B}: <b>${B}${A}</b> and <b>${B}${C}</b>. ${A}${C} is not drawn and is not an arm.`, th:`แขนทั้งสองเริ่มจากจุดยอด ${B}: ${B}${A} และ ${B}${C}`, hints:[{en:'Each arm starts at the vertex.',th:'แขนแต่ละข้างเริ่มที่จุดยอด'},{en:`The vertex is ${B}, so both arms start with ${B}.`}]}; }
+      if (kind==='same'){ const size = rnd(30,150); const opts = shuffle([{k:'ok',text:`∠${C}${B}${A}`},{k:'w1',text:`∠${B}${C}${A}`},{k:'w2',text:`∠${A}${C}${B}`},{k:'w3',text:`∠${B}${A}${C}`}]); return {type:'choice', prompt:`Which name means the <b>same angle</b> as ∠${A}${B}${C}?`, fig:svg=>simpleAngleFig(svg,size,L), options:opts, answer:'ok', explain:`Reading the letters the other way round gives the same angle: ∠${A}${B}${C} = <b>∠${C}${B}${A}</b>. The vertex ${B} stays in the middle.`, th:`อ่านกลับทางได้มุมเดียวกัน ∠${A}${B}${C} = ∠${C}${B}${A}`, hints:[{en:'The vertex must stay in the middle.'},{en:'Read the outer letters in the other order.'}]}; }
+      // pick: three rays from O with letters
+      const [P,Q,R] = pick([['P','Q','R'],['A','B','C'],['X','Y','Z'],['D','E','F']]); const O = pick(['O','V','M']);
+      const base = rnd(0,300); const s1 = rnd(35,70), s2 = rnd(35,70);
+      const which = pick(['small1','small2','big']); const names = {small1:`∠${P}${O}${Q}`, small2:`∠${Q}${O}${R}`, big:`∠${P}${O}${R}`};
+      const letters = shuffle(['a','b','c']); const map = {small1:letters[0], small2:letters[1], big:letters[2]};
+      const dirs = [base, base+s1, base+s1+s2]; const ext = L => { const e = dirs.map(a => polar(0,0,L+26,a)); return {minx:Math.min(0,...e.map(p=>p.x)), maxx:Math.max(0,...e.map(p=>p.x)), miny:Math.min(0,...e.map(p=>p.y)), maxy:Math.max(0,...e.map(p=>p.y))}; }; let lenP = 180; let ex = ext(lenP); const hh = ex.maxy-ex.miny, ww = ex.maxx-ex.minx; if (hh > 330 || ww > 570){ lenP = Math.floor(lenP*Math.min(330/hh, 570/ww)); ex = ext(lenP); } const Oc = {x: 300-(ex.minx+ex.maxx)/2, y: 182-(ex.miny+ex.maxy)/2};
+      return {type:'choice', prompt:`Which coloured angle is <b>${names[which]}</b>?`, fig:svg=>rayFigure(svg,{O:Oc,rays:[{a:base,label:R,len:lenP},{a:base+s1,label:Q,len:lenP},{a:base+s1+s2,label:P,len:lenP}],angles:[{from:base+s1,to:base+s1+s2,color:COL.blue,label:map.small1,r:58,lr:82,lrFixed:true},{from:base,to:base+s1,color:COL.pink,label:map.small2,r:58,lr:82,lrFixed:true},{from:base,to:base+s1+s2,color:COL.orange,r:112,fillOpacity:0,label:map.big,lr:134,lrFixed:true,labelAt:0.22}],Olabel:O}),
+        options:['a','b','c'].map(l=>({k:l,text:'Angle '+l})), answer:map[which],
+        explain: which==='big' ? `${names[which]} goes from arm ${O}${P} all the way to arm ${O}${R}, so it is the large orange angle <b>${map[which]}</b>.` : `${names[which]} is between arm ${O}${names[which][1]} and arm ${O}${names[which][3]}: angle <b>${map[which]}</b>.`,
+        th:`ดูตัวอักษรแรกและตัวสุดท้าย แล้วหามุมที่อยู่ระหว่างแขนสองข้างนั้น`, hints:[{en:'The first and last letters name the two arms.',th:'ตัวอักษรแรกและตัวสุดท้ายคือชื่อแขนสองข้าง'},{en:`Find arm ${O}${names[which][1]} and arm ${O}${names[which][3]}; the angle is between them.`}]};
+    };
+    ['vertex','vertex','name','name','arms','arms','pick','pick','pick','same'].forEach(k => qs.push(Object.assign(mk(k), {mod:1})));
+    return shuffle(qs);
+  }
+});
+
+/* ---------- MODULE 2: Types of Angles ---------- */
+MODULES.push({
+  id:2, title:'Types of Angles', short:'Acute, right, obtuse, straight, reflex, full turn', th:'ชนิดของมุม',
+  learn:[
+    {title:'Acute, right and obtuse', en:`An <b style="color:${COL.blue}">acute</b> angle is <b>less than 90°</b>. A <b style="color:${COL.green}">right</b> angle is <b>exactly 90°</b> – we mark it with a small square. An <b style="color:${COL.orange}">obtuse</b> angle is <b>between 90° and 180°</b>.`, th:'มุมแหลม (acute) น้อยกว่า 90° มุมฉาก (right) เท่ากับ 90° พอดี ใช้สี่เหลี่ยมเล็กกำกับ มุมป้าน (obtuse) อยู่ระหว่าง 90° ถึง 180°',
+      fig: svg => { svg.innerHTML=''; svg.setAttribute('viewBox','0 0 600 360'); const g = el('g',{},svg); [[110,50,'acute','< 90°',COL.blue],[300,90,'right','= 90°',COL.green],[490,130,'obtuse','90° – 180°',COL.orange]].forEach(([x,size,name,rule,col]) => { const O={x,y:220}; angleMark(g,O,0,size,{color:col,r:44}); [0,size].forEach(a=>{ const e=polar(O.x,O.y,90,a); el('line',{x1:O.x,y1:O.y,x2:e.x,y2:e.y,class:'ln'},g); }); el('circle',{cx:O.x,cy:O.y,r:4,class:'pt'},g); label(g,x,284,name,'vlab',{fill:col}); label(g,x,318,rule,'vlab',{'font-size':17}); }); }},
+    {title:'Straight, reflex and full turn', en:`A <b style="color:${COL.pink}">straight</b> angle is <b>exactly 180°</b> – a straight line. A <b style="color:${COL.purple}">reflex</b> angle is <b>between 180° and 360°</b> (the arc goes the long way round). A <b style="color:${COL.teal}">full turn</b> is <b>360°</b>.`, th:'มุมตรง (straight) เท่ากับ 180° มุมกลับ (reflex) อยู่ระหว่าง 180° ถึง 360° (ส่วนโค้งอ้อมทางยาว) มุมรอบจุดหนึ่งรอบเท่ากับ 360°',
+      fig: svg => { svg.innerHTML=''; svg.setAttribute('viewBox','0 0 600 360'); const g = el('g',{},svg); [[110,180,'straight','= 180°',COL.pink],[300,250,'reflex','180° – 360°',COL.purple],[490,360,'full turn','= 360°',COL.teal]].forEach(([x,size,name,rule,col]) => { const O={x,y:190}; angleMark(g,O,0,size,{color:col,r:44}); [0,size].forEach(a=>{ const e=polar(O.x,O.y,80,a); el('line',{x1:O.x,y1:O.y,x2:e.x,y2:e.y,class:'ln'},g); }); el('circle',{cx:O.x,cy:O.y,r:4,class:'pt'},g); label(g,x,298,name,'vlab',{fill:col}); label(g,x,332,rule,'vlab',{'font-size':17}); }); }},
+    {title:'How to decide', en:'Compare with 90° and 180°. Smaller than a quarter turn (90°) → <b>acute</b>. Exactly a quarter turn → <b>right</b>. Between a quarter and a half turn → <b>obtuse</b>. Exactly a half turn → <b>straight</b>. More than a half turn → <b>reflex</b>.<br>Example: <b>137°</b> is more than 90° but less than 180°, so it is <b>obtuse</b>.', th:'เทียบกับ 90° และ 180°: น้อยกว่า 90° = มุมแหลม, 90° พอดี = มุมฉาก, ระหว่าง 90°–180° = มุมป้าน, 180° พอดี = มุมตรง, มากกว่า 180° = มุมกลับ เช่น 137° มากกว่า 90° แต่น้อยกว่า 180° จึงเป็นมุมป้าน',
+      fig: svg => simpleAngleFig(svg, 137, ['A','B','C'], {typeColor:true, label:'137°'})},
+  ],
+  explore(body){
+    body.innerHTML = `<div class="lab"><div class="stage"><svg id="exSvg" class="fig" viewBox="0 0 600 360"></svg></div>
+      <div class="card panel"><h3>Explore: turn the arm</h3><p style="font-size:1rem">Drag the <b style="color:var(--accent2)">pink</b> handle round. Watch the colour and the type change at 90°, 180° and 360°.</p>${thSpan('ลากจุดชมพูหมุนแขน สังเกตสีและชนิดของมุมที่เปลี่ยนเมื่อผ่าน 90°, 180° และ 360°')}
+      <div class="fb" id="exMsg"></div>
+      <div class="legend" style="margin-top:10px">${TYPES.map(t=>`<span style="--c:${TYPE_COL[t.k]}">${t.en}: ${t.rule}</span>`).join('')}</div></div></div>`;
+    const svg = $('#exSvg'); let a = 50; const O = {x:300,y:200};
+    function draw(){ const t = typeOf(Math.round(a)) || TYPES[0]; const col = TYPE_COL[t.k]; rayFigure(svg, {O, rays:[{a:0,label:'C',len:160},{a:a,label:'A',len:160}], angles:[{from:0,to:a,color:col,r:52,label:Math.round(a)+'°'}], Olabel:'B', OlabelDir:a/2+180});
+      const h = polar(O.x,O.y,160,a); const c = el('circle',{cx:h.x,cy:h.y,r:15,class:'handle'},svg.firstChild); c.dataset.h='1';
+      $('#exMsg').innerHTML = `<b style="font-size:1.5rem;color:${col}">${Math.round(a)}° – ${t.en} angle</b><br>${t.rule}${thSpan(t.th)}`; }
+    let drag=false;
+    svg.addEventListener('pointerdown', ev => { if (!ev.target.dataset.h) return; ev.preventDefault(); drag=true; try{svg.setPointerCapture(ev.pointerId);}catch(e){} });
+    svg.addEventListener('pointermove', ev => { if (!drag) return; const p = svgPoint(svg,ev); a = Math.round(norm360(dirOf(O,p))); if (a===0) a=360; draw(); });
+    const end=()=>drag=false; svg.addEventListener('pointerup',end); svg.addEventListener('pointercancel',end);
+    draw();
+  },
+  quiz(){
+    const sizeFor = k => ({acute:rnd(12,82), right:90, obtuse:rnd(98,172), straight:180, reflex:rnd(190,345), full:360})[k];
+    const typeOpts = TYPES.map(t=>({k:t.k, text:t.en}));
+    const mk = kind => {
+      if (kind==='fig'){ const t = pick(['acute','acute','right','obtuse','obtuse','reflex','reflex','straight']); const size = sizeFor(t); const L = pick(LETTERS); return {type:'choice', prompt:`What <b>type</b> of angle is ∠${L[0]}${L[1]}${L[2]}?`, fig:svg=>simpleAngleFig(svg,size,L,{typeColor:true}), options:typeOpts, answer:t, explain:`The angle is ${size}°, which is <b>${TYPES.find(x=>x.k===t).rule}</b>, so it is <b>${TYPES.find(x=>x.k===t).en.toLowerCase()}</b>.`, th:`มุมนี้ ${size}° เป็น${TYPES.find(x=>x.k===t).th}`, hints:[{en:'Compare the opening with a right angle (90°) and a straight line (180°).',th:'เทียบกับมุมฉาก 90° และเส้นตรง 180°'},{en: size<90?'It is narrower than a right angle.':size===90?'It is exactly a square corner.':size<180?'It is wider than a right angle but not a straight line.':size===180?'The arms make a straight line.':'The marked arc goes more than half a turn.'}]}; }
+      if (kind==='num'){ const t = pick(['acute','obtuse','reflex','right','straight']); const size = sizeFor(t); return {type:'choice', prompt:`An angle measures <b>${size}°</b>. What type of angle is it?`, fig:null, options:typeOpts, answer:t, explain:`${size}° is <b>${TYPES.find(x=>x.k===t).rule}</b>, so it is <b>${TYPES.find(x=>x.k===t).en.toLowerCase()}</b>.`, th:`${size}° เป็น${TYPES.find(x=>x.k===t).th}`, hints:[{en:'Is it less than 90°, exactly 90°, between 90° and 180°, exactly 180°, or more than 180°?'}]}; }
+      if (kind==='which'){ const t = pick(['acute','obtuse','reflex']); const good = sizeFor(t); const others = shuffle(['acute','obtuse','reflex'].filter(k=>k!==t)); const nums = shuffle([good, sizeFor(others[0]), sizeFor(others[1]), sizeFor(others[0])]); const uniq = [...new Set(nums)]; while (uniq.length<4) uniq.push(sizeFor(others[1])+1); return {type:'choice', prompt:`Which of these is a <b>${TYPES.find(x=>x.k===t).en.toLowerCase()}</b> angle?`, fig:null, options:uniq.map(n=>({k:String(n), text:n+'°'})), answer:String(good), explain:`A ${TYPES.find(x=>x.k===t).en.toLowerCase()} angle is ${TYPES.find(x=>x.k===t).rule}. Only <b>${good}°</b> fits.`, th:`${TYPES.find(x=>x.k===t).th}คือมุมที่ ${TYPES.find(x=>x.k===t).rule} มีเพียง ${good}° ที่เข้าเกณฑ์`, hints:[{en:TYPES.find(x=>x.k===t).en+': '+TYPES.find(x=>x.k===t).rule}]}; }
+      const f = pick([['right',90],['straight',180],['full',360]]); return {type:'number', prompt:`A <b>${TYPES.find(x=>x.k===f[0]).en.toLowerCase()}</b> angle is exactly how many degrees?`, fig:null, answer:f[1], explain:`A ${TYPES.find(x=>x.k===f[0]).en.toLowerCase()} angle is <b>${f[1]}°</b>.`, hints:[{en:'Think of a quarter turn, a half turn and a whole turn.',th:'นึกถึงหนึ่งในสี่รอบ ครึ่งรอบ และหนึ่งรอบ'}]};
+    };
+    return shuffle(['fig','fig','fig','fig','num','num','which','which','fact','fact'].map(k => Object.assign(mk(k), {mod:2})));
+  }
+});
+
+/* ---------- MODULE 3: Measuring ---------- */
+function protractorLearnFig(svg, step){
+  // static protractor placed on an angle, for the Learn steps
+  svg.innerHTML=''; svg.setAttribute('viewBox','0 0 760 600'); svg.classList.add('fig');
+  const V = {x:380, y:380}, dirA = 0, dirC = -58, len = 260;
+  const fig = el('g',{class:'fig'},svg);
+  drawAngleFigure(fig, V, dirA, dirC, len, {color:COL.blue});
+  const pro = new Protractor(svg, {x: step===0 ? 380 : V.x, y: step===0 ? 480 : V.y});
+  pro.enabled = false; pro.rot = step>=2 ? 0 : (step===1 ? -25 : 0); pro.update();
+  const notes = el('g',{class:'fig'},svg);
+  if (step===0){ const t = label(notes, 380, 60, '1. Centre on the vertex B', 'vlab', {fill:COL.pink,'font-size':26}); }
+  if (step===1){ label(notes, 380, 60, '2. Turn the 0° line onto arm BA', 'vlab', {fill:COL.pink,'font-size':26}); }
+  if (step===2){ label(notes, 380, 60, '3. Read where arm BC crosses the scale', 'vlab', {fill:COL.pink,'font-size':26}); const e = {x:V.x+len*Math.cos(dirC*DEG), y:V.y+len*Math.sin(dirC*DEG)}; const q = {x:V.x+230*Math.cos(dirC*DEG), y:V.y+230*Math.sin(dirC*DEG)}; el('circle',{cx:q.x,cy:q.y,r:16,fill:'none',stroke:COL.pink,'stroke-width':4},notes); label(notes, q.x+130, q.y+48, 'inner scale: 58°', 'vlab', {fill:COL.pink,'font-size':22}); }
+  if (step===3){ label(notes, 380, 60, 'Two scales: 58° or 122°?', 'vlab', {fill:COL.pink,'font-size':26}); label(notes, 380, 100, 'Use the scale that reads 0° on arm BA → 58°', 'vlab', {fill:COL.pink,'font-size':20}); }
+}
+MODULES.push({
+  id:3, title:'Measuring Angles', short:'Using a protractor', th:'การวัดมุมด้วยโปรแทรกเตอร์',
+  learn:[
+    {title:'Step 1 – centre on the vertex', en:'Put the small <b>cross at the centre</b> of the protractor exactly on the <b>vertex</b> of the angle (point B).', th:'วางจุดศูนย์กลาง (กากบาทเล็ก) ของโปรแทรกเตอร์ให้ตรงจุดยอดของมุม (จุด B) พอดี', fig: svg => protractorLearnFig(svg, 0)},
+    {title:'Step 2 – baseline on one arm', en:'Turn the protractor so that the <b>0° line (baseline)</b> lies exactly along <b>one arm</b>. Keep the centre on the vertex while you turn it.', th:'หมุนโปรแทรกเตอร์ให้เส้นฐาน 0° ทับแขนข้างหนึ่งพอดี โดยยังคงให้จุดศูนย์กลางอยู่ที่จุดยอด', fig: svg => protractorLearnFig(svg, 1)},
+    {title:'Step 3 – read the scale', en:'Look where the <b>other arm</b> crosses the scale. Start counting from the <b>0° on the baseline arm</b> and follow that scale round. Count the small 1° marks after the nearest 10.', th:'ดูว่าแขนอีกข้างตัดสเกลตรงไหน เริ่มนับจาก 0° บนแขนที่ทับเส้นฐาน แล้วอ่านสเกลนั้นไปเรื่อย ๆ นับขีด 1° หลังเลข 10 ที่ใกล้ที่สุด', fig: svg => protractorLearnFig(svg, 2)},
+    {title:'Inner or outer scale?', en:'A protractor has <b>two scales</b>. One arm reads 0° on the <b style="color:var(--proInner)">inner</b> scale and 180° on the <b>outer</b> scale. <b>Use the scale that starts at 0° on your baseline arm.</b> If the angle looks acute but you read an obtuse number (or the other way round), you used the wrong scale.', th:'โปรแทรกเตอร์มี 2 สเกล ให้ใช้สเกลที่เริ่ม 0° บนแขนที่ทับเส้นฐาน ถ้ามุมดูเป็นมุมแหลมแต่อ่านได้ค่ามุมป้าน แปลว่าอ่านผิดสเกล', fig: svg => protractorLearnFig(svg, 3)},
+    {title:'Reflex angles', en:'A protractor only goes to 180°. For a <b>reflex</b> angle, measure the <b>smaller angle</b> between the arms, then <b>subtract from 360°</b>. Example: smaller angle 110° → reflex angle = 360° − 110° = <b>250°</b>.', th:'โปรแทรกเตอร์วัดได้ถึง 180° สำหรับมุมกลับให้วัดมุมเล็กระหว่างแขน แล้วเอา 360° ลบ เช่น มุมเล็ก 110° → มุมกลับ = 360° − 110° = 250°',
+      fig: svg => { const f = simpleAngleFig(svg, 250, ['A','B','C'], {color:COL.purple, label:'250°', r:50}); const g = svg.firstChild; angleMark(g, f.O, f.a1+250, f.a1+360, {color:COL.blue, r:34, label:'110°'}); }},
+  ],
+  explore(body){
+    body.innerHTML = `<div class="lab"><div id="stageHost"></div><div class="card panel"><span class="pill">Free practice</span><h3 style="margin-top:8px" id="pTitle">Measure ∠ABC</h3><p id="pText" style="font-size:1rem"></p>
+      <div class="ans"><label>∠ABC =</label><input id="ansIn" class="num-in" type="number" inputmode="numeric"><span>°</span></div>
+      <div class="row"><button class="btn" id="btnCheck">Check</button><button class="btn secondary" id="btnNew">New angle</button></div><div id="fb"></div><p class="muted" style="font-size:.9rem;margin-top:12px">±2° is accepted. Helper mode snaps the centre onto the vertex.</p></div></div>`;
+    const stage = new ProtractorStage($('#stageHost'));
+    const show = r => { $('#fb').innerHTML = `<div class="fb ${r.cls}"><b class="t">${r.title}</b><div>${r.body}</div>${thSpan(r.th)}</div>`; };
+    const newTask = () => { const t = makeMeasureTask(); stage.setTask(t); $('#pText').innerHTML = t.reflex ? 'This is a <b>reflex</b> angle (purple arc, the long way round). Measure the smaller angle, then subtract from 360°.' : 'Centre on <b>B</b>, baseline along one arm, read the scale that starts at 0° on that arm.'; $('#fb').innerHTML=''; $('#ansIn').value=''; };
+    $('#btnCheck').onclick = () => show(stage.checkMeasure($('#ansIn').value)); $('#ansIn').onkeydown = e => { if (e.key==='Enter') $('#btnCheck').click(); };
+    $('#btnNew').onclick = newTask; newTask();
+    window.__stage = stage;
+  },
+  quiz(){ return Array.from({length:10}, (_,i) => ({type:'measure', mod:3, reflex: i%4===3, prompt:'Measure the marked angle with the protractor.', hints:[{en:'Centre on the vertex, baseline on one arm.',th:'จุดศูนย์กลางที่จุดยอด เส้นฐานทับแขน'},{en:'Read the scale that starts at 0° on the baseline arm.',th:'อ่านสเกลที่เริ่ม 0° บนแขนที่ทับเส้นฐาน'},{en:'Zoom in and count the small marks from the nearest 10.',th:'ซูมเข้าแล้วนับขีดเล็กจากเลข 10 ที่ใกล้ที่สุด'}]})); }
+});
+
+/* ---------- MODULE 4: Drawing ---------- */
+MODULES.push({
+  id:4, title:'Drawing Angles', short:'Draw an angle of a given size', th:'การสร้างมุมด้วยโปรแทรกเตอร์',
+  learn:[
+    {title:'Step 1 – draw one arm and the vertex', en:'Draw a straight line for the first arm and mark the <b>vertex B</b> at one end. In the app the arm <b>BA</b> is already drawn for you.', th:'ลากเส้นตรงเป็นแขนแรก และทำจุดยอด B ที่ปลายข้างหนึ่ง ในแอปจะมีแขน BA ให้แล้ว',
+      fig: svg => { svg.innerHTML=''; svg.setAttribute('viewBox','0 0 760 600'); const g = el('g',{class:'fig'},svg); drawAngleFigure(g, {x:300,y:380}, 0, 0, 260, {noArmC:true}); label(g, 380, 80, '1. Arm BA and vertex B', 'vlab', {fill:COL.pink,'font-size':26}); }},
+    {title:'Step 2 – place the protractor', en:'Put the <b>centre on B</b> and the <b>0° line along BA</b>, exactly like measuring.', th:'วางจุดศูนย์กลางที่ B และเส้น 0° ทับแขน BA เหมือนตอนวัดมุม',
+      fig: svg => { svg.innerHTML=''; svg.setAttribute('viewBox','0 0 760 600'); const g = el('g',{class:'fig'},svg); drawAngleFigure(g, {x:300,y:380}, 0, 0, 260, {noArmC:true}); const pro = new Protractor(svg,{x:300,y:380}); pro.enabled=false; pro.update(); const n = el('g',{class:'fig'},svg); label(n, 380, 80, '2. Centre on B, 0° on BA', 'vlab', {fill:COL.pink,'font-size':26}); }},
+    {title:'Step 3 – mark the angle', en:'Find the size you want on the <b>scale that starts at 0° on BA</b> (here 65° on the inner scale) and make a <b>dot</b> there.', th:'หาขนาดมุมที่ต้องการบนสเกลที่เริ่ม 0° บน BA (ในรูปคือ 65° สเกลใน) แล้วทำจุดไว้',
+      fig: svg => { svg.innerHTML=''; svg.setAttribute('viewBox','0 0 760 600'); const g = el('g',{class:'fig'},svg); drawAngleFigure(g, {x:300,y:380}, 0, 0, 260, {noArmC:true}); const pro = new Protractor(svg,{x:300,y:380}); pro.enabled=false; pro.update(); const n = el('g',{class:'fig'},svg); const q = {x:300+215*Math.cos(-65*DEG), y:380+215*Math.sin(-65*DEG)}; el('path',{d:`M ${q.x-9} ${q.y-9} L ${q.x+9} ${q.y+9} M ${q.x-9} ${q.y+9} L ${q.x+9} ${q.y-9}`,stroke:COL.pink,'stroke-width':4,'stroke-linecap':'round'},n); label(n, 380, 80, '3. Dot at 65° (inner scale)', 'vlab', {fill:COL.pink,'font-size':26}); }},
+    {title:'Step 4 – draw the second arm', en:'Take the protractor away and draw a line <b>from B through the dot</b>. Label the end <b>C</b>. Check: ∠ABC = 65°.', th:'เอาโปรแทรกเตอร์ออก แล้วลากเส้นจาก B ผ่านจุดที่ทำไว้ ตั้งชื่อปลายว่า C ตรวจสอบ ∠ABC = 65°',
+      fig: svg => { svg.innerHTML=''; svg.setAttribute('viewBox','0 0 760 600'); const g = el('g',{class:'fig'},svg); drawAngleFigure(g, {x:300,y:380}, 0, -65, 260, {color:COL.green}); label(g, 380, 80, '4. Draw BC through the dot → ∠ABC = 65°', 'vlab', {fill:COL.pink,'font-size':26}); }},
+    {title:'Drawing a reflex angle', en:'To draw a <b>reflex</b> angle such as 250°, work out <b>360° − 250° = 110°</b>, draw 110° as usual, and the reflex angle is the big one on the <b>other side</b>.', th:'จะสร้างมุมกลับ เช่น 250° ให้คิด 360° − 250° = 110° แล้ววาด 110° ตามปกติ มุมกลับคือมุมใหญ่อีกด้านหนึ่ง',
+      fig: svg => { const f = simpleAngleFig(svg, 250, ['A','B','C'], {color:COL.purple, label:'250°', r:50}); const g = svg.firstChild; angleMark(g, f.O, f.a1+250, f.a1+360, {color:COL.blue, r:34, label:'110°'}); }},
+  ],
+  explore(body){
+    body.innerHTML = `<div class="lab"><div id="stageHost"></div><div class="card panel"><span class="pill">Free practice</span><h3 style="margin-top:8px" id="pTitle">Draw an angle</h3>
+      <div class="ans"><label>Target:</label><input id="tgtIn" class="num-in" type="number" inputmode="numeric" min="1" max="359"><span>°</span><button class="btn small secondary" id="btnSet">Set</button></div>
+      <ol id="pSteps" style="padding-left:22px;margin:6px 0 10px;font-size:1rem"></ol>
+      <div class="row"><button class="btn" id="btnCheck">Check my angle</button><button class="btn secondary" id="btnNew">Random angle</button><button class="btn ghost small" id="btnClear">Clear</button></div><div id="fb"></div></div></div>`;
+    const stage = new ProtractorStage($('#stageHost'));
+    const show = r => { $('#fb').innerHTML = `<div class="fb ${r.cls}"><b class="t">${r.title}</b><div>${r.body}</div>${thSpan(r.th)}</div>`; };
+    const setup = (target) => { const t = makeDrawTask({reflex: target > 180}); if (target) t.target = target; stage.setTask(t); $('#tgtIn').value = t.target; $('#pTitle').textContent = `Draw ∠ABC = ${t.target}°`;
+      $('#pSteps').innerHTML = `<li>Centre on <b>B</b>, 0° line along <b>BA</b>.</li>${t.reflex ? `<li>Reflex: 360° − ${t.target}° = <b>${360-t.target}°</b>. Find ${360-t.target}° on the scale.</li>` : `<li>Find <b>${t.target}°</b> on the scale that starts at 0° on BA.</li>`}<li>Switch to <b>Mark &amp; draw</b> and tap to make a dot.</li><li>Drag from <b>B</b> through the dot.</li>`; $('#fb').innerHTML=''; };
+    $('#btnSet').onclick = () => { const v = Math.min(359, Math.max(1, Math.round(+$('#tgtIn').value||60))); setup(v); };
+    $('#btnNew').onclick = () => setup(); $('#btnClear').onclick = () => { stage.clearDraw(); $('#fb').innerHTML=''; };
+    $('#btnCheck').onclick = () => show(stage.checkDraw());
+    setup(); window.__stage = stage;
+  },
+  quiz(){ return Array.from({length:10}, (_,i) => ({type:'draw', mod:4, reflex: i===4 || i===9, prompt:'Draw the angle with the protractor.', hints:[{en:'Centre on B, 0° line along BA.',th:'จุดศูนย์กลางที่ B เส้น 0° ทับ BA'},{en:'Find the number on the scale that starts at 0° on BA and make a dot.',th:'หาตัวเลขบนสเกลที่เริ่ม 0° บน BA แล้วทำจุด'},{en:'Drag from B through the dot.',th:'ลากเส้นจาก B ผ่านจุด'}]})); }
+});
+
+/* ---------- MODULE 5: Straight line, around a point, complementary & supplementary ---------- */
+function lineFig(svg, cfg){ // cfg.vals: angles above the line from left? we build rays on a straight line
+  // rays: line through O from 180 (P) to 0 (R); extra rays at cumulative angles from 0
+  const O = {x:300,y:230}; const rays = [{a:0, line:true, label:cfg.labels?.[0]||'C', label2:cfg.labels?.[1]||'A', len:230}];
+  let acc = 0; const angles = [];
+  cfg.parts.forEach((p,i) => { const from = acc, to = acc + p.v; acc = to; angles.push({from, to, color:p.color || COL.blue, label:p.label, r: 40 + (i%2)*10}); if (to < 180) rays.push({a:to, label:(cfg.rayLabels||['D','E','F'])[i], len:200}); });
+  rayFigure(svg, {O, rays, angles, Olabel:cfg.Olabel||'B', OlabelDir:270, anim:cfg.anim});
+}
+function pointFig(svg, cfg){
+  const O = {x:300,y:200}; const rays = []; const angles = []; let acc = cfg.start || 20;
+  cfg.parts.forEach((p,i) => { const from = acc, to = acc + p.v; rays.push({a:from, len:150, arrow:true}); angles.push({from, to, color:p.color||COL.blue, label:p.label, r: 40 + (i%2)*12, lr: 70 + (i%2)*12}); acc = to; });
+  rayFigure(svg, {O, rays, angles, anim:cfg.anim});
+}
+MODULES.push({
+  id:5, title:'Straight Line & Around a Point', short:'180°, 360°, complementary & supplementary', th:'มุมบนเส้นตรง มุมรอบจุด มุมประกอบ',
+  learn:[
+    {title:'Angles on a straight line', en:'Angles that sit together on a <b>straight line</b> add up to <b>180°</b>. Here <b>a + b = 180°</b>. If a = 120°, then b = 180° − 120° = <b>60°</b>.', th:'มุมที่อยู่ติดกันบนเส้นตรงรวมกันได้ 180° ในรูป a + b = 180° ถ้า a = 120° จะได้ b = 180° − 120° = 60°',
+      fig: svg => lineFig(svg, {parts:[{v:120,label:'a = 120°',color:COL.blue},{v:60,label:'b',color:COL.pink}], anim:true})},
+    {title:'Three angles on a line', en:'It still works with more angles: <b>a + b + c = 180°</b>. Find the missing one by adding the known angles and subtracting from 180°.', th:'มีหลายมุมก็ใช้ได้เหมือนกัน a + b + c = 180° หามุมที่หายโดยรวมมุมที่รู้แล้วเอา 180° ลบ',
+      fig: svg => lineFig(svg, {parts:[{v:50,label:'50°',color:COL.blue},{v:75,label:'x',color:COL.orange},{v:55,label:'55°',color:COL.green}], anim:true})},
+    {title:'Angles around a point', en:'Angles that fit together all the way round a <b>point</b> add up to <b>360°</b> (a full turn). Here <b>a + b + c = 360°</b>.', th:'มุมที่ประกอบกันรอบจุดรวมกันได้ 360° (หนึ่งรอบ) ในรูป a + b + c = 360°',
+      fig: svg => pointFig(svg, {parts:[{v:140,label:'a',color:COL.blue},{v:130,label:'b',color:COL.pink},{v:90,label:'c',color:COL.green}], anim:true})},
+    {title:'Complementary angles', en:'Two angles are <b>complementary</b> when they add up to <b>90°</b> (a right angle). 35° and 55° are complementary.', th:'มุมสองมุมเป็นมุมประกอบมุมฉาก (complementary) เมื่อรวมกันได้ 90° เช่น 35° กับ 55°',
+      fig: svg => rayFigure(svg, {O:{x:300,y:260}, rays:[{a:0,len:200},{a:35,len:200},{a:90,len:200}], angles:[{from:0,to:35,color:COL.blue,label:'35°',r:60,lr:90},{from:35,to:90,color:COL.pink,label:'55°',r:60,lr:90},{from:0,to:90,color:COL.green,r:28,fillOpacity:0}], anim:true})},
+    {title:'Supplementary angles', en:'Two angles are <b>supplementary</b> when they add up to <b>180°</b>. They do not have to be next to each other, but angles on a straight line are always supplementary.', th:'มุมสองมุมเป็นมุมประกอบสองมุมฉาก (supplementary) เมื่อรวมกันได้ 180° ไม่จำเป็นต้องอยู่ติดกัน แต่มุมบนเส้นตรงเป็นมุมประกอบสองมุมฉากเสมอ',
+      fig: svg => { svg.innerHTML=''; svg.setAttribute('viewBox','0 0 600 360'); const g = el('g',{},svg); [[150,110,COL.blue],[430,70,COL.pink]].forEach(([x,v,col]) => { const O={x,y:230}; angleMark(g,O,0,v,{color:col,r:50,label:v+'°'}); [0,v].forEach(a=>{ const e=polar(O.x,O.y,110,a); el('line',{x1:O.x,y1:O.y,x2:e.x,y2:e.y,class:'ln'},g); }); el('circle',{cx:O.x,cy:O.y,r:4,class:'pt'},g); }); label(g, 300, 310, '110° + 70° = 180°  →  supplementary', 'vlab', {'font-size':22}); }},
+  ],
+  explore(body){
+    body.innerHTML = `<div class="lab"><div class="stage"><svg id="exSvg" class="fig" viewBox="0 0 600 360"></svg><div class="toolbar"><button class="btn small ghost on" data-m="line">Straight line (180°)</button><button class="btn small ghost" data-m="point">Around a point (360°)</button></div></div>
+      <div class="card panel"><h3>Explore the sums</h3><p style="font-size:1rem">Drag the <b style="color:var(--accent2)">pink</b> handles. The angles change but the total stays the same.</p>${thSpan('ลากจุดชมพู ค่ามุมเปลี่ยนแต่ผลรวมคงเดิมเสมอ')}<div class="fb" id="exMsg"></div></div></div>`;
+    const svg = $('#exSvg'); let mode='line'; let rays = [60, 125]; let prays = [40, 160, 250];
+    const cols = [COL.blue, COL.pink, COL.green, COL.orange];
+    function draw(){
+      if (mode==='line'){ const bounds = [0, ...rays, 180]; const parts = []; for (let i=0;i<bounds.length-1;i++) parts.push({v:bounds[i+1]-bounds[i], label:fmt(bounds[i+1]-bounds[i]), color:cols[i]});
+        lineFig(svg, {parts, labels:['C','A'], rayLabels:['D','E']}); const g = svg.firstChild; rays.forEach((a,i)=>{ const h = polar(300,230,200,a); const c = el('circle',{cx:h.x,cy:h.y,r:14,class:'handle'},g); c.dataset.i=i; });
+        $('#exMsg').innerHTML = `<b style="font-size:1.2rem">${parts.map(p=>p.label).join(' + ')} = 180°</b><br>Angles on a straight line add up to 180°.${thSpan(REASONS.line.th)}`; }
+      else { const parts = []; const b = [...prays, prays[0]+360]; for (let i=0;i<3;i++) parts.push({v:b[i+1]-b[i], label:fmt(b[i+1]-b[i]), color:cols[i]});
+        pointFig(svg, {parts, start:prays[0]}); const g = svg.firstChild; prays.forEach((a,i)=>{ const h = polar(300,200,150,a); const c = el('circle',{cx:h.x,cy:h.y,r:14,class:'handle'},g); c.dataset.i=i; });
+        $('#exMsg').innerHTML = `<b style="font-size:1.2rem">${parts.map(p=>p.label).join(' + ')} = 360°</b><br>Angles around a point add up to 360°.${thSpan(REASONS.pt.th)}`; }
+    }
+    let drag=null;
+    svg.addEventListener('pointerdown', ev => { const i = ev.target.dataset && ev.target.dataset.i; if (i==null) return; ev.preventDefault(); drag=+i; try{svg.setPointerCapture(ev.pointerId);}catch(e){} });
+    svg.addEventListener('pointermove', ev => { if (drag==null) return; const p = svgPoint(svg,ev);
+      if (mode==='line'){ const a = Math.round(dirOf({x:300,y:230},p)); if (a<=0||a>=180) return; const lo = drag===0 ? 5 : rays[0]+5, hi = drag===rays.length-1 ? 175 : rays[1]-5; rays[drag] = Math.min(hi, Math.max(lo, a)); }
+      else { const a = Math.round(norm360(dirOf({x:300,y:200},p))); const next = prays[(drag+1)%3], prev = prays[(drag+2)%3]; if (norm360(a-prev) < 15 || norm360(next-a) < 15) return; prays[drag] = a; }
+      draw(); });
+    const end=()=>drag=null; svg.addEventListener('pointerup',end); svg.addEventListener('pointercancel',end);
+    $$('[data-m]').forEach(b => b.onclick = () => { mode=b.dataset.m; $$('[data-m]').forEach(x=>x.classList.toggle('on',x===b)); draw(); });
+    draw();
+  },
+  quiz(){
+    const R = ['line','pt','comp','supp','vert'];
+    const opts = key => shuffle([key, ...shuffle(R.filter(k=>k!==key)).slice(0,3)]);
+    const mk = kind => {
+      if (kind==='line2'){ const a = rnd(25,155), x = 180-a; return {type:'number', prompt:'Find <b>x</b> and choose the reason.', fig:svg=>lineFig(svg,{parts:shuffle([{v:a,label:a+'°',color:COL.blue},{v:x,label:'x',color:COL.x}])}), answer:x, reasonOpts:opts('line'), reasonKey:'line', explain:ex([`x + ${a}° = 180° (angles on a straight line)`,`x = 180° − ${a}° = <b>${x}°</b>`]), hints:[{en:`x and ${a}° sit together on the straight line.`,th:`x กับ ${a}° อยู่ติดกันบนเส้นตรง`},{en:'Angles on a straight line add up to 180°.',th:REASONS.line.th},{en:`x = 180° − ${a}° = ${x}°`}], diagnose:(n)=> n===360-a ? ['You subtracted from 360°. This is a straight line (180°), not a full turn.'] : n===a ? ['The two angles are not equal here; they add up to 180°.'] : []}; }
+      if (kind==='line3'){ const a = rnd(25,70), b = rnd(25,70), x = 180-a-b; const parts = shuffle([{v:a,label:a+'°',color:COL.blue},{v:b,label:b+'°',color:COL.green},{v:x,label:'x',color:COL.x}]); return {type:'number', prompt:'Find <b>x</b> and choose the reason.', fig:svg=>lineFig(svg,{parts}), answer:x, reasonOpts:opts('line'), reasonKey:'line', explain:ex([`${a}° + ${b}° + x = 180°`,`x = 180° − ${a+b}° = <b>${x}°</b>`]), hints:[{en:'All three angles together make the straight line.'},{en:'Angles on a straight line add up to 180°.',th:REASONS.line.th},{en:`x = 180° − ${a}° − ${b}° = ${x}°`}], diagnose:(n)=> n===180-a||n===180-b ? ['You only subtracted one angle. Subtract both known angles from 180°.'] : []}; }
+      if (kind==='pt'){ const n = pick([3,4]); const vals = []; let rem = 360; for (let i=0;i<n-1;i++){ const v = rnd(50, Math.min(150, rem-50*(n-1-i))); vals.push(v); rem -= v; } vals.push(rem); const xi = rnd(0,n-1); const parts = vals.map((v,i)=>({v, label:i===xi?'x':v+'°', color:i===xi?COL.x:[COL.blue,COL.green,COL.purple,COL.pink][i]})); const known = vals.filter((_,i)=>i!==xi); return {type:'number', prompt:'Find <b>x</b> and choose the reason.', fig:svg=>pointFig(svg,{parts, start:rnd(0,90)}), answer:vals[xi], reasonOpts:opts('pt'), reasonKey:'pt', explain:ex([`${known.map(v=>v+'°').join(' + ')} + x = 360°`,`x = 360° − ${known.reduce((s,v)=>s+v,0)}° = <b>${vals[xi]}°</b>`]), hints:[{en:'The angles go all the way round the point.',th:'มุมประกอบกันรอบจุด'},{en:'Angles around a point add up to 360°.',th:REASONS.pt.th},{en:`x = 360° − ${known.join('° − ')}° = ${vals[xi]}°`}], diagnose:(v)=> v===180-known.reduce((s,q)=>s+q,0) ? ['You used 180°. These angles go all the way round a point: 360°.'] : []}; }
+      if (kind==='comp'){ const a = rnd(12,78), x = 90-a; const figQ = Math.random()<0.5; return {type:'number', prompt: figQ ? 'The angle is a right angle. Find <b>x</b> and choose the reason.' : `Two angles are <b>complementary</b>. One is <b>${a}°</b>. Find the other angle, x, and choose the reason.`, fig: figQ ? svg=>rayFigure(svg,{O:{x:300,y:270},rays:[{a:0,len:200},{a:a,len:200},{a:90,len:200}],angles:[{from:0,to:a,color:COL.blue,label:a+'°',r:62,lr:92},{from:a,to:90,color:COL.x,label:'x',r:62,lr:92},{from:0,to:90,color:COL.green,r:26,fillOpacity:0}]}) : null, answer:x, reasonOpts:opts('comp'), reasonKey:'comp', explain:ex([`x + ${a}° = 90° (complementary angles)`,`x = 90° − ${a}° = <b>${x}°</b>`]), hints:[{en:'Complementary means they make a right angle together.',th:'มุมประกอบมุมฉากรวมกันได้ 90°'},{en:'Complementary angles add up to 90°.'},{en:`x = 90° − ${a}° = ${x}°`}], diagnose:(n)=> n===180-a ? ['You used 180°. Complementary angles add up to 90°.'] : []}; }
+      const a = rnd(20,160), x = 180-a; return {type:'number', prompt:`Two angles are <b>supplementary</b>. One is <b>${a}°</b>. Find the other angle, x, and choose the reason.`, fig:null, answer:x, reasonOpts:opts('supp'), reasonKey:'supp', explain:ex([`x + ${a}° = 180° (supplementary angles)`,`x = 180° − ${a}° = <b>${x}°</b>`]), hints:[{en:'Supplementary means they make a straight angle together.',th:'มุมประกอบสองมุมฉากรวมกันได้ 180°'},{en:'Supplementary angles add up to 180°.'},{en:`x = 180° − ${a}° = ${x}°`}], diagnose:(n)=> n===90-a ? ['You used 90°. Supplementary angles add up to 180°.'] : n===360-a ? ['You used 360°. Supplementary angles add up to 180°.'] : []};
+    };
+    return shuffle(['line2','line2','line3','line3','pt','pt','comp','comp','supp','supp'].map(k => Object.assign(mk(k), {mod:5})));
+  }
+});
+/* ===================== MODULES 6–10 ===================== */
+/* two lines crossing at O: directions d1, d2 (math). regions: 0 between d1,d2 ; 1 between d2,d1+180 ; 2 ; 3 */
+function crossFig(svg, d1, d2, labels, colors, opts={}){
+  const bounds = [d1, d2, d1+180, d2+180, d1+360]; const angles = [];
+  for (let i=0;i<4;i++) if (labels[i] != null) angles.push({from:bounds[i], to:bounds[i+1], label:labels[i], color:colors?.[i] || COL.blue, r: opts.r || 36});
+  const rays = [{a:d1, line:true, len:230, label:opts.names?.[0], label2:opts.names?.[2]},{a:d2, line:true, len:230, label:opts.names?.[1], label2:opts.names?.[3]}];
+  if (opts.extraRay != null) rays.push({a:opts.extraRay, len:200});
+  rayFigure(svg, {O:{x:300,y:185}, rays, angles, Olabel:opts.Olabel, OlabelDir:opts.OlabelDir, anim:opts.anim});
+}
+MODULES.push({
+  id:6, title:'Vertically Opposite Angles', short:'Where two lines cross', th:'มุมตรงข้าม',
+  learn:[
+    {title:'Two lines crossing', en:'When two straight lines cross, they make <b>four angles</b>. The angles <b>opposite</b> each other (across the crossing point) are called <b>vertically opposite angles</b>.', th:'เมื่อเส้นตรงสองเส้นตัดกันจะเกิดมุม 4 มุม มุมที่อยู่ตรงข้ามกันผ่านจุดตัดเรียกว่า มุมตรงข้าม (vertically opposite angles)',
+      fig: svg => crossFig(svg, 15, 75, ['a','b','c','d'], [COL.blue,COL.pink,COL.blue,COL.pink])},
+    {title:'Vertically opposite angles are equal', en:'<b>a = c</b> and <b>b = d</b>. Why? a + b = 180° (straight line) and b + c = 180° (straight line), so a and c must be the same.', th:'a = c และ b = d เพราะ a + b = 180° (มุมบนเส้นตรง) และ b + c = 180° ดังนั้น a กับ c ต้องเท่ากัน',
+      fig: svg => crossFig(svg, 15, 75, ['60°','120°','60°','120°'], [COL.blue,COL.pink,COL.blue,COL.pink], {anim:true})},
+    {title:'Finding missing angles', en:'If one angle is <b>70°</b>: the vertically opposite angle is also <b>70°</b>. The angle next to it is 180° − 70° = <b>110°</b> (angles on a straight line).', th:'ถ้ามุมหนึ่งเป็น 70° มุมตรงข้ามก็เป็น 70° ด้วย มุมที่อยู่ติดกันเป็น 180° − 70° = 110° (มุมบนเส้นตรง)',
+      fig: svg => crossFig(svg, 10, 80, ['70°','110°','70°','110°'], [COL.blue,COL.orange,COL.blue,COL.orange], {anim:true})},
+  ],
+  explore(body){
+    body.innerHTML = `<div class="lab"><div class="stage"><svg id="exSvg" class="fig" viewBox="0 0 600 360"></svg></div>
+      <div class="card panel"><h3>Explore: turn a line</h3><p style="font-size:1rem">Drag the <b style="color:var(--accent2)">pink</b> handle to turn one line. Opposite angles (same colour) stay equal; neighbours always add up to 180°.</p>${thSpan('ลากจุดชมพูเพื่อหมุนเส้น มุมตรงข้าม (สีเดียวกัน) เท่ากันเสมอ มุมที่อยู่ติดกันรวมได้ 180°')}<div class="fb" id="exMsg"></div></div></div>`;
+    const svg = $('#exSvg'); let d2 = 70; const d1 = 0;
+    function draw(){ const a = norm360(d2-d1), b = 180-a; crossFig(svg, d1, d2, [fmt(a),fmt(b),fmt(a),fmt(b)], [COL.blue,COL.pink,COL.blue,COL.pink]); const g = svg.firstChild; const h = polar(300,185,230,d2); const c = el('circle',{cx:h.x,cy:h.y,r:15,class:'handle'},g); c.dataset.h='1'; $('#exMsg').innerHTML = `<b style="color:${COL.blue}">${fmt(a)} = ${fmt(a)}</b> and <b style="color:${COL.pink}">${fmt(b)} = ${fmt(b)}</b> (vertically opposite)<br>${fmt(a)} + ${fmt(b)} = 180° (straight line)`; }
+    let drag=false; svg.addEventListener('pointerdown', ev => { if (!ev.target.dataset.h) return; ev.preventDefault(); drag=true; try{svg.setPointerCapture(ev.pointerId);}catch(e){} });
+    svg.addEventListener('pointermove', ev => { if (!drag) return; const a = Math.round(norm360(dirOf({x:300,y:185}, svgPoint(svg,ev)))); if (a>10 && a<170) d2 = a; draw(); });
+    const end=()=>drag=false; svg.addEventListener('pointerup',end); svg.addEventListener('pointercancel',end); draw();
+  },
+  quiz(){
+    const R = ['vert','line','pt','corr','comp']; const opts = key => shuffle([key, ...shuffle(R.filter(k=>k!==key)).slice(0,3)]);
+    const mk = kind => {
+      const d1 = rnd(0,40), d2 = d1 + rnd(45,135); const a = d2-d1, b = 180-a; const gi = rnd(0,3); const given = gi%2===0 ? a : b;
+      const labels = [null,null,null,null], colors = [null,null,null,null]; labels[gi] = given+'°'; colors[gi] = COL.blue;
+      if (kind==='vert'){ const xi = (gi+2)%4; labels[xi]='x'; colors[xi]=COL.x; return {type:'number', prompt:'Find <b>x</b> and choose the reason.', fig:svg=>crossFig(svg,d1,d2,labels,colors), answer:given, reasonOpts:opts('vert'), reasonKey:'vert', explain:ex([`x is vertically opposite the ${given}° angle.`,`x = <b>${given}°</b>`]), hints:[{en:`x and ${given}° are across the crossing from each other (X shape).`,th:'x กับมุมที่ให้อยู่ตรงข้ามกันผ่านจุดตัด'},{en:'Vertically opposite angles are equal.',th:REASONS.vert.th},{en:`x = ${given}°`}], diagnose:(n)=> n===180-given ? ['You subtracted from 180°. x is opposite the given angle, not next to it, so they are equal.'] : []}; }
+      const xi = (gi+1)%4; labels[xi]='x'; colors[xi]=COL.x; const x = 180-given; return {type:'number', prompt:'Find <b>x</b> and choose the reason.', fig:svg=>crossFig(svg,d1,d2,labels,colors), answer:x, reasonOpts:opts('line'), reasonKey:'line', explain:ex([`x and ${given}° are next to each other on a straight line.`,`x = 180° − ${given}° = <b>${x}°</b>`]), hints:[{en:`x and ${given}° sit side by side on one straight line.`,th:'x กับมุมที่ให้อยู่ติดกันบนเส้นตรง'},{en:'Angles on a straight line add up to 180°.',th:REASONS.line.th},{en:`x = 180° − ${given}° = ${x}°`}], diagnose:(n)=> n===given ? ['x is next to the given angle, not opposite it. Neighbouring angles add up to 180°.'] : n===360-given ? ['Use 180° (straight line), not 360°.'] : []};
+    };
+    return shuffle(['vert','vert','vert','vert','vert','line','line','line','line','line'].map(k => Object.assign(mk(k), {mod:6})));
+  }
+});
+
+/* ---------- MODULE 7: Parallel lines ---------- */
+const M7_LEARN = [
+  { title:'Parallel lines and a transversal', en:'Two <b>parallel lines</b> never meet. We mark them with matching arrows. A line that crosses both is a <b>transversal</b>. Where it crosses, it makes <b>8 angles</b>.', th:'เส้นขนาน (parallel lines) คือเส้นที่ไม่มีวันตัดกัน ใช้ลูกศรกำกับ เส้นที่ตัดผ่านเส้นขนานทั้งสองเรียกว่า เส้นตัด (transversal) ทำให้เกิดมุม 8 มุม', fig:{phi:62, labels:{t0:'a',t1:'b',t2:'c',t3:'d',b0:'e',b1:'f',b2:'g',b3:'h'}, colors:{t0:COL.blue,t1:COL.pink,t2:COL.blue,t3:COL.pink,b0:COL.blue,b1:COL.pink,b2:COL.blue,b3:COL.pink}} },
+  { title:'Corresponding angles – the F shape', en:'Angles in the <b>same position</b> at each crossing are <b>corresponding angles</b>. Trace the <b>F</b> shape. Corresponding angles are <b>equal</b>.', th:'มุมที่อยู่ตำแหน่งเดียวกันของจุดตัดทั้งสองเรียกว่า มุมที่สมนัยกัน (corresponding angles) ดูเป็นรูปตัว F มุมที่สมนัยกันมีขนาดเท่ากัน', fig:{phi:62, labels:{t0:'62°', b0:'62°'}, highlight:{keys:['t0','b0'], color:'var(--pairF)'}, anim:true} },
+  { title:'Alternate angles – the Z shape', en:'Angles <b>between</b> the parallel lines, on <b>opposite sides</b> of the transversal, are <b>alternate angles</b>. Trace the <b>Z</b> shape. Alternate angles are <b>equal</b>.', th:'มุมที่อยู่ระหว่างเส้นขนาน คนละข้างของเส้นตัด เรียกว่า มุมแย้ง (alternate angles) ดูเป็นรูปตัว Z มุมแย้งมีขนาดเท่ากัน', fig:{phi:62, labels:{t2:'62°', b0:'62°'}, highlight:{keys:['t2','b0'], color:'var(--pairZ)'}, anim:true} },
+  { title:'Co-interior angles – the C shape', en:'Angles <b>between</b> the parallel lines on the <b>same side</b> of the transversal are <b>co-interior</b> (allied) angles. Trace the <b>C</b> (or U) shape. They <b>add up to 180°</b>.', th:'มุมที่อยู่ระหว่างเส้นขนาน ข้างเดียวกันของเส้นตัด เรียกว่า มุมภายในที่อยู่บนข้างเดียวกันของเส้นตัด (co-interior angles) ดูเป็นรูปตัว C มุมคู่นี้รวมกันได้ 180°', fig:{phi:62, labels:{t2:'62°', b1:'118°'}, highlight:{keys:['t2','b1'], color:'var(--pairC)'}, anim:true} },
+  { title:'Finding a missing angle', en:'Step 1: find the pair (F, Z or C). Step 2: say the rule. Step 3: calculate.<br>Here <b>x</b> and <b>75°</b> make a <b>C</b> shape, so <b>x + 75° = 180°</b> and <b>x = 105°</b>. Always write the <b>reason</b>.', th:'ขั้นที่ 1 หาคู่มุม (F, Z หรือ C) ขั้นที่ 2 บอกกฎ ขั้นที่ 3 คำนวณ ในรูปนี้ x กับ 75° เป็นรูป C ดังนั้น x + 75° = 180° จึงได้ x = 105° และต้องเขียนเหตุผลเสมอ', fig:{phi:105, labels:{t3:'75°', b0:'x'}, highlight:{keys:['t3','b0'], color:'var(--pairC)'}, anim:true, colors:{b0:COL.x}} },
+  { title:'Are the lines parallel?', en:'The rules work <b>backwards</b> too. If corresponding (or alternate) angles are <b>equal</b>, or co-interior angles <b>add to 180°</b>, the lines <b>must be parallel</b>. If not, they are <b>not parallel</b>.<br>Here the corresponding angles are <b>70°</b> and <b>76°</b>. Not equal, so <b>not parallel</b>.', th:'กฎใช้ย้อนกลับได้ ถ้ามุมที่สมนัยกัน (หรือมุมแย้ง) เท่ากัน หรือมุมภายในบนข้างเดียวกันรวมได้ 180° แสดงว่าเส้นขนานกัน ถ้าไม่เป็นเช่นนั้น เส้นไม่ขนานกัน ในรูปนี้ 70° กับ 76° ไม่เท่ากัน จึงไม่ขนาน', fig:{phi:70, psi:-6, labels:{t0:'70°', b0:'76°'}, highlight:{keys:['t0','b0'], color:'var(--pairF)'}, anim:true, parallelMarks:false} },
+];
+function makeM7Question(kind){
+  const phi = pick([48,52,56,58,63,66,68,72,74,77,104,108,112,116,118,122,124,127,131]);
+  if (kind === 'parallel'){
+    const pairType = pick(['corresponding','alternate','cointerior']); const [k1,k2] = pick(PAIRS[pairType]);
+    const yes = Math.random() < 0.5; const psi = yes ? 0 : pick([-7,-5,5,7]);
+    const G0 = transversalGeom(phi, psi); const v1 = Math.round(posInfo(G0,k1).size); let v2 = Math.round(posInfo(G0,k2).size);
+    if (!yes && (pairType==='cointerior' ? v1+v2===180 : v1===v2)) v2 += 4;
+    const reasonKey = (yes?'parYes_':'parNo_') + REASON_OF[pairType];
+    const distract = Object.keys(REASONS).filter(k => k.startsWith('par') && k !== reasonKey);
+    const nm = PAIRNAME[pairType];
+    return { type:'yesno', mod:7, pairType, keys:[k1,k2], fig: svg => renderTransversal(svg, {phi, psi, labels:{[k1]:v1+'°', [k2]:v2+'°'}, parallelMarks:false, colors:{[k1]:COL.blue,[k2]:COL.pink}}),
+      figAfter: svg => renderTransversal(svg, {phi, psi, labels:{[k1]:v1+'°', [k2]:v2+'°'}, parallelMarks:false, highlight:{keys:[k1,k2], color:PAIR_COLOR[pairType]}, anim:true}),
+      prompt:`The two angles are <b>${v1}°</b> and <b>${v2}°</b>. Are the lines parallel?`, answer: yes ? 'yes' : 'no', reasonOpts: shuffle([reasonKey, ...shuffle(distract).slice(0,3)]), reasonKey,
+      explain: ex([`${v1}° and ${v2}° are <b>${nm.en}</b> angles (${nm.shape} shape).`, pairType==='cointerior' ? `${v1}° + ${v2}° = ${v1+v2}°${v1+v2===180 ? ' = 180°, so the lines <b>are parallel</b>.' : ', not 180°, so the lines are <b>not parallel</b>.'}` : (v1===v2 ? 'They are equal, so the lines <b>are parallel</b>.' : 'They are not equal, so the lines are <b>not parallel</b>.')]),
+      hints:[{en:`Look at the ${v1}° and ${v2}° angles: they are ${nm.en} angles (${nm.shape} shape).`, th:`มุม ${v1}° กับ ${v2}° เป็น${nm.th} (รูป ${nm.shape})`},{en: pairType==='cointerior' ? 'If the lines were parallel, co-interior angles would add up to 180°.' : `If the lines were parallel, ${nm.en} angles would be equal.`, th: pairType==='cointerior' ? 'ถ้าเส้นขนาน มุมคู่นี้ต้องรวมได้ 180°' : 'ถ้าเส้นขนาน มุมคู่นี้ต้องเท่ากัน'},{en: pairType==='cointerior' ? `${v1}° + ${v2}° = ${v1+v2}°.` : `Compare ${v1}° and ${v2}°.`}],
+      diagnose:(ans, reason) => { const out=[]; if (reason && reason !== reasonKey && reason.includes('_')){ const pt = {corr:'corresponding',alt:'alternate',coin:'cointerior'}[reason.split('_')[1]]; if (pt !== pairType) out.push(`The two marked angles are <b>${nm.en}</b> (${nm.shape} shape), not ${PAIRNAME[pt].en}.`); else out.push(`Right pair, wrong conclusion. Check whether ${pairType==='cointerior'?'they add up to 180°':'they are equal'}.`); } return out; } };
+  }
+  const [k1,k2] = pick(PAIRS[kind]); const [gk, xk] = Math.random()<0.5 ? [k1,k2] : [k2,k1];
+  const G0 = transversalGeom(phi, 0); const given = Math.round(posInfo(G0,gk).size), answer = Math.round(posInfo(G0,xk).size);
+  const reasonKey = REASON_OF[kind]; const distract = ['corr','alt','coin','vert','line'].filter(k => k !== reasonKey); const nm = PAIRNAME[kind];
+  return { type:'number', mod:7, pairType:kind, keys:[gk,xk], fig: svg => renderTransversal(svg, {phi, labels:{[gk]:given+'°', [xk]:'x'}, colors:{[gk]:COL.blue,[xk]:COL.x}}),
+    figAfter: svg => renderTransversal(svg, {phi, labels:{[gk]:given+'°', [xk]:'x'}, highlight:{keys:[gk,xk], color:PAIR_COLOR[kind]}, anim:true}),
+    prompt:'The lines are parallel. Find <b>x</b> and choose the reason.', answer, reasonOpts: shuffle([reasonKey, ...shuffle(distract).slice(0,3)]), reasonKey,
+    explain: ex([`x and ${given}° are <b>${nm.en}</b> angles (${nm.shape} shape).`, kind==='cointerior' ? `x + ${given}° = 180°, so x = 180° − ${given}° = <b>${answer}°</b>.` : `${REASONS[reasonKey].en}, so x = <b>${answer}°</b>.`]),
+    hints:[{en:`Look at x and the ${given}° angle together. They make ${nm.shape==='F'?'an':'a'} <b>${nm.shape}</b> shape, so they are <b>${nm.en}</b> angles.`, th:`ดูมุม x กับมุม ${given}° คู่กัน เป็นรูปตัว ${nm.shape} จึงเป็น${nm.th}`},{en:`Rule: <b>${REASONS[reasonKey].en}</b>.`, th:`กฎ: ${REASONS[reasonKey].th}`},{en: kind==='cointerior' ? `x + ${given}° = 180°, so x = 180° − ${given}° = ${answer}°.` : `x = ${given}°.`}],
+    diagnose:(n, reason) => { const out=[]; if (n !== answer){ if (kind!=='cointerior' && n===180-given) out.push(`You subtracted from 180°. But x and ${given}° are <b>${nm.en}</b> angles (${nm.shape} shape), so they are <b>equal</b>. Only co-interior angles (C) add up to 180°.`); else if (kind==='cointerior' && n===given) out.push(`You made them equal. But x and ${given}° are <b>co-interior</b> (C shape: between the parallel lines, same side). They <b>add up to 180°</b>.`); else if (n===360-given) out.push('You subtracted from 360°. Angles around a point are not needed here.'); }
+      if (reason && reason !== reasonKey){ const shapeOf = {corr:'F', alt:'Z', coin:'C'}; if (shapeOf[reason]) out.push(`“${REASONS[reason].en}” is the <b>${shapeOf[reason]}</b> shape rule. Here the pair makes ${nm.shape==='F'?'an':'a'} <b>${nm.shape}</b> shape.`); else if (reason==='vert') out.push('Vertically opposite angles are at the <b>same</b> crossing (X shape). These two angles are at <b>different</b> crossings.'); else if (reason==='line') out.push('Angles on a straight line are <b>next to each other</b> at one crossing. These two are at <b>different</b> crossings.'); } return out; } };
+}
+MODULES.push({
+  id:7, title:'Parallel Lines & Transversals', short:'Corresponding (F), alternate (Z), co-interior (C)', th:'เส้นขนานและเส้นตัด',
+  learn: M7_LEARN.map(s => ({title:s.title, en:s.en, th:s.th, fig: svg => renderTransversal(svg, Object.assign({}, s.fig))})),
+  explore(body){
+    body.innerHTML = `<div class="lab"><div class="stage"><svg id="expSvg" class="fig"></svg>
+      <div class="toolbar"><span style="font-weight:700;margin-right:4px">Show pair:</span>
+        <button class="btn small ghost on" data-pair="corresponding">F · Corresponding</button><button class="btn small ghost" data-pair="alternate">Z · Alternate</button><button class="btn small ghost" data-pair="cointerior">C · Co-interior</button><button class="btn small ghost" data-pair="none">None</button>
+        <span class="sep"></span><button class="btn small secondary" id="expPar">Make parallel</button></div></div>
+      <div class="card panel"><h3>Explore the rules</h3><p style="font-size:1rem">Drag the <b style="color:var(--accent2)">pink</b> handle to turn the transversal. Drag the <b style="color:var(--accent)">lavender</b> handle to tilt the bottom line. Click a pair button again to see the next pair.</p>${thSpan('ลากจุดชมพูเพื่อหมุนเส้นตัด ลากจุดม่วงเพื่อเอียงเส้นล่าง สังเกตว่ามุมคู่ไหนเท่ากันเสมอ และคู่ไหนรวมได้ 180°')}
+        <div class="legend"><span style="--c:var(--pairF)">F = corresponding</span><span style="--c:var(--pairZ)">Z = alternate</span><span style="--c:var(--pairC)">C = co-interior</span></div>
+        <div class="values" id="expVals"></div><div id="expMsg" class="fb" style="margin-top:12px"></div></div></div>`;
+    const svg = $('#expSvg'); let phi = 62, psi = 0, pair = 'corresponding', idx = 0, G;
+    const keys = ['t0','t1','t2','t3','b0','b1','b2','b3']; const names = {t0:'a',t1:'b',t2:'c',t3:'d',b0:'e',b1:'f',b2:'g',b3:'h'};
+    function draw(){
+      const hl = pair==='none' ? null : {keys: PAIRS[pair][idx % PAIRS[pair].length], color: PAIR_COLOR[pair]};
+      const G0 = transversalGeom(phi, psi); const vals = {}; keys.forEach(k => vals[k] = Math.round(posInfo(G0,k).size*10)/10);
+      const labels = {}, colors = {}, fillOpacities = {}; keys.forEach(k => { const on = hl && hl.keys.includes(k); labels[k] = `${names[k]} ${vals[k]}°`; colors[k] = on ? hl.color : 'var(--muted)'; fillOpacities[k] = on ? .35 : .06; });
+      G = renderTransversal(svg, {phi, psi, labels, colors, fillOpacities, highlight:hl, parallelMarks: psi===0, labelRadius:64});
+      $$('.vlab', svg).forEach(t => t.setAttribute('font-size','17'));
+      const hT = polar(300, 180, Math.min(200, 150/Math.abs(Math.sin(phi*DEG))), phi); const H = el('circle', {cx:hT.x, cy:hT.y, r:14, class:'handle'}, svg); H.dataset.h = 'phi';
+      const hB = polar(G.B0.x, G.B0.y, 250, psi); const HB = el('circle', {cx:hB.x, cy:hB.y, r:14, class:'handle2'}, svg); HB.dataset.h = 'psi';
+      $('#expVals').innerHTML = keys.map(k => `<div style="${hl&&hl.keys.includes(k)?`outline:3px solid ${hl.color}`:''}"><span>${names[k]}</span><b>${vals[k]}°</b></div>`).join('');
+      const msg = $('#expMsg');
+      if (hl){ const [k1,k2] = hl.keys; const v1 = vals[k1], v2 = vals[k2]; const nm = PAIRNAME[pair];
+        if (pair==='cointerior') msg.innerHTML = `<b>${names[k1]} + ${names[k2]} = ${v1}° + ${v2}° = ${Math.round((v1+v2)*10)/10}°</b><br>${psi===0 ? 'Co-interior angles add up to 180° when the lines are parallel.' : 'Not 180°, because the lines are not parallel.'}`;
+        else msg.innerHTML = `<b>${names[k1]} = ${v1}°, ${names[k2]} = ${v2}°</b><br>${psi===0 ? `${nm.en[0].toUpperCase()+nm.en.slice(1)} angles are equal when the lines are parallel.` : `Not equal, because the lines are not parallel (tilt = ${Math.abs(psi)}°).`}`;
+        msg.className = 'fb ' + (psi===0 ? 'ok' : 'warn'); }
+      else { msg.className='fb'; msg.innerHTML = psi===0 ? 'Lines are parallel. Pick a pair to highlight it.' : `Lines are <b>not</b> parallel (tilt ${Math.abs(psi)}°). Compare the values.`; }
+    }
+    $$('[data-pair]').forEach(b => b.onclick = () => { if (b.dataset.pair===pair) idx++; else { pair=b.dataset.pair; idx=0; } $$('[data-pair]').forEach(x=>x.classList.toggle('on', x.dataset.pair===pair)); draw(); });
+    $('#expPar').onclick = () => { psi = 0; draw(); };
+    let drag = null;
+    svg.addEventListener('pointerdown', ev => { const h = ev.target.dataset && ev.target.dataset.h; if (!h) return; ev.preventDefault(); drag = h; try{svg.setPointerCapture(ev.pointerId);}catch(e){} });
+    svg.addEventListener('pointermove', ev => { if (!drag) return; const p = svgPoint(svg, ev);
+      if (drag==='phi'){ let a = Math.round(Math.atan2(-(p.y-180), p.x-300)/DEG); a = norm360(a); if (a>180) a-=180; phi = Math.min(150, Math.max(30, a)); }
+      else { let a = Math.round(Math.atan2(-(p.y-G.B0.y), p.x-G.B0.x)/DEG); psi = Math.min(20, Math.max(-20, norm180(a))); }
+      draw(); });
+    const endD = () => drag = null; svg.addEventListener('pointerup', endD); svg.addEventListener('pointercancel', endD);
+    draw(); window.__explore = { set(p, s){ phi=p; psi=s; draw(); }, get(){ return {phi, psi, G}; } };
+  },
+  quiz(){ return shuffle(['corresponding','corresponding','alternate','alternate','cointerior','cointerior','corresponding','alternate','parallel','parallel'].map(k => makeM7Question(k))); }
+});
+
+/* ---------- MODULE 8: Triangles ---------- */
+function triQuestionFig(svg, angs, labels, colors, ext){
+  const pts = trianglePts(angs[0], angs[1], angs[2], rnd(0,359));
+  const marks = {}; labels.forEach((l,i) => { if (l != null) marks[i] = {label:l, color:colors[i] || COL.blue}; });
+  polygonFigure(svg, pts, {marks, labels:['A','B','C'], ext});
+  return pts;
+}
+MODULES.push({
+  id:8, title:'Angles in a Triangle', short:'180° and the exterior angle', th:'มุมในสามเหลี่ยมและมุมภายนอก',
+  learn:[
+    {title:'The three angles add up to 180°', en:'In <b>every</b> triangle, the three interior angles add up to <b>180°</b>: <b>a + b + c = 180°</b>. Tear off the corners and they fit together on a straight line.', th:'สามเหลี่ยมทุกรูป มุมภายในทั้งสามรวมกันได้ 180° (a + b + c = 180°) ถ้าฉีกมุมทั้งสามมาวางต่อกันจะได้เส้นตรงพอดี',
+      fig: svg => polygonFigure(svg, trianglePts(55,70,55,0), {marks:{0:{label:'a',color:COL.blue},1:{label:'b',color:COL.pink},2:{label:'c',color:COL.green}}, labels:['A','B','C'], anim:true})},
+    {title:'Finding a missing angle', en:'Add the two known angles and subtract from 180°. Here <b>x = 180° − 64° − 51° = 65°</b>. Reason: “angles in a triangle add up to 180°”.', th:'รวมมุมที่รู้สองมุมแล้วเอา 180° ลบ ในรูป x = 180° − 64° − 51° = 65° เหตุผล: มุมภายในของสามเหลี่ยมรวมกันได้ 180°',
+      fig: svg => polygonFigure(svg, trianglePts(65,64,51,0), {marks:{0:{label:'x',color:COL.x},1:{label:'64°',color:COL.blue},2:{label:'51°',color:COL.green}}, labels:['A','B','C'], anim:true})},
+    {title:'The exterior angle', en:'Extend one side. The angle between the extension and the next side is an <b>exterior angle</b>. The exterior angle equals the <b>sum of the two interior opposite angles</b>: <b>e = a + b</b>. (Because e + c = 180° and a + b + c = 180°.)', th:'ต่อด้านหนึ่งออกไป มุมระหว่างส่วนที่ต่อกับด้านถัดไปคือ มุมภายนอก มุมภายนอกเท่ากับผลบวกของมุมภายในสองมุมที่ไม่ใช่มุมประชิด: e = a + b',
+      fig: svg => polygonFigure(svg, trianglePts(60,50,70,0), {marks:{0:{label:'a = 60°',color:COL.blue},1:{label:'b = 50°',color:COL.pink},2:{label:'c',color:COL.green}}, labels:['A','B','C'], ext:{i:2, side:'prev', label:'e = 110°', color:COL.orange, pointLabel:'D'}, anim:true})},
+    {title:'Using the exterior angle', en:'Two ways to find the exterior angle x: (1) <b>x = 55° + 70° = 125°</b> using the exterior angle rule, or (2) first c = 180° − 55° − 70° = 55°, then x = 180° − 55° = 125° using the straight line. Both give <b>125°</b>.', th:'หามุมภายนอก x ได้ 2 วิธี: (1) x = 55° + 70° = 125° ใช้กฎมุมภายนอก หรือ (2) หา c = 55° ก่อน แล้ว x = 180° − 55° = 125° ใช้มุมบนเส้นตรง ได้ 125° เท่ากัน',
+      fig: svg => polygonFigure(svg, trianglePts(55,70,55,0), {marks:{0:{label:'55°',color:COL.blue},1:{label:'70°',color:COL.pink}}, labels:['A','B','C'], ext:{i:2, side:'prev', label:'x', color:COL.x, pointLabel:'D'}, anim:true})},
+  ],
+  explore(body){
+    body.innerHTML = `<div class="lab"><div class="stage"><svg id="exSvg" class="fig" viewBox="0 0 600 360"></svg><div class="toolbar"><button class="btn small ghost" id="extBtn">Show exterior angle</button></div></div>
+      <div class="card panel"><h3>Explore: drag the corners</h3><p style="font-size:1rem">Drag any <b style="color:var(--accent2)">pink</b> corner. Watch the three angles: the total is always 180°.</p>${thSpan('ลากจุดยอดสามเหลี่ยม สังเกตว่ามุมทั้งสามรวมกันได้ 180° เสมอ')}<div class="fb" id="exMsg"></div></div></div>`;
+    const svg = $('#exSvg'); let pts = [{x:300,y:70},{x:120,y:300},{x:480,y:300}]; let showExt = false;
+    function draw(){ const a = polyAngles(pts).map(v=>Math.round(v*10)/10); const cols=[COL.blue,COL.pink,COL.green]; const marks={}; a.forEach((v,i)=>marks[i]={label:fmt(v),color:cols[i]});
+      polygonFigure(svg, pts, {marks, labels:['A','B','C'], fitExt:false, ext: showExt ? {i:2, side:'prev', label:fmt(180-a[2]), color:COL.orange, pointLabel:'D'} : null}); const g = svg.firstChild; pts.forEach((p,i)=>{ const c = el('circle',{cx:p.x,cy:p.y,r:14,class:'handle'},g); c.dataset.i=i; });
+      $('#exMsg').innerHTML = `<b style="font-size:1.15rem">${a.map(fmt).join(' + ')} = ${fmt(a[0]+a[1]+a[2])}</b>` + (showExt ? `<br>Exterior angle at C = 180° − ${fmt(a[2])} = <b style="color:${COL.orange}">${fmt(180-a[2])}</b> = ${fmt(a[0])} + ${fmt(a[1])}` : ''); }
+    let drag=null; svg.addEventListener('pointerdown', ev => { const i = ev.target.dataset && ev.target.dataset.i; if (i==null) return; ev.preventDefault(); drag=+i; try{svg.setPointerCapture(ev.pointerId);}catch(e){} });
+    svg.addEventListener('pointermove', ev => { if (drag==null) return; const p = svgPoint(svg,ev); pts[drag] = {x:Math.min(560,Math.max(40,p.x)), y:Math.min(330,Math.max(30,p.y))}; draw(); });
+    const end=()=>drag=null; svg.addEventListener('pointerup',end); svg.addEventListener('pointercancel',end);
+    $('#extBtn').onclick = () => { showExt=!showExt; $('#extBtn').classList.toggle('on',showExt); draw(); }; draw();
+  },
+  quiz(){
+    const R = ['tri','ext','quad','line','pt']; const opts = key => shuffle([key, ...shuffle(R.filter(k=>k!==key)).slice(0,3)]);
+    const randTri = () => { const a = rnd(35,95), b = rnd(30, 150-a-25); return [a, b, 180-a-b]; };
+    const mk = kind => {
+      const t = randTri(); const names = ['A','B','C'];
+      if (kind==='sum'){ const xi = rnd(0,2); const labels = t.map((v,i)=> i===xi ? 'x' : v+'°'); const colors = t.map((v,i)=> i===xi ? COL.x : [COL.blue,COL.pink,COL.green][i]); const known = t.filter((_,i)=>i!==xi); return {type:'number', prompt:'Find <b>x</b> and choose the reason.', fig:svg=>triQuestionFig(svg,t,labels,colors), answer:t[xi], reasonOpts:opts('tri'), reasonKey:'tri', explain:ex([`x + ${known[0]}° + ${known[1]}° = 180°`,`x = 180° − ${known[0]+known[1]}° = <b>${t[xi]}°</b>`]), hints:[{en:'x is one of the three angles inside the triangle.'},{en:'Angles in a triangle add up to 180°.',th:REASONS.tri.th},{en:`x = 180° − ${known[0]}° − ${known[1]}° = ${t[xi]}°`}], diagnose:(n)=> n===360-known[0]-known[1] ? ['You used 360°. A triangle\'s angles add up to 180°.'] : n===180-known[0]||n===180-known[1] ? ['Subtract both known angles from 180°.'] : []}; }
+      if (kind==='right'){ const a = rnd(25,65); const tt = [90, a, 90-a]; const labels = ['', a+'°', 'x']; const colors=[COL.green, COL.blue, COL.x]; return {type:'number', prompt:'The triangle has a right angle. Find <b>x</b> and choose the reason.', fig:svg=>triQuestionFig(svg,tt,labels,colors), answer:90-a, reasonOpts:opts('tri'), reasonKey:'tri', explain:ex([`90° + ${a}° + x = 180°`,`x = 180° − 90° − ${a}° = <b>${90-a}°</b>`]), hints:[{en:'The square marks a 90° angle.'},{en:'Angles in a triangle add up to 180°.',th:REASONS.tri.th},{en:`x = 180° − 90° − ${a}° = ${90-a}°`}], diagnose:(n)=> n===180-a ? ['Do not forget the right angle (90°).'] : []}; }
+      if (kind==='ext'){ // exterior at C, given A and B
+        const labels = [t[0]+'°', t[1]+'°', null]; const colors=[COL.blue,COL.pink,null]; const x = t[0]+t[1]; return {type:'number', prompt:'Side BC is extended to D. Find the exterior angle <b>x</b> and choose the reason.', fig:svg=>triQuestionFig(svg,t,labels,colors,{i:2, side:'prev', label:'x', color:COL.x, pointLabel:'D'}), answer:x, reasonOpts:opts('ext'), reasonKey:'ext', explain:ex([`x is the exterior angle at C.`,`x = ${t[0]}° + ${t[1]}° = <b>${x}°</b> (sum of the two interior opposite angles)`]), hints:[{en:'x is outside the triangle, next to angle C.'},{en:'Exterior angle = sum of the two interior opposite angles.',th:REASONS.ext.th},{en:`x = ${t[0]}° + ${t[1]}° = ${x}°`}], diagnose:(n)=> n===t[2] ? ['That is the interior angle at C. x is the exterior angle (outside), which equals A + B.'] : []}; }
+      // exterior given, one interior opposite given, find the other interior opposite
+      const e = t[0]+t[1]; const labels = ['x', t[1]+'°', null]; const colors=[COL.x,COL.pink,null]; return {type:'number', prompt:`Side BC is extended to D. The exterior angle is <b>${e}°</b>. Find <b>x</b> and choose the reason.`, fig:svg=>triQuestionFig(svg,t,labels,colors,{i:2, side:'prev', label:e+'°', color:COL.orange, pointLabel:'D'}), answer:t[0], reasonOpts:opts('ext'), reasonKey:'ext', explain:ex([`Exterior angle = x + ${t[1]}°`,`${e}° = x + ${t[1]}°, so x = ${e}° − ${t[1]}° = <b>${t[0]}°</b>`]), hints:[{en:'The exterior angle equals the two interior opposite angles added together.',th:REASONS.ext.th},{en:`${e}° = x + ${t[1]}°`},{en:`x = ${e}° − ${t[1]}° = ${t[0]}°`}], diagnose:(n)=> n===180-e ? ['That is the interior angle at C (next to the exterior angle). x is at A.'] : []};
+    };
+    return shuffle(['sum','sum','sum','sum','right','ext','ext','ext','ext2','ext2'].map(k => Object.assign(mk(k), {mod:8})));
+  }
+});
+
+/* ---------- MODULE 9: Quadrilaterals ---------- */
+function randQuad(){ for(;;){ const A = rnd(60,130), B = rnd(60,130), C = rnd(60,130); const D = 360-A-B-C; if (D < 50 || D > 135) continue; const pts = quadPts(A,B,C, rnd(0,359)); if (pts) return {angs:[A,B,C,D], pts}; } }
+function quadFig(svg, q, labels, colors, ext){ const pts = q.pts; const marks={}; labels.forEach((l,i)=>{ if (l!=null) marks[i]={label:l,color:colors[i]||COL.blue}; }); polygonFigure(svg, pts, {marks, labels:['A','B','C','D'], ext}); }
+MODULES.push({
+  id:9, title:'Angles in Quadrilaterals', short:'The four angles add up to 360°', th:'มุมในสี่เหลี่ยม',
+  learn:[
+    {title:'A quadrilateral has four angles', en:'A <b>quadrilateral</b> is any shape with four straight sides. Its four interior angles add up to <b>360°</b>: <b>a + b + c + d = 360°</b>.', th:'สี่เหลี่ยม (quadrilateral) คือรูปที่มีด้านตรง 4 ด้าน มุมภายในทั้งสี่รวมกันได้ 360°',
+      fig: svg => { const q = {pts: quadPts(100,80,95,0)}; polygonFigure(svg, q.pts, {marks:{0:{label:'a',color:COL.blue},1:{label:'b',color:COL.pink},2:{label:'c',color:COL.green},3:{label:'d',color:COL.purple}}, labels:['A','B','C','D'], anim:true}); }},
+    {title:'Why 360°?', en:'Draw a diagonal and the quadrilateral splits into <b>two triangles</b>. Each triangle has 180°, so the quadrilateral has <b>2 × 180° = 360°</b>.', th:'ลากเส้นทแยงมุม สี่เหลี่ยมจะแบ่งเป็นสามเหลี่ยม 2 รูป แต่ละรูปมี 180° ดังนั้นสี่เหลี่ยมมี 2 × 180° = 360°',
+      fig: svg => { const pts = quadPts(100,80,95,0); polygonFigure(svg, pts, {labels:['A','B','C','D']}); const g = svg.firstChild; el('line',{x1:pts[0].x,y1:pts[0].y,x2:pts[2].x,y2:pts[2].y,class:'ln',stroke:COL.orange,'stroke-dasharray':'8 6'},g); label(g, 300, 346, '2 triangles × 180° = 360°', 'vlab', {'font-size':20, fill:COL.orange}); }},
+    {title:'Finding a missing angle', en:'Add the three known angles and subtract from 360°. Here <b>x = 360° − 100° − 80° − 95° = 85°</b>. Reason: “angles in a quadrilateral add up to 360°”.', th:'รวมมุมที่รู้สามมุมแล้วเอา 360° ลบ ในรูป x = 360° − 100° − 80° − 95° = 85°',
+      fig: svg => { const pts = quadPts(100,80,95,0); polygonFigure(svg, pts, {marks:{0:{label:'100°',color:COL.blue},1:{label:'80°',color:COL.pink},2:{label:'95°',color:COL.green},3:{label:'x',color:COL.x}}, labels:['A','B','C','D'], anim:true}); }},
+  ],
+  explore(body){
+    body.innerHTML = `<div class="lab"><div class="stage"><svg id="exSvg" class="fig" viewBox="0 0 600 360"></svg></div>
+      <div class="card panel"><h3>Explore: drag the corners</h3><p style="font-size:1rem">Drag any <b style="color:var(--accent2)">pink</b> corner. The four angles change, but they always add up to 360°.</p>${thSpan('ลากจุดยอดสี่เหลี่ยม มุมทั้งสี่เปลี่ยนแต่รวมกันได้ 360° เสมอ')}<div class="fb" id="exMsg"></div></div></div>`;
+    const svg = $('#exSvg'); let pts = [{x:140,y:80},{x:460,y:70},{x:500,y:300},{x:110,y:290}];
+    function draw(){ const a = polyAngles(pts).map(v=>Math.round(v*10)/10); const cols=[COL.blue,COL.pink,COL.green,COL.purple]; const marks={}; a.forEach((v,i)=>marks[i]={label:fmt(v),color:cols[i]});
+      polygonFigure(svg, pts, {marks, labels:['A','B','C','D']}); const g = svg.firstChild; pts.forEach((p,i)=>{ const c = el('circle',{cx:p.x,cy:p.y,r:14,class:'handle'},g); c.dataset.i=i; });
+      $('#exMsg').innerHTML = `<b style="font-size:1.15rem">${a.map(fmt).join(' + ')} = ${fmt(a.reduce((s,v)=>s+v,0))}</b>`; }
+    const convex = P => { const n=4; const cr = P.map((p,i)=>{ const q=P[(i+1)%n], r=P[(i+2)%n]; return (q.x-p.x)*(r.y-q.y)-(q.y-p.y)*(r.x-q.x); }); return cr.every(c=>c>0)||cr.every(c=>c<0); };
+    let drag=null; svg.addEventListener('pointerdown', ev => { const i = ev.target.dataset && ev.target.dataset.i; if (i==null) return; ev.preventDefault(); drag=+i; try{svg.setPointerCapture(ev.pointerId);}catch(e){} });
+    svg.addEventListener('pointermove', ev => { if (drag==null) return; const p = svgPoint(svg,ev); const np = pts.map(q=>({...q})); np[drag] = {x:Math.min(560,Math.max(40,p.x)), y:Math.min(330,Math.max(30,p.y))}; if (convex(np)) { pts = np; draw(); } });
+    const end=()=>drag=null; svg.addEventListener('pointerup',end); svg.addEventListener('pointercancel',end); draw();
+  },
+  quiz(){
+    const R = ['quad','tri','pt','line','ext']; const opts = key => shuffle([key, ...shuffle(R.filter(k=>k!==key)).slice(0,3)]);
+    const mk = kind => {
+      const q = randQuad(); const cols = [COL.blue,COL.pink,COL.green,COL.purple];
+      if (kind==='word'){ const xi = rnd(0,3); const known = q.angs.filter((_,i)=>i!==xi); return {type:'number', prompt:`The angles of a quadrilateral are <b>${known[0]}°</b>, <b>${known[1]}°</b>, <b>${known[2]}°</b> and <b>x</b>. Find x and choose the reason.`, fig:null, answer:q.angs[xi], reasonOpts:opts('quad'), reasonKey:'quad', explain:ex([`${known.join('° + ')}° + x = 360°`,`x = 360° − ${known.reduce((s,v)=>s+v,0)}° = <b>${q.angs[xi]}°</b>`]), hints:[{en:'A quadrilateral has four angles.'},{en:'Angles in a quadrilateral add up to 360°.',th:REASONS.quad.th},{en:`x = 360° − ${known.join('° − ')}° = ${q.angs[xi]}°`}], diagnose:(n)=> n===180-known.reduce((s,v)=>s+v,0) ? ['You used 180°. A quadrilateral\'s angles add up to 360°.'] : []}; }
+      if (kind==='right'){ // make one angle 90
+        let qq; for(;;){ const B = rnd(60,130), C = rnd(60,130); const D = 360-90-B-C; if (D<50||D>135) continue; const pts = quadPts(90,B,C,rnd(0,359)); if (pts){ qq = {angs:[90,B,C,D], pts}; break; } }
+        const labels = ['', qq.angs[1]+'°', qq.angs[2]+'°', 'x']; const colors = [COL.green, COL.blue, COL.pink, COL.x]; return {type:'number', prompt:'Angle A is a right angle. Find <b>x</b> and choose the reason.', fig:svg=>quadFig(svg,qq,labels,colors), answer:qq.angs[3], reasonOpts:opts('quad'), reasonKey:'quad', explain:ex([`90° + ${qq.angs[1]}° + ${qq.angs[2]}° + x = 360°`,`x = 360° − ${90+qq.angs[1]+qq.angs[2]}° = <b>${qq.angs[3]}°</b>`]), hints:[{en:'The square marks 90°.'},{en:'Angles in a quadrilateral add up to 360°.',th:REASONS.quad.th},{en:`x = 360° − 90° − ${qq.angs[1]}° − ${qq.angs[2]}° = ${qq.angs[3]}°`}], diagnose:(n)=> n===360-qq.angs[1]-qq.angs[2] ? ['Do not forget the right angle (90°).'] : []}; }
+      const xi = rnd(0,3); const labels = q.angs.map((v,i)=> i===xi ? 'x' : v+'°'); const colors = q.angs.map((v,i)=> i===xi ? COL.x : cols[i]); const known = q.angs.filter((_,i)=>i!==xi); return {type:'number', prompt:'Find <b>x</b> and choose the reason.', fig:svg=>quadFig(svg,q,labels,colors), answer:q.angs[xi], reasonOpts:opts('quad'), reasonKey:'quad', explain:ex([`${known.join('° + ')}° + x = 360°`,`x = 360° − ${known.reduce((s,v)=>s+v,0)}° = <b>${q.angs[xi]}°</b>`]), hints:[{en:'x is one of the four angles inside the quadrilateral.'},{en:'Angles in a quadrilateral add up to 360°.',th:REASONS.quad.th},{en:`x = 360° − ${known.join('° − ')}° = ${q.angs[xi]}°`}], diagnose:(n)=> n===180-known.reduce((s,v)=>s+v,0) ? ['You used 180° (triangle). This shape has four sides: 360°.'] : []};
+    };
+    return shuffle(['fig','fig','fig','fig','fig','right','right','right','word','word'].map(k => Object.assign(mk(k), {mod:9})));
+  }
+});
+
+/* ---------- MODULE 10: Mixed multi-step ---------- */
+function makeM10Question(kind){
+  const MX = ['mx_corr_line','mx_vert_tri','mx_line_quad','mx_right_pt','mx_alt_vert','mx_coin_line','mx_tri_line','mx_vert_pt','mx_line_tri'];
+  const opts = key => shuffle([key, ...shuffle(MX.filter(k=>k!==key)).slice(0,3)]);
+  if (kind==='par'){ // given t_i, x at b_j adjacent to the corresponding partner
+    const phi = pick([52,58,64,68,74,106,112,116,122,128]); const gi = rnd(0,3); const gk = 't'+gi; const xk = 'b'+((gi+1)%4);
+    const G0 = transversalGeom(phi,0); const given = Math.round(posInfo(G0,gk).size); const partner = given; const x = 180-given;
+    return {type:'number', mod:10, prompt:'The lines are parallel. Find <b>x</b> and choose the rules used.', fig:svg=>renderTransversal(svg,{phi,labels:{[gk]:given+'°',[xk]:'x'},colors:{[gk]:COL.blue,[xk]:COL.x}}), figAfter:svg=>renderTransversal(svg,{phi,labels:{[gk]:given+'°',['b'+gi]:partner+'°',[xk]:'x'},colors:{[gk]:COL.blue,['b'+gi]:COL.blue,[xk]:COL.x},highlight:{keys:[gk,'b'+gi],color:PAIR_COLOR.corresponding},anim:true}), answer:x, reasonOpts:opts('mx_corr_line'), reasonKey:'mx_corr_line',
+      explain:ex([`Step 1: the angle in the same position at the lower crossing is <b>${partner}°</b> (corresponding angles, F).`,`Step 2: x and ${partner}° are on a straight line, so x = 180° − ${partner}° = <b>${x}°</b>.`]), hints:[{en:`First find the angle at the lower crossing that corresponds to ${given}° (F shape).`,th:'หามุมที่สมนัยกับมุมที่ให้ก่อน (รูป F)'},{en:'Corresponding angles are equal; then x and that angle are on a straight line.',th:'มุมที่สมนัยกันเท่ากัน แล้ว x กับมุมนั้นอยู่บนเส้นตรง'},{en:`${partner}° at the lower crossing, so x = 180° − ${partner}° = ${x}°`}], diagnose:(n)=> n===given ? ['x is not the corresponding angle itself; it is next to it on the straight line. Subtract from 180°.'] : []};
+  }
+  if (kind==='tri'){ // triangle ABC, lines through A extended; vertically opposite angle p given; B given; find x = C
+    const a = rnd(35,85), b = rnd(35, 140-a); const c = 180-a-b; const pts = trianglePts(a,b,c, rnd(0,359), {x:120,y:80,w:360,h:200}); const A = pts[0];
+    return {type:'number', mod:10, prompt:`The sides through A are extended. Find <b>x</b> and choose the rules used.`, fig:svg=>{ const d1 = dirOf(pts[1],A), d2 = dirOf(pts[2],A); polygonFigure(svg, pts, {marks:{1:{label:b+'°',color:COL.pink},2:{label:'x',color:COL.x}}, labels:['A','B','C'], extraRays:{0:[d1,d2]}}); const g = svg.firstChild; const e1 = polar(A.x,A.y,90,d1), e2 = polar(A.x,A.y,90,d2); el('line',{x1:A.x,y1:A.y,x2:e1.x,y2:e1.y,class:'ln'},g); el('line',{x1:A.x,y1:A.y,x2:e2.x,y2:e2.y,class:'ln'},g); const s = norm360(d2-d1); const [f,t] = s<=180 ? [d1,d2] : [d2,d1]; angleMark(g, A, f, t, {color:COL.blue, label:a+'°', r:30}); fixLabelOverlaps(svg); }, answer:c, reasonOpts:opts('mx_vert_tri'), reasonKey:'mx_vert_tri',
+      explain:ex([`Step 1: angle A of the triangle is vertically opposite the ${a}° angle, so A = <b>${a}°</b>.`,`Step 2: angles in a triangle add up to 180°: x = 180° − ${a}° − ${b}° = <b>${c}°</b>.`]), hints:[{en:`Angle A inside the triangle is vertically opposite ${a}°.`,th:'มุม A ในสามเหลี่ยมเป็นมุมตรงข้ามกับมุมที่ให้'},{en:'Vertically opposite angles are equal; then use the triangle sum 180°.'},{en:`x = 180° − ${a}° − ${b}° = ${c}°`}], diagnose:(n)=> n===180-b ? ['You forgot angle A. It equals the given angle (vertically opposite).'] : []};
+  }
+  if (kind==='quad'){ // quadrilateral with exterior angle at D (side CD extended)
+    const q = randQuad(); const e = 180 - q.angs[3];
+    return {type:'number', mod:10, prompt:'Side CD is extended to E. Find <b>x</b> and choose the rules used.', fig:svg=>quadFig(svg,q,[q.angs[0]+'°', q.angs[1]+'°', 'x', null],[COL.blue,COL.pink,COL.x,null],{i:3, side:'prev', label:e+'°', color:COL.orange, pointLabel:'E'}), answer:q.angs[2], reasonOpts:opts('mx_line_quad'), reasonKey:'mx_line_quad',
+      explain:ex([`Step 1: angle D = 180° − ${e}° = <b>${q.angs[3]}°</b> (angles on a straight line).`,`Step 2: x = 360° − ${q.angs[0]}° − ${q.angs[1]}° − ${q.angs[3]}° = <b>${q.angs[2]}°</b> (angles in a quadrilateral).`]), hints:[{en:`First find angle D inside the shape: it is on a straight line with ${e}°.`,th:'หามุม D ก่อน จากมุมบนเส้นตรง'},{en:'Angles on a straight line add up to 180°; then the four angles add up to 360°.'},{en:`D = ${q.angs[3]}°, so x = 360° − ${q.angs[0]}° − ${q.angs[1]}° − ${q.angs[3]}° = ${q.angs[2]}°`}], diagnose:(n)=> n===360-q.angs[0]-q.angs[1]-e ? [`You used the exterior angle ${e}° as angle D. Angle D inside the shape is 180° − ${e}°.`] : []};
+  }
+  // right angle + around a point: rays at 0, 90, 90+a, 90+a+b ; x = 360-90-a-b
+  const a = rnd(50,120), b = rnd(50, 200-a); const x = 270-a-b; const start = rnd(0,359);
+  return {type:'number', mod:10, prompt:'Find <b>x</b> and choose the rules used.', fig:svg=>pointFig(svg,{parts:[{v:90,label:'',color:COL.green},{v:a,label:a+'°',color:COL.blue},{v:b,label:b+'°',color:COL.pink},{v:x,label:'x',color:COL.x}], start}), answer:x, reasonOpts:opts('mx_right_pt'), reasonKey:'mx_right_pt',
+    explain:ex([`Step 1: the square marks a right angle, <b>90°</b>.`,`Step 2: angles around a point add up to 360°: x = 360° − 90° − ${a}° − ${b}° = <b>${x}°</b>.`]), hints:[{en:'The small square means 90°.',th:'สี่เหลี่ยมเล็กหมายถึง 90°'},{en:'Angles around a point add up to 360°.',th:REASONS.pt.th},{en:`x = 360° − 90° − ${a}° − ${b}° = ${x}°`}], diagnose:(n)=> n===360-a-b ? ['You forgot the right angle (90°).'] : n===180-a-b ? ['These angles go all the way round a point: 360°, not 180°.'] : []};
+}
+MODULES.push({
+  id:10, title:'Mixed Multi-Step Problems', short:'Combine two rules with reasons', th:'โจทย์ผสมหลายขั้นตอนพร้อมเหตุผล',
+  learn:[
+    {title:'Two steps, two reasons', en:'Harder problems need <b>two rules</b>. Plan: ① find an angle you <b>can</b> work out, write its reason; ② use it to find <b>x</b>, write the second reason.', th:'โจทย์ยากต้องใช้กฎ 2 ข้อ: ① หามุมที่หาได้ก่อน เขียนเหตุผล ② ใช้มุมนั้นหา x แล้วเขียนเหตุผลที่สอง',
+      fig: svg => renderTransversal(svg, {phi:64, labels:{t0:'64°', b1:'x'}, colors:{t0:COL.blue, b1:COL.x}})},
+    {title:'Example 1: parallel lines + straight line', en:'Step 1: the angle corresponding to 64° at the lower crossing is <b>64°</b> (corresponding angles, F). Step 2: x and 64° are on a straight line: <b>x = 180° − 64° = 116°</b>.', th:'ขั้นที่ 1 มุมที่สมนัยกับ 64° ที่จุดตัดล่างเท่ากับ 64° (มุมที่สมนัยกัน) ขั้นที่ 2 x กับ 64° อยู่บนเส้นตรง: x = 180° − 64° = 116°',
+      fig: svg => renderTransversal(svg, {phi:64, labels:{t0:'64°', b0:'64°', b1:'x'}, colors:{t0:COL.blue, b0:COL.blue, b1:COL.x}, highlight:{keys:['t0','b0'], color:'var(--pairF)'}, anim:true})},
+    {title:'Example 2: straight line + quadrilateral', en:'The exterior angle at D is 70°. Step 1: angle D = 180° − 70° = <b>110°</b> (straight line). Step 2: x = 360° − 95° − 85° − 110° = <b>70°</b> (angles in a quadrilateral).', th:'มุมภายนอกที่ D เป็น 70° ขั้นที่ 1 มุม D = 180° − 70° = 110° (มุมบนเส้นตรง) ขั้นที่ 2 x = 360° − 95° − 85° − 110° = 70° (มุมในสี่เหลี่ยม)',
+      fig: svg => { const pts = quadPts(95,85,70,0); polygonFigure(svg, pts, {marks:{0:{label:'95°',color:COL.blue},1:{label:'85°',color:COL.pink},2:{label:'x',color:COL.x},3:{label:'110°',color:COL.green}}, labels:['A','B','C','D'], ext:{i:3, side:'prev', label:'70°', color:COL.orange, pointLabel:'E'}, anim:true}); }},
+    {title:'Write it like this', en:'<b>Angle D = 180° − 70° = 110°</b> (angles on a straight line add up to 180°)<br><b>x = 360° − 95° − 85° − 110° = 70°</b> (angles in a quadrilateral add up to 360°)<br>Each line: the calculation <b>and</b> the reason.', th:'เขียนทีละบรรทัด: การคำนวณ และ เหตุผลในวงเล็บ ทุกขั้น',
+      fig: svg => { const pts = quadPts(95,85,70,0); polygonFigure(svg, pts, {marks:{0:{label:'95°',color:COL.blue},1:{label:'85°',color:COL.pink},2:{label:'70°',color:COL.x},3:{label:'110°',color:COL.green}}, labels:['A','B','C','D'], ext:{i:3, side:'prev', label:'70°', color:COL.orange, pointLabel:'E'}}); }},
+  ],
+  explore(body){
+    body.innerHTML = `<div class="lab"><div class="stage"><svg id="exSvg" class="fig" viewBox="0 0 600 360"></svg><div class="toolbar"><button class="btn small ghost on" data-s="0">Problem</button><button class="btn small ghost" data-s="1">Step 1</button><button class="btn small ghost" data-s="2">Step 2</button><span class="sep"></span><button class="btn small secondary" id="newP">New problem</button></div></div>
+      <div class="card panel"><h3>Explore: reveal the steps</h3><p style="font-size:1rem">Click <b>Step 1</b> and <b>Step 2</b> to see how a two-step problem is solved. Then press <b>New problem</b>.</p>${thSpan('กด Step 1 และ Step 2 เพื่อดูวิธีแก้โจทย์สองขั้น แล้วกด New problem เพื่อสุ่มโจทย์ใหม่')}<div class="fb" id="exMsg"></div></div></div>`;
+    const svg = $('#exSvg'); let q, step = 0;
+    function draw(){ if (step===0){ q.fig(svg); $('#exMsg').innerHTML = q.prompt.replace('and choose the rules used','') ; } else { (q.figAfter||q.fig)(svg); const lines = q.explain.split('</div>').filter(Boolean); $('#exMsg').innerHTML = lines.slice(0, step).join('</div>') + '</div>' + (step===2 ? `<div style="margin-top:6px"><b>Rules:</b> ${REASONS[q.reasonKey].en}${thSpan(REASONS[q.reasonKey].th)}</div>` : ''); } $$('[data-s]').forEach(b => b.classList.toggle('on', +b.dataset.s===step)); }
+    const newP = () => { q = makeM10Question(pick(['par','tri','quad','pt'])); step = 0; draw(); };
+    $$('[data-s]').forEach(b => b.onclick = () => { step = +b.dataset.s; draw(); }); $('#newP').onclick = newP; newP();
+  },
+  quiz(){ return shuffle(['par','par','par','tri','tri','tri','quad','quad','pt','pt'].map(k => makeM10Question(k))); }
+});
+/* ===================== QUIZ RUNNER ===================== */
+/* qs: question objects. opts: {title, hints:boolean, timer:boolean, onFinish(score, results, elapsed)} */
+function runQuiz(container, qs, opts){
+  let i = 0, score = 0, answered = false; const results = []; const t0 = Date.now(); let timerId = null; let stage = null;
+  container.innerHTML = `<div class="steps" id="qsteps"></div><div class="lab"><div id="qstage"><div class="stage"><svg id="qSvg" class="fig" viewBox="0 0 600 360"></svg></div></div>
+    <div class="card panel"><div class="row" style="justify-content:space-between"><span class="pill accent">${opts.title}</span><span class="pill" id="qnum"></span>${opts.timer ? '<span class="pill timer" id="qtimer">0:00</span>' : ''}</div>
+    <h3 id="qprompt" style="margin-top:10px"></h3><div id="qans"></div><div id="qreasons" class="reasons"></div>
+    ${opts.hints ? '<div class="hints" id="qhints"></div><div id="hintbox"></div>' : ''}
+    <div id="qfb"></div>
+    <div class="row" style="margin-top:12px"><button class="btn" id="qcheck">Check answer</button><button class="btn secondary hidden" id="qnext">Next ▶</button></div></div></div>`;
+  if (opts.timer){ timerId = setInterval(() => { const s = Math.floor((Date.now()-t0)/1000); const e = $('#qtimer'); if (e) e.textContent = `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`; else clearInterval(timerId); }, 1000); }
+  const steps = () => { $('#qsteps').innerHTML = qs.map((_,k)=>`<i class="${results[k]===true?'done':results[k]===false?'wrong':k===i?'cur':''}"></i>`).join(''); };
+  function show(){
+    const q = qs[i]; answered = false; steps();
+    $('#qnum').textContent = `Question ${i+1} of ${qs.length}`;
+    $('#qprompt').innerHTML = q.prompt;
+    const host = $('#qstage');
+    if (q.type === 'measure' || q.type === 'draw'){
+      host.innerHTML = ''; stage = new ProtractorStage(host); const task = q.type==='measure' ? makeMeasureTask({reflex:q.reflex}) : makeDrawTask({reflex:q.reflex}); q.task = task; stage.setTask(task);
+      $('#qprompt').innerHTML = q.type==='measure' ? `Measure <b>∠ABC</b>.${task.reflex ? ' It is a <b>reflex</b> angle: measure the smaller angle and subtract from 360°.' : ''}` : `Draw <b>∠ABC = ${task.target}°</b>.${task.reflex ? ` Reflex: draw 360° − ${task.target}° = ${360-task.target}°; the reflex angle is on the other side.` : ''} Arm BA is given.`;
+      $('#qans').innerHTML = q.type==='measure' ? `<div class="ans"><label>∠ABC =</label><input class="num-in" id="qx" type="number" inputmode="numeric"><span>°</span></div>` : `<p class="muted" style="font-size:.95rem">Place the protractor, switch to <b>Mark &amp; draw</b>, tap a dot, drag from B through it, then press Check.</p>`;
+    } else {
+      stage = null; host.innerHTML = q.fig ? '<div class="stage"><svg id="qSvg" class="fig" viewBox="0 0 600 360"></svg></div>' : '<div class="card" style="min-height:120px;display:grid;place-items:center;color:var(--muted)">No diagram – read the question.</div>';
+      if (q.fig) q.fig($('#qSvg'));
+      if (q.type==='yesno') $('#qans').innerHTML = `<div class="ans"><button class="btn ghost" data-yn="yes">Yes, parallel</button><button class="btn ghost" data-yn="no">No, not parallel</button></div>`;
+      else if (q.type==='number') $('#qans').innerHTML = `<div class="ans"><label>x =</label><input class="num-in" id="qx" type="number" inputmode="numeric"><span>°</span></div>`;
+      else $('#qans').innerHTML = `<div class="choices">${q.options.map(o => `<label class="choice"><input type="radio" name="choice" value="${o.k}"><span>${o.text}</span></label>`).join('')}</div>`;
+    }
+    $('#qreasons').innerHTML = q.reasonOpts ? `<div style="font-weight:700;margin-top:4px">Reason:</div>` + q.reasonOpts.map(k => `<label class="reason"><input type="radio" name="reason" value="${k}"><span>${REASONS[k].en}${thSpan(REASONS[k].th)}</span></label>`).join('') : '';
+    $$('[data-yn]').forEach(b => b.onclick = () => $$('[data-yn]').forEach(x => x.classList.toggle('on', x===b)));
+    $$('.reason input, .choice input').forEach(r => r.onchange = () => $$('.reason, .choice').forEach(l => l.classList.toggle('on', l.querySelector('input').checked)));
+    if (opts.hints){ const hb = $('#qhints'); hb.innerHTML = (q.hints||[]).map((h,n) => `<button class="btn small ghost" data-h="${n+1}" ${n>0?'disabled':''}>Hint ${n+1}${n===0?': where to look':n===1?': the rule':': working'}</button>`).join(''); $('#hintbox').innerHTML=''; $$('[data-h]').forEach(b => b.onclick = () => { const n = +b.dataset.h; b.classList.add('on'); b.disabled = true; const nx = $(`[data-h="${n+1}"]`); if (nx) nx.disabled = false; $('#hintbox').innerHTML += `<div class="hintbox"><b>Hint ${n}:</b> ${q.hints[n-1].en}${thSpan(q.hints[n-1].th)}</div>`; }); }
+    $('#qfb').innerHTML=''; $('#qnext').classList.add('hidden'); $('#qcheck').classList.remove('hidden'); $('#qcheck').textContent = q.type==='draw' ? 'Check my angle' : 'Check answer';
+    const x = $('#qx'); if (x){ x.onkeydown = e => { if (e.key==='Enter') check(); }; }
+  }
+  function check(){
+    if (answered) return; const q = qs[i];
+    const reason = ($('input[name=reason]:checked')||{}).value || null;
+    let ans, ansOK, feedbackBody = '';
+    if (q.type==='measure'){ const r = stage.checkMeasure($('#qx').value); if (r.pending){ $('#qfb').innerHTML = `<div class="fb warn">${r.body}</div>`; return; } ansOK = r.ok; ans = Number($('#qx').value); feedbackBody = `<b class="t">${r.title}</b><div>${r.body}</div>${thSpan(r.th)}`; q.answer = q.task.value; q.explainText = `∠ABC = ${q.task.value}°`; }
+    else if (q.type==='draw'){ const r = stage.checkDraw(); if (r.pending){ $('#qfb').innerHTML = `<div class="fb warn">${r.body}</div>`; return; } ansOK = r.ok; ans = r.title; feedbackBody = `<b class="t">${r.title}</b><div>${r.body}</div>`; q.answer = q.task.target; q.explainText = `Draw ${q.task.target}°`; }
+    else {
+      if (q.type==='yesno'){ const b = $('[data-yn].on'); ans = b ? b.dataset.yn : null; if (!ans){ $('#qfb').innerHTML = `<div class="fb warn">Choose Yes or No first.</div>`; return; } }
+      else if (q.type==='number'){ const v = $('#qx').value; if (v===''){ $('#qfb').innerHTML = `<div class="fb warn">Type a value for x first.</div>`; return; } ans = Number(v); }
+      else { const c = $('input[name=choice]:checked'); if (!c){ $('#qfb').innerHTML = `<div class="fb warn">Choose an answer first.</div>`; return; } ans = c.value; }
+      if (q.reasonOpts && !reason){ $('#qfb').innerHTML = `<div class="fb warn">Choose a reason too.</div>`; return; }
+      ansOK = String(ans) === String(q.answer);
+    }
+    answered = true;
+    const reasonOK = !q.reasonOpts || reason === q.reasonKey;
+    const ok = ansOK && reasonOK; if (ok) score++;
+    results[i] = ok; q.result = ok; q.given = ans; steps();
+    $$('.reason').forEach(l => { const v = l.querySelector('input').value; l.classList.toggle('right', v===q.reasonKey); l.classList.toggle('wrongpick', v===reason && !reasonOK); l.querySelector('input').disabled = true; });
+    $$('.choice').forEach(l => { const v = l.querySelector('input').value; l.classList.toggle('right', v===String(q.answer)); l.classList.toggle('wrongpick', v===String(ans) && !ansOK); l.querySelector('input').disabled = true; });
+    $$('[data-yn]').forEach(b => b.disabled = true); if ($('#qx')) $('#qx').disabled = true;
+    if (q.type==='measure' || q.type==='draw'){ $('#qfb').innerHTML = `<div class="fb ${ok?'ok':'bad'}">${feedbackBody}</div>`; }
+    else {
+      const answerLine = q.type==='yesno' ? (q.answer==='yes' ? 'Yes, the lines are parallel' : 'No, not parallel') : q.type==='number' ? `x = ${q.answer}°` : q.options.find(o=>o.k===String(q.answer)).text;
+      const why = ok ? [] : (q.diagnose ? q.diagnose(ans, reason) : []);
+      if (!ok && q.reasonOpts && reason && reason !== q.reasonKey && !why.length) why.push(`The reason is “${REASONS[q.reasonKey].en}”.`);
+      $('#qfb').innerHTML = `<div class="fb ${ok?'ok':'bad'}"><b class="t">${ok ? 'Correct!' : ansOK ? 'Value right, reason wrong' : (q.reasonOpts && reasonOK) ? 'Reason right, value wrong' : 'Not correct'}</b>${why.map(w=>`<div>• ${w}</div>`).join('')}<div style="margin-top:6px"><b>Answer: ${answerLine}</b>${q.reasonOpts ? ' — ' + REASONS[q.reasonKey].en : ''}</div><div style="margin-top:4px">${q.explain||''}</div>${thSpan(q.th || (q.reasonKey ? REASONS[q.reasonKey].th : ''))}</div>`;
+      if (q.figAfter && $('#qSvg')) q.figAfter($('#qSvg'));
+    }
+    $('#qcheck').classList.add('hidden'); $('#qnext').classList.remove('hidden'); $('#qnext').textContent = i===qs.length-1 ? 'See results ▶' : 'Next ▶';
+    $('#qnext').focus();
+  }
+  $('#qcheck').onclick = check;
+  $('#qnext').onclick = () => { if (i<qs.length-1){ i++; show(); } else { if (timerId) clearInterval(timerId); opts.onFinish(score, results, Math.floor((Date.now()-t0)/1000)); } };
+  show();
+  window.__quiz = { get q(){ return qs[i]; }, get i(){ return i; }, qs, check, next:()=>$('#qnext').click(), setX:v=>{ $('#qx').value=v; }, setYN:v=>$(`[data-yn="${v}"]`).click(), setChoice:k=>{ const r=$(`input[name=choice][value="${k}"]`); r.checked=true; r.onchange(); }, setReason:k=>{ const r=$(`input[name=reason][value="${k}"]`); r.checked=true; r.onchange(); }, hint:n=>$(`[data-h="${n}"]`)?.click(), get score(){return score;}, get stage(){ return stage; } };
+  return { stop(){ if (timerId) clearInterval(timerId); } };
+}
+function reviewList(qs){
+  return `<div class="review">${qs.map((q,k) => `<div class="item ${q.result?'ok':'bad'}"><b>${k+1}. ${q.result?'✓':'✗'}</b> ${q.prompt.replace(/<[^>]+>/g,'')} <br><span class="muted">Answer: ${q.type==='yesno' ? (q.answer==='yes'?'Yes, parallel':'No, not parallel') : q.type==='choice' ? q.options.find(o=>o.k===String(q.answer)).text : q.type==='draw' ? q.answer+'°' : q.answer+'°'}${q.reasonKey ? ' — ' + REASONS[q.reasonKey].en : ''}</span></div>`).join('')}</div>`;
+}
+
+/* ===================== SCREENS ===================== */
+const app = $('#app'); let current = null;
+const SCREENS = {};
+function go(name, arg){
+  if (current && current.destroy) current.destroy();
+  app.innerHTML = ''; $$('.navbtn').forEach(b => b.classList.toggle('active', b.dataset.go === name));
+  current = SCREENS[name](arg) || {}; window.scrollTo(0,0);
+}
+document.addEventListener('click', e => { const g = e.target.closest('[data-go]'); if (g) go(g.dataset.go, g.dataset.arg ? +g.dataset.arg : undefined); });
+$('#thToggle').onclick = () => { settings = store.set({th:!settings.th}); document.body.classList.toggle('th', settings.th); $('#thToggle').classList.toggle('on', settings.th); };
+$('#thToggle').classList.toggle('on', !!settings.th);
+
+/* ---------- HOME ---------- */
+SCREENS.home = () => {
+  const prog = store.prog();
+  app.innerHTML = `<section class="hero"><div><div class="kicker">Bright EngMath · Year 7 / ม.1–ม.2 EP</div><h1>Angle Lab</h1><p style="font-size:1.25rem;margin-top:0">Everything about angles. Learn it, explore it, quiz yourself – pick any topic, in any order.</p>
+    <div class="row"><button class="btn big" data-go="module" data-arg="${prog.lastModule||1}">${prog.lastModule ? 'Continue module ' + prog.lastModule : 'Start with Module 1'}</button><button class="btn big secondary" data-go="challenge">Challenge (25 questions)</button></div></div>
+    <svg viewBox="40 40 520 290" aria-hidden="true" id="heroFig"></svg></section>
+    <h2>Choose a theme</h2><div class="themes" id="themePicker">
+      <button class="theme-card" data-theme="lime"><span class="sw"><i style="background:#E6F2A8"></i><i style="background:#B9AEF9"></i><i style="background:#FF86B0"></i><i style="background:#FFF5B8"></i></span><b>Lime &amp; Lavender</b><small>Fresh lime, lavender and pink with bold outlines.</small></button>
+      <button class="theme-card" data-theme="peach"><span class="sw"><i style="background:#FFE7D3"></i><i style="background:#8BE0C7"></i><i style="background:#FF8A65"></i><i style="background:#FFF4C2"></i></span><b>Peach &amp; Mint</b><small>Warm peach, mint and coral. Soft and friendly.</small></button>
+      <button class="theme-card" data-theme="blueprint"><span class="sw"><i style="background:#0E2138"></i><i style="background:#163453"></i><i style="background:#F4B52E"></i><i style="background:#5CC8F5"></i></span><b>Blueprint</b><small>Dark drafting board with amber and sky. Great for projecting.</small></button></div>
+    <h2>Modules <span class="muted" style="font-size:1rem;font-weight:400">· each one has Learn, Explore and a 10-question quiz</span></h2><div class="modlist" id="modlist"></div>
+    <h2 style="margin-top:26px">More</h2><div class="quick"><div class="card" data-go="challenge"><b>Challenge</b><span class="muted">25 mixed questions with answers and explanations.${prog.challenge ? ` Best: ${prog.challenge.best}/25` : ''}</span></div><div class="card" data-go="report"><b>My Report</b><span class="muted">Your scores, topics to review, print or screenshot for your teacher.</span></div><div class="card" data-go="glossary"><b>Glossary &amp; Rules Summary</b><span class="muted">All the words and all the rules on one page.</span></div></div>`;
+  $$('#themePicker .theme-card').forEach(b => { b.classList.toggle('on', b.dataset.theme === settings.theme); b.onclick = () => { settings = store.set({theme:b.dataset.theme}); document.documentElement.dataset.theme = settings.theme; $$('#themePicker .theme-card').forEach(x => x.classList.toggle('on', x===b)); }; });
+  const ml = $('#modlist');
+  MODULES.forEach(m => { const q = prog['quiz'+m.id]; const b = document.createElement('button'); b.className = 'mod' + (q && q.best >= 8 ? ' done' : ''); b.innerHTML = `<span class="num">${m.id}</span><span><b>${m.title}</b><small>${q ? `Quiz best: ${q.best}/10${q.best>=8?' ✓':''}` : m.short}</small></span>`; b.onclick = () => go('module', m.id); ml.appendChild(b); });
+  renderTransversal($('#heroFig'), {phi:60, labels:{t0:'a', b0:'a'}, highlight:{keys:['t0','b0'], color:'var(--pairF)'}});
+};
+
+/* ---------- MODULE ---------- */
+SCREENS.module = (id) => {
+  const m = MODULES.find(x => x.id === id) || MODULES[0]; let tab = 'learn'; let quiz = null;
+  store.setProg({lastModule:m.id});
+  app.innerHTML = `<div class="row" style="justify-content:space-between"><div><span class="pill accent">Module ${m.id}</span> <h2 style="display:inline;margin-left:8px">${m.title}</h2></div><div class="row" style="gap:8px">${m.id>1?`<button class="btn small ghost" data-go="module" data-arg="${m.id-1}">◀ Module ${m.id-1}</button>`:''}${m.id<10?`<button class="btn small ghost" data-go="module" data-arg="${m.id+1}">Module ${m.id+1} ▶</button>`:''}</div></div>
+    <p class="muted">${m.short}${thSpan(m.th)}</p>
+    <div class="tabs"><button class="tab" data-tab="learn"><span class="k">A</span>Learn</button><button class="tab" data-tab="explore"><span class="k">B</span>Explore</button><button class="tab" data-tab="quiz"><span class="k">C</span>Quiz (10)</button></div><div id="mbody"></div>`;
+  const body = $('#mbody');
+  const markTabs = () => { const p = store.prog(); $$('[data-tab]').forEach(b => { b.classList.toggle('active', b.dataset.tab===tab); b.classList.toggle('done', (b.dataset.tab==='learn'&&p['learn'+m.id])||(b.dataset.tab==='explore'&&p['explore'+m.id])||(b.dataset.tab==='quiz'&&p['quiz'+m.id]?.best>=8)); }); };
+  $$('[data-tab]').forEach(b => b.onclick = () => { tab = b.dataset.tab; render(); });
+  function render(){ if (quiz){ quiz.stop(); quiz = null; } markTabs(); body.innerHTML = ''; ({learn, explore, quiz:quizTab})[tab](); }
+  function learn(){
+    let step = 0;
+    body.innerHTML = `<div class="lab"><div class="stage"><svg id="learnSvg" class="fig" viewBox="0 0 600 360"></svg></div><div class="card panel"><div class="steps" id="lsteps"></div><h3 id="ltitle"></h3><div id="ltext" style="font-size:1.05rem"></div><div class="row" style="margin-top:14px"><button class="btn secondary" id="lprev">◀ Back</button><button class="btn" id="lnext">Next ▶</button><button class="btn ghost small" id="lreplay">Replay</button></div></div></div>`;
+    const svg = $('#learnSvg');
+    function show(){ const s = m.learn[step]; $('#lsteps').innerHTML = m.learn.map((_,k)=>`<i class="${k<step?'done':k===step?'cur':''}"></i>`).join(''); $('#ltitle').textContent = `${step+1}. ${s.title}`; $('#ltext').innerHTML = s.en + thSpan(s.th); svg.setAttribute('viewBox','0 0 600 360'); s.fig(svg); $('#lprev').disabled = step===0; $('#lnext').textContent = step===m.learn.length-1 ? 'Go to Explore ▶' : 'Next ▶'; }
+    $('#lprev').onclick = () => { if (step>0){ step--; show(); } };
+    $('#lnext').onclick = () => { if (step<m.learn.length-1){ step++; show(); } else { store.setProg({['learn'+m.id]:true}); tab='explore'; render(); } };
+    $('#lreplay').onclick = show; show();
+    window.__learn = { next:()=>$('#lnext').click(), get step(){ return step; } };
+  }
+  function explore(){ body.innerHTML = ''; m.explore(body); store.setProg({['explore'+m.id]:true}); const d = document.createElement('div'); d.className='row noprint'; d.style.marginTop='16px'; d.innerHTML = `<button class="btn" id="toQuiz">I'm ready → Quiz ▶</button>`; body.appendChild(d); $('#toQuiz').onclick = () => { tab='quiz'; render(); }; }
+  function quizTab(){
+    const p = store.prog()['quiz'+m.id];
+    body.innerHTML = `<div class="card" style="max-width:720px"><span class="pill accent">Quiz</span><h3 style="margin-top:8px">${m.title} – 10 questions</h3><p>New random questions every time. Three hints are available on each question; the answer and explanation appear as soon as you check. ${p ? `<br>Best score: <b>${p.best}/10</b> · Last: ${p.last}/10` : ''}</p><button class="btn big" id="startQuiz">Start the quiz</button></div>`;
+    $('#startQuiz').onclick = () => { const qs = m.quiz(); quiz = runQuiz(body, qs, {title:`Module ${m.id} quiz`, hints:true, onFinish:(score)=>{ const prev = store.prog()['quiz'+m.id]; store.setProg({['quiz'+m.id]:{best:Math.max(score, prev?.best||0), last:score, date:new Date().toISOString()}}); markTabs();
+      body.innerHTML = `<div class="card result"><div class="pill ${score>=8?'ok':''}">${score>=8?'Great work':'Keep practising'}</div><div class="score">${score}/10</div><p style="font-size:1.1rem">${score>=8?'You know this topic well.':score>=5?'Good start. Look at the questions you missed, then try again.':'Go back to Learn and Explore, then try again.'}</p><div class="row noprint" style="justify-content:center"><button class="btn secondary" id="again">Try again</button>${m.id<10?`<button class="btn" data-go="module" data-arg="${m.id+1}">Next module ▶</button>`:`<button class="btn" data-go="challenge">Take the Challenge ▶</button>`}</div>${reviewList(qs)}</div>`;
+      $('#again').onclick = quizTab; }}); };
+  }
+  render();
+  window.__m = { setTab:(t)=>{ tab=t; render(); }, module:m, startQuiz:()=>$('#startQuiz')?.click() };
+  return { destroy(){ if (quiz) quiz.stop(); delete window.__m; delete window.__quiz; delete window.__stage; delete window.__explore; } };
+};
+
+/* ---------- CHALLENGE ---------- */
+function challengeSet(){
+  const take = (id, n) => { const m = MODULES.find(x=>x.id===id); let pool = m.quiz(); const out=[]; while (out.length<n){ if (!pool.length) pool = m.quiz(); out.push(pool.shift()); } return out; };
+  const qs = [...take(1,2), ...take(2,2), ...take(3,2), ...take(4,1), ...take(5,3), ...take(6,2), ...take(7,4), ...take(8,3), ...take(9,2), ...take(10,4)];
+  return shuffle(qs);
+}
+SCREENS.challenge = () => {
+  let quiz = null; const p = store.prog().challenge;
+  app.innerHTML = `<div class="card" style="max-width:760px"><span class="pill accent">Challenge</span><h3 style="margin-top:8px">End-of-course Challenge – 25 questions</h3><p>Mixed questions from all 10 modules, including measuring and drawing with the protractor. <b>No hints.</b> You get the answer and the explanation after each question, and a full review at the end. The clock shows how long you take.</p>${p ? `<p>Best: <b>${p.best}/25</b> · Last: ${p.last}/25 (${p.date.slice(0,10)})</p>` : ''}${thSpan('ข้อสอบรวมทุกเรื่อง 25 ข้อ ไม่มีคำใบ้ ตอบแล้วเห็นเฉลยและคำอธิบายทันที')}<button class="btn big" id="startC">Start the Challenge</button></div>`;
+  $('#startC').onclick = () => { const qs = challengeSet(); quiz = runQuiz(app, qs, {title:'Challenge', hints:false, timer:true, onFinish:(score, results, elapsed) => {
+    const perMod = {}; qs.forEach(q => { perMod[q.mod] = perMod[q.mod] || {n:0, ok:0}; perMod[q.mod].n++; if (q.result) perMod[q.mod].ok++; });
+    const prev = store.prog().challenge; store.setProg({challenge:{best:Math.max(score, prev?.best||0), last:score, date:new Date().toISOString(), elapsed, perMod}});
+    const weak = Object.keys(perMod).filter(k => perMod[k].ok < perMod[k].n).map(k => MODULES.find(m=>m.id===+k).title);
+    app.innerHTML = `<div class="card result"><div class="pill ${score>=20?'ok':''}">${score>=20?'Excellent':score>=15?'Good':'Keep going'}</div><div class="score">${score}/25</div><p style="font-size:1.1rem">Time: ${Math.floor(elapsed/60)} min ${elapsed%60} s · ${Math.round(score/25*100)}%</p>${weak.length ? `<p><b>Review:</b> ${weak.join(' · ')}</p>` : '<p>No weak topics. Well done!</p>'}<div class="row noprint" style="justify-content:center"><button class="btn secondary" data-go="challenge">Try again</button><button class="btn" data-go="report">See My Report ▶</button></div>${reviewList(qs)}</div>`; }}); };
+  return { destroy(){ if (quiz) quiz.stop(); delete window.__quiz; } };
+};
+
+/* ---------- REPORT ---------- */
+SCREENS.report = () => {
+  const p = store.prog();
+  const rows = MODULES.map(m => { const q = p['quiz'+m.id]; const c = p.challenge?.perMod?.[m.id]; return {m, q, c}; });
+  const weak = rows.filter(r => !r.q || r.q.best < 8 || (r.c && r.c.ok < r.c.n)).map(r => r.m.title);
+  app.innerHTML = `<div class="card" id="reportCard" style="max-width:860px;margin:0 auto"><div class="row" style="justify-content:space-between"><div><div class="kicker" style="font-weight:700;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;font-size:.8rem">Bright EngMath · Angle Lab</div><h2 style="margin:4px 0">My Report</h2></div><div class="muted">${new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}</div></div>
+    <div class="row" style="margin:10px 0 16px"><label style="flex:1;min-width:200px">Name<input class="txt-in" id="repName" value="${settings.name||''}" placeholder="Your name"></label><label style="flex:1;min-width:140px">Class<input class="txt-in" id="repCls" value="${settings.cls||''}" placeholder="e.g. 7/2"></label></div>
+    <table class="rep"><thead><tr><th>#</th><th>Module</th><th>Quiz best</th><th>Challenge</th></tr></thead><tbody>${rows.map(r => `<tr><td>${r.m.id}</td><td>${r.m.title}</td><td>${r.q ? `<b>${r.q.best}/10</b>${r.q.best>=8?' ✓':''}` : '—'}</td><td>${r.c ? `${r.c.ok}/${r.c.n}` : '—'}</td></tr>`).join('')}</tbody></table>
+    <div class="row" style="justify-content:space-between;margin-top:10px"><div><b>Challenge:</b> ${p.challenge ? `${p.challenge.last}/25 (best ${p.challenge.best}/25) · ${Math.floor(p.challenge.elapsed/60)} min` : 'not taken yet'}</div><div><b>Quizzes passed (8+):</b> ${rows.filter(r=>r.q&&r.q.best>=8).length}/10</div></div>
+    <div class="fb" style="margin-top:14px"><b>Topics to review:</b> ${weak.length ? weak.join(' · ') : 'none – everything is at 8/10 or better'}</div>
+    <div class="row noprint" style="margin-top:16px"><button class="btn" id="printBtn">Print / Save as PDF</button><button class="btn ghost" id="resetBtn">Reset all progress</button></div></div>`;
+  $('#repName').oninput = e => settings = store.set({name:e.target.value}); $('#repCls').oninput = e => settings = store.set({cls:e.target.value});
+  $('#printBtn').onclick = () => window.print();
+  $('#resetBtn').onclick = () => { if (confirm('Reset all progress on this device?')){ store.reset(); settings = store.get(); document.documentElement.dataset.theme = settings.theme; toast('Progress reset'); go('home'); } };
+};
+
+/* ---------- GLOSSARY + RULES ---------- */
+const RULES = [
+  {t:'Acute angle', r:'< 90°', c:COL.blue, f:g=>{ angleMark(g,{x:30,y:56},0,45,{color:COL.blue,r:22}); ray(g,30,56,0,60); ray(g,30,56,45,60);} },
+  {t:'Right angle', r:'= 90°', c:COL.green, f:g=>{ angleMark(g,{x:30,y:60},0,90,{color:COL.green,r:22}); ray(g,30,60,0,60); ray(g,30,60,90,52);} },
+  {t:'Obtuse angle', r:'90° < θ < 180°', c:COL.orange, f:g=>{ angleMark(g,{x:48,y:58},0,135,{color:COL.orange,r:22}); ray(g,48,58,0,46); ray(g,48,58,135,50);} },
+  {t:'Straight angle', r:'= 180°', c:COL.pink, f:g=>{ angleMark(g,{x:48,y:50},0,180,{color:COL.pink,r:20}); ray(g,48,50,0,44); ray(g,48,50,180,44);} },
+  {t:'Reflex angle', r:'180° < θ < 360°', c:COL.purple, f:g=>{ angleMark(g,{x:48,y:40},0,250,{color:COL.purple,r:22}); ray(g,48,40,0,44); ray(g,48,40,250,30);} },
+  {t:'Full turn', r:'= 360°', c:COL.teal, f:g=>{ angleMark(g,{x:48,y:38},0,359.9,{color:COL.teal,r:22}); ray(g,48,38,0,44);} },
+  {t:'Complementary', r:'a + b = 90°', c:COL.blue, f:g=>{ angleMark(g,{x:30,y:60},0,35,{color:COL.blue,r:26}); angleMark(g,{x:30,y:60},35,90,{color:COL.pink,r:26}); ray(g,30,60,0,60); ray(g,30,60,35,60); ray(g,30,60,90,52);} },
+  {t:'Supplementary', r:'a + b = 180°', c:COL.blue, f:g=>{ angleMark(g,{x:48,y:52},0,120,{color:COL.blue,r:22}); angleMark(g,{x:48,y:52},120,180,{color:COL.pink,r:22}); ray(g,48,52,0,44); ray(g,48,52,180,44); ray(g,48,52,120,44);} },
+  {t:'Angles on a straight line', r:'a + b + c = 180°', c:COL.green, f:g=>{ angleMark(g,{x:48,y:52},0,60,{color:COL.blue,r:22}); angleMark(g,{x:48,y:52},60,120,{color:COL.pink,r:22}); angleMark(g,{x:48,y:52},120,180,{color:COL.green,r:22}); ray(g,48,52,0,44); ray(g,48,52,180,44); ray(g,48,52,60,44); ray(g,48,52,120,44);} },
+  {t:'Angles around a point', r:'sum = 360°', c:COL.purple, f:g=>{ [[0,130,COL.blue],[130,250,COL.pink],[250,360,COL.green]].forEach(([a,b,c])=>angleMark(g,{x:48,y:38},a,b,{color:c,r:22})); [0,130,250].forEach(a=>ray(g,48,38,a,34));} },
+  {t:'Vertically opposite', r:'a = a, b = b', c:COL.blue, f:g=>{ [[0,60,COL.blue],[60,180,COL.pink],[180,240,COL.blue],[240,360,COL.pink]].forEach(([a,b,c])=>angleMark(g,{x:48,y:38},a,b,{color:c,r:16})); line(g,48,38,0,44); line(g,48,38,60,44);} },
+  {t:'Corresponding (F)', r:'a = a', c:'var(--pairF)', f:g=>par(g,'corresponding') },
+  {t:'Alternate (Z)', r:'a = a', c:'var(--pairZ)', f:g=>par(g,'alternate') },
+  {t:'Co-interior (C)', r:'a + b = 180°', c:'var(--pairC)', f:g=>par(g,'cointerior') },
+  {t:'Lines are parallel if…', r:'F equal, Z equal, or C = 180°', c:COL.teal, f:g=>par(g,'corresponding') },
+  {t:'Triangle', r:'a + b + c = 180°', c:COL.blue, f:g=>{ const pts=[{x:48,y:8},{x:6,y:66},{x:90,y:66}]; const g2=el('g',{},g); [[0,COL.blue],[1,COL.pink],[2,COL.green]].forEach(([i,c])=>{ const V=pts[i]; const a=dirOf(V,pts[(i+1)%3]), b=dirOf(V,pts[(i+2)%3]); const s=norm360(b-a); const [f,t]= s<=180?[a,b]:[b,a]; angleMark(g2,V,f,t,{color:c,r:14}); }); el('path',{d:`M ${pts.map(p=>p.x+' '+p.y).join(' L ')} Z`,fill:'none',stroke:'var(--ink)','stroke-width':2},g); } },
+  {t:'Exterior angle', r:'e = a + b', c:COL.orange, f:g=>{ const pts=[{x:40,y:8},{x:6,y:62},{x:66,y:62}]; const V=pts[2]; const E={x:92,y:62}; el('path',{d:`M ${pts.map(p=>p.x+' '+p.y).join(' L ')} Z`,fill:'none',stroke:'var(--ink)','stroke-width':2},g); el('line',{x1:V.x,y1:V.y,x2:E.x,y2:E.y,stroke:'var(--ink)','stroke-width':2},g); const a=dirOf(V,E), b=dirOf(V,pts[0]); angleMark(g,V,a,b,{color:COL.orange,r:14}); } },
+  {t:'Quadrilateral', r:'a + b + c + d = 360°', c:COL.purple, f:g=>{ const pts=[{x:14,y:10},{x:88,y:14},{x:80,y:66},{x:6,y:62}]; const g2=el('g',{},g); [[0,COL.blue],[1,COL.pink],[2,COL.green],[3,COL.purple]].forEach(([i,c])=>{ const V=pts[i]; const a=dirOf(V,pts[(i+1)%4]), b=dirOf(V,pts[(i+3)%4]); const s=norm360(b-a); const [f,t]= s<=180?[a,b]:[b,a]; angleMark(g2,V,f,t,{color:c,r:12}); }); el('path',{d:`M ${pts.map(p=>p.x+' '+p.y).join(' L ')} Z`,fill:'none',stroke:'var(--ink)','stroke-width':2},g); } },
+];
+function ray(g,x,y,a,len){ const e = polar(x,y,len,a); el('line',{x1:x,y1:y,x2:e.x,y2:e.y,stroke:'var(--ink)','stroke-width':2},g); }
+function line(g,x,y,a,len){ const e = polar(x,y,len,a), s = polar(x,y,len,a+180); el('line',{x1:s.x,y1:s.y,x2:e.x,y2:e.y,stroke:'var(--ink)','stroke-width':2},g); }
+function par(g, kind){ const col = PAIR_COLOR[kind]; const y1=22, y2=56; el('line',{x1:4,y1:y1,x2:92,y2:y1,stroke:'var(--ink)','stroke-width':2},g); el('line',{x1:4,y1:y2,x2:92,y2:y2,stroke:'var(--ink)','stroke-width':2},g); const P1={x:58,y:y1}, P2={x:38,y:y2}; const phi = dirOf(P2,P1); el('line',{x1:P2.x-14,y1:y2+20,x2:P1.x+14,y2:y1-20,stroke:'var(--ink)','stroke-width':2},g);
+  const marks = {corresponding:[[P1,0,phi],[P2,0,phi]], alternate:[[P1,180,phi+180],[P2,0,phi]], cointerior:[[P1,180,phi+180],[P2,phi,180]]}[kind]; marks.forEach(([P,a,b]) => angleMark(g,P,a,b,{color:col,r:13})); }
+SCREENS.glossary = () => {
+  app.innerHTML = `<h2>Rules Summary</h2><p class="muted">Every rule in Angle Lab on one page.</p><div class="rules">${RULES.map((r,i) => `<div class="rule"><svg viewBox="0 0 96 72" data-rule="${i}"></svg><div><b style="color:${r.c}">${i+1}. ${r.t}</b><span>${r.r}</span></div></div>`).join('')}</div>
+    <h2 style="margin-top:30px">Glossary</h2><div class="gloss">${GLOSSARY.map(([en,th,d]) => `<div class="term"><b>${en}</b><small>${th}</small>${d}</div>`).join('')}</div>`;
+  $$('[data-rule]').forEach(svg => { svg.classList.add('fig'); const g = el('g',{},svg); RULES[+svg.dataset.rule].f(g); });
+};
+
+go('home');
+</script>
+</body>
+</html>

@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Times Tables Quest (Free Trial) · Bright EngMath</title>
+<style>
+:root{
+  --bg:#FFF6E9; --paper:#FFFFFF; --ink:#2D2A4A; --ink-2:#6B6584; --line:#2D2A4A;
+  --muted:#F3E9DA; --ok:#22A55B; --bad:#EE4F4A;
+  --radius:22px; --bw:3px; --shadow:0 6px 0 var(--line);
+  --head:"Arial Rounded MT Bold","Arial Rounded MT","Varela Round","Nunito","Trebuchet MS","Segoe UI",sans-serif;
+  --body:"Avenir Next","Segoe UI","Trebuchet MS","Helvetica Neue",Arial,sans-serif;
+  --t:#FF9433; --on:#2D2A4A; --tt:#D9600B;
+  --rainbow:linear-gradient(90deg,#FF6F9C 0 8.33%,#FF9433 0 16.66%,#FFC530 0 25%,#5CC85A 0 33.33%,#36A3F5 0 41.66%,#14BFA6 0 50%,#FF6252 0 58.33%,#A8D432 0 66.66%,#A585F2 0 75%,#4E6CF2 0 83.33%,#D3934F 0 91.66%,#EE4569 0);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.45;-webkit-font-smoothing:antialiased;min-height:100vh;-webkit-tap-highlight-color:transparent}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.55;
+  background:
+   radial-gradient(circle at 18px 22px,#FFC530 4px,transparent 4.6px),
+   radial-gradient(circle at 74px 64px,#FF6F9C 3.6px,transparent 4.2px),
+   radial-gradient(circle at 118px 20px,#36A3F5 3.2px,transparent 3.8px),
+   radial-gradient(circle at 46px 104px,#5CC85A 3.6px,transparent 4.2px),
+   radial-gradient(circle at 128px 96px,#A585F2 3px,transparent 3.6px);
+  background-size:150px 130px}
+body::after{content:"";position:fixed;left:0;right:0;top:0;height:8px;background:var(--rainbow);z-index:30}
+.wrap{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:8px 16px 28px}
+h1,h2,h3,.head{font-family:var(--head);font-weight:700;margin:0;letter-spacing:0}
+p{margin:6px 0}
+button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
+.num{font-variant-numeric:tabular-nums}
+:focus-visible{outline:4px solid var(--t);outline-offset:3px}
+
+/* top bar */
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 0 12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;background:none;border:0;padding:0;text-align:left}
+.mark{width:52px;height:52px;border:var(--bw) solid var(--line);border-radius:50%;display:grid;place-items:center;font:700 28px var(--head);background:#FFC530;color:var(--ink);box-shadow:0 4px 0 var(--line);flex:none;position:relative}
+.mark::after{content:"";position:absolute;right:-4px;top:-4px;width:16px;height:16px;border-radius:50%;background:#FF6F9C;border:2.5px solid var(--line)}
+.brand small{display:block;font-size:12px;color:var(--ink-2);letter-spacing:.12em;text-transform:uppercase;font-weight:800}
+.brand b{display:block;font:700 27px/1.05 var(--head)}
+.nav{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.nav button{border:2.5px solid var(--line);background:var(--paper);border-radius:999px;padding:8px 16px;font-weight:800;font-size:15px;min-height:46px;box-shadow:0 3px 0 var(--line);transition:transform .12s}
+.nav button:hover{transform:translateY(-2px)}
+.nav button[aria-current="page"]{background:var(--ink);color:#fff}
+.beltchip{display:flex;align-items:center;gap:10px;font-weight:800;font-size:15px;border:2.5px solid var(--line);background:var(--paper);border-radius:999px;padding:6px 14px;min-height:46px;box-shadow:0 3px 0 var(--line)}
+.belt{display:inline-block;width:56px;height:16px;border:2.5px solid var(--line);border-radius:8px;position:relative;flex:none;background:var(--bc)}
+.belt::after{content:"";position:absolute;right:10px;top:-6px;bottom:-6px;width:11px;background:var(--bc);border:2.5px solid var(--line);border-radius:4px}
+.belt.lg{width:120px;height:26px;border-radius:12px}.belt.lg::after{width:20px;right:22px;top:-9px;bottom:-9px;border-radius:6px}
+
+#view{animation:in .3s cubic-bezier(.3,1.3,.5,1)}
+@keyframes in{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+.panel{background:var(--paper);border:var(--bw) solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px}
+.tag{display:inline-block;font:800 13px var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--tt,var(--t))}
+.lead{color:var(--ink-2)}
+.btn{border:var(--bw) solid var(--line);background:var(--paper);border-radius:999px;padding:12px 26px;font:700 20px var(--head);min-height:58px;box-shadow:0 6px 0 var(--line);transition:transform .12s,box-shadow .12s}
+.btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 0 var(--line)}
+.btn:active:not(:disabled){transform:translateY(5px);box-shadow:0 1px 0 var(--line)}
+.btn.primary{background:var(--t);color:var(--on)}
+.btn.dark{background:var(--ink);color:#fff}
+.btn.sm{min-height:46px;font-size:16px;padding:8px 18px;box-shadow:0 4px 0 var(--line)}
+.btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.spread{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+.back{background:var(--paper);border:2.5px solid var(--line);border-radius:999px;font-weight:800;color:var(--ink);padding:6px 16px;min-height:44px;font-size:15px;margin-bottom:8px;box-shadow:0 3px 0 var(--line)}
+
+/* map */
+.hello{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin:6px 0 20px}
+.hello h1{font-size:clamp(32px,5.2vw,50px);line-height:1.08}
+.hello h1 .hl{background:linear-gradient(transparent 58%,#FFC53099 58%);padding:0 4px}
+.beltcard{display:flex;align-items:center;gap:14px;background:var(--paper);border:var(--bw) solid var(--line);border-radius:999px;padding:10px 22px;box-shadow:0 5px 0 var(--line)}
+.mapwrap{position:relative;background:var(--paper);border:var(--bw) solid var(--line);border-radius:32px;box-shadow:var(--shadow);padding:22px 18px 26px}
+.mappath{position:absolute;inset:22px 18px 26px;width:calc(100% - 36px);height:calc(100% - 48px);pointer-events:none}
+.map{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:14px 18px}
+.node{position:relative;justify-self:center;width:min(150px,100%);aspect-ratio:1;border:var(--bw) solid var(--line);border-radius:50%;background:var(--c);color:var(--con);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--head);box-shadow:0 7px 0 var(--line);transition:transform .18s cubic-bezier(.3,1.6,.5,1);padding:0;animation:pop .45s cubic-bezier(.3,1.6,.5,1) both;animation-delay:var(--d,0s)}
+.node:hover:not(.locked){transform:translateY(-5px) rotate(-3deg)}
+.node:active:not(.locked){transform:translateY(4px)}
+.node .eyes{display:flex;gap:16%;width:100%;justify-content:center;margin-top:-6%;margin-bottom:2%}
+.node .eyes i{width:11px;height:13px;border-radius:50%;background:var(--ink);position:relative}
+.node .eyes i::after{content:"";position:absolute;width:4px;height:4px;border-radius:50%;background:#fff;top:2px;left:2px}
+.node .x{font-size:clamp(28px,4.2vw,44px);line-height:1;font-weight:700}
+.node .st{font:800 13px var(--body);letter-spacing:1px;min-height:18px;margin-top:4px;background:#ffffffd9;color:var(--ink);border-radius:999px;padding:1px 9px}
+.node .st.stars{color:#E8A400;font-size:16px;letter-spacing:2px;-webkit-text-stroke:.6px var(--ink)}
+.node::before{content:"";position:absolute;left:14%;bottom:26%;width:15%;height:9%;border-radius:50%;background:#ffffff55}
+.node::after{content:"";position:absolute;right:14%;bottom:26%;width:15%;height:9%;border-radius:50%;background:#ffffff55}
+.node.cur{outline:4px dashed var(--line);outline-offset:7px}
+.node .nextflag{position:absolute;top:-16px;background:var(--ink);color:#fff;font:800 11px var(--body);padding:4px 10px;letter-spacing:.12em;border-radius:999px}
+.node.locked{background:#EFE7DA;color:#A49CB4;box-shadow:0 5px 0 #B9B0C6;border-color:#B9B0C6}
+.node.locked .eyes i{height:3px;border-radius:2px;background:#A49CB4;margin-top:6px}
+.node.locked .eyes i::after{display:none}
+.node.locked::before,.node.locked::after{display:none}
+.extras{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
+.extra{border:var(--bw) solid var(--line);border-radius:26px;padding:16px 20px;background:var(--xc);color:var(--ink);text-align:left;font:700 23px var(--head);min-height:92px;box-shadow:var(--shadow);display:flex;flex-direction:column;justify-content:center;transition:transform .15s}
+.extra:hover{transform:translateY(-3px) rotate(-1deg)}
+.extra span{font:700 14px var(--body);opacity:.85}
+.extra.locked{opacity:.55;filter:grayscale(.6)}
+
+/* steps */
+.crumbs{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 18px}
+.step{border:var(--bw) solid var(--line);background:var(--paper);border-radius:999px;padding:6px 18px 6px 8px;font:700 17px var(--head);display:flex;align-items:center;gap:10px;min-height:52px;box-shadow:0 4px 0 var(--line)}
+.step .n{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--muted);font-size:15px;border:2px solid var(--line)}
+.step[aria-current="step"]{background:var(--t);color:var(--on)}
+.step[aria-current="step"] .n{background:#fff;color:var(--ink)}
+.step:disabled{opacity:.5;border-style:dashed;cursor:not-allowed;box-shadow:none}
+.tablehead{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+.tbadge{background:var(--t);color:var(--on);border:var(--bw) solid var(--line);border-radius:50%;width:72px;height:72px;display:grid;place-items:center;font:700 26px var(--head);box-shadow:0 5px 0 var(--line);position:relative}
+.tbadge::before{content:"";position:absolute;top:13px;left:22px;width:7px;height:8px;border-radius:50%;background:var(--ink);box-shadow:21px 0 0 var(--ink)}
+.tbadge span{margin-top:12px}
+
+/* learn */
+.learn{display:grid;grid-template-columns:1.1fr 1fr;gap:20px;align-items:start}
+.big-eq{font:700 clamp(40px,7vw,68px)/1 var(--head);margin:6px 0}
+.big-eq .c{color:var(--tt)}
+.arraybox{display:flex;justify-content:center;align-items:center;min-height:340px;margin:12px 0;background:color-mix(in srgb,var(--t) 14%,#fff);border:2.5px dashed color-mix(in srgb,var(--t) 70%,var(--ink));border-radius:24px;padding:12px;overflow:hidden}
+.arr{display:grid;gap:var(--g,5px);transition:transform .5s cubic-bezier(.4,1.4,.5,1)}
+.arr.spin{transform:rotate(90deg)}
+.dot{width:var(--d,24px);height:var(--d,24px);background:var(--t);border-radius:50%;border:2.5px solid var(--line);animation:pop .3s cubic-bezier(.3,1.6,.5,1) both;position:relative}
+.dot::after{content:"";position:absolute;top:18%;left:20%;width:30%;height:30%;border-radius:50%;background:#ffffff88}
+.dot.alt{background:color-mix(in srgb,var(--t) 55%,#fff)}
+@keyframes pop{from{transform:scale(.2);opacity:0}}
+.stepper{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.stepper .btn{min-width:58px;padding:8px 14px;font-size:26px}
+.stepper .lbl{font:700 18px var(--head);min-width:140px;text-align:center}
+.skip{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:10px}
+.skip button{border:var(--bw) solid var(--line);background:var(--paper);border-radius:50%;aspect-ratio:1;font:700 21px var(--head);box-shadow:0 4px 0 var(--line)}
+.skip button.on{background:var(--t);color:var(--on);animation:pop .3s cubic-bezier(.3,1.6,.5,1)}
+.card{border:var(--bw) solid var(--line);background:var(--paper);padding:16px 18px;border-radius:var(--radius);margin-top:16px;box-shadow:0 5px 0 var(--line);position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;left:0;right:0;top:0;height:10px;background:var(--t)}
+.card h3{font-size:22px;margin:8px 0 6px}
+.ex{font:700 20px/1.4 var(--head);margin-top:6px;background:color-mix(in srgb,var(--t) 12%,#fff);border-radius:14px;padding:6px 12px}
+.ex b{color:var(--tt)}
+.fingers{display:flex;gap:6px;align-items:flex-end;height:90px;margin:12px 0 6px}
+.fingers i{width:22px;height:80px;background:var(--t);border:2.5px solid var(--line);border-radius:12px 12px 6px 6px;transition:height .3s cubic-bezier(.3,1.5,.5,1)}
+.fingers i.down{height:26px;background:var(--paper)}
+.fingers i.gap{margin-left:12px}
+.kbtns{display:flex;gap:6px;flex-wrap:wrap}
+.kbtns button{min-width:46px;min-height:46px;border:2.5px solid var(--line);background:var(--paper);border-radius:50%;font:700 17px var(--head)}
+.kbtns button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.pat{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px;font:700 17px var(--head)}
+.pat div{border:2px solid var(--line);border-radius:14px;padding:6px 8px;background:color-mix(in srgb,var(--t) 12%,#fff)}
+
+/* practice */
+.games{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.game{border:var(--bw) solid var(--line);background:var(--paper);border-radius:var(--radius);padding:16px 18px 16px 74px;text-align:left;min-height:100px;box-shadow:var(--shadow);position:relative;transition:transform .15s}
+.game:hover{transform:translateY(-3px) rotate(-.6deg)}
+.game::before{content:attr(data-i);position:absolute;left:14px;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;background:var(--t);color:var(--on);border:2.5px solid var(--line);display:grid;place-items:center;font:700 22px var(--head)}
+.game b{display:block;font:700 20px var(--head)}
+.game small{display:block;color:var(--ink-2);font-size:14px;margin-top:4px}
+.game .chk{position:absolute;right:12px;top:-12px;font:800 12px var(--body);letter-spacing:.06em;color:#fff;background:var(--ok);border:2px solid var(--line);border-radius:999px;padding:2px 10px}
+.game.done{background:#F0FBF3}
+.gamehead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.path{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:540px;margin:14px auto}
+.path button{aspect-ratio:1.35;border:var(--bw) solid var(--line);background:var(--paper);border-radius:20px;font:700 clamp(22px,4vw,32px) var(--head);position:relative;box-shadow:0 5px 0 var(--line)}
+.path button.hit{background:var(--t);color:var(--on);animation:pop .3s cubic-bezier(.3,1.6,.5,1)}
+.path button.hit small{position:absolute;top:4px;left:9px;font:800 12px var(--body)}
+.shake{animation:shake .4s}
+@keyframes shake{20%{transform:translateX(-7px) rotate(-3deg)}60%{transform:translateX(7px) rotate(3deg)}}
+.builder{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;max-width:440px;margin:12px auto;touch-action:none;user-select:none;-webkit-user-select:none;background:color-mix(in srgb,var(--t) 10%,#fff);padding:10px;border-radius:20px;border:2.5px dashed color-mix(in srgb,var(--t) 70%,var(--ink))}
+.builder div{aspect-ratio:1;border:2px solid #2D2A4A22;border-radius:50%;background:#fff}
+.builder div.sel{background:var(--t);border-color:var(--line)}
+.status{text-align:center;font:700 18px var(--head);min-height:28px;margin-top:6px}
+.memory{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:620px;margin:14px auto}
+.mcard{aspect-ratio:1.25;border:var(--bw) solid var(--line);border-radius:20px;background:var(--t);color:var(--on);font:700 clamp(18px,3.4vw,28px) var(--head);position:relative;transition:transform .25s cubic-bezier(.3,1.5,.5,1);box-shadow:0 5px 0 var(--line);overflow:hidden}
+.mcard::before{content:"?";position:absolute;inset:0;display:grid;place-items:center;font-size:42px;color:#ffffffcc;background:radial-gradient(circle at 20% 25%,#ffffff40 8px,transparent 9px),radial-gradient(circle at 80% 75%,#ffffff40 10px,transparent 11px)}
+.mcard.up,.mcard.ok{background:var(--paper);color:var(--ink);transform:rotateY(0) scale(1.03)}
+.mcard.up::before,.mcard.ok::before{display:none}
+.mcard.ok{background:color-mix(in srgb,var(--ok) 22%,#fff);border-color:var(--ok)}
+.mcard .face{visibility:hidden}
+.mcard.up .face,.mcard.ok .face{visibility:visible}
+.tri{display:block;margin:6px auto;max-width:300px;width:100%}
+.famlist{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;font:700 22px var(--head)}
+.famlist div{border:2.5px solid var(--line);border-radius:16px;padding:8px 12px;background:var(--paper)}
+.famlist div.cur{outline:4px solid var(--t);outline-offset:2px}
+.famlist div.done{background:color-mix(in srgb,var(--ok) 15%,#fff)}
+
+/* question + keypad */
+.qa{display:grid;grid-template-columns:1fr 340px;gap:22px;align-items:start}
+.q{font:700 clamp(38px,6.5vw,64px)/1.2 var(--head);text-align:center;padding:16px 0}
+.q.word{font:700 clamp(20px,2.6vw,25px)/1.5 var(--body);text-align:left;padding:10px 0}
+.q.mid{font-size:clamp(28px,4vw,38px)}
+.slot{display:inline-block;min-width:1.7em;border-radius:16px;background:color-mix(in srgb,var(--t) 18%,#fff);border:3px dashed var(--t);color:var(--tt);text-align:center;padding:0 .15em;line-height:1.15}
+.q.word .slot{min-width:2.4em}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.keypad button{min-height:68px;border:var(--bw) solid var(--line);background:var(--paper);border-radius:22px;font:700 30px var(--head);box-shadow:0 5px 0 var(--line);user-select:none;-webkit-user-select:none;transition:transform .08s,box-shadow .08s}
+.keypad button:active{transform:translateY(4px);box-shadow:0 1px 0 var(--line)}
+.keypad .go{grid-column:span 3;background:var(--t);color:var(--on);font-size:24px;border-radius:999px}
+.keypad .sm{font-size:19px;background:var(--muted)}
+.fb{margin-top:14px;border:var(--bw) solid;border-radius:22px;padding:14px 18px;display:none;position:relative}
+.fb.show{display:block;animation:in .3s cubic-bezier(.3,1.5,.5,1)}
+.fb.good{border-color:var(--ok);background:#EAF8EF}
+.fb.bad{border-color:#F5A623;background:#FFF5E0}
+.fb b.h{font:700 23px var(--head)}
+.fb.good b.h{color:#178A48}
+.fb.bad b.h{color:#B76A00}
+.fb .why{font-weight:700;margin-top:4px}
+.mini{display:grid;gap:3px;margin-top:10px;width:max-content;max-width:100%}
+.mini i{width:var(--m,12px);height:var(--m,12px);background:var(--t);border-radius:50%;border:1.5px solid var(--line);display:block}
+.bar{height:18px;border:2.5px solid var(--line);border-radius:999px;overflow:hidden;background:var(--paper)}
+.bar i{display:block;height:100%;background:var(--t);transition:width .4s cubic-bezier(.3,1.3,.5,1);border-radius:999px;background-image:repeating-linear-gradient(-45deg,#ffffff40 0 8px,transparent 8px 16px)}
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.timer{font:700 28px var(--head);background:var(--muted);border:2.5px solid var(--line);border-radius:999px;padding:2px 16px}
+.timer.low{color:#fff;background:var(--bad)}
+.result{text-align:center;padding:18px}
+.stars{font-size:72px;letter-spacing:10px;color:#FFC530;-webkit-text-stroke:3px var(--ink);line-height:1.1;margin:6px 0}
+.stars span{display:inline-block;animation:star .55s cubic-bezier(.3,1.7,.5,1) both}
+.stars span.off{color:#EFE7DA;-webkit-text-stroke-color:#B9B0C6}
+@keyframes star{from{transform:scale(0) rotate(-60deg)}}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{min-width:60px;min-height:50px;border:2.5px solid var(--line);border-radius:999px;background:var(--paper);font:700 18px var(--head);padding:0 14px;box-shadow:0 3px 0 var(--line)}
+.chip[aria-pressed="true"]{background:var(--c,var(--ink));color:var(--con,#fff)}
+.chip:disabled{opacity:.4;border-style:dashed;box-shadow:none}
+.flash{animation:flash .5s}
+@keyframes flash{0%{background:#C9F2D7}100%{background:var(--paper)}}
+.flashbad{animation:flashbad .6s}
+@keyframes flashbad{0%{background:#FFE2B8}100%{background:var(--paper)}}
+.speednum{font:700 64px var(--head);color:var(--ink);background:#FFC530;border:var(--bw) solid var(--line);border-radius:50%;width:110px;height:110px;display:inline-grid;place-items:center;box-shadow:0 5px 0 var(--line)}
+
+/* confetti */
+.confetti{position:fixed;pointer-events:none;z-index:80;left:0;top:0}
+.confetti i{position:absolute;width:10px;height:10px;border-radius:50%;animation:burst .9s cubic-bezier(.2,.8,.4,1) forwards}
+.confetti i:nth-child(3n){border-radius:2px}
+.confetti i:nth-child(4n){width:0;height:0;background:none!important;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:11px solid var(--cc)}
+@keyframes burst{to{transform:translate(var(--dx),var(--dy)) rotate(var(--r));opacity:0}}
+
+/* dashboard */
+.dash{display:grid;grid-template-columns:auto repeat(12,minmax(0,1fr));gap:3px;font-variant-numeric:tabular-nums}
+.dash .h{font:700 15px var(--head);display:grid;place-items:center;min-height:30px;border-radius:50%}
+.dash .rh{background:var(--c);color:var(--con);padding:0 8px;border:2px solid var(--line);border-radius:999px}
+.dash .cell{aspect-ratio:1;display:grid;place-items:center;font:700 clamp(10px,1.5vw,15px) var(--head);border:1.5px solid #2D2A4A1F;border-radius:8px;background:#fff;color:#2D2A4A55;padding:0}
+.dash .cell.pr{border:2px dashed var(--c);color:var(--ink);background:color-mix(in srgb,var(--c) 12%,#fff)}
+.dash .cell.fl{background:var(--c);color:var(--con);border:2px solid var(--line)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:15px;font-weight:700;margin:12px 0}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{width:22px;height:22px;border-radius:6px;display:inline-block}
+.ladder{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:10px}
+.ladder div{border:2.5px solid var(--line);border-radius:18px;padding:10px 4px;text-align:center;font-weight:800;font-size:14px;background:var(--paper)}
+.ladder div.got{box-shadow:0 4px 0 var(--line);background:#FFF9EC}
+.ladder div.no{opacity:.45;border-style:dashed}
+.ladder .belt{margin:6px auto 8px}
+.dashwrap{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:20px;align-items:start}
+.stat{font:700 44px var(--head)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+
+/* class mode */
+.cm{min-height:calc(100vh - 140px);display:flex;flex-direction:column}
+.cmq{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:10px;background:var(--paper);border:var(--bw) solid var(--line);border-radius:36px;box-shadow:var(--shadow);margin-top:8px}
+.cmq .q{font-size:clamp(56px,11vw,150px)}
+.cmq .q.word{font-size:clamp(24px,3.4vw,44px);max-width:1000px;text-align:center}
+.cmans{font:700 clamp(30px,5vw,60px) var(--head);color:var(--tt);min-height:1.2em}
+.cmwhy{font-size:clamp(18px,2.2vw,26px);font-weight:700;max-width:900px}
+.cmbar{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;padding:16px 0 4px}
+.cmbar .btn{font-size:24px;min-height:72px;min-width:240px}
+.cmtime{height:14px;max-width:600px;width:100%;margin:10px auto}
+
+/* modal */
+.modal{position:fixed;inset:0;background:#2D2A4A99;display:grid;place-items:center;z-index:50;padding:16px;animation:in .2s}
+.modal .panel{max-width:520px;width:100%;text-align:center;border-radius:32px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 20px;border-radius:999px;font-weight:800;z-index:60;max-width:calc(100% - 32px);animation:in .25s;text-align:center}
+
+/* settings */
+.set{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 0;border-bottom:2.5px dashed var(--muted);flex-wrap:wrap}
+.set:last-child{border-bottom:0}
+.set h3{font-size:21px}
+.switch{width:72px;height:42px;border:var(--bw) solid var(--line);border-radius:999px;background:var(--muted);position:relative;flex:none}
+.switch::after{content:"";position:absolute;top:4px;left:4px;width:28px;height:28px;border-radius:50%;background:#fff;border:2.5px solid var(--line);transition:left .25s cubic-bezier(.3,1.5,.5,1)}
+.switch[aria-checked="true"]{background:var(--ok)}
+.switch[aria-checked="true"]::after{left:34px}
+
+footer.foot{margin-top:32px;padding:14px 18px;border:2.5px solid var(--line);border-radius:999px;background:var(--paper);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:14px;color:var(--ink-2);box-shadow:0 4px 0 var(--line)}
+footer.foot b{color:var(--ink)}
+.trialnote{background:#FFC530;color:var(--ink);border:2.5px solid var(--line);padding:10px 18px;border-radius:999px;font-weight:800;font-size:15px;margin-bottom:14px;box-shadow:0 3px 0 var(--line)}
+
+@media (max-width:1000px){.map{grid-template-columns:repeat(4,1fr)}}
+@media (max-width:820px){
+  .learn,.qa,.dashwrap{grid-template-columns:minmax(0,1fr)}
+  .games{grid-template-columns:repeat(2,1fr)}
+  .extras{grid-template-columns:1fr}
+  .arraybox{min-height:260px}
+  .ladder{grid-template-columns:repeat(4,1fr)}
+  .keypad button{min-height:60px}
+  .q{padding:8px 0}
+}
+@media (min-width:641px){.node{grid-row:var(--r);grid-column:var(--col)}}
+@media (max-width:640px){.mappath{display:none}.map{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:520px){
+  body{font-size:17px}
+  .map{gap:12px 10px}.mapwrap{padding:16px 10px 20px;border-radius:26px}
+  .node .eyes i{width:8px;height:10px}.node .eyes i::after{width:3px;height:3px}
+  .node .st{font-size:11px;padding:0 6px}
+  .panel{padding:16px}
+  .skip{grid-template-columns:repeat(4,1fr)}
+  .games{grid-template-columns:1fr}
+  .memory{grid-template-columns:repeat(3,1fr)}
+  .famlist{grid-template-columns:1fr}
+  .brand b{font-size:22px}
+  .nav button{padding:6px 12px;font-size:14px}
+  .dash{gap:2px}.dash .h{font-size:11px}.dash .rh{padding:0 4px}.dash .cell{font-size:9px;border-width:1px;border-radius:5px}.dash .cell.pr,.dash .cell.fl{border-width:1.5px}
+  .dashwrap .panel:first-child{padding:10px}
+  .stat{font-size:34px}
+  .step{padding:4px 12px 4px 6px;font-size:14px;min-height:44px}.step .n{width:26px;height:26px;font-size:12px}
+  .tbadge{width:60px;height:60px;font-size:21px}.tbadge::before{top:10px;left:18px;box-shadow:17px 0 0 var(--ink)}
+  .tablehead h2{font-size:22px!important}
+  .q{font-size:clamp(34px,11vw,48px)}
+  .keypad{gap:8px}.keypad button{min-height:56px;font-size:26px}
+  footer.foot{border-radius:22px}
+  .beltcard{padding:6px 16px;gap:10px}.beltcard .belt.lg{width:70px;height:18px}.beltcard .belt.lg::after{width:12px;right:14px;top:-7px;bottom:-7px}
+}
+@media (min-width:1600px){.wrap{zoom:1.22}}
+@media (min-width:2200px){.wrap{zoom:1.5}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <button class="brand" id="home" aria-label="Times Tables Quest home">
+      <span class="mark">×</span><span><small>Bright EngMath</small><b>Times Tables Quest</b></span>
+    </button>
+    <nav class="nav" aria-label="Main">
+      <span class="beltchip" id="beltchip"></span>
+      <button data-nav="map">Map</button>
+      <button data-nav="dash">My Facts</button>
+      <button data-nav="classmode">Class Mode</button>
+      <button data-nav="teacher">Teacher</button>
+    </nav>
+  </header>
+  <main id="view" aria-live="polite"></main>
+  <footer class="foot"><span><b>Bright EngMath</b> · Times Tables Quest</span><span>© Bright EngMath · For single classroom use only</span></footer>
+</div>
+<script>
+"use strict";
+const EDITION = "trial"; // build script sets "trial" for the free sample
+const TRIAL = EDITION === "trial";
+const TRIAL_TABLES = [2, 5];
+
+/* ---------------- data ---------------- */
+const PAL = [["#FF6F9C","#2D2A4A"],["#FF9433","#2D2A4A"],["#FFC530","#2D2A4A"],["#5CC85A","#2D2A4A"],["#36A3F5","#2D2A4A"],["#14BFA6","#2D2A4A"],
+             ["#FF6252","#2D2A4A"],["#A8D432","#2D2A4A"],["#A585F2","#2D2A4A"],["#4E6CF2","#FFFFFF"],["#D3934F","#2D2A4A"],["#EE4569","#2D2A4A"]];
+// darker shade of each table color for colored text on white
+const TXT = ["#D6336C","#D9600B","#A86F00","#2E8B3A","#1673C9","#0A8574","#D63A2C","#5F7F0E","#7451D6","#3F5BE0","#9A5F23","#D02550"];
+const BELTS = [["White",0,"#FFFFFF"],["Yellow",2,"#F2C230"],["Orange",4,"#EF7D22"],["Green",6,"#3C9A4A"],["Blue",8,"#2667C9"],["Brown",10,"#7A4A2A"],["Black",12,"#1A1A1A"]];
+const NAMES = ["Priya","Mateo","Aisha","Kenji","Zara","Noah","Mei","Omar","Lena","Diego","Ava","Sam","Tariq","Isla"];
+const GAMES = [
+  {id:"path",name:"Skip Count Path",desc:"Tap the numbers in order."},
+  {id:"build",name:"Array Builder",desc:"Drag to build rows × columns."},
+  {id:"memory",name:"Memory Match",desc:"Match each fact to its answer."},
+  {id:"missing",name:"Missing Factor",desc:"Find the missing number."},
+  {id:"family",name:"Fact Families",desc:"Multiply and divide with the same 3 numbers."},
+  {id:"word",name:"Word Problems",desc:"Short stories with a times fact."}
+];
+const STRAT = {
+  1:{title:"Times 1 keeps the number the same",body:"1 group of 8 is just 8. Any number × 1 is that same number. And any number × 0 is 0, because 0 groups is nothing."},
+  2:{title:"Double it",body:"× 2 means 2 equal groups. Add the number to itself."},
+  3:{title:"Double it, then add one more group",body:"3 groups = 2 groups + 1 more group."},
+  4:{title:"Double, then double again",body:"4 groups = 2 groups, twice. Double the number, then double that answer."},
+  5:{title:"Answers end in 0 or 5",body:"Every × 5 answer ends in 0 or 5. You can also find × 10 and take half."},
+  6:{title:"Times 5, plus one more group",body:"6 groups = 5 groups + 1 more group."},
+  7:{title:"Break it into 5 and 2",body:"7 groups = 5 groups + 2 groups. Find both, then add."},
+  8:{title:"Double three times",body:"8 = 2 × 2 × 2. Double the number, double again, and double one more time."},
+  9:{title:"Times 10, take away one group",body:"9 groups = 10 groups − 1 group. For 9 × 1 to 9 × 10, the digits of the answer add up to 9."},
+  10:{title:"Shift the digits, add a 0",body:"× 10 makes each digit move one place to the left. A 0 fills the ones place: 7 → 70."},
+  11:{title:"Watch the pattern",body:"For 11 × 1 to 11 × 9, the digit repeats: 11 × 4 = 44. For bigger numbers, use 10 groups + 1 group."},
+  12:{title:"Times 10, plus times 2",body:"12 groups = 10 groups + 2 groups. Find both, then add."}
+};
+// One worked example for table t with factor k. Returns HTML; verified by QA script.
+function exFor(t,k){const p=t*k;
+  switch(t){
+    case 1:return `1 × ${k} = <b>${k}</b>`;
+    case 2:return `2 × ${k} = ${k} + ${k} = <b>${p}</b>`;
+    case 3:return `3 × ${k} = (2 × ${k}) + ${k} = ${2*k} + ${k} = <b>${p}</b>`;
+    case 4:return `4 × ${k}: double ${k} is ${2*k}, double again is <b>${p}</b>`;
+    case 5:return `5 × ${k} = half of (10 × ${k}) = half of ${10*k} = <b>${p}</b>`;
+    case 6:return `6 × ${k} = (5 × ${k}) + ${k} = ${5*k} + ${k} = <b>${p}</b>`;
+    case 7:return `7 × ${k} = (5 × ${k}) + (2 × ${k}) = ${5*k} + ${2*k} = <b>${p}</b>`;
+    case 8:return `8 × ${k}: ${k} → ${2*k} → ${4*k} → <b>${p}</b>`;
+    case 9:return `9 × ${k} = (10 × ${k}) − ${k} = ${10*k} − ${k} = <b>${p}</b>`;
+    case 10:return `10 × ${k} = <b>${p}</b> (${k} ten${k>1?"s":""})`;
+    case 11:return k<=9?`11 × ${k} = <b>${p}</b> (the ${k} repeats)`:`11 × ${k} = (10 × ${k}) + ${k} = ${10*k} + ${k} = <b>${p}</b>`;
+    case 12:return `12 × ${k} = (10 × ${k}) + (2 × ${k}) = ${10*k} + ${2*k} = <b>${p}</b>`;
+  }}
+const EXAMPLES = {1:[8,12],2:[7,9],3:[7,8],4:[6,9],5:[8,7],6:[7,8],7:[6,8],8:[6,7],9:[6,8],10:[7,12],11:[4,12],12:[6,8]};
+
+/* ---------------- state ---------------- */
+const KEY = TRIAL ? "bem-ttq-trial-v1" : "bem-ttq-v1";
+const fresh = () => ({tables:{}, facts:{}, practice:{}, speedBest:0, settings:{unlockAll:false, bossTime:180}});
+let S = fresh();
+try{const raw=localStorage.getItem(KEY); if(raw){const d=JSON.parse(raw); S=Object.assign(fresh(),d); S.settings=Object.assign(fresh().settings,d.settings||{});}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+
+const passedCount = () => Object.values(S.tables).filter(x=>x&&x.passed).length;
+const beltIndex = (n=passedCount()) => BELTS.reduce((b,x,i)=>n>=x[1]?i:b,0);
+function isOpen(t){
+  if(TRIAL) return TRIAL_TABLES.includes(t);
+  if(S.settings.unlockAll||t===1) return true;
+  return !!(S.tables[t-1]&&S.tables[t-1].passed);
+}
+function practiceDone(t){return (S.practice[t]||[]).length>=GAMES.length}
+function bossOpen(t){return S.settings.unlockAll||practiceDone(t)||(S.tables[t]&&S.tables[t].passed)}
+// mastery: fluent = 3 correct in a row, each within 3 seconds
+function record(t,k,ok,ms,timed=true){
+  if(!(t>=1&&t<=12&&k>=1&&k<=12)) return;
+  const key=t+"x"+k, f=S.facts[key]||(S.facts[key]={s:0,n:0,m:false});
+  f.n++;
+  if(!ok){f.s=0;f.m=false}
+  else if(timed){ if(ms<=3000){f.s++; if(f.s>=3)f.m=true} else f.s=0 }
+  save();
+}
+const factState = (t,k) => {const f=S.facts[t+"x"+k]; return !f||!f.n?"ns":f.m?"fl":"pr"};
+
+/* ---------------- helpers ---------------- */
+const $ = (s,el=document)=>el.querySelector(s), $$=(s,el=document)=>[...el.querySelectorAll(s)];
+const view = $("#view");
+const rnd = n => Math.floor(Math.random()*n);
+const pick = a => a[rnd(a.length)];
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]]}return a}
+const range = (a,b)=>Array.from({length:b-a+1},(_,i)=>a+i);
+const pl = (n,s,p)=>n===1?s:(p||s+"s");
+function tableVars(t){const st=document.documentElement.style;
+  if(!t){st.setProperty("--t","#1E2A44");st.setProperty("--on","#fff");st.setProperty("--tt","#1E2A44");return}
+  st.setProperty("--t",PAL[t-1][0]);st.setProperty("--on",PAL[t-1][1]);st.setProperty("--tt",TXT[t-1]);}
+let cleanups=[], keyHandler=null;
+function go(fn,...args){cleanups.forEach(f=>{try{f()}catch(e){}});cleanups=[];keyHandler=null;closeModal();
+  view.style.animation="none";view.offsetHeight;view.style.animation="";
+  fn(...args);window.scrollTo(0,0);renderBelt();}
+document.addEventListener("keydown",e=>{if(keyHandler&&!e.metaKey&&!e.ctrlKey&&!e.altKey&&keyHandler(e)!==false&&["Enter"," ","Backspace"].includes(e.key))e.preventDefault()});
+const PRAISE=["Awesome!","Great job!","You got it!","Super!","Nice work!","Yes! Correct!","Brilliant!","Way to go!"];
+const praise=()=>pick(PRAISE);
+function confetti(el){if(matchMedia("(prefers-reduced-motion: reduce)").matches||!el)return;const r=el.getBoundingClientRect(),c=document.createElement("div");c.className="confetti";
+  c.style.left=(r.left+r.width/2)+"px";c.style.top=(r.top+Math.min(r.height,60)/2)+"px";
+  c.innerHTML=Array.from({length:22},(_,i)=>{const a=Math.random()*Math.PI*2,d=60+Math.random()*120,col=PAL[i%12][0];
+    return `<i style="background:${col};--cc:${col};--dx:${Math.cos(a)*d}px;--dy:${Math.sin(a)*d-40}px;--r:${Math.random()*540}deg"></i>`}).join("");
+  document.body.appendChild(c);setTimeout(()=>c.remove(),1000)}
+function toast(msg){const d=document.createElement("div");d.className="toast";d.setAttribute("role","status");d.textContent=msg;document.body.appendChild(d);setTimeout(()=>d.remove(),2600)}
+function modal(html){closeModal();const m=document.createElement("div");m.className="modal";m.id="modal";m.innerHTML=`<div class="panel" role="dialog" aria-modal="true">${html}</div>`;document.body.appendChild(m);m.addEventListener("click",e=>{if(e.target===m)closeModal()});const b=$("button",m);if(b)b.focus();return m}
+function closeModal(){const m=$("#modal");if(m)m.remove()}
+function arrayHTML(r,c,size){const s=size||Math.max(7,Math.min(14,Math.floor(220/Math.max(r,c))));
+  return `<div class="mini" style="grid-template-columns:repeat(${c},${s}px);--m:${s}px" role="img" aria-label="${r} rows of ${c}">${"<i></i>".repeat(r*c)}</div>`}
+function trialLocked(){modal(`<span class="tag">Free trial</span><h2 style="font-size:28px;margin:6px 0 10px">This part is in the full version</h2>
+  <p>The free trial includes the 2 and 5 times tables. The full Times Tables Quest has all 12 tables, Mixed Review, the full Speed Challenge, and Class Mode with every table.</p>
+  <p class="lead">Look for <b>Times Tables Quest</b> in the Bright EngMath store on TPT.</p>
+  <button class="btn dark" style="margin-top:12px" onclick="closeModal()">OK</button>`)}
+
+function renderBelt(){const b=BELTS[beltIndex()];
+  $("#beltchip").innerHTML=`<i class="belt" style="--bc:${b[2]}"></i>${b[0]} Belt`;
+  $("#beltchip").setAttribute("aria-label",`${b[0]} Belt, ${passedCount()} of 12 tables passed`)}
+function setNav(id){$$("[data-nav]").forEach(b=>{if(b.dataset.nav===id)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")})}
+$("#home").onclick=()=>go(MapScreen);
+$$("[data-nav]").forEach(b=>b.onclick=()=>go({map:MapScreen,dash:Dash,classmode:ClassSetup,teacher:Teacher}[b.dataset.nav]));
+
+/* ---------------- questions ---------------- */
+// q = {t,k,type,html,answer,why,rows,cols,word?,timed}
+const slot = '<span class="slot"></span>';
+function qFact(t,k,flip=Math.random()<.5){const a=flip?k:t,b=flip?t:k;
+  return {t,k,type:"fact",html:`${a} × ${b} = ${slot}`,answer:t*k,why:exFor(t,k),rows:k,cols:t,timed:true}}
+function qMissing(t,k,left=Math.random()<.5){
+  return {t,k,type:"missing",html:left?`${slot} × ${t} = ${t*k}`:`${t} × ${slot} = ${t*k}`,answer:k,
+    why:`${k} × ${t} = ${t*k}, so the missing number is ${k}.`,rows:k,cols:t,timed:true}}
+function qDiv(t,k){return {t,k,type:"div",html:`${t*k} ÷ ${t} = ${slot}`,answer:k,why:`${t*k} ÷ ${t} = ${k}, because ${k} × ${t} = ${t*k}.`,rows:k,cols:t,timed:true}}
+function qArray(t,k){return {t,k,type:"array",html:`<div class="q mid" style="padding:0">How many dots?</div>${arrayHTML(k,t,Math.max(9,Math.min(20,Math.floor(260/Math.max(k,t)))))}<div class="q mid" style="padding:6px 0 0">${k} × ${t} = ${slot}</div>`,
+  answer:t*k,why:`${k} rows of ${t} = ${t*k}.`,rows:k,cols:t,timed:false,raw:true}}
+const CTX = [ // each: mult(name,k,t) -> text, unit ; div(name,p,t) -> text, unit
+  {m:(n,k,t)=>`${n} has ${k} bags. Each bag holds ${t} ${pl(t,"apple")}. How many apples are there in all?`,mu:"apples",
+   d:(n,p,t)=>`${n} has ${p} apples and puts ${t} in each bag. How many bags does ${n} fill?`,du:"bags"},
+  {m:(n,k,t)=>`${n} sets up ${k} rows of chairs with ${t} ${pl(t,"chair")} in each row. How many chairs is that?`,mu:"chairs",
+   d:(n,p,t)=>`${n} has ${p} chairs and puts ${t} in each row. How many rows can ${n} make?`,du:"rows"},
+  {m:(n,k,t)=>`${n} buys ${k} boxes of crayons. Each box has ${t} ${pl(t,"crayon")}. How many crayons does ${n} buy?`,mu:"crayons",
+   d:(n,p,t)=>`${n} has ${p} crayons and puts ${t} in each box. How many boxes does ${n} fill?`,du:"boxes"},
+  {m:(n,k,t)=>`${n} brings ${k} packs of juice boxes. Each pack has ${t} juice ${pl(t,"box","boxes")}. How many juice boxes are there?`,mu:"juice boxes",
+   d:(n,p,t)=>`${n} has ${p} juice boxes. Each pack holds ${t}. How many packs is that?`,du:"packs"},
+  {m:(n,k,t)=>`${n} fills ${k} plates with ${t} ${pl(t,"cookie")} on each plate. How many cookies are on the plates?`,mu:"cookies",
+   d:(n,p,t)=>`${n} bakes ${p} cookies and puts ${t} on each plate. How many plates does ${n} need?`,du:"plates"},
+  {m:(n,k,t)=>`In ${n}'s game, there are ${k} teams with ${t} ${pl(t,"player")} on each team. How many players are there?`,mu:"players",
+   d:(n,p,t)=>`${p} players come to ${n}'s game. Each team needs ${t} ${pl(t,"player")}. How many teams can they make?`,du:"teams"},
+  {m:(n,k,t)=>`${n}'s classroom has ${k} shelves. Each shelf holds ${t} ${pl(t,"book")}. How many books are on the shelves?`,mu:"books",
+   d:(n,p,t)=>`${n} has ${p} books and puts ${t} on each shelf. How many shelves does ${n} use?`,du:"shelves"},
+  {m:(n,k,t)=>`${n} makes ${k} vases of flowers with ${t} ${pl(t,"flower")} in each vase. How many flowers does ${n} use?`,mu:"flowers",
+   d:(n,p,t)=>`${n} picks ${p} flowers and puts ${t} in each vase. How many vases does ${n} fill?`,du:"vases"}
+];
+function qWord(t,k,div=Math.random()<.4,ctx=pick(CTX),name=pick(NAMES)){
+  if(k<2)k=2+rnd(11);
+  if(div) return {t,k,type:"word",word:true,html:`${ctx.d(name,t*k,t)}<br>${slot} ${ctx.du}`,answer:k,why:`${t*k} ÷ ${t} = ${k}, because ${k} × ${t} = ${t*k}.`,rows:k,cols:t,timed:false};
+  return {t,k,type:"word",word:true,html:`${ctx.m(name,k,t)}<br>${slot} ${ctx.mu}`,answer:t*k,why:`${k} groups of ${t} = ${k} × ${t} = ${t*k}.`,rows:k,cols:t,timed:false};
+}
+function mixedQ(tables,types=["fact","fact","fact","missing","div"]){const t=pick(tables),k=1+rnd(12),ty=pick(types);
+  return ty==="fact"?qFact(t,k):ty==="missing"?qMissing(t,k):qDiv(t,k)}
+
+/* ---------------- keypad + quiz runner ---------------- */
+function keypadHTML(){return `<div class="keypad" role="group" aria-label="Number pad">${[1,2,3,4,5,6,7,8,9].map(n=>`<button data-k="${n}">${n}</button>`).join("")}
+  <button data-k="C" class="sm" aria-label="Clear">Clear</button><button data-k="0">0</button><button data-k="B" class="sm" aria-label="Delete">⌫</button>
+  <button data-k="OK" class="go">Check answer</button></div>`}
+/* opts: {el, qs, timer:seconds|0, title, onDone(res), autoNextWrong:ms|0} */
+function runQuiz(o){
+  const res={correct:0,total:o.qs.length,wrong:[],timeUp:false};let i=0,val="",locked=false,shown=0,tleft=o.timer||0,tid=null,adv=null;
+  o.el.innerHTML=`<div class="panel"><div class="qhead"><span class="tag num" data-n></span>${o.timer?`<span class="timer num" data-timer></span>`:`<span class="tag" style="color:var(--ink-2)">${o.title||""}</span>`}</div>
+    <div class="bar"><i data-bar style="width:0"></i></div>
+    <div class="qa" style="margin-top:12px"><div><div class="q num" data-q></div><div class="fb" data-fb aria-live="polite"></div></div>${keypadHTML()}</div></div>`;
+  const Q=$("[data-q]",o.el),FB=$("[data-fb]",o.el),T=$("[data-timer]",o.el),GO=$(".go",o.el);
+  const fmt=s=>`${Math.floor(s/60)}:${String(s%60).padStart(2,"0")}`;
+  function paint(){const s=$(".slot",Q);if(s)s.textContent=val||"?"}
+  function show(){if(i>=o.qs.length)return finish();const q=o.qs[i];val="";locked=false;shown=performance.now();
+    Q.className="q num"+(q.word?" word":"");Q.innerHTML=q.html;paint();FB.className="fb";FB.innerHTML="";GO.textContent="Check answer";
+    $("[data-n]",o.el).textContent=`Question ${i+1} of ${o.qs.length}`;$("[data-bar]",o.el).style.width=(i/o.qs.length*100)+"%";}
+  function next(){clearTimeout(adv);i++;show()}
+  function check(){const q=o.qs[i],ok=+val===q.answer,ms=performance.now()-shown;locked=true;
+    if(o.record!==false) record(q.t,q.k,ok,ms,q.timed);
+    if(ok)res.correct++;else res.wrong.push(q);
+    FB.className="fb show "+(ok?"good":"bad");
+    FB.innerHTML=ok?`<b class="h">✓ ${praise()}</b><div class="why">${q.why}</div>`:
+      `<b class="h">Almost! Let's look together.</b> The answer is <b>${q.answer}</b>.<div class="why">${q.why}</div>${arrayHTML(q.rows,q.cols)}`;
+    if(ok)confetti(FB);
+    if(ok){adv=setTimeout(next,1100)}else{GO.textContent="Next →";if(o.autoNextWrong)adv=setTimeout(next,o.autoNextWrong)}}
+  function key(k){if(i>=o.qs.length)return;
+    if(locked){if(k==="OK")next();return}
+    if(k==="OK"){if(val!=="")check();return}
+    if(k==="B")val=val.slice(0,-1);else if(k==="C")val="";else if(val.length<3)val+=k;paint()}
+  $$(".keypad button",o.el).forEach(b=>b.onclick=()=>key(b.dataset.k));
+  keyHandler=e=>{if(/^[0-9]$/.test(e.key))key(e.key);else if(e.key==="Backspace")key("B");else if(e.key==="Enter")key("OK");else if(e.key==="Escape")key("C");else return false};
+  function finish(){clearInterval(tid);clearTimeout(adv);keyHandler=null;o.onDone(res)}
+  if(o.timer){T.textContent=fmt(tleft);tid=setInterval(()=>{tleft--;T.textContent=fmt(Math.max(0,tleft));T.classList.toggle("low",tleft<=20);
+    if(tleft<=0){res.timeUp=true;i=o.qs.length;finish()}},1000)}
+  cleanups.push(()=>{clearInterval(tid);clearTimeout(adv)});
+  show();focusOnSmall(o.el);
+}
+function focusOnSmall(el){if(window.innerWidth<820)requestAnimationFrame(()=>el.scrollIntoView({block:"start",behavior:"auto"}))}
+
+/* ---------------- MAP ---------------- */
+function MapScreen(){tableVars(3);setNav("map");
+  const pc=passedCount(),cur=range(1,12).find(t=>isOpen(t)&&!(S.tables[t]&&S.tables[t].passed));
+  view.innerHTML=`${TRIAL?`<div class="trialnote">Free trial: the 2 and 5 times tables are open. Other levels are in the full version.</div>`:""}
+  <div class="hello"><div><span class="tag" style="--tt:var(--ink-2)">Bright EngMath presents</span><h1>Hi, math explorer!<br><span class="hl">Pick a number buddy.</span></h1>
+    <p class="lead">Learn it, practice it, then win the Boss Round to wake up the next buddy.</p></div>
+    <div class="beltcard"><i class="belt lg" style="--bc:${BELTS[beltIndex()][2]}"></i><div><b>${BELTS[beltIndex()][0]} Belt</b><div class="lead num">${pc} of 12 tables passed</div></div></div></div>
+  <div class="mapwrap"><svg class="mappath" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M50 50 H350 C398 50 398 150 350 150 H50 C2 150 2 250 50 250 H350" fill="none" stroke="#F3E9DA" stroke-width="22" vector-effect="non-scaling-stroke" stroke-linecap="round"/>
+    <path d="M50 50 H350 C398 50 398 150 350 150 H50 C2 150 2 250 50 250 H350" fill="none" stroke="#2D2A4A" stroke-width="4" stroke-dasharray="1 14" vector-effect="non-scaling-stroke" stroke-linecap="round"/></svg>
+  <div class="map">${range(1,12).map(t=>{const d=S.tables[t],open=isOpen(t),done=d&&d.passed;
+    const r=Math.ceil(t/4),i=(t-1)%4,col=r===2?4-i:i+1;
+    const st=done?`<span class="st stars">${"★".repeat(d.stars)}${"☆".repeat(3-d.stars)}</span>`:`<span class="st">${open?(t===cur?"Start":"Play"):"Sleeping"}</span>`;
+    return `<button class="node ${done?"done":open?(t===cur?"cur":""):"locked"}" data-t="${t}" style="--c:${PAL[t-1][0]};--con:${PAL[t-1][1]};--r:${r};--col:${col};--d:${t*0.04}s" aria-label="${t} times table${t===1?" (and times 0)":""}, ${done?d.stars+" stars":open?"open":"locked"}">
+      ${t===cur&&!done?'<span class="nextflag">NEXT</span>':""}<span class="eyes" aria-hidden="true"><i></i><i></i></span><span class="x num">×${t}</span>${st}</button>`}).join("")}</div></div>
+  <div class="extras">
+    <button class="extra ${TRIAL||pc===0?"locked":""}" data-x="mixed" style="--xc:#FFD6E4">Mixed Review <span>${TRIAL?"Full version":pc?"Facts from the tables you've passed":"Pass a Boss Round first"}</span></button>
+    <button class="extra" data-x="speed" style="--xc:#D4ECFF">Speed Challenge <span class="num">60 seconds · Best: ${S.speedBest||"—"}</span></button>
+    <button class="extra" data-x="dash" style="--xc:#FFF0BF">My Facts <span class="num">${range(1,12).reduce((a,t)=>a+range(1,12).filter(k=>factState(t,k)==="fl").length,0)} of 144 facts fluent</span></button>
+  </div>`;
+  $$(".node",view).forEach(b=>b.onclick=()=>{const t=+b.dataset.t;
+    if(!isOpen(t)){if(TRIAL)trialLocked();else toast(`Pass the ×${t-1} Boss Round to open ×${t}.`);return}
+    go(Learn,t)});
+  $('[data-x="mixed"]',view).onclick=()=>{if(TRIAL)return trialLocked();if(!passedCount()&&!S.settings.unlockAll)return toast("Pass your first Boss Round to open Mixed Review.");go(MixedSetup)};
+  $('[data-x="speed"]',view).onclick=()=>go(SpeedSetup);
+  $('[data-x="dash"]',view).onclick=()=>go(Dash);
+}
+
+/* ---------------- table frame ---------------- */
+function frame(t,stepName,inner){tableVars(t);setNav("");
+  const steps=[["learn","Learn",true],["practice","Practice",true],["boss","Boss Round",bossOpen(t)]];
+  const pd=practiceDone(t),bd=S.tables[t]&&S.tables[t].passed;
+  view.innerHTML=`<button class="back" data-back>← Map</button>
+  <div class="tablehead"><span class="tbadge num"><span>×${t}</span></span><div><h2 style="font-size:28px">The ${t} Times Table</h2>${t===1?'<div class="lead">plus × 0</div>':""}</div></div>
+  <nav class="crumbs" aria-label="Steps">${steps.map(([id,n,on],i)=>`<button class="step" data-step="${id}" ${id===stepName?'aria-current="step"':""} ${on?"":"disabled"}>
+    <span class="n">${(i===1&&pd)||(i===2&&bd)?"✓":i+1}</span>${n}${on?"":" · finish Practice"}</button>`).join("")}</nav><div data-inner></div>`;
+  $("[data-back]",view).onclick=()=>go(MapScreen);
+  $$("[data-step]",view).forEach(b=>b.onclick=()=>go({learn:Learn,practice:Practice,boss:Boss}[b.dataset.step],t));
+  const el=$("[data-inner]",view);el.innerHTML=inner||"";return el;
+}
+
+/* ---------------- LEARN ---------------- */
+function Learn(t){
+  const ex=EXAMPLES[t];
+  const extra={
+    1:`<div class="card"><span class="tag">Times 0</span><h3>0 groups is nothing</h3><p>0 groups of 5 is 0. Any number × 0 = 0.</p><div class="ex">0 × 5 = <b>0</b> &nbsp; 9 × 0 = <b>0</b></div></div>`,
+    5:`<div class="card"><span class="tag">Pattern</span><h3>Look at the ones digit</h3><div class="pat num">${range(1,12).map(k=>`<div>${5*k}</div>`).join("")}</div><p>The ones digit goes 5, 0, 5, 0 …</p></div>`,
+    9:`<div class="card"><span class="tag">Finger trick (9 × 1 to 9 × 10)</span><h3>Fold down one finger</h3><p>Hold up 10 fingers. For 9 × <b data-fk>4</b>, fold down finger number <b data-fk>4</b>. Fingers to the left are tens. Fingers to the right are ones.</p>
+       <div class="fingers" data-fingers aria-hidden="true"></div><div class="ex num" data-fres></div><div class="kbtns" data-kb>${range(1,10).map(k=>`<button data-k="${k}" aria-pressed="${k===4}">${k}</button>`).join("")}</div></div>`,
+    10:`<div class="card"><span class="tag">Place value</span><h3>Each digit moves one place left</h3><div class="pat num" style="grid-template-columns:repeat(2,1fr)"><div>7 ones → 7 tens = 70</div><div>12 → 120</div></div></div>`,
+    11:`<div class="card"><span class="tag">Pattern</span><h3>11 × 1 to 11 × 12</h3><div class="pat num">${range(1,12).map(k=>`<div>11 × ${k} = ${11*k}</div>`).join("")}</div><p>From 11 × 10 on, use 10 groups + 1 group: 11 × 12 = 120 + 12 = 132.</p></div>`
+  }[t]||"";
+  const el=frame(t,"learn",`<div class="learn">
+    <div class="panel"><span class="tag">Build it</span><div class="big-eq num" data-eq></div>
+      <div class="arraybox"><div class="arr" data-arr></div></div>
+      <div class="stepper"><button class="btn" data-minus aria-label="One fewer row">−</button><span class="lbl num" data-lbl></span>
+        <button class="btn" data-plus aria-label="One more row">+</button><button class="btn dark" data-turn>Turn it ↻</button></div>
+      <p class="lead" data-turnnote style="margin-top:10px">Tap <b>Turn it</b>. The array turns, but the number of dots stays the same.</p></div>
+    <div>
+      <div class="panel"><h2 style="font-size:24px">Count by ${t}s</h2><p class="lead">Tap the boxes in order to say each number.</p><div class="skip num" data-skip></div></div>
+      <div class="card"><span class="tag">Strategy for × ${t}</span><h3>${STRAT[t].title}</h3><p>${STRAT[t].body}</p>${ex.map(k=>`<div class="ex num">${exFor(t,k)}</div>`).join("")}</div>
+      ${extra}
+      <div class="card"><span class="tag">Turn-around fact</span><h3 class="num">${t} × ${t===4?3:4} = ${t===4?3:4} × ${t}</h3><p>Same dots, same answer: ${t*(t===4?3:4)}. Knowing one fact gives you two.</p></div>
+      <div style="margin-top:16px;text-align:right"><button class="btn primary" data-next>Go to Practice →</button></div>
+    </div></div>`);
+  let rows=4,cols=t,turned=false;
+  const arr=$("[data-arr]",el);
+  function draw(){const d=Math.max(8,Math.min(26,Math.floor(300/Math.max(rows,cols))-5));arr.style.setProperty("--d",d+"px");arr.style.setProperty("--g",Math.max(3,Math.round(d/5))+"px");
+    arr.style.gridTemplateColumns=`repeat(${cols},auto)`;
+    arr.innerHTML=Array.from({length:rows*cols},(_,i)=>`<i class="dot ${Math.floor(i/cols)%2?"alt":""}" style="animation-delay:${Math.min(i*8,400)}ms"></i>`).join("");
+    $("[data-eq]",el).innerHTML=`${rows} × ${cols} = <span class="c">${rows*cols}</span>`;
+    $("[data-lbl]",el).textContent=`${rows} ${pl(rows,"row")} of ${cols}`;
+    arr.setAttribute("role","img");arr.setAttribute("aria-label",`${rows} rows of ${cols} dots, ${rows*cols} in all`);}
+  const grow=d=>{if(turned){cols=Math.max(1,Math.min(12,cols+d))}else{rows=Math.max(1,Math.min(12,rows+d))}draw()};
+  $("[data-plus]",el).onclick=()=>grow(1);$("[data-minus]",el).onclick=()=>grow(-1);
+  $("[data-turn]",el).onclick=()=>{arr.classList.add("spin");setTimeout(()=>{arr.style.transition="none";arr.classList.remove("spin");[rows,cols]=[cols,rows];turned=!turned;draw();arr.offsetHeight;arr.style.transition=""},460)};
+  draw();
+  const sk=$("[data-skip]",el);sk.innerHTML=range(1,12).map(k=>`<button data-v="${t*k}" aria-label="Show the next number">?</button>`).join("");
+  let si=0;$$("button",sk).forEach((b,i)=>b.onclick=()=>{if(i!==si){$$("button",sk)[si].classList.add("shake");setTimeout(()=>$$("button",sk)[si]&&$$("button",sk)[si].classList.remove("shake"),400);return}
+    b.textContent=b.dataset.v;b.classList.add("on");b.setAttribute("aria-label",b.dataset.v);si++;});
+  if(t===9){const F=$("[data-fingers]",el);const setK=k=>{F.innerHTML=range(1,10).map(i=>`<i class="${i===k?"down":""} ${i===6?"gap":""}"></i>`).join("");
+      $$("[data-fk]",el).forEach(x=>x.textContent=k);$("[data-fres]",el).innerHTML=`${k-1} finger${k-1===1?"":"s"} left, ${10-k} right → 9 × ${k} = <b>${9*k}</b>`;
+      $$("[data-kb] button",el).forEach(b=>b.setAttribute("aria-pressed",+b.dataset.k===k))};
+    $$("[data-kb] button",el).forEach(b=>b.onclick=()=>setK(+b.dataset.k));setK(4);}
+  $("[data-next]",el).onclick=()=>go(Practice,t);
+}
+
+/* ---------------- PRACTICE ---------------- */
+function Practice(t){
+  const done=S.practice[t]||[], start=(t-1)%GAMES.length, order=range(0,5).map(i=>GAMES[(start+i)%6]);
+  const el=frame(t,"practice",`<div class="spread" style="margin-bottom:14px"><div><h2 style="font-size:26px">Practice: 6 games</h2><p class="lead">Play all 6 to open the Boss Round. Each game is short.</p></div>
+    <button class="btn primary" data-all>${done.length?"Play all 6 again":"Start Practice"}</button></div>
+    <div class="games">${order.map((g,i)=>`<button class="game ${done.includes(g.id)?"done":""}" data-g="${g.id}" data-i="${i+1}"><b>${g.name}</b><small>${g.desc}</small>${done.includes(g.id)?'<span class="chk">✓ DONE</span>':""}</button>`).join("")}</div>
+    ${practiceDone(t)?`<div style="margin-top:18px;text-align:right"><button class="btn dark" data-boss>Go to Boss Round →</button></div>`:""}`);
+  $("[data-all]",el).onclick=()=>playGame(t,order.map(g=>g.id),0);
+  $$("[data-g]",el).forEach(b=>b.onclick=()=>playGame(t,[b.dataset.g],0));
+  const bb=$("[data-boss]",el);if(bb)bb.onclick=()=>go(Boss,t);
+}
+function markGame(t,id){const a=S.practice[t]||(S.practice[t]=[]);if(!a.includes(id))a.push(id);save()}
+function playGame(t,list,idx){go(()=>{
+  const g=GAMES.find(x=>x.id===list[idx]);
+  const el=frame(t,"practice",`<div class="gamehead"><div><span class="tag">${list.length>1?`Game ${idx+1} of ${list.length}`:"Practice game"}</span><h2 style="font-size:28px">${g.name}</h2></div>
+    <button class="btn sm" data-quit>Back to games</button></div><div data-game></div>`);
+  $("[data-quit]",el).onclick=()=>go(Practice,t);
+  const box=$("[data-game]",el);
+  const done=(summary)=>{markGame(t,g.id);
+    const last=idx>=list.length-1, nextG=!last&&GAMES.find(x=>x.id===list[idx+1]);
+    box.innerHTML=`<div class="panel result"><span class="tag">${g.name}</span><h2 style="font-size:36px;margin:6px 0">Game complete</h2><p class="num">${summary}</p>
+      ${last?(practiceDone(t)?`<p>Practice is done. The Boss Round is open.</p><div class="row" style="justify-content:center"><button class="btn" data-back2>Back to games</button><button class="btn primary" data-boss>Go to Boss Round →</button></div>`
+        :`<button class="btn primary" data-back2>Back to games</button>`)
+      :`<button class="btn primary" data-nextg>Next: ${nextG.name} →</button>`}</div>`;
+    const n=$("[data-nextg]",box);if(n)n.onclick=()=>playGame(t,list,idx+1);
+    const b=$("[data-back2]",box);if(b)b.onclick=()=>go(Practice,t);
+    const bo=$("[data-boss]",box);if(bo)bo.onclick=()=>go(Boss,t);
+    renderBelt();};
+  ({path:gPath,build:gBuild,memory:gMemory,missing:gMissing,family:gFamily,word:gWord})[g.id](box,t,done);
+  setTimeout(()=>focusOnSmall($(".gamehead",view)||box),0);
+})}
+
+function gPath(box,t,done){
+  const seq=range(1,12).map(k=>t*k);let pool;
+  if(t===1)pool=range(13,24);else pool=range(t+1,t*12).filter(n=>n%t!==0);
+  const dec=shuffle(pool).slice(0,4),tiles=shuffle(seq.concat(dec));let next=0,miss=0;
+  box.innerHTML=`<div class="panel"><p class="lead">Tap the ${t}s in order: ${t}, ${2*t}, ${3*t} … all the way to ${12*t}. Four numbers do not belong.</p>
+    <div class="path num">${tiles.map(v=>`<button data-v="${v}">${v}</button>`).join("")}</div><div class="status" aria-live="polite" data-st>Start with ${t}.</div></div>`;
+  $$(".path button",box).forEach(b=>b.onclick=()=>{const v=+b.dataset.v;if(b.classList.contains("hit"))return;
+    if(v===seq[next]){b.classList.add("hit");b.innerHTML=`<small>${next+1}</small>${v}`;next++;
+      $("[data-st]",box).textContent=next>=12?`✓ Path complete! 12 × ${t} = ${12*t}.`:`✓ ${v}. Next: ${v} + ${t}.`;
+      if(next>=12)setTimeout(()=>done(`${miss===0?"No wrong taps":miss+" wrong "+pl(miss,"tap")}. You counted by ${t}s to ${12*t}.`),1100)}
+    else{miss++;b.classList.remove("shake");b.offsetWidth;b.classList.add("shake");
+      $("[data-st]",box).textContent=seq.includes(v)?`Oops! Not yet. What comes after ${next?seq[next-1]:0}? Add ${t}.`:`Oops! ${v} is not in the ${t}s. Count on ${t} from ${next?seq[next-1]:0}.`}});
+}
+
+function gBuild(box,t,done){
+  const ks=shuffle(range(2,12)).slice(0,3);let i=0,br=0,bc=0,drag=false,first=true,score=0;
+  box.innerHTML=`<div class="panel"><p class="lead">Drag from the top-left square to build the array. Rows go across. Columns go down.</p>
+    <div class="q num" data-bq style="padding:6px 0"></div><div class="builder" data-b>${range(0,143).map(n=>`<div data-r="${Math.floor(n/12)+1}" data-c="${n%12+1}"></div>`).join("")}</div>
+    <div class="status num" data-st aria-live="polite"></div><div class="row" style="justify-content:center;margin-top:8px"><button class="btn" data-clr>Clear</button><button class="btn primary" data-chk>Check answer</button></div></div>`;
+  const B=$("[data-b]",box),ST=$("[data-st]",box);
+  const target=()=>{const k=ks[i];return i%2?[t,k]:[k,t]}; // [rows, cols]
+  function paint(){$$("div",B).forEach(d=>d.classList.toggle("sel",+d.dataset.r<=br&&+d.dataset.c<=bc));ST.textContent=br?`You built ${br} ${pl(br,"row")} of ${bc} = ${br*bc}`:"Nothing built yet."}
+  function setQ(){const [r,c]=target();$("[data-bq]",box).textContent=`${r} × ${c}`;br=bc=0;first=true;paint();ST.textContent=`Build ${r} ${pl(r,"row")} of ${c}.`}
+  function at(e){const el=document.elementFromPoint(e.clientX,e.clientY);if(el&&el.parentNode===B){br=+el.dataset.r;bc=+el.dataset.c;paint()}}
+  B.onpointerdown=e=>{drag=true;try{B.setPointerCapture(e.pointerId)}catch(_){}at(e)};B.onpointermove=e=>{if(drag)at(e)};
+  B.onpointerup=B.onpointercancel=()=>drag=false;
+  $("[data-clr]",box).onclick=()=>{br=bc=0;paint()};
+  $("[data-chk]",box).onclick=()=>{const [r,c]=target(),k=ks[i];
+    if(br===r&&bc===c){if(first)score++;record(t,k,first,0,false);ST.textContent=`✓ ${praise()} ${r} rows of ${c} = ${r*c}.`;confetti(ST);i++;
+      if(i>=ks.length)setTimeout(()=>done(`${score} of 3 right on the first try.`),1200);else setTimeout(setQ,1200)}
+    else{first=false;ST.textContent=br?`So close! You built ${br} × ${bc}. We need ${r} ${pl(r,"row")} (across) and ${c} ${pl(c,"column")} (down).`:"Drag on the grid to build the array first."}};
+  setQ();
+}
+
+function gMemory(box,t,done){
+  const ks=shuffle(range(1,12)).slice(0,6);let cards=[];ks.forEach(k=>{cards.push({k,txt:`${t} × ${k}`});cards.push({k,txt:String(t*k)})});cards=shuffle(cards);
+  let open=[],found=0,tries=0,busy=false;
+  box.innerHTML=`<div class="panel"><p class="lead">Turn over two cards. Match each fact with its answer.</p><div class="memory num">${cards.map((c,i)=>`<button class="mcard" data-i="${i}" aria-label="Hidden card"><span class="face">${c.txt}</span></button>`).join("")}</div><div class="status num" data-st aria-live="polite">6 pairs to find.</div></div>`;
+  const ST=$("[data-st]",box);
+  $$(".mcard",box).forEach(b=>b.onclick=()=>{if(busy||b.classList.contains("up")||b.classList.contains("ok"))return;const c=cards[+b.dataset.i];
+    b.classList.add("up");b.setAttribute("aria-label",c.txt);open.push([b,c]);
+    if(open.length===2){tries++;const [[b1,c1],[b2,c2]]=open;open=[];
+      if(c1.k===c2.k&&c1.txt!==c2.txt){b1.classList.add("ok");b2.classList.add("ok");found++;record(t,c1.k,true,0,false);
+        ST.textContent=found===6?"✓ All pairs found!":`✓ Match: ${t} × ${c1.k} = ${t*c1.k}. ${6-found} left.`;
+        if(found===6)setTimeout(()=>done(`All 6 pairs in ${tries} tries.`),1000)}
+      else{busy=true;ST.textContent="Not a match. Try to remember where they are.";setTimeout(()=>{[b1,b2].forEach(x=>{x.classList.remove("up");x.setAttribute("aria-label","Hidden card")});busy=false},950)}}});
+}
+
+function gMissing(box,t,done){
+  const qs=shuffle(range(1,12)).slice(0,6).map((k,i)=>qMissing(t,k,i%2===0));
+  runQuiz({el:box,qs,title:"Missing Factor",onDone:r=>done(`${r.correct} of ${r.total} correct.`)});
+}
+
+function gFamily(box,t,done){
+  const ks=shuffle(range(2,12).filter(k=>k!==t)).slice(0,2);let fi=0,step=0,val="",score=0,tot=0,shown=0,locked=false;
+  box.innerHTML=`<div class="panel"><div class="qa"><div><p class="lead">These 3 numbers make a fact family. Fill in each fact.</p><svg class="tri" viewBox="0 0 300 220" data-tri aria-hidden="true"></svg>
+    <div class="famlist num" data-fl></div><div class="fb" data-fb aria-live="polite"></div></div>${keypadHTML()}</div></div>`;
+  const FB=$("[data-fb]",box),GO=$(".go",box);
+  const facts=k=>{const p=t*k;return [[`${t} × ${k} = `,p],[`${k} × ${t} = `,p],[`${p} ÷ ${t} = `,k],[`${p} ÷ ${k} = `,t]]};
+  function draw(){const k=ks[fi],p=t*k;
+    $("[data-tri]",box).innerHTML=`<polygon points="150,12 290,208 10,208" fill="var(--paper)" stroke="var(--line)" stroke-width="5" stroke-linejoin="round"/>
+      <line x1="60" y1="150" x2="240" y2="150" stroke="var(--t)" stroke-width="4"/><text x="150" y="122" text-anchor="middle" font-size="44" font-weight="800" fill="var(--ink)" font-family="Avenir Next,Segoe UI,sans-serif">${p}</text>
+      <text x="95" y="194" text-anchor="middle" font-size="38" font-weight="800" fill="var(--ink)" font-family="Avenir Next,Segoe UI,sans-serif">${t}</text><text x="150" y="194" text-anchor="middle" font-size="30" font-weight="800" fill="var(--t)">×</text>
+      <text x="205" y="194" text-anchor="middle" font-size="38" font-weight="800" fill="var(--ink)" font-family="Avenir Next,Segoe UI,sans-serif">${k}</text>`;
+    $("[data-fl]",box).innerHTML=facts(k).map((f,i)=>`<div class="${i<step?"done":i===step?"cur":""}">${f[0]}${i<step?f[1]:i===step?`<span class="slot">${val||"?"}</span>`:"…"}</div>`).join("")}
+  function check(){const k=ks[fi],[txt,ans]=facts(k)[step],ok=+val===ans;tot++;if(ok)score++;locked=true;
+    record(t,k,ok,performance.now()-shown,true);
+    FB.className="fb show "+(ok?"good":"bad");if(ok)confetti(FB);FB.innerHTML=ok?`<b class="h">✓ ${praise()}</b> ${txt}${ans}`:`<b class="h">Almost!</b> ${txt}<b>${ans}</b>. ${step>=2?`Think: ${ans} × ${step===2?t:k} = ${t*k}.`:`${k} rows of ${t} = ${t*k}.`}${arrayHTML(k,t)}`;
+    GO.textContent=ok?"Check answer":"Next →";if(ok)setTimeout(adv,900)}
+  function adv(){locked=false;val="";step++;FB.className="fb";GO.textContent="Check answer";if(step>=4){step=0;fi++;if(fi>=ks.length){keyHandler=null;return done(`${score} of ${tot} facts right.`)}}shown=performance.now();draw()}
+  function key(k){if(locked){if(k==="OK")adv();return}if(k==="OK"){if(val!=="")check();return}if(k==="B")val=val.slice(0,-1);else if(k==="C")val="";else if(val.length<3)val+=k;draw()}
+  $$(".keypad button",box).forEach(b=>b.onclick=()=>key(b.dataset.k));
+  keyHandler=e=>{if(/^[0-9]$/.test(e.key))key(e.key);else if(e.key==="Backspace")key("B");else if(e.key==="Enter")key("OK");else return false};
+  shown=performance.now();draw();
+}
+
+function gWord(box,t,done){
+  const ctx=shuffle(CTX),nm=shuffle(NAMES),ks=shuffle(range(2,12));
+  const qs=[qWord(t,ks[0],false,ctx[0],nm[0]),qWord(t,ks[1],true,ctx[1],nm[1]),qWord(t,ks[2],false,ctx[2],nm[2])];
+  runQuiz({el:box,qs,title:"Word Problems",onDone:r=>done(`${r.correct} of ${r.total} correct.`)});
+}
+
+/* ---------------- BOSS ---------------- */
+function bossQs(t){const ks=shuffle(range(1,12)),nm=shuffle(NAMES),cx=shuffle(CTX);
+  const qs=[qFact(t,ks[0],false),qFact(t,ks[1],true),qFact(t,ks[2],false),qFact(t,ks[3],true),qMissing(t,ks[4],true),qMissing(t,ks[5],false),
+    qDiv(t,ks[6]),qDiv(t,ks[7]),qArray(t,Math.max(2,ks[8])),qArray(t,ks[9]===1?7:ks[9]),qWord(t,Math.max(2,ks[10]),false,cx[0],nm[0]),qWord(t,Math.max(2,ks[11]),true,cx[1],nm[1])];
+  return shuffle(qs)}
+function Boss(t){
+  if(!bossOpen(t))return go(Practice,t);
+  const tm=S.settings.bossTime,prev=S.tables[t];
+  const el=frame(t,"boss",`<div class="panel result"><span class="tag">Boss Round · ×${t}</span>
+    <h2 style="font-size:clamp(30px,5vw,44px);margin:8px 0">12 questions. ${tm?`${tm/60} minutes.`:"No time limit."}</h2>
+    <p class="lead" style="max-width:560px;margin:0 auto 14px">Facts, missing numbers, division, arrays, and word problems. Get 10 or more right to pass${t<12?` and open the ${t+1} times table`:""}.</p>
+    <p class="num" style="font-weight:800">★★★ 12 right &nbsp;·&nbsp; ★★ 11 right &nbsp;·&nbsp; ★ 10 right</p>
+    ${prev&&prev.passed?`<p class="lead">Your best: ${"★".repeat(prev.stars)}${"☆".repeat(3-prev.stars)}</p>`:""}
+    <button class="btn primary" data-go style="margin-top:8px">Start Boss Round</button></div>`);
+  $("[data-go]",el).onclick=()=>{const box=$("[data-inner]",view);
+    runQuiz({el:box,qs:bossQs(t),timer:tm,autoNextWrong:tm?3500:0,onDone:r=>bossEnd(t,r)})};
+}
+function bossEnd(t,r){const box=$("[data-inner]",view);if(!box)return;
+  const stars=r.correct>=12?3:r.correct===11?2:r.correct>=10?1:0,beforeBelt=beltIndex(),old=S.tables[t];
+  if(stars){S.tables[t]={passed:true,stars:Math.max(stars,old&&old.stars||0)};save()}
+  const newBelt=beltIndex();
+  box.innerHTML=`<div class="panel result"><span class="tag">Boss Round · ×${t}</span>
+    <div class="stars" aria-label="${stars} of 3 stars">${[0,1,2].map(i=>`<span class="${i<stars?"":"off"}" style="animation-delay:${i*.2}s">★</span>`).join("")}</div>
+    <h2 class="num" style="font-size:44px">${r.correct} / 12</h2>
+    <p>${r.timeUp?"Time's up! ":""}${stars?(t<12?`You passed! The ${t+1} times table is open.`:"You passed the last table!"):`You need 10 to pass. Look at the facts below, then try again.`}</p>
+    ${r.wrong.length?`<div style="max-width:560px;margin:10px auto;text-align:left"><b>Facts to review:</b> <span class="num">${[...new Set(r.wrong.map(q=>`${q.rows} × ${q.cols} = ${q.rows*q.cols}`))].join(" · ")}</span></div>`:""}
+    <div class="row" style="justify-content:center;margin-top:10px"><button class="btn" data-again>${stars?"Play again":"Try again"}</button>
+    ${stars&&t<12&&isOpen(t+1)?`<button class="btn primary" data-nextt>Go to ×${t+1} →</button>`:`<button class="btn primary" data-map>Back to map</button>`}</div></div>`;
+  $("[data-again]",box).onclick=()=>go(Boss,t);
+  const n=$("[data-nextt]",box);if(n)n.onclick=()=>go(Learn,t+1);
+  const m=$("[data-map]",box);if(m)m.onclick=()=>go(MapScreen);
+  renderBelt();
+  if(newBelt>beforeBelt){const b=BELTS[newBelt];setTimeout(()=>modal(`<span class="tag" style="--tt:var(--ink-2)">New belt</span><div style="margin:18px 0"><i class="belt lg" style="--bc:${b[2]}"></i></div>
+    <h2 style="font-size:34px">${b[0]} Belt!</h2><p>You have passed ${passedCount()} of the 12 times tables.</p><button class="btn dark" onclick="closeModal()" style="margin-top:10px">Keep going</button>`),900)}
+}
+
+/* ---------------- MIXED REVIEW ---------------- */
+function chipsHTML(sel,isAllowed){return `<div class="chips">${range(1,12).map(t=>`<button class="chip num" data-c="${t}" style="--c:${PAL[t-1][0]};--con:${PAL[t-1][1]}" aria-pressed="${sel.includes(t)}" ${isAllowed(t)?"":"disabled"}>×${t}</button>`).join("")}</div>`}
+function bindChips(el,sel){$$("[data-c]",el).forEach(b=>b.onclick=()=>{const t=+b.dataset.c,i=sel.indexOf(t);if(i>=0)sel.splice(i,1);else sel.push(t);b.setAttribute("aria-pressed",i<0)})}
+function MixedSetup(){tableVars(0);setNav("");
+  const allowed=t=>S.settings.unlockAll||(S.tables[t]&&S.tables[t].passed);const sel=range(1,12).filter(allowed);
+  view.innerHTML=`<button class="back" data-back>← Map</button><div class="panel"><span class="tag">Mixed Review</span><h2 style="font-size:32px;margin:4px 0">20 mixed questions</h2>
+    <p class="lead">Facts, missing numbers, and division from the tables you choose. No timer, so take your time.</p>
+    <h3 style="margin:16px 0 8px">Tables</h3>${chipsHTML(sel,allowed)}<div style="margin-top:20px"><button class="btn primary" data-go>Start Mixed Review</button></div></div>`;
+  $("[data-back]",view).onclick=()=>go(MapScreen);bindChips(view,sel);
+  $("[data-go]",view).onclick=()=>{if(!sel.length)return toast("Choose at least one table.");
+    const s=sel.slice().sort((a,b)=>a-b);go(()=>{tableVars(0);view.innerHTML=`<button class="back" data-back>← Map</button><div data-box></div>`;$("[data-back]",view).onclick=()=>go(MapScreen);
+      runQuiz({el:$("[data-box]",view),qs:range(1,20).map(()=>mixedQ(s)),title:"Mixed Review · ×"+s.join(", ×"),onDone:r=>{
+        $("[data-box]",view).innerHTML=`<div class="panel result"><span class="tag">Mixed Review</span><h2 class="num" style="font-size:48px;margin:8px 0">${r.correct} / 20</h2>
+        <p>${r.correct>=18?"Excellent work.":r.correct>=14?"Good work. A few facts need another look.":"Keep practicing. Review the facts below in Learn."}</p>
+        ${r.wrong.length?`<p class="num"><b>Facts to review:</b> ${[...new Set(r.wrong.map(q=>`${q.cols} × ${q.rows} = ${q.rows*q.cols}`))].join(" · ")}</p>`:""}
+        <div class="row" style="justify-content:center"><button class="btn" data-again>Play again</button><button class="btn primary" data-map>Back to map</button></div></div>`;
+        $("[data-again]",view).onclick=()=>go(MixedSetup);$("[data-map]",view).onclick=()=>go(MapScreen)}})})};
+}
+
+/* ---------------- SPEED ---------------- */
+function SpeedSetup(){tableVars(0);setNav("");
+  const allowed=t=>TRIAL?TRIAL_TABLES.includes(t):true;const sel=range(1,12).filter(allowed);
+  view.innerHTML=`<button class="back" data-back>← Map</button><div class="panel"><span class="tag">Speed Challenge</span><h2 style="font-size:32px;margin:4px 0">How many in 60 seconds?</h2>
+    <p class="lead">Answer as many facts as you can. Your best score with ${TRIAL?"both trial tables":"all 12 tables"} is saved.</p>
+    <p class="stat num">Best: ${S.speedBest||"—"}</p>
+    <h3 style="margin:16px 0 8px">Tables</h3>${chipsHTML(sel,allowed)}
+    ${TRIAL?'<p class="lead" style="margin-top:8px">Free trial: ×2 and ×5 only.</p>':""}<div style="margin-top:20px"><button class="btn primary" data-go>Start · 60 seconds</button></div></div>`;
+  $("[data-back]",view).onclick=()=>go(MapScreen);bindChips(view,sel);
+  $("[data-go]",view).onclick=()=>{if(!sel.length)return toast("Choose at least one table.");const full=sel.length===(TRIAL?2:12);go(Speed,sel.slice(),full)};
+}
+function Speed(tables,full){tableVars(0);setNav("");
+  let score=0,miss=0,tleft=60,val="",q=null,shown=0,tid,locked=false;
+  view.innerHTML=`<button class="back" data-back>← Quit</button><div class="panel"><div class="qhead"><span class="speednum num" data-sc aria-live="polite">0</span><span class="timer num" data-tm>1:00</span></div>
+    <div class="bar"><i data-bar style="width:100%"></i></div><div class="qa" style="margin-top:10px"><div><div class="q num" data-q></div><div class="status" data-st aria-live="polite"></div></div>${keypadHTML()}</div></div>`;
+  $("[data-back]",view).onclick=()=>go(SpeedSetup);
+  const Q=$("[data-q]",view),ST=$("[data-st]",view);
+  function nq(){let n;do{n=qFact(pick(tables),1+rnd(12))}while(q&&n.html===q.html);q=n;val="";Q.innerHTML=q.html;paint();shown=performance.now();locked=false}
+  function paint(){$(".slot",Q).textContent=val||"?"}
+  function key(k){if(locked||tleft<=0)return;if(k==="OK"){if(val==="")return;const ok=+val===q.answer;record(q.t,q.k,ok,performance.now()-shown,true);
+      const P=$(".panel",view);P.classList.remove("flash","flashbad");P.offsetWidth;
+      if(ok){score++;$("[data-sc]",view).textContent=score;P.classList.add("flash");ST.textContent="";nq()}
+      else{miss++;P.classList.add("flashbad");ST.innerHTML=`✗ ${q.html.replace(slot,"<b>"+q.answer+"</b>")}`;locked=true;setTimeout(nq,900)}return}
+    if(k==="B")val=val.slice(0,-1);else if(k==="C")val="";else if(val.length<3)val+=k;paint()}
+  $$(".keypad button",view).forEach(b=>b.onclick=()=>key(b.dataset.k));
+  keyHandler=e=>{if(/^[0-9]$/.test(e.key))key(e.key);else if(e.key==="Backspace")key("B");else if(e.key==="Enter")key("OK");else return false};
+  tid=setInterval(()=>{tleft--;$("[data-tm]",view).textContent=`0:${String(Math.max(0,tleft)).padStart(2,"0")}`;$("[data-tm]",view).classList.toggle("low",tleft<=10);
+    $("[data-bar]",view).style.width=(tleft/60*100)+"%";if(tleft<=0)end()},1000);
+  cleanups.push(()=>clearInterval(tid));
+  function end(){clearInterval(tid);keyHandler=null;const best=full&&score>(S.speedBest||0);if(best){S.speedBest=score;save()}
+    view.innerHTML=`<button class="back" data-back>← Map</button><div class="panel result"><span class="tag">Speed Challenge</span><div class="speednum num" style="font-size:96px">${score}</div>
+      <p>${pl(score,"fact")} correct in 60 seconds${miss?`, ${miss} to fix`:""}.</p>${best?`<p><b>New best score!</b></p>`:full?`<p class="lead">Best: ${S.speedBest}</p>`:`<p class="lead">Practice round (best scores are saved when all tables are chosen).</p>`}
+      <div class="row" style="justify-content:center"><button class="btn primary" data-again>Try again</button><button class="btn" data-map>Back to map</button></div></div>`;
+    $("[data-back]",view).onclick=$("[data-map]",view).onclick=()=>go(MapScreen);$("[data-again]",view).onclick=()=>go(Speed,tables,full)}
+  nq();
+}
+
+/* ---------------- DASHBOARD ---------------- */
+function Dash(){tableVars(0);setNav("dash");
+  let fl=0,pr=0;range(1,12).forEach(t=>range(1,12).forEach(k=>{const s=factState(t,k);if(s==="fl")fl++;else if(s==="pr")pr++}));
+  const bi=beltIndex(),pc=passedCount();
+  view.innerHTML=`<div class="hello"><div><span class="tag" style="--tt:var(--ink-2)">My Facts</span><h1>Fact Dashboard</h1><p class="lead">Each square is one fact. A fact is <b>fluent</b> after 3 right answers in a row, each in 3 seconds or less.</p></div></div>
+  <div class="dashwrap"><div class="panel"><div class="dash num" role="grid" aria-label="12 by 12 fact grid">
+    <div class="h">×</div>${range(1,12).map(k=>`<div class="h">${k}</div>`).join("")}
+    ${range(1,12).map(t=>`<div class="h rh" style="--c:${PAL[t-1][0]};--con:${PAL[t-1][1]}">${t}</div>${range(1,12).map(k=>{const s=factState(t,k);
+      return `<button class="cell ${s}" style="--c:${PAL[t-1][0]};--con:${PAL[t-1][1]}" data-f="${t},${k}" aria-label="${t} × ${k} = ${t*k}, ${s==="fl"?"fluent":s==="pr"?"practicing":"not started"}">${s==="ns"?"":t*k}</button>`}).join("")}`).join("")}
+  </div><div class="legend"><span><i style="border:1.5px solid #1E2A4425;background:var(--paper)"></i>Not started</span><span><i style="border:2px dashed var(--ink)"></i>Practicing (number shown)</span><span><i style="background:var(--ink)"></i>Fluent (filled)</span></div>
+  <p class="lead" data-fi>Tap a square to see that fact.</p></div>
+  <div><div class="panel"><div class="stats"><div><div class="stat num">${fl}</div><div class="lead">fluent facts</div></div><div><div class="stat num" style="color:var(--ink-2)">${pr}</div><div class="lead">practicing</div></div><div><div class="stat num" style="color:var(--ink-2)">${144-fl-pr}</div><div class="lead">not started</div></div></div></div>
+  <div class="panel" style="margin-top:16px"><h3 style="font-size:22px">Belts</h3><p class="lead">Pass Boss Rounds to earn belts.</p>
+    <div class="ladder">${BELTS.map((b,i)=>`<div class="${i<=bi?"got":"no"}"><i class="belt" style="--bc:${b[2]}"></i>${b[0]}<br><span class="lead num" style="font-size:12px">${b[1]?b[1]+" tables":"Start"}</span></div>`).join("")}</div>
+    <p class="num" style="margin-top:10px"><b>${pc} of 12</b> tables passed.${bi<6?` Pass ${BELTS[bi+1][1]-pc} more for ${BELTS[bi+1][0]} Belt.`:""}</p></div></div></div>`;
+  $$("[data-f]",view).forEach(b=>b.onclick=()=>{const [t,k]=b.dataset.f.split(",").map(Number),f=S.facts[t+"x"+k];
+    $("[data-fi]",view).innerHTML=`<b class="num">${t} × ${k} = ${t*k}</b> · ${!f||!f.n?"Not started yet.":f.m?"Fluent!":`Practicing: ${f.s} of 3 fast right answers in a row.`}`});
+}
+
+/* ---------------- CLASS MODE ---------------- */
+function ClassSetup(){tableVars(0);setNav("classmode");
+  const allowed=t=>TRIAL?TRIAL_TABLES.includes(t):true;const sel=TRIAL?[2,5]:[];
+  view.innerHTML=`<div class="panel"><span class="tag">Class Mode</span><h2 style="font-size:32px;margin:4px 0">Project it for the whole class</h2>
+    <p class="lead">Students answer aloud or on whiteboards. You tap <b>Show answer</b>, then <b>Next</b>. Keyboard: Space or → to move on. Class Mode does not change any student's progress.</p>
+    <h3 style="margin:16px 0 8px">Tables</h3>${chipsHTML(sel,allowed)}
+    <h3 style="margin:16px 0 8px">Question types</h3><div class="chips" data-types>${[["fact","Facts"],["missing","Missing factor"],["div","Division"],["word","Word problems"]].map(([v,n],i)=>`<button class="chip" data-ty="${v}" aria-pressed="${i===0}">${n}</button>`).join("")}</div>
+    <h3 style="margin:16px 0 8px">Thinking time</h3><div class="chips" data-tt>${[0,5,10].map((v,i)=>`<button class="chip" data-v="${v}" aria-pressed="${i===1}">${v?v+" sec":"Off"}</button>`).join("")}</div>
+    <h3 style="margin:16px 0 8px">Questions</h3><div class="chips" data-nq>${[10,20].map((v,i)=>`<button class="chip num" data-v="${v}" aria-pressed="${i===0}">${v}</button>`).join("")}</div>
+    <div style="margin-top:22px"><button class="btn primary" data-go>Start Class Mode</button></div></div>`;
+  bindChips(view,sel);
+  $$("[data-ty]",view).forEach(b=>b.onclick=()=>b.setAttribute("aria-pressed",b.getAttribute("aria-pressed")!=="true"));
+  ["tt","nq"].forEach(g=>$$(`[data-${g}] button`,view).forEach(b=>b.onclick=()=>{$$(`[data-${g}] button`,view).forEach(x=>x.setAttribute("aria-pressed",x===b))}));
+  $("[data-go]",view).onclick=()=>{const types=$$("[data-ty]",view).filter(b=>b.getAttribute("aria-pressed")==="true").map(b=>b.dataset.ty);
+    if(!sel.length)return toast("Choose at least one table.");if(!types.length)return toast("Choose at least one question type.");
+    const tt=+$('[data-tt] [aria-pressed="true"]',view).dataset.v,n=+$('[data-nq] [aria-pressed="true"]',view).dataset.v;
+    const qs=range(1,n).map(()=>{const t=pick(sel),k=1+rnd(12),ty=pick(types);return ty==="fact"?qFact(t,k):ty==="missing"?qMissing(t,k):ty==="div"?qDiv(t,k):qWord(t,k)});
+    go(ClassPlay,qs,tt)};
+}
+function ClassPlay(qs,tt){setNav("classmode");let i=0,revealed=false,tid=null;
+  view.innerHTML=`<div class="cm"><div class="spread"><button class="back" data-exit>← End Class Mode</button><span class="tag num" data-n style="--tt:var(--ink-2)"></span><button class="btn sm" data-fs>Full screen</button></div>
+    <div class="cmq"><div class="q num" data-q></div><div class="bar cmtime" data-tbar hidden><i style="width:100%"></i></div><div class="cmans num" data-a></div><div class="cmwhy" data-w></div><div data-arr></div></div>
+    <div class="cmbar"><button class="btn primary" data-main>Show answer</button></div></div>`;
+  const Q=$("[data-q]",view);
+  function show(){const q=qs[i];tableVars(q.t);revealed=false;clearInterval(tid);
+    $("[data-n]",view).textContent=`Question ${i+1} of ${qs.length}`;Q.className="q num"+(q.word?" word":"");Q.innerHTML=q.html;$(".slot",Q).textContent="?";
+    $("[data-a]",view).innerHTML="";$("[data-w]",view).innerHTML="";$("[data-arr]",view).innerHTML="";$("[data-main]",view).textContent="Show answer";
+    const TB=$("[data-tbar]",view);TB.hidden=!tt;if(tt){let left=tt*10;const I=$("i",TB);I.style.width="100%";tid=setInterval(()=>{left--;I.style.width=(left/(tt*10)*100)+"%";if(left<=0)clearInterval(tid)},100)}}
+  function reveal(){const q=qs[i];revealed=true;clearInterval(tid);$(".slot",Q).textContent=q.answer;$("[data-a]",view).textContent="";
+    $("[data-w]",view).innerHTML=q.why;$("[data-arr]",view).innerHTML=q.rows*q.cols<=144?arrayHTML(q.rows,q.cols,Math.max(10,Math.min(26,Math.floor(360/Math.max(q.rows,q.cols))))):"";
+    $("[data-main]",view).textContent=i<qs.length-1?"Next →":"Finish"}
+  function main(){if(!revealed)return reveal();i++;if(i>=qs.length){clearInterval(tid);return go(ClassSetup)}show()}
+  $("[data-main]",view).onclick=main;
+  $("[data-exit]",view).onclick=()=>{if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});go(ClassSetup)};
+  $("[data-fs]",view).onclick=()=>{const d=document.documentElement;if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});else if(d.requestFullscreen)d.requestFullscreen().catch(()=>toast("Full screen is not available here. Try your browser's full screen key (F11)."));else toast("Use your browser's full screen option.")};
+  keyHandler=e=>{if([" ","Enter","ArrowRight"].includes(e.key)){main();return}return false};
+  cleanups.push(()=>clearInterval(tid));show();
+}
+
+/* ---------------- TEACHER ---------------- */
+function Teacher(){tableVars(0);setNav("teacher");
+  const sw=(id,on,dis)=>`<button class="switch" role="switch" data-sw="${id}" aria-checked="${on}" ${dis?"disabled":""} aria-label="${id}"></button>`;
+  view.innerHTML=`<div class="panel"><span class="tag">Teacher Settings</span><h2 style="font-size:32px;margin:4px 0 6px">Settings</h2>
+    <p class="lead">Progress is saved only in this browser on this device. Nothing is sent anywhere, and no login is needed.</p>
+    <div class="set"><div><h3>Open all levels</h3><p class="lead">Let students play any table and its Boss Round without passing the one before.${TRIAL?" (Full version only.)":""}</p></div>${sw("unlockAll",S.settings.unlockAll,TRIAL)}</div>
+    <div class="set"><div><h3>Boss Round timer</h3><p class="lead">Time for 12 questions.</p></div><div class="chips" data-bt>${[[180,"3 min"],[300,"5 min"],[0,"Off"]].map(([v,n])=>`<button class="chip" data-v="${v}" aria-pressed="${S.settings.bossTime===v}">${n}</button>`).join("")}</div></div>
+    <div class="set"><div><h3>Class Mode</h3><p class="lead">Show questions on the projector and reveal answers yourself.</p></div><button class="btn sm dark" data-cm>Open Class Mode</button></div>
+    <div class="set"><div><h3>Reset progress</h3><p class="lead">Clears stars, belts, the fact dashboard, practice checkmarks, and the Speed Challenge best score on this device.</p></div><button class="btn sm" data-reset style="border-color:var(--bad);color:var(--bad)">Reset progress…</button></div>
+  </div>
+  <div class="panel" style="margin-top:16px"><h3>About</h3><p>Times Tables Quest by <b>Bright EngMath</b>. Multiplication facts 1–12 (and × 0). Works offline. For single classroom use only.</p>
+    <p class="lead">Best in Chrome or Edge. Also works in Safari and Firefox.</p></div>`;
+  $('[data-sw="unlockAll"]',view).onclick=e=>{if(TRIAL)return;S.settings.unlockAll=!S.settings.unlockAll;save();e.currentTarget.setAttribute("aria-checked",S.settings.unlockAll);toast(S.settings.unlockAll?"All levels are open.":"Levels open one at a time again.")};
+  $$("[data-bt] button",view).forEach(b=>b.onclick=()=>{S.settings.bossTime=+b.dataset.v;save();$$("[data-bt] button",view).forEach(x=>x.setAttribute("aria-pressed",x===b))});
+  $("[data-cm]",view).onclick=()=>go(ClassSetup);
+  $("[data-reset]",view).onclick=()=>{modal(`<h2 style="font-size:28px">Reset all progress?</h2><p>This clears stars, belts, fact data, and the best score on this device. Settings stay the same. This cannot be undone.</p>
+    <div class="row" style="justify-content:center;margin-top:12px"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn" data-yes style="background:var(--bad);color:#fff">Yes, reset</button></div>`);
+    $("[data-yes]").onclick=()=>{const st=S.settings;S=fresh();S.settings=st;save();closeModal();go(MapScreen);toast("Progress has been reset.")}};
+}
+
+window.__ttq={get S(){return S},go,MapScreen,Learn,Practice,Boss,Dash,ClassSetup,Teacher,SpeedSetup,MixedSetup,playGame,exFor,qFact,qMissing,qDiv,qWord,qArray,bossQs,CTX,record,factState,beltIndex,EDITION};
+go(MapScreen);
+</script>
+</body>
+</html>

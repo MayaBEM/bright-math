@@ -1,0 +1,1161 @@
+<title>Angle Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Lexend:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: graph-paper workbook. Each lesson = explanation column + hands-on panel. Sticky lesson nav. */
+:root{
+  --paper:#F6F9FC; --grid:#E2EBF4; --card:#FFFFFF; --ink:#1E2A45; --ink-soft:#56627C; --line:#CCD7E4;
+  --coral:#E35D47; --coral-soft:#FCE4DE; --butter:#F3C33F; --butter-soft:#FFF4CF;
+  --sage:#4F9672; --sage-soft:#DCEFE3; --sky:#2F7BB5; --sky-soft:#DCEBF8;
+  --right:#2E7D55; --wrong:#BF3B27;
+  --display:"Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --body:"Lexend", "Segoe UI", system-ui, sans-serif;
+  --mono:"DM Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#111A2C; --grid:#18233A; --card:#17223A; --ink:#E9EEF7; --ink-soft:#A8B3C8; --line:#2D3A57;
+  --coral:#FF7C66; --coral-soft:#3B2421; --butter:#F6D06A; --butter-soft:#38301A;
+  --sage:#78C49C; --sage-soft:#1B3328; --sky:#6AB2EA; --sky-soft:#17304A;
+  --right:#6FD39D; --wrong:#FF8B78; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --paper:#111A2C; --grid:#18233A; --card:#17223A; --ink:#E9EEF7; --ink-soft:#A8B3C8; --line:#2D3A57;
+  --coral:#FF7C66; --coral-soft:#3B2421; --butter:#F6D06A; --butter-soft:#38301A;
+  --sage:#78C49C; --sage-soft:#1B3328; --sky:#6AB2EA; --sky-soft:#17304A;
+  --right:#6FD39D; --wrong:#FF8B78; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{background-color:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px}
+h1,h2,h3{font-family:var(--display);line-height:1.12;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.6rem,7vw,4.6rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:800;letter-spacing:-.01em}
+h3{font-size:1.2rem;font-weight:600}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);font-weight:500}
+.mono{font-family:var(--mono)}
+.muted{color:var(--ink-soft)}
+.prose{display:flex;flex-direction:column;gap:14px;max-width:62ch;min-width:0}
+.prose ul,.prose ol{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:6px}
+b,strong{font-weight:600}
+.hl{background:var(--butter-soft);padding:0 .25em;border-radius:4px}
+.sym{font-family:var(--mono);font-weight:500;background:var(--sky-soft);padding:1px 6px;border-radius:5px;white-space:nowrap}
+
+/* hero */
+.hero{padding-block:44px 28px;display:grid;grid-template-columns:1.05fr 1fr;gap:36px;align-items:center}
+.hero .lede{font-size:1.15rem;color:var(--ink-soft);max-width:44ch;margin-top:14px}
+.hero .stamp{display:inline-flex;gap:8px;align-items:center;margin-bottom:14px}
+.grade{font-family:var(--mono);font-size:.8rem;border:1.5px solid var(--ink);border-radius:999px;padding:2px 10px}
+.readout{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:baseline;margin-top:6px}
+.readout .big{font-family:var(--mono);font-size:2.6rem;font-weight:500;line-height:1}
+.type-pill{font-family:var(--display);font-weight:600;font-size:1.15rem;padding:3px 14px;border-radius:999px;background:var(--coral);color:var(--card)}
+.presets{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+
+/* nav */
+.lessonnav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1.5px solid var(--line)}
+.lessonnav .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:thin}
+.lessonnav a{flex:0 0 auto;text-decoration:none;color:var(--ink);font-size:.88rem;padding:6px 12px;border-radius:8px;border:1.5px solid transparent;white-space:nowrap}
+.lessonnav a:hover{border-color:var(--line);background:var(--card)}
+.lessonnav a span{font-family:var(--mono);color:var(--coral);margin-right:6px;font-size:.78rem}
+
+/* sections */
+section.lesson{padding-block:56px;border-bottom:1.5px dashed var(--line)}
+.lesson-head{display:flex;flex-direction:column;gap:8px;margin-bottom:26px;max-width:70ch}
+.lesson-head p{color:var(--ink-soft);font-size:1.05rem}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:32px;align-items:start}
+.split.rev{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}
+.panel{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 2px 0 var(--line);min-width:0;display:flex;flex-direction:column;gap:14px}
+.panel-title{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.panel-title h3{font-size:1.05rem}
+svg.fig{width:100%;height:auto;display:block;overflow:visible}
+svg.stage{width:100%;height:auto;display:block;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+.note{border-left:4px solid var(--butter);background:var(--butter-soft);padding:10px 14px;border-radius:0 10px 10px 0}
+.note.warn{border-color:var(--coral);background:var(--coral-soft)}
+.note.ok{border-color:var(--sage);background:var(--sage-soft)}
+
+/* controls */
+button,.btn{font:inherit;font-size:.95rem;font-weight:500;cursor:pointer;border-radius:10px;padding:9px 16px;border:1.5px solid var(--ink);background:var(--card);color:var(--ink);min-height:42px;transition:transform .12s,background .12s}
+button:hover{background:var(--butter-soft)}
+button:active{transform:translateY(1px)}
+button.primary{background:var(--ink);color:var(--paper)}
+button.primary:hover{background:var(--coral);border-color:var(--coral);color:#fff}
+button.chip{padding:6px 12px;min-height:36px;font-size:.88rem;border-color:var(--line)}
+button.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+button:disabled{opacity:.45;cursor:not-allowed;transform:none}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+input[type=number]{font:inherit;font-family:var(--mono);font-size:1.1rem;width:6.5em;padding:8px 10px;border-radius:10px;border:1.5px solid var(--ink);background:var(--paper);color:var(--ink);min-height:42px}
+input[type=range]{width:100%;accent-color:var(--coral)}
+label.check{display:flex;gap:8px;align-items:center;cursor:pointer;font-size:.95rem}
+label.check input{width:18px;height:18px;accent-color:var(--coral)}
+.feedback{min-height:1.6em;font-weight:500}
+.feedback.good{color:var(--right)} .feedback.bad{color:var(--wrong)}
+.status{display:flex;flex-wrap:wrap;gap:8px}
+.status span{font-size:.85rem;padding:3px 10px;border-radius:999px;border:1.5px solid var(--line);color:var(--ink-soft)}
+.status span.on{border-color:var(--sage);background:var(--sage-soft);color:var(--ink)}
+.status span::before{content:"○ ";} .status span.on::before{content:"✓ ";color:var(--right);font-weight:600}
+.eq{font-family:var(--mono);font-size:1.15rem;padding:10px 14px;background:var(--paper);border-radius:10px;border:1.5px solid var(--line);overflow-x:auto}
+
+/* steps */
+ol.steps{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;counter-reset:s}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start}
+ol.steps li::before{content:counter(s);font-family:var(--mono);font-weight:500;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--ink);display:grid;place-items:center;font-size:.9rem;background:var(--card)}
+ol.steps li.now::before{background:var(--coral);border-color:var(--coral);color:#fff}
+ol.steps li.done{color:var(--ink-soft)}
+
+/* types grid */
+.types{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.tcard{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:6px}
+.tcard h3{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.tcard h3 .mono{font-size:.85rem;color:var(--coral);font-weight:500}
+.tcard p{font-size:.92rem;color:var(--ink-soft)}
+.lines3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:28px}
+
+/* key facts */
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.fact{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:4px}
+.fact .n{font-family:var(--mono);font-size:1.5rem;font-weight:500;color:var(--coral)}
+.fact p{font-size:.9rem}
+
+/* find x */
+.xgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.xcard{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.xcard ol{margin:0;padding-left:1.2em;font-family:var(--mono);font-size:.92rem;display:flex;flex-direction:column;gap:2px}
+
+/* quiz */
+.quiz{max-width:760px;margin:0 auto}
+.qbar{height:10px;border-radius:999px;background:var(--grid);border:1.5px solid var(--line);overflow:hidden}
+.qbar i{display:block;height:100%;background:var(--coral);width:0;transition:width .3s}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.opt{text-align:left;display:flex;gap:10px;align-items:center;border-color:var(--line);min-height:52px}
+.opt .k{font-family:var(--mono);width:28px;height:28px;border-radius:7px;border:1.5px solid var(--line);display:grid;place-items:center;flex:0 0 auto;font-size:.85rem}
+.opt.correct{border-color:var(--right);background:var(--sage-soft)}
+.opt.correct .k{background:var(--right);color:var(--card);border-color:var(--right)}
+.opt.incorrect{border-color:var(--wrong);background:var(--coral-soft)}
+.opt.incorrect .k{background:var(--wrong);color:var(--card);border-color:var(--wrong)}
+.qfig{max-width:420px;width:100%;margin:0 auto}
+.score{font-family:var(--display);font-size:3.4rem;font-weight:800;line-height:1}
+
+/* svg classes */
+.ink-line{stroke:var(--ink);stroke-width:3.5;stroke-linecap:round;fill:none}
+.ink-thin{stroke:var(--ink);stroke-width:2.5;stroke-linecap:round;fill:none}
+.guide{stroke:var(--ink-soft);stroke-width:1.5;stroke-dasharray:5 5;fill:none}
+.dot{fill:var(--coral)} .dot-ink{fill:var(--ink)}
+.handle{fill:var(--butter);stroke:var(--ink);stroke-width:2.5;cursor:grab;touch-action:none}
+.handle:active{cursor:grabbing}
+.handle:focus{outline:none} .handle:focus-visible{stroke:var(--coral);stroke-width:4}
+.w-coral{fill:var(--coral);fill-opacity:.25;stroke:var(--coral);stroke-width:2}
+.w-sky{fill:var(--sky);fill-opacity:.22;stroke:var(--sky);stroke-width:2}
+.w-sage{fill:var(--sage);fill-opacity:.25;stroke:var(--sage);stroke-width:2}
+.w-butter{fill:var(--butter);fill-opacity:.4;stroke:var(--butter);stroke-width:2}
+.w-faint{fill:var(--ink-soft);fill-opacity:.07;stroke:var(--line);stroke-width:1}
+.rmark{fill:none;stroke:var(--ink);stroke-width:2}
+.lbl{font-family:var(--mono);font-size:15px;font-weight:500;fill:var(--ink);text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.lbl-x{font-family:var(--mono);font-size:17px;font-weight:500;fill:var(--coral);text-anchor:middle;dominant-baseline:central;font-style:italic;pointer-events:none}
+.pname{font-family:var(--display);font-size:17px;font-weight:600;fill:var(--ink);text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.tag{font-family:var(--body);font-size:13px;fill:var(--ink-soft);pointer-events:none}
+.pr-body{fill:var(--sky-soft);fill-opacity:.78;stroke:var(--sky);stroke-width:1.5;cursor:grab;touch-action:none}
+.pr-static .pr-body{cursor:default}
+.pr-tick{stroke:var(--ink);stroke-width:.9;opacity:.75;pointer-events:none;fill:none}
+.pr-line{stroke:var(--sky);stroke-width:1.2;fill:none;pointer-events:none}
+.pr-out{font-family:var(--mono);fill:var(--ink);text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.pr-in{font-family:var(--mono);fill:var(--coral);text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.pr-knob{cursor:grab;touch-action:none}
+.pr-knob circle{fill:var(--coral);stroke:var(--card);stroke-width:2}
+.pr-knob path{stroke:#fff;stroke-width:2;fill:none;pointer-events:none}
+.pr-stem{stroke:var(--coral);stroke-width:2}
+.tri-fill{fill:var(--sky-soft);stroke:var(--ink);stroke-width:3;stroke-linejoin:round}
+.tri-a{fill:var(--coral);fill-opacity:.3} .tri-b{fill:var(--sage);fill-opacity:.3}
+.diag{stroke:var(--coral);stroke-width:2.5;stroke-dasharray:7 5}
+.pmark{stroke:var(--ink);stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+footer{padding-block:40px 60px;color:var(--ink-soft);font-size:.9rem}
+
+@media (max-width:880px){
+  .hero,.split,.split.rev{grid-template-columns:minmax(0,1fr)}
+  .types,.xgrid,.lines3{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .split.rev > .prose{order:-1}
+}
+@media (max-width:520px){
+  .wrap{padding-inline:16px}
+  .types,.xgrid,.lines3,.opts{grid-template-columns:minmax(0,1fr)}
+  section.lesson{padding-block:40px}
+  .lbl{font-size:17px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+
+<header class="wrap hero" id="top">
+  <div class="prose">
+    <div class="stamp"><span class="grade">Grade 6 Maths</span><span class="eyebrow">Geometry</span></div>
+    <h1>Angle Lab</h1>
+    <p class="lede">Name angles, sort them by size, measure them with a protractor, draw them, and use angle facts with lines and shapes to find missing angles.</p>
+    <p class="muted">Try it: drag the yellow dot to open or close the angle. Watch the size and the name change.</p>
+  </div>
+  <div class="panel">
+    <svg class="stage" id="heroSvg" viewBox="0 0 420 340" aria-label="Interactive angle. Drag the yellow handle to change the angle.">
+      <g id="heroG"></g>
+      <circle class="handle" id="heroHandle" r="13" tabindex="0" role="slider" aria-label="Angle size" aria-valuemin="0" aria-valuemax="360"></circle>
+    </svg>
+    <div class="readout"><span class="big" id="heroDeg">50°</span><span class="type-pill" id="heroType">Acute</span></div>
+    <p id="heroDesc" class="muted"></p>
+    <div class="presets" id="heroPresets"></div>
+  </div>
+</header>
+
+<nav class="lessonnav" aria-label="Lessons">
+  <div class="wrap">
+    <a href="#parts"><span>1</span>Parts &amp; names</a>
+    <a href="#types"><span>2</span>Types of angles</a>
+    <a href="#measure"><span>3</span>Measuring</a>
+    <a href="#draw"><span>4</span>Drawing</a>
+    <a href="#pairs"><span>5</span>Angle pairs</a>
+    <a href="#parallel"><span>6</span>Parallel lines</a>
+    <a href="#shapes"><span>7</span>Shapes &amp; diagonals</a>
+    <a href="#findx"><span>8</span>Find the angle</a>
+    <a href="#quiz"><span>9</span>Quiz</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- 1 PARTS -->
+<section class="lesson" id="parts">
+  <div class="lesson-head">
+    <span class="eyebrow">Lesson 1</span>
+    <h2>Parts of an angle and how to name it</h2>
+    <p>An angle is made when two rays start from the same point. The size of an angle tells us how much one ray has turned away from the other.</p>
+  </div>
+  <div class="split">
+    <div class="prose">
+      <svg class="fig" viewBox="0 0 380 250" aria-label="Angle ABC with vertex B and arms BA and BC">
+        <path class="w-butter" d="" id="partsWedge"></path>
+        <line class="ink-line" x1="80" y1="200" x2="340" y2="200"/>
+        <line class="ink-line" x1="80" y1="200" x2="255" y2="40"/>
+        <circle class="dot" cx="80" cy="200" r="6"/>
+        <circle class="dot-ink" cx="340" cy="200" r="4.5"/><circle class="dot-ink" cx="255" cy="40" r="4.5"/>
+        <text class="pname" x="62" y="214">B</text><text class="pname" x="356" y="200">C</text><text class="pname" x="268" y="28">A</text>
+        <text class="tag" x="40" y="240">vertex (corner point)</text>
+        <text class="tag" x="235" y="225">arm BC (a ray)</text>
+        <text class="tag" x="185" y="90" transform="rotate(-42 185 90)">arm BA (a ray)</text>
+        <text class="lbl" x="150" y="172">∠ABC</text>
+      </svg>
+      <ul>
+        <li>The <b>vertex</b> is the point where the two arms meet.</li>
+        <li>The <b>arms</b> are the two rays that make the angle.</li>
+        <li>We measure angles in <b>degrees</b> (°). One full turn is <b>360°</b>.</li>
+        <li>The symbol <span class="sym">∠</span> means “angle”.</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><h3>Three ways to name an angle</h3></div>
+      <ol class="steps">
+        <li><div><b>Three letters</b>, with the vertex in the <span class="hl">middle</span>: <span class="sym">∠ABC</span> or <span class="sym">∠CBA</span>. Both name the same angle.</div></li>
+        <li><div><b>The vertex letter only</b>: <span class="sym">∠B</span>. Use this only when there is just one angle at B.</div></li>
+        <li><div><b>A number or small letter</b> written inside the angle: <span class="sym">∠1</span> or <span class="sym">∠x</span>.</div></li>
+      </ol>
+      <p class="note">Why the middle letter matters: below, three angles share vertex B. Tap a name to see which angle it means. Saying “∠B” here would be confusing.</p>
+      <svg class="fig" id="nameSvg" viewBox="0 0 380 230"></svg>
+      <div class="row" id="nameBtns"></div>
+      <p class="feedback" id="nameOut"></p>
+    </div>
+  </div>
+</section>
+
+<!-- 2 TYPES -->
+<section class="lesson" id="types">
+  <div class="lesson-head">
+    <span class="eyebrow">Lesson 2</span>
+    <h2>Types of angles</h2>
+    <p>We sort angles by comparing them with a right angle (90°, a square corner) and a straight angle (180°, a straight line).</p>
+  </div>
+  <div class="types" id="typeCards"></div>
+  <div class="split" style="margin-top:32px">
+    <div class="prose">
+      <h3>Name that angle</h3>
+      <p>Look at the angle shaded in coral. Estimate first: is it smaller than a square corner, exactly a square corner, or bigger? Then choose its type.</p>
+      <p class="note">Quick check: hold the corner of a sheet of paper against the screen. If the angle fits inside the corner, it is acute.</p>
+      <p class="muted">Correct in a row: <b class="mono" id="streak">0</b> &nbsp;·&nbsp; Best: <b class="mono" id="best">0</b></p>
+    </div>
+    <div class="panel">
+      <svg class="fig" id="gameSvg" viewBox="0 0 300 240" aria-label="An angle to classify"></svg>
+      <div class="row" id="gameBtns"></div>
+      <p class="feedback" id="gameOut" aria-live="polite"></p>
+      <div class="row"><button class="primary" id="gameNext">Next angle</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 MEASURE -->
+<section class="lesson" id="measure">
+  <div class="lesson-head">
+    <span class="eyebrow">Lesson 3</span>
+    <h2>Measuring an angle with a protractor</h2>
+    <p>A protractor is a half circle marked from 0° to 180°. It has two scales that run in opposite directions. Here the <b style="color:var(--ink)">outer scale is navy</b> and the <b style="color:var(--coral)">inner scale is coral</b>.</p>
+  </div>
+  <div class="split">
+    <div class="prose">
+      <ol class="steps">
+        <li><div><b>Estimate.</b> Is the angle acute or obtuse? Your answer must match.</div></li>
+        <li><div><b>Centre.</b> Put the centre point of the protractor exactly on the vertex.</div></li>
+        <li><div><b>Line up.</b> Turn the protractor so the baseline (the 0° line) lies along one arm.</div></li>
+        <li><div><b>Choose the scale</b> that shows <b>0</b> on that arm.</div></li>
+        <li><div><b>Read.</b> Follow the same scale round to the other arm. Read the number where the arm crosses it.</div></li>
+      </ol>
+      <p class="note warn"><b>Common mistake:</b> reading the wrong scale. A 50° angle can look like 130° if you start from the 0 on the other side. Always check your estimate: acute angles are less than 90°.</p>
+      <p class="muted">In the lab: drag the blue protractor to move it. Drag the coral knob to turn it. It clicks into place when it is close.</p>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><h3>Protractor lab</h3>
+        <div class="row"><button class="chip" id="modeStarter" aria-pressed="true">Starter</button><button class="chip" id="modeChallenge" aria-pressed="false">Challenge</button></div>
+      </div>
+      <svg class="stage" id="labSvg" viewBox="0 0 600 470" aria-label="Protractor lab">
+        <g id="labAngle"></g>
+        <g id="prG"></g>
+      </svg>
+      <div class="status"><span id="stCentre">Centre on vertex</span><span id="stLine">Baseline on an arm</span></div>
+      <div class="row">
+        <label for="labIn">The angle is</label><input type="number" id="labIn" min="0" max="180" inputmode="numeric"><span class="mono">°</span>
+        <button class="primary" id="labCheck">Check answer</button>
+      </div>
+      <p class="feedback" id="labOut" aria-live="polite"></p>
+      <div class="row"><button id="labPlace">Place it for me</button><button id="labNew">New angle</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 DRAW -->
+<section class="lesson" id="draw">
+  <div class="lesson-head">
+    <span class="eyebrow">Lesson 4</span>
+    <h2>Drawing an angle of a given size</h2>
+    <p>You need a sharp pencil, a ruler and a protractor. Follow the steps and make the angle yourself.</p>
+  </div>
+  <div class="split rev">
+    <div class="panel">
+      <div class="panel-title"><h3>Draw ∠ABC = <span class="mono" id="drawTarget">65</span>°</h3><button class="chip" id="drawNew">New angle</button></div>
+      <svg class="stage" id="drawSvg" viewBox="0 0 600 330" aria-label="Angle drawing practice"></svg>
+      <p class="feedback" id="drawOut" aria-live="polite"></p>
+      <div class="row"><button id="drawBack">Back</button><button class="primary" id="drawNext">Next step</button></div>
+    </div>
+    <div class="prose">
+      <ol class="steps" id="drawSteps">
+        <li><div><b>Draw the first arm.</b> Use a ruler to draw a ray BC. Mark the vertex B.</div></li>
+        <li><div><b>Place the protractor.</b> Centre on B. Baseline along BC.</div></li>
+        <li><div><b>Mark a dot.</b> Find <span class="mono drawT">65</span>° on the scale that starts at 0 on BC. Tap that spot on the edge to make a dot.</div></li>
+        <li><div><b>Join and label.</b> Remove the protractor. Use the ruler to join B to the dot. Label the dot A.</div></li>
+      </ol>
+      <p class="note">Check your drawing. If you were asked for an acute angle, does your angle look smaller than a square corner?</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5 PAIRS -->
+<section class="lesson" id="pairs">
+  <div class="lesson-head">
+    <span class="eyebrow">Lesson 5</span>
+    <h2>Angle pairs and angle facts</h2>
+    <p><b>Adjacent angles</b> share a vertex and an arm and sit side by side. When adjacent angles fill a right angle, a straight line or a full turn, we know their total.</p>
+  </div>
+  <div class="split">
+    <div class="prose">
+      <ul>
+        <li><b>Complementary angles</b> add up to <span class="hl">90°</span>. 30° and 60° are complementary.</li>
+        <li><b>Supplementary angles</b> add up to <span class="hl">180°</span>. Angles on a straight line are supplementary.</li>
+        <li><b>Angles around a point</b> add up to <span class="hl">360°</span>, one full turn.</li>
+      </ul>
+      <p class="note">Memory trick: <b>C</b> comes before <b>S</b> in the alphabet, and 90 comes before 180. <b>C</b>omplementary makes a <b>C</b>orner. <b>S</b>upplementary makes a <b>S</b>traight line.</p>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><h3>Drag the yellow dots</h3>
+        <div class="row" id="pairTabs">
+          <button class="chip" data-m="comp" aria-pressed="true">90°</button>
+          <button class="chip" data-m="supp" aria-pressed="false">180°</button>
+          <button class="chip" data-m="point" aria-pressed="false">360°</button>
+        </div>
+      </div>
+      <svg class="stage" id="pairSvg" viewBox="0 0 400 300"></svg>
+      <div class="eq" id="pairEq"></div>
+    </div>
+  </div>
+  <div class="split rev" style="margin-top:36px">
+    <div class="panel">
+      <div class="panel-title"><h3>Two crossing lines</h3><span class="muted">Drag the yellow dot</span></div>
+      <svg class="stage" id="vertSvg" viewBox="0 0 400 290"></svg>
+      <div class="eq" id="vertEq"></div>
+    </div>
+    <div class="prose">
+      <h3>Vertically opposite angles</h3>
+      <p>When two straight lines cross, they make four angles. The angles <b>opposite</b> each other (across the vertex) are always <span class="hl">equal</span>.</p>
+      <p>The angles <b>next to</b> each other sit on a straight line, so they add up to <b>180°</b>.</p>
+      <p class="note ok">So if you know one of the four angles, you can find all the others.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 6 PARALLEL -->
+<section class="lesson" id="parallel">
+  <div class="lesson-head">
+    <span class="eyebrow">Lesson 6</span>
+    <h2>Parallel lines, perpendicular lines and transversals</h2>
+    <p>Lines on a flat surface either never meet or cross at one point. How they meet decides the angles.</p>
+  </div>
+  <div class="lines3" id="lineCards"></div>
+  <div class="split">
+    <div class="prose">
+      <p>A <b>transversal</b> is a line that crosses two or more other lines. It makes 8 angles, numbered here 1 to 8.</p>
+      <p>When the two lines are <b>parallel</b>:</p>
+      <ul>
+        <li><b>Corresponding angles</b> are equal. They are in the same position at each crossing. Look for an <b>F</b> shape.</li>
+        <li><b>Alternate interior angles</b> are equal. They are between the lines, on opposite sides of the transversal. Look for a <b>Z</b> shape.</li>
+        <li><b>Alternate exterior angles</b> are equal. They are outside the lines, on opposite sides.</li>
+        <li><b>Co-interior angles</b> add up to <b>180°</b>. They are between the lines, on the same side. Look for a <b>C</b> or <b>U</b> shape.</li>
+      </ul>
+      <p class="note warn">These rules only work when the lines are parallel. Tick “Tilt the bottom line” to see them break.</p>
+    </div>
+    <div class="panel">
+      <div class="row" id="transBtns"></div>
+      <svg class="stage" id="transSvg" viewBox="0 0 460 340"></svg>
+      <label class="check" for="tilt"><input type="checkbox" id="tilt"> Tilt the bottom line (not parallel)</label>
+      <div class="eq" id="transEq"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 SHAPES -->
+<section class="lesson" id="shapes">
+  <div class="lesson-head">
+    <span class="eyebrow">Lesson 7</span>
+    <h2>Angles in triangles, quadrilaterals and diagonals</h2>
+    <p>Drag the corners of each shape. The angles change, but the total stays the same.</p>
+  </div>
+  <div class="split">
+    <div class="panel">
+      <div class="panel-title"><h3>Triangle</h3><span class="type-pill" id="triType" style="font-size:.9rem">Acute triangle</span></div>
+      <svg class="stage" id="triSvg" viewBox="0 0 400 300"></svg>
+      <p class="muted">Tear off the three corners and put them side by side. They always make a straight line:</p>
+      <svg class="fig" id="stripSvg" viewBox="0 0 400 120"></svg>
+      <div class="eq" id="triEq"></div>
+    </div>
+    <div class="panel">
+      <div class="panel-title"><h3>Quadrilateral</h3><label class="check" for="showDiag"><input type="checkbox" id="showDiag"> Draw a diagonal</label></div>
+      <svg class="stage" id="quadSvg" viewBox="0 0 400 300"></svg>
+      <p class="feedback bad" id="quadWarn"></p>
+      <div class="eq" id="quadEq"></div>
+      <p class="muted">A <b>diagonal</b> joins two corners that are not next to each other. One diagonal cuts a quadrilateral into two triangles, so its angles add to 2 × 180° = 360°.</p>
+    </div>
+  </div>
+  <div class="split rev" style="margin-top:36px">
+    <div class="panel">
+      <div class="panel-title"><h3>Diagonals in polygons</h3>
+        <div class="row"><button class="chip" id="dOne" aria-pressed="true">From one corner</button><button class="chip" id="dAll" aria-pressed="false">All diagonals</button></div>
+      </div>
+      <svg class="stage" id="polySvg" viewBox="0 0 300 300" style="max-width:360px;margin:0 auto"></svg>
+      <label for="polyN">Number of sides: <b class="mono" id="polyNOut">5</b> (<span id="polyName">pentagon</span>)</label>
+      <input type="range" id="polyN" min="3" max="10" value="5">
+    </div>
+    <div class="prose">
+      <h3>Count the triangles</h3>
+      <p>From one corner, draw every diagonal you can. Count the triangles. Each triangle gives 180°.</p>
+      <div style="overflow-x:auto">
+      <table class="mono" style="border-collapse:collapse;width:100%;min-width:300px;font-size:.95rem" id="polyTable"></table>
+      </div>
+      <p class="note">Rule: a polygon with <b>n</b> sides splits into <b>n − 2</b> triangles, so its angles add up to <b>(n − 2) × 180°</b>. The total number of diagonals is <b>n × (n − 3) ÷ 2</b>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 8 FIND X -->
+<section class="lesson" id="findx">
+  <div class="lesson-head">
+    <span class="eyebrow">Lesson 8</span>
+    <h2>Find the missing angle</h2>
+    <p>Diagrams are not drawn to scale, so do not measure. Use an angle fact, write a number sentence, then solve it.</p>
+  </div>
+  <div class="facts" style="margin-bottom:28px">
+    <div class="fact"><span class="n">90°</span><p>Complementary angles, a right angle</p></div>
+    <div class="fact"><span class="n">180°</span><p>Angles on a straight line; angles in a triangle; co-interior angles</p></div>
+    <div class="fact"><span class="n">360°</span><p>Angles around a point; angles in a quadrilateral</p></div>
+    <div class="fact"><span class="n">=</span><p>Vertically opposite, corresponding and alternate angles are equal</p></div>
+  </div>
+  <div class="xgrid" id="xGrid"></div>
+</section>
+
+<!-- 9 QUIZ -->
+<section class="lesson" id="quiz" style="border-bottom:0">
+  <div class="lesson-head">
+    <span class="eyebrow">Lesson 9</span>
+    <h2>Check your understanding</h2>
+    <p>15 questions on everything in Angle Lab. You get feedback after each answer.</p>
+  </div>
+  <div class="quiz panel" id="quizBox"></div>
+</section>
+</main>
+
+<footer class="wrap">Angle Lab · Grade 6 geometry. Diagrams in the problems are not drawn to scale unless you can drag them.</footer>
+
+<script>
+/* ---------- geometry helpers ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+const rad = d => d * Math.PI / 180, toDeg = r => r * 180 / Math.PI;
+const norm = a => ((a % 360) + 360) % 360;
+const pt = (cx, cy, r, a) => [cx + r * Math.cos(rad(a)), cy - r * Math.sin(rad(a))];
+const dirOf = (x1, y1, x2, y2) => norm(toDeg(Math.atan2(-(y2 - y1), x2 - x1)));
+const angDiff = (a, b) => Math.abs(((a - b + 540) % 360) - 180);
+const rand = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const f1 = n => +n.toFixed(1);
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function arcD(cx, cy, r, a1, sw) { // counter-clockwise from a1 by sw degrees
+  if (sw >= 359.99) { const [x1, y1] = pt(cx, cy, r, a1), [x2, y2] = pt(cx, cy, r, a1 + 180);
+    return `M${f1(x1)} ${f1(y1)} A${r} ${r} 0 1 0 ${f1(x2)} ${f1(y2)} A${r} ${r} 0 1 0 ${f1(x1)} ${f1(y1)}`; }
+  const [x1, y1] = pt(cx, cy, r, a1), [x2, y2] = pt(cx, cy, r, a1 + sw);
+  return `M${f1(x1)} ${f1(y1)} A${r} ${r} 0 ${sw > 180 ? 1 : 0} 0 ${f1(x2)} ${f1(y2)}`;
+}
+function wedgeD(cx, cy, r, a1, sw) {
+  if (sw <= 0.01) return '';
+  if (sw >= 359.99) return arcD(cx, cy, r, a1, 360) + ' Z';
+  return `M${cx} ${cy} L` + arcD(cx, cy, r, a1, sw).slice(1) + ' Z';
+}
+function rightMarkD(cx, cy, d, s = 16) {
+  const p1 = pt(cx, cy, s, d), p2 = pt(cx, cy, s * Math.SQRT2, d + 45), p3 = pt(cx, cy, s, d + 90);
+  return `M${f1(p1[0])} ${f1(p1[1])} L${f1(p2[0])} ${f1(p2[1])} L${f1(p3[0])} ${f1(p3[1])}`;
+}
+function seg(x1, y1, x2, y2, cls = 'ink-line') { return `<line class="${cls}" x1="${f1(x1)}" y1="${f1(y1)}" x2="${f1(x2)}" y2="${f1(y2)}"/>`; }
+function rayLine(cx, cy, len, d, cls) { const [x, y] = pt(cx, cy, len, d); return seg(cx, cy, x, y, cls); }
+function txt(x, y, s, cls = 'lbl') { return `<text class="${cls}" x="${f1(x)}" y="${f1(y)}">${s}</text>`; }
+function svgPt(svg, e) { const p = svg.createSVGPoint(); p.x = e.clientX; p.y = e.clientY; return p.matrixTransform(svg.getScreenCTM().inverse()); }
+function drag(el, svg, onMove, onStart) {
+  el.addEventListener('pointerdown', e => {
+    e.preventDefault(); e.stopPropagation(); el.setPointerCapture(e.pointerId);
+    onStart && onStart(svgPt(svg, e));
+    const mv = ev => onMove(svgPt(svg, ev));
+    const up = () => { el.removeEventListener('pointermove', mv); el.removeEventListener('pointerup', up); el.removeEventListener('pointercancel', up); };
+    el.addEventListener('pointermove', mv); el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up);
+  });
+}
+function roundToSum(vals, total) { // integer rounding that keeps the exact total
+  const fl = vals.map(Math.floor); let rest = total - fl.reduce((a, b) => a + b, 0);
+  const order = vals.map((v, i) => [v - Math.floor(v), i]).sort((a, b) => b[0] - a[0]);
+  for (let k = 0; k < order.length && rest > 0; k++, rest--) fl[order[k][1]]++;
+  return fl;
+}
+function angleType(a) {
+  a = Math.round(a);
+  if (a === 0) return ['Zero angle', 'Both arms point the same way. There is no turn at all.'];
+  if (a < 90) return ['Acute', 'More than 0° and less than 90°. Smaller than a square corner.'];
+  if (a === 90) return ['Right', 'Exactly 90°. A square corner, like the corner of a book. A quarter turn.'];
+  if (a < 180) return ['Obtuse', 'More than 90° and less than 180°. Wider than a square corner.'];
+  if (a === 180) return ['Straight', 'Exactly 180°. The two arms make a straight line. A half turn.'];
+  if (a < 360) return ['Reflex', 'More than 180° and less than 360°. Bigger than a straight line.' + (a === 270 ? ' 270° is a three-quarter turn.' : '')];
+  return ['Full turn', 'Exactly 360°. One complete turn, back to the start.'];
+}
+
+/* ---------- protractor drawing ---------- */
+function protractorSVG(R, fs = 11) {
+  let s = `<path class="pr-body" d="M${-R} 0 A${R} ${R} 0 0 1 ${R} 0 L${R + 10} 0 L${R + 10} 14 L${-R - 10} 14 L${-R - 10} 0 Z"/>`;
+  let ticks = '';
+  for (let t = 0; t <= 180; t++) {
+    const L = t % 10 === 0 ? 15 : t % 5 === 0 ? 9 : 5;
+    const [x1, y1] = pt(0, 0, R, t), [x2, y2] = pt(0, 0, R - L, t);
+    ticks += `M${f1(x1)} ${f1(y1)}L${f1(x2)} ${f1(y2)}`;
+    if (t % 10 === 0 && t > 0 && t < 180) { const [a, b] = pt(0, 0, R * 0.62, t), [c, d] = pt(0, 0, R * 0.36, t); ticks += `M${f1(a)} ${f1(b)}L${f1(c)} ${f1(d)}`; }
+  }
+  s += `<path class="pr-tick" d="${ticks}"/>`;
+  s += `<path class="pr-line" d="M${-R * .36} 0 A${R * .36} ${R * .36} 0 0 1 ${R * .36} 0"/>`;
+  s += `<path class="pr-line" d="M${-R * .62} 0 A${R * .62} ${R * .62} 0 0 1 ${R * .62} 0"/>`;
+  for (let t = 0; t <= 180; t += 10) {
+    const [ox, oy] = pt(0, 0, R - 15 - fs * 0.9, t), [ix, iy] = pt(0, 0, R - 15 - fs * 2.3, t);
+    s += `<text class="pr-out" font-size="${fs}" x="${f1(ox)}" y="${f1(oy)}" transform="rotate(${90 - t} ${f1(ox)} ${f1(oy)})">${180 - t}</text>`;
+    s += `<text class="pr-in" font-size="${fs * .9}" x="${f1(ix)}" y="${f1(iy)}" transform="rotate(${90 - t} ${f1(ix)} ${f1(iy)})">${t}</text>`;
+  }
+  s += `<line class="pr-line" x1="${-R}" y1="0" x2="${R}" y2="0" style="stroke-width:1.6"/>`;
+  s += `<line class="pr-line" x1="0" y1="0" x2="0" y2="${-R * .36}"/>`;
+  s += `<circle cx="0" cy="0" r="3" style="fill:var(--coral);pointer-events:none"/>`;
+  s += `<line class="pr-line" x1="-9" y1="0" x2="9" y2="0" style="stroke:var(--coral);stroke-width:2"/><line class="pr-line" x1="0" y1="-9" x2="0" y2="9" style="stroke:var(--coral);stroke-width:2"/>`;
+  return s;
+}
+
+/* ---------- generic static figure ---------- */
+function rayFig(o) {
+  const { cx, cy, len = 110, r = 34 } = o; let s = '';
+  (o.wedges || []).forEach(w => s += `<path class="w-${w[3]}" d="${wedgeD(cx, cy, w[4] || r, w[0], w[1])}"/>`);
+  (o.right || []).forEach(d => s += `<path class="rmark" d="${rightMarkD(cx, cy, d, 15)}"/>`);
+  (o.lines || []).forEach(d => { const [x1, y1] = pt(cx, cy, len, d), [x2, y2] = pt(cx, cy, len, d + 180); s += seg(x1, y1, x2, y2, 'ink-thin'); });
+  (o.rays || []).forEach(d => s += rayLine(cx, cy, len, d, 'ink-thin'));
+  s += `<circle class="dot" cx="${cx}" cy="${cy}" r="4.5"/>`;
+  (o.wedges || []).forEach(w => { if (!w[2]) return; const R = w[4] || r; const lr = w[1] < 40 ? R + 26 : R + 18;
+    const [x, y] = pt(cx, cy, lr, w[0] + w[1] / 2); s += txt(x, y, w[2], w[2] === 'x' || w[2] === '?' ? 'lbl-x' : 'lbl'); });
+  return s;
+}
+function lineInter(P, u, Q, v) { // P + s u = Q + t v
+  const det = u[0] * (-v[1]) - (-v[0]) * u[1]; const dx = Q[0] - P[0], dy = Q[1] - P[1];
+  const s = (dx * (-v[1]) - (-v[0]) * dy) / det; return [P[0] + s * u[0], P[1] + s * u[1]];
+}
+function triFig(angA, angB, labA, labB, labC) {
+  const A = [60, 190], B = [250, 190];
+  const C = lineInter(A, [Math.cos(rad(angA)), -Math.sin(rad(angA))], B, [Math.cos(rad(180 - angB)), -Math.sin(rad(180 - angB))]);
+  let s = `<polygon class="tri-fill" points="${A} ${B} ${C.map(f1)}"/>`;
+  const cA = dirOf(...C, ...A), cB = dirOf(...C, ...B), swC = norm(cB - cA);
+  s += angA === 90 ? `<path class="rmark" d="${rightMarkD(...A, 0, 16)}"/>` : `<path class="w-sky" d="${wedgeD(...A, 26, 0, angA)}"/>`;
+  s += `<path class="w-sage" d="${wedgeD(...B, 26, 180 - angB, angB)}"/>`;
+  s += `<path class="w-coral" d="${wedgeD(...C, 24, cA, swC)}"/>`;
+  s += txt(...pt(...A, 50, angA / 2), labA, 'lbl') + txt(...pt(...B, 50, 180 - angB / 2), labB, 'lbl') + txt(...pt(...C, 46, cA + swC / 2), labC, labC === 'x' ? 'lbl-x' : 'lbl');
+  return s;
+}
+function regions(L, T) { // angles at a crossing: line direction L, transversal direction T
+  const k = T - L;
+  return { 1: [T, 180 - k], 2: [L, k], 3: [L + 180, k], 4: [T + 180, 180 - k] };
+}
+function parallelFig(T, marks, opts = {}) { // marks: {regionNumber: label}
+  const C = [160, 112], yTop = 62, yBot = 162, W = 320; let s = '';
+  const tx = y => C[0] + (C[1] - y) / Math.tan(rad(T));
+  const P1 = [tx(yTop), yTop], P2 = [tx(yBot), yBot];
+  for (const [n, lab] of Object.entries(marks)) {
+    const P = n <= 4 ? P1 : P2, rg = regions(0, T)[n <= 4 ? n : n - 4];
+    s += `<path class="w-${lab === 'x' ? 'coral' : 'sky'}" d="${wedgeD(...P, 22, rg[0], rg[1])}"/>`;
+  }
+  s += seg(10, yTop, W - 10, yTop, 'ink-thin') + seg(10, yBot, W - 10, yBot, 'ink-thin');
+  s += `<path class="pmark" d="M40 ${yTop - 6} l7 6 l-7 6 M40 ${yBot - 6} l7 6 l-7 6"/>`;
+  s += seg(tx(14), 14, tx(208), 208, 'ink-thin');
+  for (const [n, lab] of Object.entries(marks)) {
+    const P = n <= 4 ? P1 : P2, rg = regions(0, T)[n <= 4 ? n : n - 4];
+    s += txt(...pt(...P, rg[1] < 50 ? 46 : 38, rg[0] + rg[1] / 2), lab, lab === 'x' ? 'lbl-x' : 'lbl');
+  }
+  return s;
+}
+function protractorFig(d1, d2) {
+  const cx = 160, cy = 152;
+  return `<g transform="translate(${cx} ${cy})" class="pr-static">${protractorSVG(128, 9)}</g>` +
+    rayLine(cx, cy, 150, d1, 'ink-thin') + rayLine(cx, cy, 150, d2, 'ink-thin') + `<circle class="dot" cx="${cx}" cy="${cy}" r="4"/>`;
+}
+
+/* ---------- HERO ---------- */
+(() => {
+  const svg = $('#heroSvg'), g = $('#heroG'), h = $('#heroHandle'), V = [210, 170], L = 140;
+  let a = 50;
+  function render() {
+    let s = '';
+    if (a === 90) s += `<path class="rmark" d="${rightMarkD(...V, 0, 22)}" style="stroke:var(--coral);stroke-width:3"/>`;
+    else if (a > 0) s += `<path class="w-coral" d="${wedgeD(...V, 44, 0, a)}"/>`;
+    if (a > 0 && a < 360 && a !== 90) { /* outside part, faint */ }
+    s += rayLine(...V, L + 20, 0) + rayLine(...V, L, a);
+    s += `<circle class="dot" cx="${V[0]}" cy="${V[1]}" r="6"/>`;
+    s += txt(V[0] - 6, V[1] + 24, 'vertex', 'tag');
+    if (a > 0) s += txt(...pt(...V, a < 30 ? 82 : 70, a / 2), a + '°');
+    g.innerHTML = s;
+    const [hx, hy] = pt(...V, L, a); h.setAttribute('cx', f1(hx)); h.setAttribute('cy', f1(hy));
+    h.setAttribute('aria-valuenow', a);
+    const [name, desc] = angleType(a);
+    $('#heroDeg').textContent = a + '°'; $('#heroType').textContent = name; $('#heroDesc').textContent = desc;
+  }
+  drag(h, svg, p => {
+    let raw = dirOf(...V, p.x, p.y);
+    if (a >= 300 && raw <= 60) raw = 360; else if (a <= 60 && raw >= 300) raw = 0;
+    for (const snap of [90, 180, 270]) if (Math.abs(raw - snap) < 2.5) raw = snap;
+    a = Math.round(raw); render();
+  });
+  h.addEventListener('keydown', e => {
+    const step = e.shiftKey ? 10 : 1;
+    if (['ArrowRight', 'ArrowUp'].includes(e.key)) a = Math.min(360, a + step);
+    else if (['ArrowLeft', 'ArrowDown'].includes(e.key)) a = Math.max(0, a - step); else return;
+    e.preventDefault(); render();
+  });
+  const box = $('#heroPresets');
+  [35, 90, 140, 180, 250, 360].forEach(v => { const b = document.createElement('button'); b.className = 'chip'; b.textContent = v + '°';
+    b.onclick = () => { a = v; render(); }; box.appendChild(b); });
+  render();
+})();
+
+/* ---------- LESSON 1: naming ---------- */
+(() => {
+  const B = [80, 200];
+  $('#partsWedge').setAttribute('d', wedgeD(80, 200, 44, 0, dirOf(80, 200, 255, 40)));
+  const svg = $('#nameSvg'), Bn = [70, 195], dA = 140, dD = 55, dC = 0, L = 170;
+  const opts = { '∠ABD': [dD, dA - dD, 'coral'], '∠DBC': [dC, dD - dC, 'sky'], '∠ABC': [dC, dA - dC, 'sage'] };
+  function render(k) {
+    let s = '';
+    if (k) { const [a1, sw, col] = opts[k]; s += `<path class="w-${col}" d="${wedgeD(...Bn, 56, a1, sw)}"/>`; s += txt(...pt(...Bn, 84, a1 + sw / 2), sw + '°'); }
+    [dA, dD, dC].forEach(d => s += rayLine(...Bn, L, d, 'ink-thin'));
+    s += `<circle class="dot" cx="${Bn[0]}" cy="${Bn[1]}" r="5"/>`;
+    s += txt(Bn[0] - 16, Bn[1] + 14, 'B', 'pname');
+    [[dA, 'A'], [dD, 'D'], [dC, 'C']].forEach(([d, n]) => s += txt(...pt(...Bn, L + 16, d), n, 'pname'));
+    svg.innerHTML = s;
+  }
+  const out = $('#nameOut'), msgs = {
+    '∠ABD': 'Arms BA and BD. It is 85°, an acute angle.',
+    '∠DBC': 'Arms BD and BC. It is 55°, an acute angle.',
+    '∠ABC': 'Arms BA and BC. It is the whole angle: 85° + 55° = 140°, an obtuse angle.'
+  };
+  const box = $('#nameBtns');
+  Object.keys(opts).forEach(k => { const b = document.createElement('button'); b.className = 'chip'; b.textContent = k; b.setAttribute('aria-pressed', 'false');
+    b.onclick = () => { box.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); render(k); out.textContent = msgs[k]; };
+    box.appendChild(b); });
+  render();
+})();
+
+/* ---------- LESSON 2: type cards + game ---------- */
+(() => {
+  const cards = [
+    ['Acute', '0° < a < 90°', 50, 'Less than a square corner. Like the tip of a pizza slice.'],
+    ['Right', 'a = 90°', 90, 'A square corner, marked with a small square. Like the corner of a book.'],
+    ['Obtuse', '90° < a < 180°', 130, 'Wider than a square corner. Like a laptop screen tipped back.'],
+    ['Straight', 'a = 180°', 180, 'The arms form a straight line. A half turn.'],
+    ['Reflex', '180° < a < 360°', 250, 'Bigger than a straight line. Measure it the long way round.'],
+    ['Full turn', 'a = 360°', 360, 'One complete turn, like a wheel going round once.']
+  ];
+  $('#typeCards').innerHTML = cards.map(([n, r, a, d]) => {
+    const cx = 110, cy = a > 180 ? 75 : 95, s = (a === 90 ? `<path class="rmark" d="${rightMarkD(cx, cy, 0, 18)}" style="stroke:var(--coral);stroke-width:2.5"/>` : `<path class="w-coral" d="${wedgeD(cx, cy, a === 360 ? 30 : 34, 0, a)}"/>`)
+      + rayLine(cx, cy, 80, 0, 'ink-thin') + (a < 360 ? rayLine(cx, cy, 80, a, 'ink-thin') : '') + `<circle class="dot" cx="${cx}" cy="${cy}" r="4"/>`
+      + (a === 360 ? `<path class="pmark" d="M${cx + 30} ${cy} l-5 -7 M${cx + 30} ${cy} l6 -6" style="stroke:var(--coral)"/>` : '');
+    return `<div class="tcard"><svg class="fig" viewBox="0 0 220 ${a > 180 ? 160 : 110}">${s}</svg><h3>${n}<span class="mono">${r}</span></h3><p>${d}</p></div>`;
+  }).join('');
+
+  const types = ['Acute', 'Right', 'Obtuse', 'Straight', 'Reflex'];
+  let cur, answered = false, streak = 0, best = 0;
+  const svg = $('#gameSvg'), out = $('#gameOut'), box = $('#gameBtns');
+  try { best = +localStorage.getItem('angleBest') || 0; } catch (e) {}
+  $('#best').textContent = best;
+  function next() {
+    const t = types[rand(0, 4)];
+    const a = t === 'Acute' ? rand(12, 80) : t === 'Right' ? 90 : t === 'Obtuse' ? rand(100, 170) : t === 'Straight' ? 180 : rand(195, 340);
+    const rot = rand(0, 359); cur = { t, a }; answered = false;
+    const cx = 150, cy = 120;
+    svg.innerHTML = (a === 90 ? `<path class="rmark" d="${rightMarkD(cx, cy, rot, 20)}" style="stroke:var(--coral);stroke-width:3"/>` : `<path class="w-coral" d="${wedgeD(cx, cy, 38, rot, a)}"/>`)
+      + rayLine(cx, cy, 100, rot) + rayLine(cx, cy, 100, rot + a) + `<circle class="dot" cx="${cx}" cy="${cy}" r="5"/>`;
+    out.textContent = ''; out.className = 'feedback';
+    box.querySelectorAll('button').forEach(b => { b.disabled = false; b.className = 'opt'; });
+  }
+  types.forEach(t => { const b = document.createElement('button'); b.className = 'opt'; b.textContent = t;
+    b.onclick = () => {
+      if (answered) return; answered = true;
+      const ok = t === cur.t; const [, desc] = angleType(cur.a);
+      out.className = 'feedback ' + (ok ? 'good' : 'bad');
+      out.textContent = (ok ? '✓ Yes! ' : `✗ Not quite. It is ${cur.t.toLowerCase()}. `) + `This angle is ${cur.a}°. ${desc}`;
+      b.classList.add(ok ? 'correct' : 'incorrect');
+      box.querySelectorAll('button').forEach(x => { if (x.textContent === cur.t) x.classList.add('correct'); });
+      streak = ok ? streak + 1 : 0; if (streak > best) { best = streak; try { localStorage.setItem('angleBest', best); } catch (e) {} }
+      $('#streak').textContent = streak; $('#best').textContent = best;
+    };
+    box.appendChild(b); });
+  $('#gameNext').onclick = next;
+  next();
+})();
+
+/* ---------- LESSON 3: protractor lab ---------- */
+(() => {
+  const svg = $('#labSvg'), V = [300, 235], R = 170, ARM = 210;
+  const prG = $('#prG');
+  const knobArrow = arcD(0, -R - 26, 6.5, 120, 260);
+  prG.innerHTML = protractorSVG(R, 11) +
+    `<line class="pr-stem" x1="0" y1="${-R}" x2="0" y2="${-R - 13}"/><g class="pr-knob" id="knob" tabindex="0" role="button" aria-label="Turn the protractor (arrow keys)"><circle cx="0" cy="${-R - 26}" r="14"/><path d="${knobArrow}"/><path d="M${f1(pt(0, -R - 26, 6.5, 380)[0]) - 3} ${f1(pt(0, -R - 26, 6.5, 380)[1]) - 4} l4 4 l-5 2"/></g>`;
+  const st = { mode: 'starter', d1: 0, d2: 50, m: 50, px: 150, py: 445, rot: 0, tries: 0 };
+  function newAngle() {
+    let m; do { m = rand(15, 165); } while (Math.abs(m - 90) < 5);
+    st.m = m; st.tries = 0;
+    if (st.mode === 'starter') { if (Math.random() < .5) { st.d1 = 0; st.d2 = m; } else { st.d1 = 180; st.d2 = 180 - m; } }
+    else { st.d1 = rand(0, 359); st.d2 = norm(st.d1 + m); }
+    st.px = 140; st.py = 445; st.rot = st.mode === 'starter' ? 0 : rand(-30, 30);
+    $('#labIn').value = ''; $('#labOut').textContent = ''; $('#labOut').className = 'feedback';
+    drawAngle(); place();
+  }
+  function drawAngle() {
+    const start = st.mode === 'starter' && st.d1 === 180 ? st.d2 : st.d1;
+    $('#labAngle').innerHTML = `<path class="w-butter" d="${wedgeD(...V, 26, start, st.m)}"/>` +
+      rayLine(...V, ARM, st.d1) + rayLine(...V, ARM, st.d2) + `<circle class="dot" cx="${V[0]}" cy="${V[1]}" r="5"/>`;
+  }
+  function place() {
+    prG.setAttribute('transform', `translate(${f1(st.px)} ${f1(st.py)}) rotate(${f1(-st.rot)})`);
+    const centred = Math.hypot(st.px - V[0], st.py - V[1]) < .6;
+    const lined = [st.d1, st.d2].some(d => angDiff(st.rot, d) < .6 || angDiff(st.rot + 180, d) < .6);
+    $('#stCentre').classList.toggle('on', centred); $('#stLine').classList.toggle('on', lined);
+  }
+  let off = [0, 0];
+  drag(prG.querySelector('.pr-body'), svg, p => {
+    st.px = Math.max(0, Math.min(600, p.x - off[0])); st.py = Math.max(0, Math.min(470, p.y - off[1]));
+    if (Math.hypot(st.px - V[0], st.py - V[1]) < 14) { st.px = V[0]; st.py = V[1]; }
+    place();
+  }, p => { off = [p.x - st.px, p.y - st.py]; });
+  function snapRot(r) {
+    for (const d of [st.d1, st.d2]) for (const c of [d, d + 180]) if (angDiff(r, c) < 4) return norm(c);
+    return r;
+  }
+  const knob = $('#knob');
+  drag(knob, svg, p => { st.rot = snapRot(norm(dirOf(st.px, st.py, p.x, p.y) - 90)); place(); });
+  knob.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') st.rot = norm(st.rot + (e.shiftKey ? 10 : 1));
+    else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') st.rot = norm(st.rot - (e.shiftKey ? 10 : 1)); else return;
+    e.preventDefault(); place();
+  });
+  function animateTo(px, py, rot) {
+    const s0 = { px: st.px, py: st.py, rot: st.rot }, dr = ((rot - s0.rot + 540) % 360) - 180;
+    if (reduceMotion) { st.px = px; st.py = py; st.rot = norm(rot); place(); return; }
+    const t0 = performance.now();
+    const step = now => { const k = Math.min(1, (now - t0) / 700), e = 1 - Math.pow(1 - k, 3);
+      st.px = s0.px + (px - s0.px) * e; st.py = s0.py + (py - s0.py) * e; st.rot = norm(s0.rot + dr * e);
+      if (k === 1) { st.px = px; st.py = py; st.rot = norm(rot); } place(); if (k < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }
+  $('#labPlace').onclick = () => {
+    animateTo(V[0], V[1], st.mode === 'starter' ? 0 : st.d1);
+    const out = $('#labOut'); out.className = 'feedback';
+    const usesInner = !(st.mode === 'starter' && st.d1 === 180);
+    out.textContent = `The baseline is on an arm. Start from the 0 of the ${usesInner ? 'inner (coral)' : 'outer (navy)'} scale and read round to the other arm.`;
+  };
+  $('#labNew').onclick = newAngle;
+  $('#labCheck').onclick = () => {
+    const v = parseFloat($('#labIn').value), out = $('#labOut');
+    if (isNaN(v)) { out.className = 'feedback bad'; out.textContent = 'Type a number of degrees first.'; return; }
+    st.tries++;
+    if (Math.abs(v - st.m) <= 1) { out.className = 'feedback good'; out.textContent = `✓ Correct! The angle is ${st.m}°, an ${st.m < 90 ? 'acute' : 'obtuse'} angle.`; }
+    else if (Math.abs(v - (180 - st.m)) <= 1) { out.className = 'feedback bad'; out.textContent = `✗ You read the other scale. This angle looks ${st.m < 90 ? 'acute (less than 90°)' : 'obtuse (more than 90°)'}, so ${v}° cannot be right. Start from 0 on the arm.`; }
+    else { out.className = 'feedback bad'; out.textContent = st.tries >= 2 ? `✗ The answer is ${st.m}°. Press “Place it for me” to see how to read it.` : '✗ Not quite. Check the centre is on the vertex and the baseline is on an arm, then read again.'; }
+  };
+  $('#labIn').addEventListener('keydown', e => { if (e.key === 'Enter') $('#labCheck').click(); });
+  const setMode = m => { st.mode = m; $('#modeStarter').setAttribute('aria-pressed', m === 'starter'); $('#modeChallenge').setAttribute('aria-pressed', m === 'challenge'); newAngle(); };
+  $('#modeStarter').onclick = () => setMode('starter'); $('#modeChallenge').onclick = () => setMode('challenge');
+  newAngle();
+})();
+
+/* ---------- LESSON 4: drawing ---------- */
+(() => {
+  const svg = $('#drawSvg'), B = [300, 285], R = 175, RAY = 260;
+  const st = { step: 1, target: 65, side: 'right', dot: null, hover: null };
+  const steps = [...document.querySelectorAll('#drawSteps li')];
+  function newTask() {
+    let t; do { t = rand(4, 34) * 5; } while (t === 90);
+    st.target = t; st.side = Math.random() < .6 ? 'right' : 'left'; st.dot = null; st.step = 1; render();
+  }
+  const baseDir = () => st.side === 'right' ? 0 : 180;
+  const measureOf = d => st.side === 'right' ? d : 180 - d;
+  function render() {
+    $('#drawTarget').textContent = st.target; document.querySelectorAll('.drawT').forEach(e => e.textContent = st.target);
+    steps.forEach((li, i) => { li.className = i + 1 === st.step ? 'now' : i + 1 < st.step ? 'done' : ''; });
+    let s = '';
+    const [cx, cy] = pt(...B, RAY, baseDir());
+    if (st.step === 4 && st.dot !== null) {
+      const m = measureOf(st.dot), start = st.side === 'right' ? 0 : st.dot;
+      s += `<path class="w-butter" d="${wedgeD(...B, 44, start, m)}"/>` + txt(...pt(...B, 70, start + m / 2), m + '°');
+    }
+    s += seg(...B, cx, cy);
+    s += `<circle class="dot" cx="${B[0]}" cy="${B[1]}" r="5"/>` + txt(B[0], B[1] + 22, 'B', 'pname') + txt(cx + (st.side === 'right' ? 14 : -14), cy - 14, 'C', 'pname');
+    if (st.step === 2 || st.step === 3) s += `<g transform="translate(${B[0]} ${B[1]})" class="pr-static">${protractorSVG(R, 11)}</g>`;
+    if (st.step === 3 && st.hover !== null) { const [x, y] = pt(...B, R + 14, st.hover); s += `<circle cx="${f1(x)}" cy="${f1(y)}" r="6" style="fill:var(--coral);opacity:.35"/>`; }
+    if (st.dot !== null && st.step >= 3) {
+      const [x, y] = pt(...B, R + 14, st.dot);
+      if (st.step === 4) { const [ax, ay] = pt(...B, RAY, st.dot); s += seg(...B, ax, ay) + txt(...pt(...B, R + 34, st.dot), 'A', 'pname'); }
+      s += `<circle cx="${f1(x)}" cy="${f1(y)}" r="6" class="dot"/>`;
+    }
+    svg.innerHTML = s;
+    svg.style.cursor = st.step === 3 ? 'crosshair' : 'default';
+    $('#drawBack').disabled = st.step === 1;
+    $('#drawNext').disabled = st.step === 4 || (st.step === 3 && st.dot === null);
+    $('#drawNext').textContent = st.step === 3 ? 'Join B to the dot' : 'Next step';
+    const out = $('#drawOut');
+    if (st.step === 4) {
+      const m = measureOf(st.dot);
+      if (m === st.target) { out.className = 'feedback good'; out.textContent = `✓ Well done! ∠ABC = ${st.target}°. It is ${angleType(m)[0].toLowerCase()}.`; }
+      else if (m === 180 - st.target) { out.className = 'feedback bad'; out.textContent = `✗ Your angle is ${m}°. You counted on the scale that starts at 0 on the other side. Go back and start from 0 on BC.`; }
+      else { out.className = 'feedback bad'; out.textContent = `✗ Your angle is ${m}°, not ${st.target}°. Go back and move your dot.`; }
+    } else { out.className = 'feedback'; out.textContent = st.step === 3 ? (st.dot === null ? 'Tap the edge of the protractor to place your dot.' : 'Dot placed. Tap again to move it, or join B to the dot.') : ''; }
+  }
+  function angleAt(p) { if (p.y > B[1] + 8) return null; let a = dirOf(...B, p.x, p.y); if (a > 180) a = a > 270 ? 0 : 180; return Math.round(a); }
+  svg.addEventListener('pointermove', e => { if (st.step !== 3) return; st.hover = angleAt(svgPt(svg, e)); render(); });
+  svg.addEventListener('pointerleave', () => { if (st.hover !== null) { st.hover = null; render(); } });
+  svg.addEventListener('pointerdown', e => { if (st.step !== 3) return; const a = angleAt(svgPt(svg, e)); if (a === null) return; st.dot = a; render(); });
+  $('#drawNext').onclick = () => { if (st.step < 4) { st.step++; st.hover = null; render(); } };
+  $('#drawBack').onclick = () => { if (st.step > 1) { st.step--; render(); } };
+  $('#drawNew').onclick = newTask;
+  newTask();
+})();
+
+/* ---------- LESSON 5: pairs ---------- */
+(() => {
+  const svg = $('#pairSvg');
+  const cfg = { comp: { V: [90, 255], len: 200, total: 90 }, supp: { V: [200, 220], len: 170, total: 180 }, point: { V: [200, 150], len: 125, total: 360 } };
+  const state = { comp: [0, 35, 90], supp: [0, 125, 180], point: [0, 130, 245, 360] };
+  const cols = ['coral', 'sky', 'sage'];
+  const NS = 'http://www.w3.org/2000/svg';
+  const g = document.createElementNS(NS, 'g'), hg = document.createElementNS(NS, 'g'); svg.append(g, hg);
+  let mode = 'comp', handles = [];
+  function draw() {
+    const { V, len, total } = cfg[mode], rays = state[mode]; let s = '';
+    if (mode === 'comp') s += `<path class="rmark" d="${rightMarkD(...V, 0, 92)}" style="stroke-dasharray:4 4;opacity:.5"/>`;
+    for (let i = 0; i < rays.length - 1; i++) s += `<path class="w-${cols[i]}" d="${wedgeD(...V, 56, rays[i], rays[i + 1] - rays[i])}"/>`;
+    if (mode === 'supp') s += seg(V[0] - len, V[1], V[0] + len, V[1]) + rayLine(...V, len, rays[1]);
+    else rays.forEach(d => { if (d < 360) s += rayLine(...V, len, d); });
+    s += `<circle class="dot" cx="${V[0]}" cy="${V[1]}" r="5"/>`;
+    for (let i = 0; i < rays.length - 1; i++) { const sw = rays[i + 1] - rays[i]; s += txt(...pt(...V, sw < 30 ? 92 : 80, rays[i] + sw / 2), sw + '°'); }
+    g.innerHTML = s;
+    handles.forEach(([h, i]) => { const [x, y] = pt(...V, len - 12, rays[i]); h.setAttribute('cx', f1(x)); h.setAttribute('cy', f1(y)); });
+    const parts = []; for (let i = 0; i < rays.length - 1; i++) parts.push(rays[i + 1] - rays[i] + '°');
+    const name = { comp: 'Complementary: together they make a right angle', supp: 'Supplementary: together they make a straight line', point: 'Angles around a point: one full turn' }[mode];
+    $('#pairEq').innerHTML = `${parts.join(' + ')} = <b>${total}°</b><br><span style="font-size:.85rem" class="muted">${name}</span>`;
+  }
+  function setMode(m) {
+    mode = m; hg.innerHTML = ''; handles = [];
+    const rays = state[m], V = cfg[m].V;
+    for (let i = 1; i < rays.length - 1; i++) {
+      const h = document.createElementNS(NS, 'circle');
+      h.setAttribute('class', 'handle'); h.setAttribute('r', 12); h.setAttribute('tabindex', '0'); h.setAttribute('aria-label', 'Move ray'); hg.appendChild(h);
+      const clamp = a => Math.round(Math.max(rays[i - 1] + 5, Math.min(rays[i + 1] - 5, a)));
+      drag(h, svg, p => { let a = dirOf(...V, p.x, p.y); if (m !== 'point' && a > 270) a = 0; rays[i] = clamp(a); draw(); });
+      h.addEventListener('keydown', e => { const k = { ArrowUp: 1, ArrowLeft: 1, ArrowDown: -1, ArrowRight: -1 }[e.key]; if (!k) return; e.preventDefault(); rays[i] = clamp(rays[i] + k); draw(); });
+      handles.push([h, i]);
+    }
+    draw();
+  }
+  document.querySelectorAll('#pairTabs button').forEach(b => b.onclick = () => {
+    document.querySelectorAll('#pairTabs button').forEach(x => x.setAttribute('aria-pressed', x === b)); setMode(b.dataset.m);
+  });
+  setMode('comp');
+
+  // vertically opposite
+  const vs = $('#vertSvg'), O = [200, 145], L = 175; let th = 55;
+  const vg = document.createElementNS('http://www.w3.org/2000/svg', 'g'); vs.appendChild(vg);
+  const h = document.createElementNS('http://www.w3.org/2000/svg', 'circle'); h.setAttribute('class', 'handle'); h.setAttribute('r', 12); h.setAttribute('tabindex', '0'); h.setAttribute('aria-label', 'Turn the second line'); vs.appendChild(h);
+  function vr() {
+    const b = 180 - th; let s = '';
+    s += `<path class="w-coral" d="${wedgeD(...O, 42, 0, th)}"/><path class="w-sky" d="${wedgeD(...O, 42, th, b)}"/><path class="w-coral" d="${wedgeD(...O, 42, 180, th)}"/><path class="w-sky" d="${wedgeD(...O, 42, 180 + th, b)}"/>`;
+    s += seg(O[0] - L, O[1], O[0] + L, O[1]);
+    const [x1, y1] = pt(...O, L - 30, th), [x2, y2] = pt(...O, L - 30, th + 180); s += seg(x1, y1, x2, y2);
+    s += `<circle class="dot" cx="${O[0]}" cy="${O[1]}" r="5"/>`;
+    [[0, th], [th, b], [180, th], [180 + th, b]].forEach(([a, sw]) => s += txt(...pt(...O, sw < 30 ? 82 : 70, a + sw / 2), sw + '°'));
+    vg.innerHTML = s; h.setAttribute('cx', f1(x1)); h.setAttribute('cy', f1(y1));
+    $('#vertEq').innerHTML = `<span style="color:var(--coral)">${th}° = ${th}°</span> &nbsp; <span style="color:var(--sky)">${b}° = ${b}°</span><br><span style="font-size:.9rem">${th}° + ${b}° = 180°</span>`;
+  }
+  drag(h, vs, p => { let a = dirOf(...O, p.x, p.y); if (a > 180) a -= 180; th = Math.round(Math.max(10, Math.min(170, a))); vr(); });
+  h.addEventListener('keydown', e => { const k = { ArrowUp: 1, ArrowLeft: 1, ArrowDown: -1, ArrowRight: -1 }[e.key]; if (!k) return; e.preventDefault(); th = Math.max(10, Math.min(170, th + k)); vr(); });
+  vr();
+})();
+
+/* ---------- LESSON 6: lines + transversal ---------- */
+(() => {
+  const mk = (title, sym, body, svgInner) => `<div class="tcard"><svg class="fig" viewBox="0 0 220 130">${svgInner}</svg><h3>${title}<span class="mono">${sym}</span></h3><p>${body}</p></div>`;
+  $('#lineCards').innerHTML =
+    mk('Parallel lines', 'AB ∥ CD', 'Always the same distance apart. They never meet. Arrow marks show lines are parallel.',
+      seg(20, 40, 200, 40, 'ink-thin') + seg(20, 95, 200, 95, 'ink-thin') + `<path class="pmark" d="M105 34 l8 6 l-8 6 M105 89 l8 6 l-8 6"/>`) +
+    mk('Perpendicular lines', 'AB ⊥ CD', 'They meet at a right angle (90°). A small square marks the right angle.',
+      seg(20, 100, 200, 100, 'ink-thin') + seg(110, 100, 110, 12, 'ink-thin') + `<path class="rmark" d="M110 86 h14 v14"/>`) +
+    mk('Intersecting lines', '', 'They cross at one point. Perpendicular lines are a special kind of intersecting lines.',
+      seg(25, 110, 195, 25, 'ink-thin') + seg(30, 30, 190, 105, 'ink-thin') + `<circle class="dot" cx="${110}" cy="${f1(67.5)}" r="4"/>`);
+
+  const svg = $('#transSvg'), C = [230, 170], yT = 100, yB = 240;
+  let T = 62, sel = 'corr';
+  const pairs = {
+    corr: ['Corresponding', [[1, 5], [2, 6], [3, 7], [4, 8]], 'equal'],
+    altin: ['Alternate interior', [[3, 6], [4, 5]], 'equal'],
+    altex: ['Alternate exterior', [[1, 8], [2, 7]], 'equal'],
+    coint: ['Co-interior', [[3, 5], [4, 6]], 'sum'],
+    vert: ['Vertically opposite', [[1, 4], [2, 3], [5, 8], [6, 7]], 'equal']
+  };
+  const cols = ['coral', 'sky', 'sage', 'butter'];
+  const g = document.createElementNS('http://www.w3.org/2000/svg', 'g'); svg.appendChild(g);
+  const h = document.createElementNS('http://www.w3.org/2000/svg', 'circle'); h.setAttribute('class', 'handle'); h.setAttribute('r', 12); h.setAttribute('tabindex', '0'); h.setAttribute('aria-label', 'Turn the transversal'); svg.appendChild(h);
+  const box = $('#transBtns');
+  Object.entries(pairs).forEach(([k, [n]]) => { const b = document.createElement('button'); b.className = 'chip'; b.textContent = n; b.dataset.k = k; b.setAttribute('aria-pressed', k === sel);
+    b.onclick = () => { sel = k; box.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); render(); }; box.appendChild(b); });
+  function render() {
+    const tilt = $('#tilt').checked ? 10 : 0;
+    const tx = y => C[0] + (C[1] - y) / Math.tan(rad(T));
+    const P1 = [tx(yT), yT], P2 = [tx(yB), yB];
+    const r1 = regions(0, T), r2 = regions(tilt, T);
+    const ang = {}; for (let i = 1; i <= 4; i++) { ang[i] = { P: P1, a: r1[i][0], sw: r1[i][1] }; ang[i + 4] = { P: P2, a: r2[i][0], sw: r2[i][1] }; }
+    const color = {}; pairs[sel][1].forEach((pr, i) => pr.forEach(n => color[n] = cols[i % 4]));
+    let s = '';
+    for (let n = 1; n <= 8; n++) { const A = ang[n]; s += `<path class="w-${color[n] || 'faint'}" d="${wedgeD(...A.P, 30, A.a, A.sw)}"/>`; }
+    s += seg(-50, yT, 510, yT);
+    const [l2a, l2b] = [pt(...P2, 400, tilt), pt(...P2, 400, tilt + 180)]; s += seg(...l2a, ...l2b);
+    if (!tilt) s += `<path class="pmark" d="M40 ${yT - 7} l8 7 l-8 7 M40 ${yB - 7} l8 7 l-8 7"/>`;
+    const [ta, tb] = [pt(...C, 230, T), pt(...C, 230, T + 180)]; s += seg(...ta, ...tb, 'ink-thin');
+    for (let n = 1; n <= 8; n++) { const A = ang[n]; s += txt(...pt(...A.P, A.sw < 45 ? 50 : 44, A.a + A.sw / 2), n, 'lbl'); }
+    g.innerHTML = s;
+    const [hx, hy] = pt(...C, 150, T); h.setAttribute('cx', f1(hx)); h.setAttribute('cy', f1(hy));
+    const v = n => Math.round(ang[n].sw);
+    const [name, list, kind] = pairs[sel];
+    const lines = list.map(([a, b]) => kind === 'sum' ? `∠${a} + ∠${b} = ${v(a)}° + ${v(b)}° = ${v(a) + v(b)}°` : `∠${a} = ${v(a)}°, ∠${b} = ${v(b)}° ${v(a) === v(b) ? '✓ equal' : '✗ not equal'}`);
+    let rule = kind === 'sum' ? 'Co-interior angles add up to 180° when the lines are parallel.' : `${name} angles are equal${sel === 'vert' ? ' (always, parallel or not).' : ' when the lines are parallel.'}`;
+    if (tilt && sel !== 'vert') rule = 'The lines are not parallel now, so this rule does not work.';
+    $('#transEq').innerHTML = lines.join('<br>') + `<br><span style="font-size:.9rem" class="muted">${rule}</span>`;
+  }
+  drag(h, svg, p => { let a = dirOf(...C, p.x, p.y); if (a > 180) a -= 180; T = Math.round(Math.max(25, Math.min(155, a))); render(); });
+  h.addEventListener('keydown', e => { const k = { ArrowUp: 1, ArrowLeft: 1, ArrowDown: -1, ArrowRight: -1 }[e.key]; if (!k) return; e.preventDefault(); T = Math.max(25, Math.min(155, T + k)); render(); });
+  $('#tilt').onchange = render;
+  render();
+})();
+
+/* ---------- LESSON 7: shapes ---------- */
+function polyAngles(P) {
+  const n = P.length; let area = 0;
+  for (let i = 0; i < n; i++) { const a = P[i], b = P[(i + 1) % n]; area += a[0] * (-b[1]) - b[0] * (-a[1]); }
+  const ccw = area > 0;
+  return P.map((p, i) => {
+    const prev = P[(i - 1 + n) % n], next = P[(i + 1) % n];
+    const d0 = dirOf(...p, ...prev), d1 = dirOf(...p, ...next);
+    return ccw ? { start: d1, sw: norm(d0 - d1) } : { start: d0, sw: norm(d1 - d0) };
+  });
+}
+function segCross(p1, p2, p3, p4) {
+  const d = (a, b, c) => (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]);
+  return d(p3, p4, p1) * d(p3, p4, p2) < 0 && d(p1, p2, p3) * d(p1, p2, p4) < 0;
+}
+function shapeWidget(svgSel, pts, names, onRender) {
+  const svg = $(svgSel); const g = document.createElementNS('http://www.w3.org/2000/svg', 'g'); svg.appendChild(g);
+  const hs = pts.map((p, i) => { const h = document.createElementNS('http://www.w3.org/2000/svg', 'circle'); h.setAttribute('class', 'handle'); h.setAttribute('r', 11); h.setAttribute('tabindex', '0'); h.setAttribute('aria-label', 'Corner ' + names[i]); svg.appendChild(h); return h; });
+  const cols = ['coral', 'sky', 'sage', 'butter'];
+  function render() {
+    const A = polyAngles(pts), total = (pts.length - 2) * 180, vals = roundToSum(A.map(a => a.sw), total);
+    const cen = pts.reduce((a, p) => [a[0] + p[0] / pts.length, a[1] + p[1] / pts.length], [0, 0]);
+    let s = onRender.before ? onRender.before(pts, A) : '';
+    s += `<polygon class="tri-fill" points="${pts.map(p => p.map(f1).join(',')).join(' ')}" style="fill-opacity:${onRender.fillOpacity ?? 1}"/>`;
+    s += onRender.mid ? onRender.mid(pts, A) : '';
+    A.forEach((a, i) => { s += Math.round(a.sw) === 90 && vals[i] === 90 ? `<path class="rmark" d="${rightMarkD(...pts[i], a.start, 16)}"/>` : `<path class="w-${cols[i]}" d="${wedgeD(...pts[i], 24, a.start, a.sw)}"/>`;
+      s += txt(...pt(...pts[i], a.sw < 50 ? 52 : 44, a.start + a.sw / 2), vals[i] + '°'); });
+    pts.forEach((p, i) => { const dx = p[0] - cen[0], dy = p[1] - cen[1], L = Math.hypot(dx, dy) || 1; s += txt(p[0] + dx / L * 24, p[1] + dy / L * 24, names[i], 'pname'); });
+    g.innerHTML = s;
+    pts.forEach((p, i) => { hs[i].setAttribute('cx', f1(p[0])); hs[i].setAttribute('cy', f1(p[1])); });
+    onRender.after(vals, A, pts);
+  }
+  hs.forEach((h, i) => drag(h, svg, p => {
+    const old = pts[i]; pts[i] = [Math.max(24, Math.min(376, p.x)), Math.max(24, Math.min(276, p.y))];
+    if (pts.length === 4 && (segCross(pts[0], pts[1], pts[2], pts[3]) || segCross(pts[1], pts[2], pts[3], pts[0]))) { pts[i] = old; onRender.warn && onRender.warn(); }
+    render();
+  }));
+  render(); return render;
+}
+(() => {
+  const tri = [[60, 250], [340, 250], [230, 60]];
+  shapeWidget('#triSvg', tri, ['A', 'B', 'C'], {
+    after(vals) {
+      const [a, b, c] = vals, cols = ['coral', 'sky', 'sage'], V = [200, 105];
+      let s = seg(30, 105, 370, 105, 'ink-thin'), st = 0;
+      [a, b, c].forEach((v, i) => { s += `<path class="w-${cols[i]}" d="${wedgeD(...V, 82, st, v)}"/>`; s += txt(...pt(...V, v < 25 ? 98 : 58, st + v / 2), v + '°'); st += v; });
+      $('#stripSvg').innerHTML = s + `<circle class="dot" cx="200" cy="105" r="4"/>`;
+      $('#triEq').innerHTML = `∠A + ∠B + ∠C = ${a}° + ${b}° + ${c}° = <b>180°</b>`;
+      const mx = Math.max(a, b, c); $('#triType').textContent = mx === 90 ? 'Right triangle' : mx > 90 ? 'Obtuse triangle' : 'Acute triangle';
+    }
+  });
+  const quad = [[60, 240], [330, 255], [300, 70], [110, 55]];
+  let rerender;
+  const diagOf = (A) => (A[1].sw > 180 || A[3].sw > 180) ? [1, 3] : [0, 2];
+  rerender = shapeWidget('#quadSvg', quad, ['A', 'B', 'C', 'D'], {
+    mid(P, A) {
+      if (!$('#showDiag').checked) return '';
+      const [i, j] = diagOf(A), k1 = (i + 1) % 4, k2 = (j + 1) % 4;
+      return `<polygon class="tri-a" points="${[P[i], P[k1], P[j]].map(p => p.join(',')).join(' ')}"/><polygon class="tri-b" points="${[P[j], P[k2], P[i]].map(p => p.join(',')).join(' ')}"/>` + seg(...P[i], ...P[j], 'diag');
+    },
+    warn() { $('#quadWarn').textContent = 'The sides cannot cross, or it is not a quadrilateral any more.'; clearTimeout(this.t); this.t = setTimeout(() => $('#quadWarn').textContent = '', 1800); },
+    after(vals, A) {
+      let s = `∠A + ∠B + ∠C + ∠D = ${vals.map(v => v + '°').join(' + ')} = <b>360°</b>`;
+      if ($('#showDiag').checked) { const [i, j] = diagOf(A), n = 'ABCD'; s += `<br><span style="font-size:.9rem">Diagonal ${n[i]}${n[j]} makes 2 triangles: 180° + 180° = 360°</span>`; }
+      $('#quadEq').innerHTML = s;
+    }
+  });
+  $('#showDiag').onchange = rerender;
+
+  // polygons
+  const names = { 3: 'triangle', 4: 'quadrilateral', 5: 'pentagon', 6: 'hexagon', 7: 'heptagon', 8: 'octagon', 9: 'nonagon', 10: 'decagon' };
+  let all = false;
+  function poly() {
+    const n = +$('#polyN').value, P = [...Array(n)].map((_, i) => pt(150, 152, 118, 90 + i * 360 / n));
+    let s = '';
+    if (!all) for (let i = 1; i < n - 1; i++) s += `<polygon class="${i % 2 ? 'tri-a' : 'tri-b'}" points="${[P[0], P[i], P[i + 1]].map(p => p.map(f1).join(',')).join(' ')}"/>`;
+    s += `<polygon points="${P.map(p => p.map(f1).join(',')).join(' ')}" style="fill:none;stroke:var(--ink);stroke-width:3;stroke-linejoin:round"/>`;
+    if (all) { for (let i = 0; i < n; i++) for (let j = i + 2; j < n; j++) if (!(i === 0 && j === n - 1)) s += seg(...P[i], ...P[j], 'diag'); }
+    else for (let j = 2; j < n - 1; j++) s += seg(...P[0], ...P[j], 'diag');
+    P.forEach((p, i) => s += `<circle cx="${f1(p[0])}" cy="${f1(p[1])}" r="${i === 0 && !all ? 6 : 4}" class="${i === 0 && !all ? 'dot' : 'dot-ink'}"/>`);
+    $('#polySvg').innerHTML = s;
+    $('#polyNOut').textContent = n; $('#polyName').textContent = names[n];
+    const rows = [['Sides (n)', n], ['Diagonals from one corner (n − 3)', n - 3], ['Triangles (n − 2)', n - 2], ['Angle sum (n − 2) × 180°', `${n - 2} × 180° = ${(n - 2) * 180}°`], ['All diagonals n × (n − 3) ÷ 2', `${n} × ${n - 3} ÷ 2 = ${n * (n - 3) / 2}`]];
+    $('#polyTable').innerHTML = rows.map(([a, b], i) => `<tr style="border-bottom:1.5px solid var(--line)"><td style="padding:8px 10px 8px 0;font-family:var(--body)">${a}</td><td style="padding:8px 0;text-align:right;font-weight:500;${(all ? i === 4 : i === 2 || i === 3) ? 'color:var(--coral)' : ''}">${b}</td></tr>`).join('');
+  }
+  $('#polyN').oninput = poly;
+  $('#dOne').onclick = () => { all = false; $('#dOne').setAttribute('aria-pressed', true); $('#dAll').setAttribute('aria-pressed', false); poly(); };
+  $('#dAll').onclick = () => { all = true; $('#dOne').setAttribute('aria-pressed', false); $('#dAll').setAttribute('aria-pressed', true); poly(); };
+  poly();
+})();
+
+/* ---------- LESSON 8: find x ---------- */
+(() => {
+  const probs = [
+    { t: 'Angles on a straight line', vb: '0 0 300 190', fig: rayFig({ cx: 150, cy: 150, len: 125, lines: [0], rays: [55], wedges: [[0, 55, 'x', 'coral'], [55, 125, '125°', 'sky']] }), ans: 55,
+      steps: ['Angles on a straight line add to 180°.', 'x + 125° = 180°', 'x = 180° − 125°', 'x = 55°'] },
+    { t: 'Angles around a point', vb: '0 0 300 250', fig: rayFig({ cx: 150, cy: 125, len: 105, rays: [0, 110, 205, 285], wedges: [[0, 110, '110°', 'sky'], [110, 95, '95°', 'sage'], [205, 80, '80°', 'butter'], [285, 75, 'x', 'coral']] }), ans: 75,
+      steps: ['Angles around a point add to 360°.', 'x + 110° + 95° + 80° = 360°', 'x + 285° = 360°', 'x = 75°'] },
+    { t: 'Two crossing lines', vb: '0 0 300 220', fig: rayFig({ cx: 150, cy: 110, len: 135, lines: [0, 38], wedges: [[0, 38, '38°', 'sky'], [218, 142, 'x', 'coral']] }), ans: 142,
+      steps: ['The angle next to 38° is on a straight line: 180° − 38° = 142°.', 'x is vertically opposite that angle.', 'Vertically opposite angles are equal.', 'x = 142°'] },
+    { t: 'Angles in a triangle', vb: '0 0 300 215', fig: triFig(48, 67, '48°', '67°', 'x'), ans: 65,
+      steps: ['Angles in a triangle add to 180°.', 'x + 48° + 67° = 180°', 'x + 115° = 180°', 'x = 65°'] },
+    { t: 'Parallel lines', vb: '0 0 320 220', fig: parallelFig(110, { 3: '110°', 6: 'x' }), ans: 110,
+      steps: ['The two lines are parallel (arrow marks).', 'x and 110° are between the lines, on opposite sides of the transversal.', 'They are alternate interior angles, so they are equal.', 'x = 110°'] },
+    { t: 'Complementary angles', vb: '0 0 300 210', fig: rayFig({ cx: 70, cy: 180, len: 160, rays: [0, 27, 90], wedges: [[0, 27, '27°', 'sky', 70], [27, 63, 'x', 'coral', 70]], right: [0] }), ans: 63,
+      steps: ['The square mark shows a right angle: 90°.', 'x + 27° = 90°', 'x = 90° − 27°', 'x = 63°'] }
+  ];
+  $('#xGrid').innerHTML = probs.map((p, i) => `<div class="xcard"><h3>${i + 1}. ${p.t}</h3><svg class="fig" viewBox="${p.vb}" aria-label="${p.t} diagram">${p.fig}</svg>
+    <div class="row"><label for="x${i}" class="mono">x =</label><input type="number" id="x${i}" inputmode="numeric"><span class="mono">°</span><button class="primary" data-i="${i}">Check</button></div>
+    <p class="feedback" id="xo${i}" aria-live="polite"></p>
+    <div class="row"><button class="chip" data-s="${i}">Show steps</button></div><ol id="xs${i}" hidden>${p.steps.map(s => `<li>${s}</li>`).join('')}</ol></div>`).join('');
+  $('#xGrid').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.s !== undefined) { const ol = $('#xs' + b.dataset.s); ol.hidden = !ol.hidden; b.textContent = ol.hidden ? 'Show steps' : 'Hide steps'; return; }
+    const i = +b.dataset.i, v = parseFloat($('#x' + i).value), o = $('#xo' + i);
+    if (isNaN(v)) { o.className = 'feedback bad'; o.textContent = 'Type your answer first.'; return; }
+    const ok = v === probs[i].ans; o.className = 'feedback ' + (ok ? 'good' : 'bad');
+    o.textContent = ok ? `✓ Correct! x = ${probs[i].ans}°` : '✗ Not yet. Which angle fact fits this diagram? Try again or show the steps.';
+  });
+  $('#xGrid').addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.matches('input')) e.target.parentElement.querySelector('button').click(); });
+})();
+
+/* ---------- LESSON 9: quiz ---------- */
+(() => {
+  const Q = [
+    { q: 'In ∠PQR, which point is the vertex?', o: ['P', 'Q', 'R', 'The arm PR'], a: 1, e: 'The vertex is always the middle letter. In ∠PQR the arms are QP and QR, and they meet at Q.' },
+    { q: 'An angle measures exactly 90°. What type of angle is it?', o: ['Acute', 'Right', 'Obtuse', 'Straight'], a: 1, e: 'A right angle is exactly 90°, a square corner.' },
+    { q: 'Which of these is an obtuse angle?', o: ['45°', '89°', '128°', '205°'], a: 2, e: 'Obtuse angles are more than 90° and less than 180°. 89° is acute and 205° is reflex.' },
+    { q: 'Which of these is a reflex angle?', o: ['95°', '175°', '180°', '260°'], a: 3, e: 'Reflex angles are more than 180° and less than 360°. 180° is a straight angle, not reflex.' },
+    { q: 'What is the size of this angle?', fig: protractorFig(0, 50), vb: '0 0 320 175', o: ['40°', '50°', '130°', '140°'], a: 1, e: 'One arm is on 0 of the inner (coral) scale. Read the same scale: 50°. The angle is acute, so 130° cannot be right.' },
+    { q: 'What is the size of this angle?', fig: protractorFig(180, 110), vb: '0 0 320 175', o: ['110°', '70°', '20°', '160°'], a: 1, e: 'This time the arm is on the left, at 0 of the outer (navy) scale. Read the outer scale: 70°. It is acute, so 110° is the wrong scale.' },
+    { q: 'What is the complement of 35°?', o: ['145°', '65°', '55°', '35°'], a: 2, e: 'Complementary angles add up to 90°. 90° − 35° = 55°.' },
+    { q: 'What is the supplement of 72°?', o: ['18°', '108°', '118°', '288°'], a: 1, e: 'Supplementary angles add up to 180°. 180° − 72° = 108°.' },
+    { q: 'Two lines cross. Find the angle marked ?', fig: rayFig({ cx: 150, cy: 100, len: 130, lines: [0, 40], wedges: [[0, 40, '40°', 'sky'], [180, 40, '?', 'coral']] }), vb: '0 0 300 200', o: ['40°', '50°', '140°', '320°'], a: 0, e: 'The ? angle is vertically opposite the 40° angle, so it is also 40°.' },
+    { q: 'Find x.', fig: rayFig({ cx: 150, cy: 120, len: 100, rays: [0, 120, 220], wedges: [[0, 120, '120°', 'sky'], [120, 100, '100°', 'sage'], [220, 140, 'x', 'coral']] }), vb: '0 0 300 240', o: ['40°', '140°', '160°', '240°'], a: 1, e: 'Angles around a point add up to 360°. 360° − 120° − 100° = 140°.' },
+    { q: 'Find x in the triangle.', fig: triFig(90, 35, '', '35°', 'x'), vb: '0 0 300 215', o: ['35°', '55°', '65°', '145°'], a: 1, e: 'Angles in a triangle add up to 180°. 180° − 90° − 35° = 55°.' },
+    { q: 'The lines are parallel. Find x.', fig: parallelFig(70, { 3: '70°', 5: 'x' }), vb: '0 0 320 220', o: ['70°', '90°', '110°', '290°'], a: 2, e: 'x and 70° are co-interior angles (between the lines, same side). They add up to 180°: 180° − 70° = 110°.' },
+    { q: 'What do the four angles of any quadrilateral add up to?', o: ['180°', '270°', '360°', '540°'], a: 2, e: 'A diagonal cuts a quadrilateral into 2 triangles: 2 × 180° = 360°.' },
+    { q: 'How many diagonals does a hexagon (6 sides) have altogether?', o: ['3', '6', '9', '12'], a: 2, e: 'n × (n − 3) ÷ 2 = 6 × 3 ÷ 2 = 9. (From one corner there are only 3.)' },
+    { q: 'Two lines meet at a right angle. What are they called?', o: ['Parallel lines', 'Perpendicular lines', 'Reflex lines', 'Curved lines'], a: 1, e: 'Perpendicular lines meet at 90°. We write AB ⊥ CD.' }
+  ];
+  const box = $('#quizBox'); let i = 0, score = 0, done = false;
+  function show() {
+    if (i >= Q.length) return finish();
+    const q = Q[i]; done = false;
+    box.innerHTML = `<div class="panel-title"><span class="mono muted">Question ${i + 1} of ${Q.length}</span><span class="mono muted">Score: ${score}</span></div>
+      <div class="qbar"><i style="width:${i / Q.length * 100}%"></i></div>
+      <h3 style="font-size:1.3rem">${i + 1}. ${q.q}</h3>
+      ${q.fig ? `<svg class="fig qfig" viewBox="${q.vb}">${q.fig}</svg>` : ''}
+      <div class="opts">${q.o.map((o, k) => `<button class="opt" data-k="${k}"><span class="k">${'ABCD'[k]}</span><span>${o}</span></button>`).join('')}</div>
+      <p class="feedback" id="qFb" aria-live="polite"></p>
+      <div class="row"><button class="primary" id="qNext" hidden>${i === Q.length - 1 ? 'Finish' : 'Next'}</button></div>`;
+    box.querySelectorAll('.opt').forEach(b => b.onclick = () => {
+      if (done) return; done = true; const k = +b.dataset.k, ok = k === q.a; if (ok) score++;
+      box.querySelectorAll('.opt').forEach(x => { x.disabled = true; if (+x.dataset.k === q.a) x.classList.add('correct'); });
+      if (!ok) b.classList.add('incorrect');
+      const fb = $('#qFb'); fb.className = 'feedback ' + (ok ? 'good' : 'bad'); fb.textContent = (ok ? '✓ Correct. ' : '✗ Not quite. ') + q.e;
+      const n = $('#qNext'); n.hidden = false; n.focus();
+    });
+    $('#qNext').onclick = () => { i++; show(); };
+  }
+  function finish() {
+    const pct = score / Q.length, msg = pct === 1 ? 'Perfect score! You are an angle expert.' : pct >= .8 ? 'Great work. Look back at the questions you missed.' : pct >= .5 ? 'Good start. Review the lessons on the topics you missed, then try again.' : 'Keep practising. Work through the lessons again, especially Lessons 3 and 5.';
+    box.innerHTML = `<div class="qbar"><i style="width:100%"></i></div><span class="eyebrow">Quiz complete</span><div class="score">${score} / ${Q.length}</div><p style="font-size:1.1rem">${msg}</p>
+      <div class="row"><button class="primary" id="qAgain">Try again</button><a class="btn" href="#parts" style="text-decoration:none">Back to Lesson 1</a></div>`;
+    $('#qAgain').onclick = () => { i = 0; score = 0; show(); };
+  }
+  show();
+})();
+</script>

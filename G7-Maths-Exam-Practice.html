@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<title>G7 Maths Exam Practice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@600;700;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+  /* PABLO-style retro theme: cream ground, black ink borders, butter pills,
+     brick-red accent, pastel cards, hard offset shadows. Single committed theme. */
+  :root{
+    --paper:#EDE8DE; --card:#FDFBF6; --ink:#191510; --muted:#6E675B;
+    --bd:#191510; --soft:#D9D2C1; --chip:#F6F1E4;
+    --red:#D2301F; --red-deep:#AF2416;
+    --butter:#F8DE7E; --butter-deep:#F2CE4B; --butter-soft:#FBEBB4;
+    --blue:#A6E3EA; --green:#A9E8B4; --pink:#F6C6D8; --peach:#F8CDA8; --sand:#E7DFCB;
+    --good:#1E7A3C; --good-bg:#C9EFCB;
+    --bad:#C0271A; --bad-bg:#F8D3C9;
+    --hard:3px 3px 0 var(--bd); --hard-sm:2px 2px 0 var(--bd);
+    --focus:#1A6ED8;
+    --c1:#D2301F; --c2:#1E7A3C; --c3:#B8860B; --c4:#1A6ED8; --c5:#7A4A21;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:"Atkinson Hyperlegible",Verdana,system-ui,sans-serif;
+    font-size:17px; line-height:1.55; min-height:100vh;
+  }
+  .disp{font-family:"Archivo",system-ui,sans-serif;font-weight:700}
+  .wrap{max-width:900px;margin:0 auto;padding:24px 20px 64px}
+  button{font:inherit;color:inherit;cursor:pointer;background:none;border:none}
+  button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px}
+  .hidden{display:none!important}
+
+  /* ---------- header ---------- */
+  header.site{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:34px}
+  .wordmark{display:flex;align-items:center;gap:10px}
+  .wordmark .box{
+    background:var(--red);color:#FFF6E9;border:2px solid var(--bd);box-shadow:var(--hard-sm);
+    font-family:"Archivo",system-ui,sans-serif;font-weight:800;font-size:15px;
+    padding:5px 10px;border-radius:8px;letter-spacing:.02em;
+  }
+  .wordmark .sub{font-size:13.5px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+
+  /* ---------- home ---------- */
+  .eyebrow{font-size:13px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:10px}
+  h1.hero{
+    font-family:"Archivo Black","Archivo",Impact,system-ui,sans-serif;font-weight:400;
+    text-transform:uppercase;
+    font-size:clamp(28px,5vw,44px);line-height:1.06;letter-spacing:.005em;text-wrap:balance;
+  }
+  h1.hero .hl{color:var(--red);text-decoration:underline;text-decoration-thickness:5px;text-underline-offset:6px;text-decoration-color:var(--butter-deep)}
+  .sticker{
+    display:inline-block;margin:16px 0 2px;transform:rotate(-2.5deg);
+    background:var(--butter);border:2px solid var(--bd);border-radius:999px;box-shadow:var(--hard-sm);
+    font-family:"Archivo",system-ui,sans-serif;font-weight:800;font-size:14px;
+    letter-spacing:.08em;text-transform:uppercase;padding:7px 16px;
+  }
+  .lede{color:var(--muted);max-width:56ch;margin:14px 0 6px}
+  .syllabus{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 30px}
+  .syllabus .tag{display:flex;align-items:center;gap:7px;background:var(--card);border:2px solid var(--bd);border-radius:999px;padding:4px 12px;font-size:13.5px;font-weight:700}
+  .dot{width:9px;height:9px;border-radius:50%;flex:none;border:1.5px solid var(--bd)}
+  .mode{
+    display:flex;gap:0;border:2px solid var(--bd);border-radius:14px;overflow:hidden;
+    margin:0 0 12px;background:var(--card);box-shadow:var(--hard);
+  }
+  .mode button{flex:1;padding:13px 14px;text-align:left;border-left:2px solid var(--bd)}
+  .mode button:first-child{border-left:none}
+  .mode button .t{display:block;font-weight:800;font-family:"Archivo",system-ui,sans-serif;font-size:15.5px}
+  .mode button .d{display:block;font-size:13.5px;color:var(--muted);margin-top:2px}
+  .mode button[aria-pressed="true"]{background:var(--butter)}
+  .mode button[aria-pressed="true"] .d{color:var(--ink)}
+  .mode button[aria-pressed="true"] .t::after{content:" ✓";color:var(--good)}
+  .papers{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px;margin-top:20px}
+  .paper{
+    border:2px solid var(--bd);border-radius:16px;box-shadow:var(--hard);
+    padding:18px 18px 16px;display:flex;flex-direction:column;gap:10px;position:relative;
+    background:var(--card);
+  }
+  .papers .paper:nth-child(1){background:var(--blue)}
+  .papers .paper:nth-child(2){background:var(--green)}
+  .papers .paper:nth-child(3){background:var(--pink)}
+  .papers .paper:nth-child(4){background:var(--peach)}
+  .papers .paper:nth-child(5){background:var(--butter-soft)}
+  .papers .paper:nth-child(6){background:var(--sand)}
+  .paper h2{font-family:"Archivo Black","Archivo",Impact,system-ui,sans-serif;font-weight:400;font-size:21px;text-transform:uppercase;letter-spacing:.01em}
+  .paper .meta{font-size:13.5px;color:var(--ink);opacity:.75}
+  .paper .best{font-size:13.5px;font-weight:700;color:var(--good)}
+  .paper .best.none{color:var(--ink);opacity:.55;font-weight:400}
+  .paper .row{display:flex;gap:10px;align-items:center;margin-top:auto;padding-top:6px}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    font-weight:800;font-family:"Archivo",system-ui,sans-serif;
+    border-radius:999px;padding:10px 20px;font-size:15px;
+    border:2px solid var(--bd);box-shadow:var(--hard-sm);
+    transition:transform .08s,box-shadow .08s;
+  }
+  .btn:hover{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--bd)}
+  .btn:active{transform:translate(2px,2px);box-shadow:0 0 0 var(--bd)}
+  .btn-primary{background:var(--butter);color:var(--ink)}
+  .btn-primary:hover{background:var(--butter-deep)}
+  .btn-ghost{background:var(--card);color:var(--ink)}
+  .btn-ghost:hover{background:var(--chip)}
+  .btn-quiet{color:var(--muted);font-size:14px;padding:8px 10px;font-weight:700}
+  .btn-quiet:hover{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+  .note{margin-top:26px;font-size:14px;color:var(--muted);border-top:2px dashed var(--soft);padding-top:14px}
+
+  /* ---------- quiz ---------- */
+  .quiz-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:10px}
+  .quiz-top .pn{font-family:"Archivo Black","Archivo",Impact,system-ui,sans-serif;font-weight:400;font-size:18px;text-transform:uppercase}
+  .quiz-top .count{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums;font-weight:700}
+  .bar{height:14px;background:var(--card);border:2px solid var(--bd);border-radius:99px;overflow:hidden;margin-bottom:22px}
+  .bar i{display:block;height:100%;background:var(--red);border-radius:99px 0 0 99px;transition:width .25s ease}
+  .qcard{background:var(--card);border:2px solid var(--bd);border-radius:18px;box-shadow:var(--hard);padding:26px 26px 22px}
+  .qchip{display:inline-flex;align-items:center;gap:7px;background:var(--chip);border:1.5px solid var(--bd);border-radius:999px;padding:3px 12px;font-size:12.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink);margin-bottom:14px}
+  .qtext{font-size:20px;font-weight:400;line-height:1.5;margin-bottom:20px;max-width:60ch}
+  .qtext b{font-weight:700}
+  .choices{display:grid;gap:11px}
+  .choice{
+    display:flex;align-items:center;gap:14px;text-align:left;width:100%;
+    border:2px solid var(--bd);border-radius:14px;padding:12px 14px;font-size:17.5px;
+    background:var(--card);transition:transform .08s,background .12s;
+  }
+  .choice:not(:disabled):hover{background:var(--chip);transform:translate(1px,1px)}
+  .choice .letter{
+    flex:none;width:30px;height:30px;border-radius:50%;border:2px solid var(--bd);
+    display:flex;align-items:center;justify-content:center;background:var(--paper);
+    font-family:"Archivo",system-ui,sans-serif;font-weight:800;font-size:14px;color:var(--ink);
+  }
+  .choice.picked{background:var(--butter);box-shadow:var(--hard-sm)}
+  .choice.picked .letter{background:var(--ink);border-color:var(--ink);color:var(--butter)}
+  .choice.correct{background:var(--good-bg)}
+  .choice.correct .letter{background:var(--good);border-color:var(--bd);color:#fff}
+  .choice.wrong{background:var(--bad-bg)}
+  .choice.wrong .letter{background:var(--bad);border-color:var(--bd);color:#fff}
+  .choice:disabled{cursor:default}
+  .choice .mark{margin-left:auto;font-weight:800;font-size:14.5px;flex:none;font-family:"Archivo",system-ui,sans-serif}
+  .choice.correct .mark{color:var(--good)}
+  .choice.wrong .mark{color:var(--bad)}
+  .feedback{border-radius:14px;padding:14px 16px;margin-top:16px;font-size:15.5px;border:2px solid var(--bd)}
+  .feedback.good{background:var(--good-bg)}
+  .feedback.bad{background:var(--bad-bg)}
+  .feedback .fh{font-weight:800;font-family:"Archivo",system-ui,sans-serif;margin-bottom:4px}
+  .feedback.good .fh{color:var(--good)} .feedback.bad .fh{color:var(--bad)}
+  .quiz-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:18px}
+  .quiz-foot .spacer{flex:1}
+
+  /* ---------- results ---------- */
+  .score-hero{
+    background:var(--butter-soft);border:2px solid var(--bd);border-radius:18px;box-shadow:var(--hard);
+    padding:30px 26px;text-align:center;margin-bottom:18px;
+  }
+  .score-hero .big{font-family:"Archivo Black","Archivo",Impact,system-ui,sans-serif;font-weight:400;font-size:54px;line-height:1;font-variant-numeric:tabular-nums}
+  .score-hero .big small{font-size:26px;color:var(--muted);font-weight:400}
+  .score-hero .msg{margin-top:8px;color:var(--ink);opacity:.75}
+  .score-hero .pct{display:inline-block;margin-top:12px;background:var(--butter);border:2px solid var(--bd);box-shadow:var(--hard-sm);border-radius:999px;padding:3px 15px;font-weight:800;font-size:14.5px;font-family:"Archivo",system-ui,sans-serif}
+  .panel{background:var(--card);border:2px solid var(--bd);border-radius:18px;box-shadow:var(--hard);padding:22px 24px;margin-bottom:18px}
+  .panel h3{font-family:"Archivo",system-ui,sans-serif;font-weight:800;font-size:16px;margin-bottom:14px;text-transform:uppercase;letter-spacing:.06em}
+  .chrow{display:flex;align-items:center;gap:12px;margin-bottom:10px;font-size:14.5px}
+  .chrow .nm{flex:0 0 46%;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:8px}
+  .chrow .track{flex:1;height:12px;background:var(--paper);border:1.5px solid var(--bd);border-radius:99px;overflow:hidden}
+  .chrow .track i{display:block;height:100%;border-radius:99px 0 0 99px}
+  .chrow .val{flex:none;font-variant-numeric:tabular-nums;color:var(--muted);width:44px;text-align:right;font-weight:700}
+  .review{display:flex;flex-direction:column;gap:10px}
+  .rev{border:2px solid var(--bd);border-radius:14px;padding:13px 15px;font-size:15.5px}
+  .rev.good{background:var(--good-bg)}
+  .rev.bad{background:var(--bad-bg)}
+  .rev .rq{font-weight:700;margin-bottom:4px}
+  .rev .ra{margin-bottom:2px}
+  .rev .rx{color:var(--ink);opacity:.7;font-size:14.5px}
+  .rev .badge{font-weight:800;margin-right:6px}
+  .rev.good .badge{color:var(--good)} .rev.bad .badge{color:var(--bad)}
+  .result-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}
+
+  /* ---------- answer key ---------- */
+  .key-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+  .key-head h2{font-family:"Archivo Black","Archivo",Impact,system-ui,sans-serif;font-weight:400;font-size:25px;text-transform:uppercase}
+  .key-head .tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  select.paper-pick{
+    font:inherit;font-weight:700;background:var(--card);color:var(--ink);
+    border:2px solid var(--bd);border-radius:10px;padding:9px 12px;box-shadow:var(--hard-sm);
+  }
+  table.key{width:100%;border-collapse:collapse;background:var(--card);font-size:15.5px}
+  .key-scroll{overflow-x:auto;border:2px solid var(--bd);border-radius:16px;box-shadow:var(--hard);background:var(--card)}
+  table.key th{
+    text-align:left;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);
+    padding:12px 14px;border-bottom:2px solid var(--bd);background:var(--butter);
+  }
+  table.key td{padding:11px 14px;border-bottom:1.5px solid var(--soft);vertical-align:top}
+  table.key tr:last-child td{border-bottom:none}
+  table.key td.qn{font-variant-numeric:tabular-nums;font-weight:800;width:44px}
+  table.key td.ans{white-space:nowrap;font-weight:700}
+  table.key td.ans .lt{color:var(--red)}
+  table.key td.ex{color:var(--muted);font-size:14.5px;min-width:260px}
+
+  footer.credit{margin-top:44px;text-align:center;font-size:13.5px;color:var(--muted)}
+
+  @media (max-width:560px){
+    .wrap{padding:18px 14px 48px}
+    .qcard{padding:20px 16px 18px}
+    .qtext{font-size:18px}
+    .mode{flex-direction:column}
+    .mode button{border-left:none;border-top:2px solid var(--bd)}
+    .mode button:first-child{border-top:none}
+    .chrow .nm{flex-basis:42%}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none!important;animation:none!important}
+  }
+  @media print{
+    body{background:#fff;color:#111}
+    .no-print, header.site, .key-head .tools, footer.credit{display:none!important}
+    .wrap{max-width:none;padding:0}
+    .key-scroll{border:1px solid #999;box-shadow:none;border-radius:0}
+    table.key{font-size:12.5px}
+    table.key th{background:#eee;color:#333}
+    table.key td{border-bottom:1px solid #ddd}
+    .print-title{display:block!important;font-family:Georgia,serif;font-size:18px;margin-bottom:10px}
+  }
+  .print-title{display:none}
+</style>
+
+<div class="wrap">
+  <header class="site">
+    <div class="wordmark">
+      <span class="box">Bright EngMath</span>
+      <span class="sub">Grade 7 · Lower Secondary</span>
+    </div>
+    <button class="btn-quiet no-print" id="nav-key-btn">Teacher answer keys →</button>
+  </header>
+
+  <!-- ============ HOME ============ -->
+  <section id="screen-home">
+    <p class="eyebrow">Six full practice papers · Chapters 1–5</p>
+    <h1 class="hero">Maths Exam Practice<br>that <span class="hl">marks itself</span>.</h1>
+    <div class="sticker">6 papers × 25 questions · with answer keys</div>
+    <p class="lede">Six parallel papers of 25 multiple-choice questions, written in Cambridge
+    Checkpoint style. Every question is marked instantly, with a worked explanation — and every
+    paper has a printable teacher answer key.</p>
+
+    <div class="syllabus" id="syllabus"></div>
+
+    <div class="mode" role="group" aria-label="Choose a mode">
+      <button id="mode-practice" aria-pressed="true">
+        <span class="t">Practice mode</span>
+        <span class="d">Feedback and explanation after every question</span>
+      </button>
+      <button id="mode-test" aria-pressed="false">
+        <span class="t">Test mode</span>
+        <span class="d">Answer all 25 first — results and review at the end</span>
+      </button>
+    </div>
+
+    <div class="papers" id="papers"></div>
+
+    <p class="note">Tip for teachers: papers A–F are parallel forms — the same skills appear in the
+    same order in every paper, so you can use one for teaching, one for homework and one for the test.
+    No calculator needed.</p>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section id="screen-quiz" class="hidden">
+    <div class="quiz-top">
+      <span class="pn" id="quiz-paper">Paper A</span>
+      <span class="count" id="quiz-count">Question 1 of 25</span>
+      <button class="btn-quiet" id="quiz-exit">Exit ✕</button>
+    </div>
+    <div class="bar"><i id="quiz-bar" style="width:4%"></i></div>
+    <div class="qcard">
+      <span class="qchip" id="quiz-chip"></span>
+      <p class="qtext" id="quiz-q"></p>
+      <div class="choices" id="quiz-choices"></div>
+      <div class="feedback hidden" id="quiz-feedback" role="status"></div>
+    </div>
+    <div class="quiz-foot">
+      <button class="btn btn-ghost hidden" id="quiz-back">← Back</button>
+      <span class="spacer"></span>
+      <button class="btn btn-primary hidden" id="quiz-next">Next →</button>
+    </div>
+  </section>
+
+  <!-- ============ RESULTS ============ -->
+  <section id="screen-results" class="hidden">
+    <div class="score-hero">
+      <p class="eyebrow" id="res-paper">Paper A · Test mode</p>
+      <p class="big" id="res-score">21<small> / 25</small></p>
+      <p class="msg" id="res-msg"></p>
+      <span class="pct" id="res-pct"></span>
+    </div>
+    <div class="panel">
+      <h3>Marks by chapter</h3>
+      <div id="res-chapters"></div>
+    </div>
+    <div class="panel">
+      <h3>Question review</h3>
+      <div class="review" id="res-review"></div>
+    </div>
+    <div class="result-actions">
+      <button class="btn btn-primary" id="res-retry">Try this paper again</button>
+      <button class="btn btn-ghost" id="res-home">All papers</button>
+    </div>
+  </section>
+
+  <!-- ============ ANSWER KEY ============ -->
+  <section id="screen-key" class="hidden">
+    <div class="key-head">
+      <h2>Teacher answer key</h2>
+      <div class="tools no-print">
+        <label class="sub" for="key-pick" style="font-size:13.5px;color:var(--muted);font-weight:700">Paper</label>
+        <select class="paper-pick" id="key-pick"></select>
+        <button class="btn btn-primary" id="key-print">Print</button>
+        <button class="btn btn-ghost" id="key-home">← Back</button>
+      </div>
+    </div>
+    <strong class="print-title" id="key-print-title"></strong>
+    <div class="key-scroll">
+      <table class="key">
+        <thead><tr><th>Q</th><th>Answer</th><th>Explanation</th></tr></thead>
+        <tbody id="key-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="credit">© Bright EngMath · Grade 7 (G7) Mathematics · Chapters 1–5 (Integers · Expressions ·
+  Place value &amp; rounding · Decimals · Angles)</footer>
+</div>
+
+<script>
+const DATA = {"chapters":{"1":"Integers","2":"Expressions, formulae and equations","3":"Place value and rounding","4":"Decimals","5":"Angles and constructions"},"sets":[{"name":"Paper A","questions":[{"ch":1,"topic":"Adding and subtracting integers","q":"Work out −8 + 5.","choices":["−13","−3","13","3"],"a":1,"ex":"Start at −8 and count up 5: −8 + 5 = −3."},{"ch":1,"topic":"Multiplying and dividing integers","q":"Work out −6 × 7.","choices":["42","13","−13","−42"],"a":3,"ex":"Negative × positive gives a negative answer: 6 × 7 = 42, so −6 × 7 = −42."},{"ch":1,"topic":"Lowest common multiples","q":"What is the lowest common multiple (LCM) of 6 and 8?","choices":["48","2","24","14"],"a":2,"ex":"Multiples of 8: 8, 16, 24… 24 is also a multiple of 6, so the LCM is 24. (48 is a common multiple, but not the lowest.)"},{"ch":1,"topic":"Highest common factors","q":"What is the highest common factor (HCF) of 18 and 24?","choices":["6","3","2","72"],"a":0,"ex":"Factors of 18: 1, 2, 3, 6, 9, 18. Factors of 24: 1, 2, 3, 4, 6, 8, 12, 24. The highest number in both lists is 6."},{"ch":1,"topic":"Tests for divisibility","q":"Which of these numbers is divisible by 3?","choices":["412","517","1004","258"],"a":3,"ex":"Add the digits: 2 + 5 + 8 = 15, and 15 is divisible by 3, so 258 is divisible by 3."},{"ch":1,"topic":"Square roots and cube roots","q":"What is √81?","choices":["9","6561","40.5","8"],"a":0,"ex":"9 × 9 = 81, so √81 = 9."},{"ch":2,"topic":"Constructing expressions","q":"Sam has n stickers. Mia has 3 more than twice as many stickers as Sam. Which expression shows how many stickers Mia has?","choices":["2n + 3","2n − 3","2(n + 3)","3n + 2"],"a":0,"ex":"Twice as many as Sam is 2n, and 3 more than that is 2n + 3."},{"ch":2,"topic":"Using expressions and formulae","q":"If a = 3 and b = 5, work out the value of 4a + 2b.","choices":["120","14","22","26"],"a":2,"ex":"4a + 2b = (4 × 3) + (2 × 5) = 12 + 10 = 22."},{"ch":2,"topic":"Collecting like terms","q":"Simplify 5a + 3b − 2a + b.","choices":["7ab","7a + 4b","3a + 2b","3a + 4b"],"a":3,"ex":"Collect the a terms: 5a − 2a = 3a. Collect the b terms: 3b + b = 4b. Different letters cannot be combined into 7ab."},{"ch":2,"topic":"Expanding brackets","q":"Expand 3(x + 5).","choices":["8x","x + 15","3x + 15","3x + 5"],"a":2,"ex":"Multiply everything inside the bracket by 3: 3 × x + 3 × 5 = 3x + 15."},{"ch":2,"topic":"Constructing and solving equations","q":"Solve x + 7 = 15.","choices":["x = 22","x = 7","x = −8","x = 8"],"a":3,"ex":"Subtract 7 from both sides: x = 15 − 7 = 8."},{"ch":2,"topic":"Inequalities","q":"Which of these values of n satisfies n > −2?","choices":["−3","0","−2","−5"],"a":1,"ex":"n must be greater than −2. Only 0 is greater than −2. (−2 itself is not included because the sign is >, not ≥.)"},{"ch":3,"topic":"Multiplying and dividing by powers of 10","q":"Work out 3.6 × 100.","choices":["0.036","36","360","3600"],"a":2,"ex":"Multiplying by 100 moves every digit two places to the left: 3.6 × 100 = 360."},{"ch":3,"topic":"Multiplying and dividing by powers of 10","q":"Work out 45 ÷ 100.","choices":["0.45","450","0.045","4.5"],"a":0,"ex":"Dividing by 100 moves every digit two places to the right: 45 ÷ 100 = 0.45."},{"ch":3,"topic":"Rounding","q":"Round 3472 to the nearest hundred.","choices":["3470","3500","3000","3400"],"a":1,"ex":"Look at the tens digit, 7. It is 5 or more, so round up: 3472 → 3500."},{"ch":3,"topic":"Rounding","q":"Round 3.456 to 1 decimal place.","choices":["3.4","3.46","3.6","3.5"],"a":3,"ex":"Look at the second decimal, 5. It is 5 or more, so round up: 3.456 → 3.5."},{"ch":4,"topic":"Ordering decimals","q":"Which list shows the numbers 0.45, 0.5 and 0.405 in order, smallest first?","choices":["0.405, 0.45, 0.5","0.405, 0.5, 0.45","0.5, 0.45, 0.405","0.45, 0.405, 0.5"],"a":0,"ex":"Compare using equal decimal places: 0.450, 0.500, 0.405. Smallest first: 0.405, 0.45, 0.5."},{"ch":4,"topic":"Adding and subtracting decimals","q":"Work out 4.7 + 2.65.","choices":["6.35","3.12","7.25","7.35"],"a":3,"ex":"Line up the decimal points: 4.70 + 2.65 = 7.35."},{"ch":4,"topic":"Multiplying decimals","q":"Work out 0.6 × 0.4.","choices":["0.024","0.24","24","2.4"],"a":1,"ex":"6 × 4 = 24. There are 2 decimal places in the question, so the answer has 2: 0.24."},{"ch":4,"topic":"Dividing decimals","q":"Work out 4.8 ÷ 6.","choices":["8","0.8","0.08","1.25"],"a":1,"ex":"48 ÷ 6 = 8, so 4.8 ÷ 6 = 0.8."},{"ch":4,"topic":"Making decimal calculations easier","q":"Which calculation gives the same answer as 3.99 × 6?","choices":["(4 × 6) − (0.01 × 6)","(4 × 6) − 0.01","(3 × 6) + (0.9 × 6)","(4 × 6) + (0.01 × 6)"],"a":0,"ex":"3.99 = 4 − 0.01, so 3.99 × 6 = (4 × 6) − (0.01 × 6) = 24 − 0.06 = 23.94."},{"ch":5,"topic":"A sum of 360°","q":"Three angles meet at a point. Two of them are 150° and 120°. What is the size of the third angle?","choices":["270°","90°","100°","80°"],"a":1,"ex":"Angles at a point add up to 360°: 360 − 150 − 120 = 90°."},{"ch":5,"topic":"Intersecting lines","q":"Two straight lines cross. One of the angles formed is 65°. What is the size of the angle vertically opposite it?","choices":["295°","115°","65°","25°"],"a":2,"ex":"Vertically opposite angles are equal, so the angle is also 65°."},{"ch":5,"topic":"Angles in triangles","q":"Two angles of a triangle are 65° and 48°. What is the size of the third angle?","choices":["77°","247°","67°","113°"],"a":2,"ex":"Angles in a triangle add up to 180°: 180 − 65 − 48 = 67°."},{"ch":5,"topic":"Angles in quadrilaterals","q":"Three angles of a quadrilateral are 110°, 85° and 95°. What is the size of the fourth angle?","choices":["60°","70°","250°","80°"],"a":1,"ex":"Angles in a quadrilateral add up to 360°: 360 − (110 + 85 + 95) = 70°."}]},{"name":"Paper B","questions":[{"ch":1,"topic":"Adding and subtracting integers","q":"Work out −4 − 9.","choices":["−5","−13","5","13"],"a":1,"ex":"Start at −4 and count down 9 more: −4 − 9 = −13."},{"ch":1,"topic":"Multiplying and dividing integers","q":"Work out −8 × (−4).","choices":["−32","32","−12","12"],"a":1,"ex":"Negative × negative gives a positive answer: −8 × (−4) = 32."},{"ch":1,"topic":"Lowest common multiples","q":"What is the lowest common multiple (LCM) of 4 and 10?","choices":["40","20","2","14"],"a":1,"ex":"Multiples of 10: 10, 20… 20 is also a multiple of 4, so the LCM is 20."},{"ch":1,"topic":"Highest common factors","q":"What is the highest common factor (HCF) of 20 and 36?","choices":["8","4","180","2"],"a":1,"ex":"Factors of 20: 1, 2, 4, 5, 10, 20. Factors of 36 include 1, 2, 4, 6, 9… The highest common factor is 4."},{"ch":1,"topic":"Tests for divisibility","q":"Which of these numbers is divisible by 9?","choices":["361","234","508","129"],"a":1,"ex":"Add the digits: 2 + 3 + 4 = 9, which is divisible by 9, so 234 is divisible by 9."},{"ch":1,"topic":"Square roots and cube roots","q":"What is the cube root of 64?","choices":["4","32","21.3","8"],"a":0,"ex":"4 × 4 × 4 = 64, so the cube root of 64 is 4. (8 is the square root.)"},{"ch":2,"topic":"Constructing expressions","q":"A pencil costs p cents. Which expression shows the total cost, in cents, of 5 pencils and one 40-cent eraser?","choices":["5p + 40","45p","5(p + 40)","p + 200"],"a":0,"ex":"5 pencils cost 5 × p = 5p cents. Add the eraser: 5p + 40."},{"ch":2,"topic":"Using expressions and formulae","q":"The formula v = u + at gives speed. Find v when u = 5, a = 3 and t = 4.","choices":["12","32","17","60"],"a":2,"ex":"Multiply first: at = 3 × 4 = 12. Then v = 5 + 12 = 17."},{"ch":2,"topic":"Collecting like terms","q":"Simplify 4x + 7 − x + 2.","choices":["12x","5x + 9","3x + 9","3x + 5"],"a":2,"ex":"x terms: 4x − x = 3x. Numbers: 7 + 2 = 9."},{"ch":2,"topic":"Expanding brackets","q":"Expand 5(2a − 3).","choices":["10a + 15","10a − 3","10a − 15","7a − 8"],"a":2,"ex":"5 × 2a = 10a and 5 × (−3) = −15, so the answer is 10a − 15."},{"ch":2,"topic":"Constructing and solving equations","q":"Solve 3x = 27.","choices":["x = 24","x = 30","x = 81","x = 9"],"a":3,"ex":"Divide both sides by 3: x = 27 ÷ 3 = 9."},{"ch":2,"topic":"Inequalities","q":"“x is less than or equal to 6.” Which inequality shows this?","choices":["x ≤ 6","x ≥ 6","x < 6","x > 6"],"a":0,"ex":"“Less than or equal to” is written with the ≤ symbol: x ≤ 6."},{"ch":3,"topic":"Multiplying and dividing by powers of 10","q":"Work out 0.47 × 1000.","choices":["4700","0.00047","470","47"],"a":2,"ex":"Multiplying by 1000 moves every digit three places to the left: 0.47 × 1000 = 470."},{"ch":3,"topic":"Multiplying and dividing by powers of 10","q":"Work out 3.2 ÷ 10.","choices":["32","0.302","0.32","0.032"],"a":2,"ex":"Dividing by 10 moves every digit one place to the right: 3.2 ÷ 10 = 0.32."},{"ch":3,"topic":"Rounding","q":"Round 786 to the nearest ten.","choices":["780","800","700","790"],"a":3,"ex":"Look at the ones digit, 6. It is 5 or more, so round up: 786 → 790."},{"ch":3,"topic":"Rounding","q":"Round 0.8149 to 2 decimal places.","choices":["0.8","0.815","0.81","0.82"],"a":2,"ex":"Look at the third decimal, 4. It is less than 5, so round down: 0.8149 → 0.81."},{"ch":4,"topic":"Ordering decimals","q":"Which of these numbers is the largest?","choices":["0.58","0.099","0.512","0.6"],"a":3,"ex":"Write them with equal decimal places: 0.600, 0.580, 0.099, 0.512. The largest is 0.6 — more digits does not mean bigger!"},{"ch":4,"topic":"Adding and subtracting decimals","q":"Work out 8 − 3.6.","choices":["4.6","5.4","5.6","4.4"],"a":3,"ex":"Write 8 as 8.0, then 8.0 − 3.6 = 4.4."},{"ch":4,"topic":"Multiplying decimals","q":"Work out 3.5 × 4.","choices":["14","12.5","140","1.4"],"a":0,"ex":"3.5 × 4 = (3 × 4) + (0.5 × 4) = 12 + 2 = 14."},{"ch":4,"topic":"Dividing decimals","q":"Work out 7.2 ÷ 0.9.","choices":["8","0.8","6.48","80"],"a":0,"ex":"Multiply both numbers by 10: 7.2 ÷ 0.9 = 72 ÷ 9 = 8."},{"ch":4,"topic":"Making decimal calculations easier","q":"Multiplying a number by 0.5 always gives the same answer as…","choices":["dividing the number by 2","multiplying the number by 2","dividing the number by 5","dividing the number by 0.2"],"a":0,"ex":"0.5 is one half, so multiplying by 0.5 means finding half — the same as dividing by 2."},{"ch":5,"topic":"A sum of 360°","q":"Four angles meet at a point. Three of them are 85°, 95° and 130°. What is the size of the fourth angle?","choices":["60°","40°","310°","50°"],"a":3,"ex":"Angles at a point add up to 360°: 360 − (85 + 95 + 130) = 360 − 310 = 50°."},{"ch":5,"topic":"Intersecting lines","q":"Two angles on a straight line are 47° and x. Find x.","choices":["143°","133°","43°","313°"],"a":1,"ex":"Angles on a straight line add up to 180°: 180 − 47 = 133°."},{"ch":5,"topic":"Angles in triangles","q":"An isosceles triangle has an angle of 40° between its two equal sides. What is the size of each base angle?","choices":["50°","40°","140°","70°"],"a":3,"ex":"The two base angles are equal: (180 − 40) ÷ 2 = 70°."},{"ch":5,"topic":"Angles in quadrilaterals","q":"What do the four interior angles of any quadrilateral add up to?","choices":["360°","270°","180°","540°"],"a":0,"ex":"A quadrilateral can be split into two triangles, so its angles add up to 2 × 180° = 360°."}]},{"name":"Paper C","questions":[{"ch":1,"topic":"Adding and subtracting integers","q":"The temperature is −6 °C. It rises by 11 °C. What is the new temperature?","choices":["17 °C","5 °C","−5 °C","−17 °C"],"a":1,"ex":"A rise means adding: −6 + 11 = 5, so the new temperature is 5 °C."},{"ch":1,"topic":"Multiplying and dividing integers","q":"Work out 45 ÷ (−9).","choices":["5","36","−9","−5"],"a":3,"ex":"Positive ÷ negative gives a negative answer: 45 ÷ 9 = 5, so the answer is −5."},{"ch":1,"topic":"Lowest common multiples","q":"What is the lowest common multiple (LCM) of 9 and 12?","choices":["108","36","3","21"],"a":1,"ex":"Multiples of 12: 12, 24, 36… 36 is also a multiple of 9, so the LCM is 36."},{"ch":1,"topic":"Highest common factors","q":"What is the highest common factor (HCF) of 27 and 45?","choices":["18","9","135","3"],"a":1,"ex":"Factors of 27: 1, 3, 9, 27. Factors of 45: 1, 3, 5, 9, 15, 45. The highest common factor is 9."},{"ch":1,"topic":"Tests for divisibility","q":"Which of these numbers is divisible by 6?","choices":["414","231","423","508"],"a":0,"ex":"A number divisible by 6 must be even AND divisible by 3. 414 is even and 4 + 1 + 4 = 9, so it works."},{"ch":1,"topic":"Square roots and cube roots","q":"What is √144?","choices":["11","72","12","14"],"a":2,"ex":"12 × 12 = 144, so √144 = 12."},{"ch":2,"topic":"Constructing expressions","q":"I think of a number x, subtract 4, then multiply the result by 6. Which expression shows my answer?","choices":["x − 24","6x − 4","6(x − 4)","4 − 6x"],"a":2,"ex":"Subtract first: (x − 4). Then multiply the whole result by 6, so brackets are needed: 6(x − 4)."},{"ch":2,"topic":"Using expressions and formulae","q":"Work out the value of 3x² when x = 4.","choices":["48","144","24","12"],"a":0,"ex":"Square first: x² = 16. Then 3 × 16 = 48. (144 comes from squaring 3x, which is wrong.)"},{"ch":2,"topic":"Collecting like terms","q":"Simplify 6p + 2q − p − 5q.","choices":["2pq","5p + 3q","5p − 3q","7p − 3q"],"a":2,"ex":"p terms: 6p − p = 5p. q terms: 2q − 5q = −3q."},{"ch":2,"topic":"Expanding brackets","q":"Expand 4(3 + 2m).","choices":["20m","12 + 2m","12 + 8m","8m + 3"],"a":2,"ex":"4 × 3 = 12 and 4 × 2m = 8m, so the answer is 12 + 8m."},{"ch":2,"topic":"Constructing and solving equations","q":"Solve 2x + 5 = 17.","choices":["x = 6","x = 12","x = 24","x = 11"],"a":0,"ex":"Subtract 5: 2x = 12. Divide by 2: x = 6."},{"ch":2,"topic":"Inequalities","q":"Which of these values of x satisfies 2x < 10?","choices":["7","4","6","5"],"a":1,"ex":"2x < 10 means x < 5. Only 4 is less than 5. (x = 5 gives 2x = 10, which is not less than 10.)"},{"ch":3,"topic":"Multiplying and dividing by powers of 10","q":"Work out 5.08 × 10.","choices":["508","50.8","50.08","0.508"],"a":1,"ex":"Multiplying by 10 moves every digit one place to the left: 5.08 × 10 = 50.8."},{"ch":3,"topic":"Multiplying and dividing by powers of 10","q":"Work out 670 ÷ 1000.","choices":["67","0.67","6.7","0.067"],"a":1,"ex":"Dividing by 1000 moves every digit three places to the right: 670 ÷ 1000 = 0.67."},{"ch":3,"topic":"Rounding","q":"Round 12501 to the nearest thousand.","choices":["12600","12500","13000","12000"],"a":2,"ex":"Look at the hundreds digit, 5. It is 5 or more, so round up: 12501 → 13000."},{"ch":3,"topic":"Rounding","q":"Round 12.96 to 1 decimal place.","choices":["13.0","12.0","12.9","13.1"],"a":0,"ex":"Look at the second decimal, 6. Round up: 12.9 becomes 13.0."},{"ch":4,"topic":"Ordering decimals","q":"Which of these numbers is the smallest?","choices":["0.089","0.7","0.65","0.9"],"a":0,"ex":"0.089 has a 0 in the tenths place, so it is less than 0.1 — smaller than all the others."},{"ch":4,"topic":"Adding and subtracting decimals","q":"Work out 5.24 + 3.8.","choices":["9.4","8.04","5.62","9.04"],"a":3,"ex":"Line up the decimal points: 5.24 + 3.80 = 9.04. (5.62 comes from lining up the digits wrongly.)"},{"ch":4,"topic":"Multiplying decimals","q":"Work out 0.7 × 8.","choices":["6.3","56","0.56","5.6"],"a":3,"ex":"7 × 8 = 56. One decimal place in the question, so the answer is 5.6."},{"ch":4,"topic":"Dividing decimals","q":"Work out 3.6 ÷ 4.","choices":["0.9","0.09","9","1.2"],"a":0,"ex":"36 ÷ 4 = 9, so 3.6 ÷ 4 = 0.9."},{"ch":4,"topic":"Making decimal calculations easier","q":"Which calculation is the same as 24 × 0.25?","choices":["24 − 0.25","24 × 4","24 ÷ 4","24 ÷ 25"],"a":2,"ex":"0.25 is one quarter, so 24 × 0.25 = 24 ÷ 4 = 6."},{"ch":5,"topic":"A sum of 360°","q":"Two angles meet at a point. One of them is 205°. What is the size of the other angle?","choices":["55°","165°","145°","155°"],"a":3,"ex":"Angles at a point add up to 360°: 360 − 205 = 155°."},{"ch":5,"topic":"Intersecting lines","q":"Two straight lines cross. One of the angles formed is 110°. What is the size of the angle NEXT to it on the straight line?","choices":["250°","110°","90°","70°"],"a":3,"ex":"Angles on a straight line add up to 180°: 180 − 110 = 70°."},{"ch":5,"topic":"Angles in triangles","q":"A right-angled triangle has one angle of 35°. What is the size of the third angle?","choices":["145°","55°","65°","35°"],"a":1,"ex":"The angles are 90°, 35° and the third angle: 180 − 90 − 35 = 55°."},{"ch":5,"topic":"Angles in quadrilaterals","q":"Three angles of a quadrilateral are 90°, 90° and 120°. What is the size of the fourth angle?","choices":["50°","70°","240°","60°"],"a":3,"ex":"Angles in a quadrilateral add up to 360°: 360 − 300 = 60°."}]},{"name":"Paper D","questions":[{"ch":1,"topic":"Adding and subtracting integers","q":"Work out 7 + (−12).","choices":["5","−19","19","−5"],"a":3,"ex":"Adding a negative is the same as subtracting: 7 − 12 = −5."},{"ch":1,"topic":"Multiplying and dividing integers","q":"Work out −72 ÷ (−8).","choices":["8","−64","9","−9"],"a":2,"ex":"Negative ÷ negative gives a positive answer: 72 ÷ 8 = 9."},{"ch":1,"topic":"Lowest common multiples","q":"One bus leaves the station every 6 minutes and another every 9 minutes. They leave together at 08:00. After how many minutes will they next leave together?","choices":["54","3","18","15"],"a":2,"ex":"The next time they leave together is the LCM of 6 and 9. Multiples of 9: 9, 18… 18 is also a multiple of 6, so it is 18 minutes."},{"ch":1,"topic":"Highest common factors","q":"A teacher has 24 pencils and 36 pens. She puts them into identical packs with nothing left over. What is the greatest possible number of packs?","choices":["72","6","4","12"],"a":3,"ex":"The greatest number of packs is the HCF of 24 and 36, which is 12. Each pack gets 2 pencils and 3 pens."},{"ch":1,"topic":"Tests for divisibility","q":"Which of these numbers is divisible by 4?","choices":["306","422","214","316"],"a":3,"ex":"Check the last two digits: 16 is divisible by 4, so 316 is divisible by 4."},{"ch":1,"topic":"Square roots and cube roots","q":"What is the cube root of 27?","choices":["9","3","13.5","6"],"a":1,"ex":"3 × 3 × 3 = 27, so the cube root of 27 is 3."},{"ch":2,"topic":"Constructing expressions","q":"Tom is t years old. His mother is 4 times as old as Tom. Which expression shows their total age?","choices":["5t","4t","t + 4","4t + 4"],"a":0,"ex":"Mother's age is 4t. Total = t + 4t = 5t."},{"ch":2,"topic":"Using expressions and formulae","q":"The formula P = 2(l + w) gives the perimeter of a rectangle. Find P when l = 7 and w = 4.","choices":["18","11","22","56"],"a":2,"ex":"P = 2 × (7 + 4) = 2 × 11 = 22."},{"ch":2,"topic":"Collecting like terms","q":"Simplify 8m − 3 + 2m − 4.","choices":["10m − 7","6m − 7","3m","10m − 1"],"a":0,"ex":"m terms: 8m + 2m = 10m. Numbers: −3 − 4 = −7."},{"ch":2,"topic":"Expanding brackets","q":"Expand −2(x − 4).","choices":["−2x − 4","−2x − 8","2x − 8","−2x + 8"],"a":3,"ex":"−2 × x = −2x and −2 × (−4) = +8, so the answer is −2x + 8."},{"ch":2,"topic":"Constructing and solving equations","q":"Solve 4x − 3 = 21.","choices":["x = 6","x = 24","x = 4.5","x = 18"],"a":0,"ex":"Add 3: 4x = 24. Divide by 4: x = 6. (4.5 comes from subtracting 3 instead of adding.)"},{"ch":2,"topic":"Inequalities","q":"Which of these values of x makes x + 3 ≥ 9 true?","choices":["6","2","5","4"],"a":0,"ex":"x + 3 ≥ 9 means x ≥ 6. When x = 6, x + 3 = 9, and 9 ≥ 9 is true."},{"ch":3,"topic":"Multiplying and dividing by powers of 10","q":"Work out 0.9 × 100.","choices":["0.009","90","900","9"],"a":1,"ex":"Multiplying by 100 moves every digit two places to the left: 0.9 × 100 = 90."},{"ch":3,"topic":"Multiplying and dividing by powers of 10","q":"Work out 8 ÷ 100.","choices":["80","0.08","0.8","0.008"],"a":1,"ex":"Dividing by 100 moves every digit two places to the right: 8 ÷ 100 = 0.08."},{"ch":3,"topic":"Rounding","q":"Round 4449 to the nearest hundred.","choices":["4450","4400","4500","4000"],"a":1,"ex":"Look at the tens digit, 4. It is less than 5, so round down: 4449 → 4400."},{"ch":3,"topic":"Rounding","q":"Round 7.0451 to 2 decimal places.","choices":["7.05","7.045","7.1","7.04"],"a":0,"ex":"Look at the third decimal, 5. It is 5 or more, so round up: 7.0451 → 7.05."},{"ch":4,"topic":"Ordering decimals","q":"Which list shows 3.2, 3.09 and 3.15 in order, smallest first?","choices":["3.15, 3.09, 3.2","3.09, 3.15, 3.2","3.09, 3.2, 3.15","3.2, 3.15, 3.09"],"a":1,"ex":"Compare tenths first: 3.09 (0 tenths), 3.15 (1 tenth), 3.2 (2 tenths)."},{"ch":4,"topic":"Adding and subtracting decimals","q":"Work out 7.2 − 4.85.","choices":["3.35","2.45","2.35","2.65"],"a":2,"ex":"Write 7.2 as 7.20, then 7.20 − 4.85 = 2.35."},{"ch":4,"topic":"Multiplying decimals","q":"Work out 1.2 × 0.5.","choices":["2.4","0.06","0.6","6"],"a":2,"ex":"Multiplying by 0.5 is the same as halving: half of 1.2 is 0.6."},{"ch":4,"topic":"Dividing decimals","q":"Work out 5 ÷ 0.5.","choices":["0.1","1","10","2.5"],"a":2,"ex":"Multiply both numbers by 10: 5 ÷ 0.5 = 50 ÷ 5 = 10. Dividing by 0.5 makes the answer bigger!"},{"ch":4,"topic":"Making decimal calculations easier","q":"To work out 5.7 + 2.9 in her head, Ana first works out 5.7 + 3. What should she do next?","choices":["subtract 0.1","subtract 0.9","add 0.9","add 0.1"],"a":0,"ex":"2.9 = 3 − 0.1, so after adding 3 she must subtract 0.1: 8.7 − 0.1 = 8.6."},{"ch":5,"topic":"A sum of 360°","q":"Four equal angles meet at a point. What is the size of each angle?","choices":["60°","90°","120°","45°"],"a":1,"ex":"Angles at a point add up to 360°: 360 ÷ 4 = 90°."},{"ch":5,"topic":"Intersecting lines","q":"Two angles on a straight line are x and 3x. Find x.","choices":["60°","90°","135°","45°"],"a":3,"ex":"x + 3x = 4x, and angles on a straight line add up to 180°. So 4x = 180 and x = 45°."},{"ch":5,"topic":"Angles in triangles","q":"What is the size of each angle in an equilateral triangle?","choices":["120°","90°","45°","60°"],"a":3,"ex":"All three angles are equal: 180 ÷ 3 = 60°."},{"ch":5,"topic":"Angles in quadrilaterals","q":"One angle of a parallelogram is 65°. What is the size of the angle NEXT to it?","choices":["65°","115°","295°","25°"],"a":1,"ex":"Angles next to each other in a parallelogram add up to 180°: 180 − 65 = 115°."}]},{"name":"Paper E","questions":[{"ch":1,"topic":"Adding and subtracting integers","q":"Work out −3 − (−10).","choices":["13","−7","−13","7"],"a":3,"ex":"Subtracting a negative is the same as adding: −3 + 10 = 7."},{"ch":1,"topic":"Multiplying and dividing integers","q":"Work out −5 × (−6) × (−2).","choices":["−30","60","−60","13"],"a":2,"ex":"Three negative factors give a negative answer: 5 × 6 × 2 = 60, so the answer is −60."},{"ch":1,"topic":"Lowest common multiples","q":"What is the lowest common multiple (LCM) of 8 and 12?","choices":["24","20","4","96"],"a":0,"ex":"Multiples of 12: 12, 24… 24 is also a multiple of 8, so the LCM is 24."},{"ch":1,"topic":"Highest common factors","q":"What is the highest common factor (HCF) of 16 and 40?","choices":["2","80","8","4"],"a":2,"ex":"Factors of 16: 1, 2, 4, 8, 16. Factors of 40: 1, 2, 4, 5, 8, 10, 20, 40. The highest common factor is 8."},{"ch":1,"topic":"Tests for divisibility","q":"Which of these numbers is divisible by both 2 and 5?","choices":["725","802","730","555"],"a":2,"ex":"A number divisible by both 2 and 5 must end in 0. Only 730 ends in 0."},{"ch":1,"topic":"Square roots and cube roots","q":"Which of these is a square number?","choices":["49","18","50","27"],"a":0,"ex":"49 = 7 × 7, so it is a square number. (27 is a cube number.)"},{"ch":2,"topic":"Constructing expressions","q":"A rectangle has length 2w and width w. Which expression shows its perimeter?","choices":["2w²","4w","6w","3w"],"a":2,"ex":"Perimeter = 2(length + width) = 2(2w + w) = 2 × 3w = 6w. (2w² would be the area.)"},{"ch":2,"topic":"Using expressions and formulae","q":"Work out the value of 5m − 2n when m = 6 and n = 3.","choices":["24","36","26","3"],"a":0,"ex":"5m − 2n = 30 − 6 = 24."},{"ch":2,"topic":"Collecting like terms","q":"Simplify 3c + 5d + 2c − d.","choices":["5c + 5d","5c + 4d","10cd","6c + 4d"],"a":1,"ex":"c terms: 3c + 2c = 5c. d terms: 5d − d = 4d."},{"ch":2,"topic":"Expanding brackets","q":"Expand and simplify 6(w + 2) − 4.","choices":["6w + 8","6w + 12","6w − 12","6w + 6"],"a":0,"ex":"6(w + 2) = 6w + 12. Then subtract 4: 6w + 12 − 4 = 6w + 8."},{"ch":2,"topic":"Constructing and solving equations","q":"Solve x ÷ 5 = 4.","choices":["x = 0.8","x = 1.25","x = 9","x = 20"],"a":3,"ex":"Multiply both sides by 5: x = 4 × 5 = 20."},{"ch":2,"topic":"Inequalities","q":"n is an integer and −3 ≤ n < 1. Which list shows ALL the possible values of n?","choices":["−2, −1, 0","−2, −1, 0, 1","−3, −2, −1, 0, 1","−3, −2, −1, 0"],"a":3,"ex":"−3 is included (≤) but 1 is not included (<), so n can be −3, −2, −1 or 0."},{"ch":3,"topic":"Multiplying and dividing by powers of 10","q":"Work out 62 × 1000.","choices":["62000","620","620000","6200"],"a":0,"ex":"Multiplying by 1000 moves every digit three places to the left: 62 × 1000 = 62000."},{"ch":3,"topic":"Multiplying and dividing by powers of 10","q":"Work out 40.6 ÷ 10.","choices":["406","4.6","0.406","4.06"],"a":3,"ex":"Dividing by 10 moves every digit one place to the right: 40.6 ÷ 10 = 4.06. (You cannot just remove the zero — that gives 4.6, which is wrong.)"},{"ch":3,"topic":"Rounding","q":"Round 65 to the nearest ten.","choices":["65","70","60","100"],"a":1,"ex":"The ones digit is 5, so round up: 65 → 70."},{"ch":3,"topic":"Rounding","q":"Round 5.649 to 1 decimal place.","choices":["5.65","5.5","5.6","5.7"],"a":2,"ex":"Look only at the second decimal, 4. It is less than 5, so round down: 5.649 → 5.6. (Do not round twice!)"},{"ch":4,"topic":"Ordering decimals","q":"Which of these numbers is the largest?","choices":["0.303","0.33","0.3","0.033"],"a":1,"ex":"Write them with equal decimal places: 0.330, 0.303, 0.300, 0.033. The largest is 0.33."},{"ch":4,"topic":"Adding and subtracting decimals","q":"A book costs $4.65 and a pen costs $1.80. What is the total cost?","choices":["$5.45","$6.35","$6.45","$6.55"],"a":2,"ex":"Line up the decimal points: $4.65 + $1.80 = $6.45."},{"ch":4,"topic":"Multiplying decimals","q":"Work out 2.5 × 0.4.","choices":["10","0.1","100","1"],"a":3,"ex":"25 × 4 = 100. Two decimal places in the question, so the answer is 1.00 = 1."},{"ch":4,"topic":"Dividing decimals","q":"Work out 0.42 ÷ 7.","choices":["6","0.06","0.006","0.6"],"a":1,"ex":"42 ÷ 7 = 6, so 0.42 ÷ 7 = 0.06."},{"ch":4,"topic":"Making decimal calculations easier","q":"Dividing a number by 0.1 always gives the same answer as…","choices":["dividing the number by 10","multiplying the number by 100","multiplying the number by 10","subtracting 0.1 from the number"],"a":2,"ex":"There are 10 tenths in every whole, so dividing by 0.1 is the same as multiplying by 10."},{"ch":5,"topic":"A sum of 360°","q":"Three equal angles and an angle of 120° meet at a point. What is the size of each equal angle?","choices":["90°","80°","240°","60°"],"a":1,"ex":"360 − 120 = 240° shared equally by 3 angles: 240 ÷ 3 = 80°."},{"ch":5,"topic":"Intersecting lines","q":"Two straight lines cross. One of the angles formed is 38°. What is the size of the angle vertically opposite it?","choices":["322°","38°","52°","142°"],"a":1,"ex":"Vertically opposite angles are equal, so the angle is also 38°."},{"ch":5,"topic":"Angles in triangles","q":"The angles of a triangle are 90°, 28° and x. Find x.","choices":["62°","242°","72°","52°"],"a":0,"ex":"Angles in a triangle add up to 180°: 180 − 90 − 28 = 62°."},{"ch":5,"topic":"Angles in quadrilaterals","q":"Three angles of a quadrilateral are 100°, 80° and 75°. What is the size of the fourth angle?","choices":["115°","95°","285°","105°"],"a":3,"ex":"Angles in a quadrilateral add up to 360°: 360 − 255 = 105°."}]},{"name":"Paper F","questions":[{"ch":1,"topic":"Adding and subtracting integers","q":"The temperature is 4 °C and it falls by 9 °C. What is the new temperature?","choices":["−5 °C","5 °C","−13 °C","13 °C"],"a":0,"ex":"A fall means subtracting: 4 − 9 = −5, so the new temperature is −5 °C."},{"ch":1,"topic":"Multiplying and dividing integers","q":"Work out −54 ÷ 6.","choices":["−60","9","−8","−9"],"a":3,"ex":"Negative ÷ positive gives a negative answer: 54 ÷ 6 = 9, so the answer is −9."},{"ch":1,"topic":"Lowest common multiples","q":"What is the lowest common multiple (LCM) of 5 and 7?","choices":["105","35","70","12"],"a":1,"ex":"5 and 7 have no common factor except 1, so the LCM is 5 × 7 = 35. (70 is a common multiple, but not the lowest.)"},{"ch":1,"topic":"Highest common factors","q":"What is the highest common factor (HCF) of 30 and 42?","choices":["3","6","2","210"],"a":1,"ex":"30 = 2 × 3 × 5 and 42 = 2 × 3 × 7. The common prime factors are 2 × 3, so the HCF is 6."},{"ch":1,"topic":"Tests for divisibility","q":"Which of these numbers is divisible by 8?","choices":["4212","4216","4218","4220"],"a":1,"ex":"Check the last three digits: 216 ÷ 8 = 27 exactly, so 4216 is divisible by 8."},{"ch":1,"topic":"Square roots and cube roots","q":"Which of these is a cube number?","choices":["125","100","75","50"],"a":0,"ex":"125 = 5 × 5 × 5, so it is a cube number."},{"ch":2,"topic":"Constructing expressions","q":"There are b boys in a club. The number of girls is 5 fewer than 3 times the number of boys. Which expression shows the number of girls?","choices":["3b + 5","3(b − 5)","3b − 5","5 − 3b"],"a":2,"ex":"Three times the boys is 3b, and 5 fewer means subtract 5: 3b − 5."},{"ch":2,"topic":"Using expressions and formulae","q":"The formula A = bh ÷ 2 gives the area of a triangle. Find A when b = 10 and h = 6.","choices":["16","8","60","30"],"a":3,"ex":"A = (10 × 6) ÷ 2 = 60 ÷ 2 = 30. (60 forgets to divide by 2.)"},{"ch":2,"topic":"Collecting like terms","q":"Simplify 7y − 2y + y.","choices":["10y","4y","5y","6y"],"a":3,"ex":"7y − 2y = 5y, then 5y + y = 6y."},{"ch":2,"topic":"Expanding brackets","q":"Expand and simplify 2(3n + 1) + 3n.","choices":["6n + 2","11n","9n + 2","9n + 1"],"a":2,"ex":"2(3n + 1) = 6n + 2. Then add 3n: 6n + 2 + 3n = 9n + 2."},{"ch":2,"topic":"Constructing and solving equations","q":"Solve 5x + 2 = 3x + 10.","choices":["x = 6","x = 4","x = 8","x = 1.5"],"a":1,"ex":"Subtract 3x: 2x + 2 = 10. Subtract 2: 2x = 8. So x = 4."},{"ch":2,"topic":"Inequalities","q":"Which of these values of y satisfies y < −4?","choices":["−6","0","−4","−3"],"a":0,"ex":"y must be less than −4. On a number line, −6 is to the left of −4, so −6 < −4."},{"ch":3,"topic":"Multiplying and dividing by powers of 10","q":"Work out 7.25 × 100.","choices":["725","72.5","7250","70.25"],"a":0,"ex":"Multiplying by 100 moves every digit two places to the left: 7.25 × 100 = 725."},{"ch":3,"topic":"Multiplying and dividing by powers of 10","q":"Work out 5 ÷ 1000.","choices":["0.005","0.05","500","0.0005"],"a":0,"ex":"Dividing by 1000 moves every digit three places to the right: 5 ÷ 1000 = 0.005."},{"ch":3,"topic":"Rounding","q":"Round 9962 to the nearest hundred.","choices":["9960","10000","9000","9900"],"a":1,"ex":"Look at the tens digit, 6. It is 5 or more, so round up: 9962 → 10000."},{"ch":3,"topic":"Rounding","q":"Round 0.09731 to 2 decimal places.","choices":["0.097","0.09","0.01","0.10"],"a":3,"ex":"Look at the third decimal, 7. Round up: 0.09 becomes 0.10."},{"ch":4,"topic":"Ordering decimals","q":"Which decimal lies between 0.4 and 0.5?","choices":["0.46","0.06","0.54","0.39"],"a":0,"ex":"0.46 is greater than 0.40 and less than 0.50, so it lies between them."},{"ch":4,"topic":"Adding and subtracting decimals","q":"Work out 10 − 6.35.","choices":["3.75","4.65","3.65","4.35"],"a":2,"ex":"Write 10 as 10.00, then 10.00 − 6.35 = 3.65."},{"ch":4,"topic":"Multiplying decimals","q":"Work out 0.03 × 0.2.","choices":["0.0006","0.06","0.006","0.6"],"a":2,"ex":"3 × 2 = 6. Three decimal places in the question, so the answer is 0.006."},{"ch":4,"topic":"Dividing decimals","q":"Work out 9 ÷ 0.3.","choices":["3","2.7","30","0.3"],"a":2,"ex":"Multiply both numbers by 10: 9 ÷ 0.3 = 90 ÷ 3 = 30."},{"ch":4,"topic":"Making decimal calculations easier","q":"Which calculation is equivalent to 18 × 0.5 × 0.2?","choices":["18 × 0.1","18 × 0.25","18 ÷ 0.1","18 × 0.7"],"a":0,"ex":"Multiply the decimals first: 0.5 × 0.2 = 0.1, so the calculation is 18 × 0.1 = 1.8."},{"ch":5,"topic":"A sum of 360°","q":"Three angles meet at a point. Two of them are 140° and 95°. What is the size of the third angle?","choices":["135°","235°","125°","115°"],"a":2,"ex":"Angles at a point add up to 360°: 360 − 140 − 95 = 125°."},{"ch":5,"topic":"Intersecting lines","q":"Two angles on a straight line are 124° and y. Find y.","choices":["236°","46°","66°","56°"],"a":3,"ex":"Angles on a straight line add up to 180°: 180 − 124 = 56°."},{"ch":5,"topic":"Angles in triangles","q":"An isosceles triangle has base angles of 55° each. What is the size of the angle at the top?","choices":["110°","70°","125°","55°"],"a":1,"ex":"180 − 55 − 55 = 70°."},{"ch":5,"topic":"Angles in quadrilaterals","q":"Three angles of a quadrilateral are 88°, 92° and 101°. What is the size of the fourth angle?","choices":["89°","69°","261°","79°"],"a":3,"ex":"Angles in a quadrilateral add up to 360°: 360 − 281 = 79°."}]}]};
+
+const CH_COLORS = {1:"var(--c1)",2:"var(--c2)",3:"var(--c3)",4:"var(--c4)",5:"var(--c5)"};
+const CH_SHORT = {1:"Integers",2:"Expressions & equations",3:"Place value & rounding",4:"Decimals",5:"Angles"};
+const LETTERS = ["A","B","C","D"];
+const $ = id => document.getElementById(id);
+
+let mode = "practice";          // 'practice' | 'test'
+let cur = null;                 // {setIdx, i, answers[], locked}
+
+/* ---------- storage (best scores; safe if unavailable) ---------- */
+function loadBest(){ try{ return JSON.parse(localStorage.getItem("bem-g7-best")||"{}"); }catch(e){ return {}; } }
+function saveBest(setIdx, score){
+  try{
+    const b = loadBest();
+    if(score > (b[setIdx] ?? -1)){ b[setIdx] = score; localStorage.setItem("bem-g7-best", JSON.stringify(b)); }
+  }catch(e){}
+}
+
+/* ---------- screens ---------- */
+function show(name){
+  ["home","quiz","results","key"].forEach(s => $("screen-"+s).classList.toggle("hidden", s!==name));
+  window.scrollTo(0,0);
+}
+
+/* ---------- home ---------- */
+function renderSyllabus(){
+  $("syllabus").innerHTML = Object.keys(DATA.chapters).map(ch =>
+    `<span class="tag"><span class="dot" style="background:${CH_COLORS[ch]}"></span>${ch}. ${DATA.chapters[ch]}</span>`).join("");
+}
+function renderPapers(){
+  const best = loadBest();
+  $("papers").innerHTML = DATA.sets.map((s, i) => {
+    const b = best[i];
+    const bestTxt = (b === undefined)
+      ? `<span class="best none">Not attempted yet</span>`
+      : `<span class="best">★ Best: ${b} / 25</span>`;
+    return `<article class="paper">
+      <h2 class="disp">${s.name}</h2>
+      <p class="meta">25 questions · all 5 chapters · no calculator</p>
+      ${bestTxt}
+      <div class="row">
+        <button class="btn btn-primary" data-start="${i}">Start</button>
+        <button class="btn-quiet" data-key="${i}">Answer key</button>
+      </div>
+    </article>`;
+  }).join("");
+  $("papers").querySelectorAll("[data-start]").forEach(b => b.onclick = () => startQuiz(+b.dataset.start));
+  $("papers").querySelectorAll("[data-key]").forEach(b => b.onclick = () => openKey(+b.dataset.key));
+}
+$("mode-practice").onclick = () => setMode("practice");
+$("mode-test").onclick = () => setMode("test");
+function setMode(mm){
+  mode = mm;
+  $("mode-practice").setAttribute("aria-pressed", mm==="practice");
+  $("mode-test").setAttribute("aria-pressed", mm==="test");
+}
+
+/* ---------- quiz ---------- */
+function startQuiz(setIdx){
+  cur = { setIdx, i:0, answers:Array(25).fill(null), locked:Array(25).fill(false) };
+  $("quiz-paper").textContent = DATA.sets[setIdx].name + (mode==="test" ? " · Test" : " · Practice");
+  show("quiz");
+  renderQuestion();
+}
+function q(){ return DATA.sets[cur.setIdx].questions[cur.i]; }
+
+function renderQuestion(){
+  const question = q(), n = cur.i + 1;
+  $("quiz-count").textContent = `Question ${n} of 25`;
+  $("quiz-bar").style.width = (n/25*100) + "%";
+  $("quiz-chip").innerHTML = `<span class="dot" style="background:${CH_COLORS[question.ch]}"></span> ${CH_SHORT[question.ch]} · ${question.topic}`;
+  $("quiz-q").innerHTML = `<b>${n}.</b>&ensp;${question.q}`;
+  const picked = cur.answers[cur.i], locked = cur.locked[cur.i];
+  $("quiz-choices").innerHTML = question.choices.map((c, j) => {
+    let cls = "choice", mark = "";
+    if(locked){
+      if(j === question.a){ cls += " correct"; mark = `<span class="mark">✓ Correct</span>`; }
+      else if(j === picked){ cls += " wrong"; mark = `<span class="mark">✗ Your answer</span>`; }
+    } else if(j === picked){ cls += " picked"; }
+    return `<button class="${cls}" data-j="${j}" ${locked ? "disabled" : ""}>
+      <span class="letter">${LETTERS[j]}</span><span>${c}</span>${mark}</button>`;
+  }).join("");
+  $("quiz-choices").querySelectorAll("button").forEach(b => b.onclick = () => pick(+b.dataset.j));
+
+  // feedback
+  const fb = $("quiz-feedback");
+  if(locked && mode === "practice"){
+    const ok = picked === question.a;
+    fb.className = "feedback " + (ok ? "good" : "bad");
+    fb.innerHTML = `<p class="fh">${ok ? "Correct!" : "Not quite — the answer is " + LETTERS[question.a] + "."}</p><p>${question.ex}</p>`;
+    fb.classList.remove("hidden");
+  } else {
+    fb.classList.add("hidden");
+  }
+
+  // nav buttons
+  const last = cur.i === 24;
+  $("quiz-back").classList.toggle("hidden", !(mode==="test" && cur.i > 0));
+  const next = $("quiz-next");
+  const canNext = (mode==="practice") ? locked : picked !== null;
+  next.classList.toggle("hidden", !canNext);
+  next.textContent = last ? "Finish paper ✓" : "Next →";
+}
+function pick(j){
+  if(cur.locked[cur.i]) return;
+  cur.answers[cur.i] = j;
+  if(mode === "practice") cur.locked[cur.i] = true;
+  renderQuestion();
+}
+$("quiz-next").onclick = () => {
+  if(cur.i === 24){ finish(); } else { cur.i++; renderQuestion(); }
+};
+$("quiz-back").onclick = () => { if(cur.i > 0){ cur.i--; renderQuestion(); } };
+$("quiz-exit").onclick = () => { cur = null; renderPapers(); show("home"); };
+
+document.addEventListener("keydown", e => {
+  if(!cur || $("screen-quiz").classList.contains("hidden")) return;
+  const k = e.key.toUpperCase();
+  const idx = LETTERS.indexOf(k) !== -1 ? LETTERS.indexOf(k) : (["1","2","3","4"].indexOf(e.key));
+  if(idx >= 0 && idx <= 3 && !cur.locked[cur.i]) pick(idx);
+  if(e.key === "Enter" && !$("quiz-next").classList.contains("hidden")) $("quiz-next").click();
+});
+
+/* ---------- results ---------- */
+function finish(){
+  const qs = DATA.sets[cur.setIdx].questions;
+  const score = qs.reduce((t, qq, i) => t + (cur.answers[i] === qq.a ? 1 : 0), 0);
+  saveBest(cur.setIdx, score);
+  const pct = Math.round(score/25*100);
+  $("res-paper").textContent = DATA.sets[cur.setIdx].name + " · " + (mode==="test" ? "Test mode" : "Practice mode");
+  $("res-score").innerHTML = `${score}<small> / 25</small>`;
+  $("res-pct").textContent = pct + "%";
+  $("res-msg").textContent =
+    pct >= 90 ? "Outstanding — exam ready!" :
+    pct >= 75 ? "Great work — nearly there." :
+    pct >= 50 ? "Good effort — review the explanations below." :
+                "Keep going — work through the review below, then try again.";
+  // chapter breakdown
+  const byCh = {};
+  qs.forEach((qq, i) => {
+    byCh[qq.ch] = byCh[qq.ch] || {ok:0, n:0};
+    byCh[qq.ch].n++; if(cur.answers[i] === qq.a) byCh[qq.ch].ok++;
+  });
+  $("res-chapters").innerHTML = Object.keys(byCh).map(ch => {
+    const {ok, n} = byCh[ch];
+    return `<div class="chrow">
+      <span class="nm"><span class="dot" style="background:${CH_COLORS[ch]}"></span>${ch}. ${CH_SHORT[ch]}</span>
+      <span class="track"><i style="width:${ok/n*100}%;background:${CH_COLORS[ch]}"></i></span>
+      <span class="val">${ok}/${n}</span></div>`;
+  }).join("");
+  // review — wrong answers first
+  const order = qs.map((qq, i) => i).sort((a, b) => (cur.answers[a]===qs[a].a) - (cur.answers[b]===qs[b].a));
+  $("res-review").innerHTML = order.map(i => {
+    const qq = qs[i], ok = cur.answers[i] === qq.a;
+    const your = cur.answers[i] === null ? "no answer" : LETTERS[cur.answers[i]] + " (" + qq.choices[cur.answers[i]] + ")";
+    return `<div class="rev ${ok ? "good" : "bad"}">
+      <p class="rq"><span class="badge">${ok ? "✓" : "✗"}</span>Q${i+1}. ${qq.q}</p>
+      <p class="ra">${ok ? "Your answer: " : "Your answer: " + your + " · Correct: "}<b>${LETTERS[qq.a]} (${qq.choices[qq.a]})</b></p>
+      <p class="rx">${qq.ex}</p></div>`;
+  }).join("");
+  show("results");
+}
+$("res-retry").onclick = () => { const s = cur.setIdx; startQuiz(s); };
+$("res-home").onclick = () => { renderPapers(); show("home"); };
+
+/* ---------- answer key ---------- */
+function openKey(setIdx){
+  $("key-pick").innerHTML = DATA.sets.map((s, i) => `<option value="${i}" ${i===setIdx?"selected":""}>${s.name}</option>`).join("");
+  renderKey(setIdx);
+  show("key");
+}
+function renderKey(setIdx){
+  const s = DATA.sets[setIdx];
+  $("key-print-title").textContent = "Bright EngMath · Grade 7 · " + s.name + " — Answer key";
+  $("key-body").innerHTML = s.questions.map((qq, i) =>
+    `<tr><td class="qn">${i+1}</td>
+     <td class="ans"><span class="lt">${LETTERS[qq.a]}</span> · ${qq.choices[qq.a]}</td>
+     <td class="ex">${qq.ex}</td></tr>`).join("");
+}
+$("key-pick").onchange = e => renderKey(+e.target.value);
+$("key-print").onclick = () => window.print();
+$("key-home").onclick = () => { renderPapers(); show("home"); };
+$("nav-key-btn").onclick = () => openKey(0);
+
+/* ---------- init ---------- */
+renderSyllabus();
+renderPapers();
+</script>
+
+</body>
+</html>

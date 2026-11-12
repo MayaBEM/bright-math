@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Multiply &amp; Divide Quest — Proposal</title>
+<style>
+:root{
+  --paper:#F6F1E7; --ink:#1F2A44; --ink2:#55607a; --line:#d9cfbd; --grid:rgba(31,42,68,.06);
+  --w4:#C8553D; --w5:#2A7F7A; --w6:#B8862A; --accent:#C8553D; --ok:#2E7D4F; --bad:#B3261E;
+  --card:#FFFDF8; --hl:#FFE7A3;
+  --sans:"Avenir Next","Segoe UI","Helvetica Neue",Arial,sans-serif;
+  --cond:"Avenir Next Condensed","DIN Alternate","Bahnschrift","Arial Narrow",sans-serif;
+  --mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+  --serif:"Iowan Old Style","Charter","Georgia",serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:#ECE7DD;color:#1d1d1d;font-family:var(--sans),"Thonburi","Leelawadee UI",sans-serif;line-height:1.55}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 16px 80px}
+h1{font-family:var(--cond);font-size:clamp(28px,4vw,44px);margin:0 0 4px;letter-spacing:.01em;color:var(--ink)}
+h2{font-family:var(--cond);font-size:28px;color:var(--ink);margin:56px 0 6px;border-top:2px solid var(--ink);padding-top:14px}
+h2 small{font-family:var(--sans);font-weight:500;font-size:14px;color:var(--ink2);margin-left:8px}
+h3{margin:22px 0 8px;font-size:18px;color:var(--ink)}
+p.note{color:#4b4b4b;max-width:820px;margin:6px 0 16px}
+.tag{display:inline-block;font:600 12px var(--sans);padding:2px 8px;border:1.5px solid currentColor;border-radius:3px;letter-spacing:.04em}
+
+/* ---------- THEME MINIS ---------- */
+.themes{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:20px}
+.tcard{background:#fff;border:1px solid #d5cfc4;border-radius:6px;overflow:hidden}
+.tmeta{padding:14px 16px 16px;border-top:1px solid #e6e0d5;font-size:14px}
+.tmeta b{font-size:16px}
+.sw{display:flex;gap:6px;margin:8px 0}
+.sw i{width:26px;height:26px;border-radius:3px;border:1px solid rgba(0,0,0,.12)}
+.mini{height:360px;position:relative;overflow:hidden;padding:18px}
+/* A drafting */
+.mA{background:#F6F1E7;background-image:linear-gradient(rgba(31,42,68,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(31,42,68,.07) 1px,transparent 1px);background-size:16px 16px;color:#1F2A44}
+.mA .ttl{font:700 26px/1 var(--cond);letter-spacing:.02em}
+.mA .ruler{height:14px;margin:8px 0 14px;background:repeating-linear-gradient(90deg,#1F2A44 0 1px,transparent 1px 8px);mask:linear-gradient(#000 50%,transparent 50%);-webkit-mask:linear-gradient(#000 60%,transparent 60%)}
+.mA .world{display:flex;align-items:center;gap:10px;background:#FFFDF8;border:1.5px solid #1F2A44;margin-bottom:9px;padding:8px 10px}
+.mA .world .sq{width:30px;height:30px;display:grid;place-items:center;color:#fff;font:700 15px var(--cond)}
+.mA .world small{display:block;color:#55607a;font-size:11px}
+.mA .bar{margin-left:auto;width:70px;height:6px;background:#e8dfcf}
+.mA .bar i{display:block;height:100%}
+/* B transit */
+.mB{background:#F4F4F0;color:#222}
+.mB .ttl{font:800 25px/1.05 var(--sans);letter-spacing:-.01em}
+.mB .lines{position:relative;margin-top:18px}
+.mB .ln{display:flex;align-items:center;height:62px;position:relative}
+.mB .ln:before{content:"";position:absolute;left:30px;right:10px;top:50%;height:8px;margin-top:-4px;background:var(--c);border-radius:4px}
+.mB .rd{position:relative;width:46px;height:46px;border-radius:50%;background:var(--c);color:#fff;display:grid;place-items:center;font:800 18px var(--sans);z-index:1;flex:none}
+.mB .st{position:relative;z-index:1;width:16px;height:16px;border-radius:50%;background:#fff;border:4px solid var(--c);margin-left:24px}
+.mB .st.d{background:var(--c)}
+.mB .lbl{position:absolute;left:58px;top:-2px;font:700 11px var(--sans);letter-spacing:.05em;text-transform:uppercase;color:#444;z-index:2;background:#F4F4F0;padding:0 4px}
+/* C print */
+.mC{background:#EFEBE3;color:#111}
+.mC .ttl{font:400 33px/0.95 var(--serif);letter-spacing:-.02em}
+.mC .ttl b{font-family:var(--sans);font-weight:800;font-size:13px;letter-spacing:.2em;display:block;margin-bottom:8px}
+.mC .shp{position:absolute;mix-blend-mode:multiply}
+.mC .row{position:absolute;left:18px;right:18px;bottom:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.mC .row div{border-top:3px solid #111;padding-top:6px;font:700 12px var(--sans)}
+.mC .row div span{display:block;font:400 26px var(--serif)}
+
+/* ranks */
+.ranks{display:flex;flex-wrap:wrap;gap:14px;margin:10px 0 0}
+.rank{text-align:center;width:92px;font-size:12px}
+.rank svg{display:block;margin:0 auto 4px}
+
+/* ---------- LEVEL MAP ---------- */
+.worlds{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:18px}
+.wcol{background:#FFFDF8;border:1px solid #d5cfc4;border-top:8px solid var(--c);padding:14px 14px 6px}
+.wcol h3{margin:0;font-family:var(--cond);font-size:21px}
+.wcol .std{font:12px var(--mono);color:#666}
+.lv{display:grid;grid-template-columns:34px 1fr;gap:8px;padding:10px 0;border-bottom:1px dashed #d9cfbd}
+.lv:last-child{border:0}
+.lv .n{width:30px;height:30px;border:2px solid var(--c);color:var(--c);display:grid;place-items:center;font:700 14px var(--cond)}
+.lv b{font-size:15px}
+.lv .m{font-size:12.5px;color:#555}
+.lv .g{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.lv .g span{font-size:11px;padding:1px 6px;background:#f0ebe1;border-radius:2px}
+.lv .g span.ldc{background:var(--hl);font-weight:700}
+.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:8px;margin-top:10px;font-size:13.5px}
+.games div{background:#fff;border-left:4px solid var(--ink);padding:8px 10px}
+
+/* ---------- APP SCREENS (themable) ---------- */
+.themebar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0 16px}
+.themebar button{font:600 14px var(--sans);padding:8px 14px;border:1.5px solid var(--ink);background:#fff;cursor:pointer;border-radius:3px}
+.themebar button[aria-pressed=true]{background:var(--ink);color:#fff}
+.screens{display:grid;gap:22px}
+.device{border:10px solid #23262d;border-radius:16px;overflow:hidden;background:#23262d}
+.device .cap{color:#cfd3da;font:600 12px var(--sans);padding:0 4px 8px;letter-spacing:.06em;text-transform:uppercase}
+.app{--a:var(--w6);background:var(--app-bg);color:var(--app-ink);font-family:var(--app-font);min-height:520px;display:flex;flex-direction:column}
+.app[data-t=A]{--app-bg:#F6F1E7;--app-ink:#1F2A44;--app-card:#FFFDF8;--app-line:#1F2A44;--app-font:var(--sans);--app-head:var(--cond);--app-r:0px;
+  background-image:linear-gradient(rgba(31,42,68,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(31,42,68,.05) 1px,transparent 1px);background-size:20px 20px}
+.app[data-t=B]{--app-bg:#F4F4F0;--app-ink:#222;--app-card:#fff;--app-line:#222;--app-font:var(--sans);--app-head:var(--sans);--app-r:10px;--a:#1F5FA8}
+.app[data-t=C]{--app-bg:#EFEBE3;--app-ink:#111;--app-card:#F8F5EF;--app-line:#111;--app-font:var(--sans);--app-head:var(--serif);--app-r:0px;--a:#2C4FA3}
+.topbar{display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:2px solid var(--app-line);background:var(--app-card)}
+.topbar .wb{background:var(--a);color:#fff;font:700 13px var(--app-head);padding:4px 10px;border-radius:var(--app-r);letter-spacing:.04em}
+.topbar .lt{font:700 17px var(--app-head)}
+.phases{margin-left:auto;display:flex;gap:0;border:1.5px solid var(--app-line);border-radius:var(--app-r);overflow:hidden}
+.phases span{font:700 12px var(--app-font);padding:5px 10px;letter-spacing:.04em;text-transform:uppercase;opacity:.55}
+.phases span.on{background:var(--app-line);color:var(--app-bg);opacity:1}
+.tools{display:flex;gap:6px}
+.tools button{font:600 12px var(--app-font);border:1.5px solid var(--app-line);background:transparent;color:var(--app-ink);padding:5px 9px;border-radius:var(--app-r);cursor:pointer}
+.body{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:18px;padding:18px;flex:1}
+@media (max-width:820px){.body{grid-template-columns:1fr}.phases{display:none}}
+.panel{background:var(--app-card);border:1.5px solid var(--app-line);border-radius:var(--app-r);padding:16px;position:relative}
+.panel h4{margin:0 0 8px;font:700 12px var(--app-font);letter-spacing:.08em;text-transform:uppercase;opacity:.7}
+
+/* long division board */
+.ld{display:flex;align-items:flex-start;justify-content:center;gap:0;font-family:var(--mono);font-size:clamp(22px,3.2vw,34px);padding:6px 0 4px;overflow-x:auto}
+.ld .dv{display:flex;flex-direction:column}
+.ld .dvs{padding:0 8px;height:1.6em;margin-top:1.6em;display:flex;align-items:center;font-weight:700}
+.ldg{display:grid;grid-auto-rows:1.6em}
+.c{width:1.25em;height:1.6em;display:grid;place-items:center;position:relative;border-radius:4px;transition:background .2s}
+.c.g{color:var(--app-ink);opacity:.55}
+.c.q{color:var(--a);font-weight:700}
+.c.dd{border-top:3px solid var(--app-line);border-radius:0}
+.c.dd.first{border-left:3px solid var(--app-line);border-top-left-radius:10px 0}
+.c.ul{border-bottom:2px solid var(--app-ink)}
+.c.tgt{background:var(--hl);outline:2px dashed var(--a);outline-offset:-2px}
+.c.typ{color:var(--a)}
+.c.src{background:var(--hl)}
+.c.fade{opacity:.35}
+.c.err{background:#F6D3CF}
+.arrow{position:absolute;font-size:.55em;color:var(--a);bottom:-0.4em}
+.steprow{display:flex;gap:6px;justify-content:center;margin:10px 0 0;flex-wrap:wrap}
+.steprow span{font:700 12px var(--app-font);padding:5px 10px;border:1.5px solid var(--app-line);border-radius:var(--app-r);opacity:.4;letter-spacing:.03em}
+.steprow span.on{opacity:1;background:var(--a);border-color:var(--a);color:#fff}
+.steprow span.done{opacity:.8}
+.msg{margin-top:12px;font-size:16px;line-height:1.45;min-height:3em}
+.msg .k{font-family:var(--mono);font-weight:700}
+.msg.bad{color:var(--bad)}
+.msg.good{color:var(--ok)}
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.pad button,.bigbtn{font:700 24px var(--app-font);min-height:58px;border:2px solid var(--app-line);background:var(--app-card);color:var(--app-ink);border-radius:var(--app-r);cursor:pointer;transition:transform .08s}
+.pad button:active,.bigbtn:active{transform:scale(.97)}
+.pad .wide{grid-column:span 2}
+.bigbtn{width:100%;background:var(--a);border-color:var(--a);color:#fff;font-size:18px;margin-top:8px}
+.bigbtn.alt{background:transparent;color:var(--app-ink);border-color:var(--app-line)}
+.share{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.share div{min-width:58px;padding:0 8px;font-size:13px!important;height:58px;border:2px solid var(--a);display:grid;place-items:center;font:700 15px var(--mono);border-radius:var(--app-r);background:var(--app-card)}
+.share div.r{border-style:dashed;opacity:.8}
+.pvc{display:grid;grid-template-columns:repeat(4,1fr);border:1.5px solid var(--app-line);text-align:center;font-family:var(--mono);border-radius:var(--app-r);overflow:hidden}
+.pvc div{padding:6px 2px;border-left:1px solid var(--app-line)}
+.pvc div:nth-child(-n+4){font:700 11px var(--app-font);letter-spacing:.05em;border-bottom:1px solid var(--app-line)}
+.pvc div:nth-child(4n+1){border-left:0}
+.pvc .on{background:var(--hl);font-weight:700}
+.nav{display:flex;gap:8px;margin-top:12px}
+.nav button{flex:1}
+.shake{animation:sh .32s}
+@keyframes sh{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+@media (prefers-reduced-motion:reduce){.shake{animation:none}.c{transition:none}}
+.foot{padding:8px 18px;font-size:11px;opacity:.7;border-top:1px solid var(--app-line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
+/* boss */
+.timer{height:10px;border:1.5px solid var(--app-line);border-radius:var(--app-r);overflow:hidden;margin:4px 0 14px}
+.timer i{display:block;height:100%;width:62%;background:var(--a)}
+.dots{display:flex;gap:5px;margin-bottom:12px}
+.dots i{width:22px;height:8px;background:var(--app-line);opacity:.2}
+.dots i.ok{opacity:1;background:var(--ok)}
+.dots i.no{opacity:1;background:var(--bad)}
+.dots i.now{opacity:1;background:var(--a)}
+.bossq{font:700 clamp(30px,5vw,46px) var(--mono);text-align:center;margin:18px 0}
+.ansrow{display:flex;gap:10px;justify-content:center;align-items:center;font:700 22px var(--mono);flex-wrap:wrap}
+.ansrow .box{min-width:110px;height:56px;border:2.5px solid var(--a);display:grid;place-items:center;border-radius:var(--app-r);background:var(--app-card)}
+.ansrow .box.sm{min-width:60px}
+.stars{display:flex;gap:10px;justify-content:center;margin-top:16px;font-size:13px;text-align:center}
+.stars svg{display:block;margin:0 auto 3px}
+
+/* ---------- WORKSHEETS ---------- */
+.wsbar{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 14px}
+.sheets{display:grid;gap:28px;justify-items:center}
+.sheet{width:min(100%,794px);aspect-ratio:210/297;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.15);padding:4.2% 5.2% 3.4%;color:#111;font-family:var(--sans);display:flex;flex-direction:column;position:relative;font-size:clamp(8px,1.55vw,12.5px);overflow:hidden}
+.sheet.letter{aspect-ratio:8.5/11}
+.sh-head{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid #111;padding-bottom:.6em}
+.sh-head .t{font:700 2em/1.1 var(--cond)}
+.sh-head .sub{font-size:1em;color:#444}
+.corner{text-align:right;font:700 .95em var(--sans);white-space:nowrap}
+.corner .gr{display:inline-block;background:var(--w);color:#fff;padding:.25em .7em;letter-spacing:.06em}
+.corner .sc{display:block;font:600 .9em var(--mono);margin-top:.3em}
+.namel{display:flex;gap:2em;margin:.7em 0;font-size:.95em}
+.namel span{flex:1;border-bottom:1px solid #111}
+.teach{border:2px solid var(--w);background:color-mix(in srgb,var(--w) 7%,#fff);padding:.8em 1em;display:grid;grid-template-columns:1.1fr 1fr;gap:1em;align-items:center}
+.teach ol{margin:.2em 0 0 1.2em;padding:0}
+.teach li{margin:.15em 0}
+.lab{font:700 .85em var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--w)}
+.sec{margin-top:.9em}
+.sec .h{display:flex;align-items:center;gap:.6em;font-weight:700;margin-bottom:.45em}
+.sec .h i{font-style:normal;background:#111;color:#fff;padding:.1em .55em;font-size:.85em}
+.probs{display:grid;grid-template-columns:1fr 1fr;gap:.8em 1.6em}
+.pb{display:flex;gap:.6em;align-items:flex-start}
+.pb .num{font-weight:700;min-width:1.6em}
+.gridbox{display:grid;grid-auto-rows:1.7em;grid-auto-columns:1.7em;grid-auto-flow:column;font:600 1.1em var(--mono)}
+.gcell{border:1px solid #c9c9c9;margin:-0.5px;display:grid;place-items:center}
+.gcell.bt{border-top:2px solid #111}
+.gcell.bl{border-left:2px solid #111}
+.gcell.bb{border-bottom:2px solid #111}
+.gcell.nb{border-color:transparent}
+.amodel{font:600 1em var(--mono)}
+.wp{border:1.5px solid #111;padding:.6em .8em;margin-top:.9em;display:grid;grid-template-columns:1.1fr 1fr;gap:1em}
+.workbox{border:1px dashed #888;min-height:7em;background-image:linear-gradient(#e6e6e6 1px,transparent 1px),linear-gradient(90deg,#e6e6e6 1px,transparent 1px);background-size:1.4em 1.4em}
+.sh-foot{margin-top:auto;display:flex;justify-content:space-between;border-top:1px solid #111;padding-top:.5em;font-size:.82em;color:#333}
+.mult{display:flex;flex-wrap:wrap;gap:0;border:1.5px solid #111;font:600 .95em var(--mono);margin:.3em 0}
+.mult div{flex:1;text-align:center;border-left:1px solid #111;padding:.25em 0;min-width:3.6em}
+.mult div:first-child{border-left:0}
+.mult small{display:block;font-size:.8em;color:#555}
+.dmsb{border-collapse:collapse;font-size:.9em;width:100%}
+.dmsb th,.dmsb td{border:1px solid #111;padding:.3em .4em;text-align:left}
+.dmsb th{background:color-mix(in srgb,var(--w) 14%,#fff)}
+.tier{display:grid;grid-template-columns:auto 1fr;gap:1.2em;border-top:1.5px solid #111;padding-top:.7em;margin-top:.7em}
+.tier .badge{font:700 .8em var(--sans);border:1.5px solid #111;padding:.15em .5em;display:inline-block;margin-bottom:.3em}
+.code{display:grid;grid-template-columns:repeat(7,1fr);border:2px solid #111;margin:.5em 0}
+.code div{text-align:center;border-left:1px solid #111;border-top:1px solid #111;padding:.3em 0;font:600 1em var(--mono)}
+.code div:nth-child(-n+7){border-top:0}
+.code div:nth-child(7n+1){border-left:0}
+.code b{display:block;font:700 1.25em var(--sans)}
+.riddle{border:2.5px solid #111;padding:.8em;text-align:center;margin:.6em 0}
+.riddle .q{font:700 1.5em var(--cond)}
+.blanks{display:flex;justify-content:center;gap:.5em;margin-top:.8em;flex-wrap:wrap}
+.blanks div{width:3.6em;text-align:center}
+.blanks div span{display:block;height:2em;border-bottom:2px solid #111;font:700 1.4em var(--sans)}
+.blanks div small{font:600 .85em var(--mono)}
+.blanks .gap{width:1.5em}
+.cprobs{display:grid;grid-template-columns:repeat(2,1fr);gap:.6em}
+.cprobs div{border:1px solid #111;padding:.5em .6em;display:flex;justify-content:space-between;align-items:center;min-height:5.2em}
+.cprobs div b{font:700 1.15em var(--mono)}
+.cprobs div .lt{width:2em;height:2em;border:1.5px solid #111;flex:none}
+.sheet.ink .teach{background:#fff}
+.sheet.ink .corner .gr{background:#fff;color:#111;border:1.5px solid #111}
+.sheet.ink .sec .h i{background:#fff;color:#111;border:1.5px solid #111}
+.sheet.ink .dmsb th{background:#fff}
+.sheet.ink .workbox{background:none}
+.sheet.ink [fill-ink]{fill:#fff}
+
+.cfm{background:#FFFDF8;border:2px solid var(--ink);padding:16px 20px;margin-top:20px}
+.cfm li{margin:6px 0}
+table.pl{border-collapse:collapse;width:100%;font-size:14px;background:#fff}
+table.pl td,table.pl th{border:1px solid #d5cfc4;padding:6px 8px;text-align:left;vertical-align:top}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<span class="tag" style="color:var(--accent)">PROPOSAL · รอยืนยันก่อนผลิต</span>
+<h1>Multiply &amp; Divide Quest</h1>
+<p class="note">เอกสารนี้มี 4 ส่วน: (1) ธีม 3 แบบ (2) แผนผังด่านทั้ง 3 โลก (3) หน้าจอ Long Division Coach ครบ Learn → Practice → Boss Round — <b>ส่วน Practice กดเล่นได้จริง</b> ลองตอบผิดเพื่อดู feedback ได้ (4) ใบงานตัวอย่างชุดละ 1 หน้า สลับ A4/Letter และ ink-saver ได้</p>
+
+<!-- ================= 1. THEMES ================= -->
+<h2>1 · ธีม 3 แบบ <small>ทุกแบบไม่ใช้ภาพวาด ใช้ตัวอักษร สี เส้น และรูปทรงเรขาคณิตเท่านั้น</small></h2>
+<div class="themes">
+
+  <div class="tcard">
+    <div class="mini mA">
+      <div class="ttl">MULTIPLY &amp; DIVIDE QUEST</div>
+      <div style="font-size:11px;letter-spacing:.14em;color:#55607a">BRIGHT ENGMATH · GRADES 4–6</div>
+      <div class="ruler"></div>
+      <div class="world"><div class="sq" style="background:#C8553D">4</div><div><b>World 1 · The Workshop</b><small>9 levels · Grade 4</small></div><div class="bar"><i style="width:66%;background:#C8553D"></i></div></div>
+      <div class="world"><div class="sq" style="background:#2A7F7A">5</div><div><b>World 2 · The Drafting Room</b><small>9 levels · Grade 5</small></div><div class="bar"><i style="width:22%;background:#2A7F7A"></i></div></div>
+      <div class="world"><div class="sq" style="background:#B8862A">6</div><div><b>World 3 · The Blueprint Vault</b><small>8 levels · Grade 6</small></div><div class="bar"><i style="width:0"></i></div></div>
+      <svg width="120" height="80" style="position:absolute;right:-10px;bottom:-6px;opacity:.9"><polygon points="10,75 110,75 10,8" fill="none" stroke="#1F2A44" stroke-width="2"/><polygon points="24,66 76,66 24,32" fill="none" stroke="#1F2A44" stroke-width="1.5"/></svg>
+    </div>
+    <div class="tmeta"><b>A · Drafting Table (แนะนำ)</b>
+      <div class="sw"><i style="background:#F6F1E7"></i><i style="background:#1F2A44"></i><i style="background:#C8553D"></i><i style="background:#2A7F7A"></i><i style="background:#B8862A"></i></div>
+      โต๊ะเขียนแบบ: กระดาษกราฟสีครีม เส้นหมึกน้ำเงินเข้ม ไม้บรรทัด ไม้ฉาก มุมเหลี่ยม เข้ากับเรื่อง area model และการตั้งหลักตรงแนวโดยตรง ดูเป็นผู้ใหญ่ขึ้นเหมาะ ป.4–ม.1 · สีโลก: <b style="color:#C8553D">Terracotta</b> / <b style="color:#2A7F7A">Teal</b> / <b style="color:#B8862A">Ochre</b></div>
+  </div>
+
+  <div class="tcard">
+    <div class="mini mB">
+      <div class="ttl">Multiply &amp;<br>Divide Quest</div>
+      <div style="font:700 11px var(--sans);letter-spacing:.12em;color:#666;margin-top:4px">BRIGHT ENGMATH · NETWORK MAP</div>
+      <div class="lines">
+        <div class="ln" style="--c:#E86A1E"><div class="rd">4</div><span class="lbl">Grade 4 Line</span><div class="st d"></div><div class="st d"></div><div class="st d"></div><div class="st"></div><div class="st"></div><div class="st"></div></div>
+        <div class="ln" style="--c:#2E8B57"><div class="rd">5</div><span class="lbl">Grade 5 Line</span><div class="st d"></div><div class="st"></div><div class="st"></div><div class="st"></div><div class="st"></div><div class="st"></div></div>
+        <div class="ln" style="--c:#1F5FA8"><div class="rd">6</div><span class="lbl">Grade 6 Line</span><div class="st"></div><div class="st"></div><div class="st"></div><div class="st"></div><div class="st"></div></div>
+      </div>
+    </div>
+    <div class="tmeta"><b>B · Transit Lines</b>
+      <div class="sw"><i style="background:#F4F4F0"></i><i style="background:#222"></i><i style="background:#E86A1E"></i><i style="background:#2E8B57"></i><i style="background:#1F5FA8"></i></div>
+      แผนที่รถไฟฟ้า: แต่ละโลกคือ "สาย" แต่ละด่านคือ "สถานี" ผ่านด่าน = สถานีเติมสี ตัวหนังสือหนาแบบป้ายสถานี ทันสมัย อ่านง่ายเวลาฉายจอ เด็กโตชอบ · สีโลก: <b style="color:#E86A1E">Orange</b> / <b style="color:#2E8B57">Green</b> / <b style="color:#1F5FA8">Blue</b></div>
+  </div>
+
+  <div class="tcard">
+    <div class="mini mC">
+      <div class="shp" style="width:150px;height:150px;border-radius:50%;background:#E2452B;right:-30px;top:-20px"></div>
+      <div class="shp" style="width:120px;height:120px;background:#2C4FA3;right:60px;top:70px"></div>
+      <div class="shp" style="width:0;height:0;border-left:70px solid transparent;border-right:70px solid transparent;border-bottom:120px solid #E0A526;right:-10px;top:130px"></div>
+      <div class="ttl" style="position:relative"><b>BRIGHT ENGMATH</b>Multiply<br>&amp; Divide<br>Quest</div>
+      <div class="row"><div>WORLD 1<span>×÷ 4</span></div><div>WORLD 2<span>×÷ 5</span></div><div>WORLD 3<span>×÷ 6</span></div></div>
+    </div>
+    <div class="tmeta"><b>C · Print Shop</b>
+      <div class="sw"><i style="background:#EFEBE3"></i><i style="background:#111"></i><i style="background:#E2452B"></i><i style="background:#2C4FA3"></i><i style="background:#E0A526"></i></div>
+      โปสเตอร์โรงพิมพ์แบบ Swiss/risograph: รูปทรงใหญ่ซ้อนสีแบบหมึกพิมพ์ ตัวหนังสือ serif ใหญ่ เส้นดำคม ดูมีดีไซน์และไม่ซ้ำตลาด แต่หน้าจอฝึกจะเรียบกว่า 2 แบบแรก · สีโลก: <b style="color:#E2452B">Vermilion</b> / <b style="color:#2C4FA3">Cobalt</b> / <b style="color:#b07d0c">Mustard</b></div>
+  </div>
+</div>
+
+<h3>ระดับรางวัล (ใช้กับทุกธีม) — ตามจำนวนด่านที่ผ่านจาก 26 ด่าน</h3>
+<div class="ranks" id="ranks"></div>
+
+<!-- ================= 2. LEVEL MAP ================= -->
+<h2>2 · แผนผังด่าน <small>26 ด่าน · แต่ละด่าน Learn → Practice → Boss Round (10 ข้อ จับเวลา 1–3 ดาว)</small></h2>
+<p class="note">Practice ของแต่ละด่านหมุนเวียนมินิเกมตามป้ายสีเทา (<span style="background:var(--hl);padding:0 4px;font-weight:700">ไฮไลต์</span> = มี Long Division Coach) · ด่าน G4 ใช้ partial quotients / area model ตามมาตรฐาน 4.NBT.B.6 ส่วน standard algorithm เต็มรูปเริ่มเป็นเป้าหมายหลักที่ G5–G6 (Coach ใน G4 เป็นตัวเลือกเสริม หาร 1 หลัก)</p>
+<div class="worlds" id="worlds"></div>
+<h3>มินิเกม 8 แบบ</h3>
+<div class="games">
+  <div><b>1 Area Model Builder</b> — ลากเส้นแบ่งสี่เหลี่ยมตามหลัก เติมผลคูณย่อย รวมผล (ใช้กับ distributive/GCF ใน G6 ด้วย)</div>
+  <div><b>2 Partial Products / Quotients</b> — เติมทีละบรรทัด มีป้ายบอกว่าบรรทัดนี้คือ 30 × 20 ฯลฯ</div>
+  <div><b>3 Long Division Coach</b> — Divide → Multiply → Subtract → Bring Down ไฮไลต์ช่อง ผิดบอกทันทีว่าขั้นไหน</div>
+  <div><b>4 Estimate First</b> — เลือก compatible numbers ก่อน แล้วค่อยคำนวณ เทียบผลกับค่าประมาณ</div>
+  <div><b>5 Decimal Point Drop</b> — ลากจุดทศนิยมไปวางในคำตอบ เช็กด้วยการประมาณ</div>
+  <div><b>6 Factor Finder</b> — หาคู่ตัวประกอบด้วยสี่เหลี่ยม (array) จำแนก prime/composite, GCF/LCM</div>
+  <div><b>7 Remainder Detective</b> — ปัดขึ้น / ทิ้งเศษ / เศษคือคำตอบ / เศษเป็นเศษส่วน</div>
+  <div><b>8 Word Problems</b> — หลายขั้น สถานการณ์จริง ชื่อหลากหลายวัฒนธรรม</div>
+</div>
+
+<!-- ================= 3. LONG DIVISION COACH ================= -->
+<h2>3 · Long Division Coach ครบ 3 ขั้น <small>World 3 · Level 1 · 6.NS.B.2</small></h2>
+<div class="themebar">ดูในธีม:
+  <button data-th="A" aria-pressed="true">A Drafting Table</button>
+  <button data-th="B" aria-pressed="false">B Transit Lines</button>
+  <button data-th="C" aria-pressed="false">C Print Shop</button>
+</div>
+<div class="screens">
+
+  <div class="device"><div class="cap">Stage 1 · Learn — กด Next/Back ดูทีละขั้น</div>
+    <div class="app" data-t="A">
+      <div class="topbar"><span class="wb">WORLD 3</span><span class="lt">Long Division</span>
+        <div class="phases"><span class="on">Learn</span><span>Practice</span><span>Boss</span></div></div>
+      <div class="body">
+        <div class="panel"><h4>Written method</h4><div class="ld" id="learnBoard"></div><div class="steprow" id="learnSteps"></div></div>
+        <div class="panel"><h4>What it means</h4>
+          <div class="pvc" id="learnPvc"></div>
+          <div class="share" id="learnShare"></div>
+          <div class="msg" id="learnMsg"></div>
+          <div class="nav"><button class="bigbtn alt" id="lBack">Back</button><button class="bigbtn" id="lNext">Next</button></div>
+        </div>
+      </div>
+      <div class="foot"><span>Bright EngMath · Multiply &amp; Divide Quest</span><span>For single classroom use only</span></div>
+    </div></div>
+
+  <div class="device"><div class="cap">Stage 2 · Practice — Long Division Coach (เล่นได้จริง · คีย์บอร์ดก็ได้)</div>
+    <div class="app" data-t="A">
+      <div class="topbar"><span class="wb">WORLD 3</span><span class="lt">Long Division Coach · 2 of 6</span>
+        <div class="phases"><span>Learn</span><span class="on">Practice</span><span>Boss</span></div>
+        <div class="tools"><button>Scratch pad</button></div></div>
+      <div class="body">
+        <div class="panel"><h4>Your work</h4><div class="ld" id="pBoard"></div><div class="steprow" id="pSteps"></div><div class="msg" id="pMsg"></div></div>
+        <div class="panel"><h4 id="pPrompt">Answer</h4>
+          <div class="pad" id="pad"></div>
+          <button class="bigbtn" id="pCheck">Check</button>
+          <button class="bigbtn alt" id="pNew">New problem</button>
+        </div>
+      </div>
+      <div class="foot"><span>Bright EngMath · Multiply &amp; Divide Quest</span><span>For single classroom use only</span></div>
+    </div></div>
+
+  <div class="device"><div class="cap">Stage 3 · Boss Round — 10 ข้อ จับเวลา (ภาพนิ่ง)</div>
+    <div class="app" data-t="A">
+      <div class="topbar"><span class="wb">WORLD 3</span><span class="lt">Boss Round · Long Division</span>
+        <div class="phases"><span>Learn</span><span>Practice</span><span class="on">Boss</span></div></div>
+      <div class="body" style="grid-template-columns:1fr">
+        <div class="panel" style="max-width:720px;margin:0 auto;width:100%">
+          <div style="display:flex;justify-content:space-between;font-weight:700"><span>Question 6 of 10</span><span style="font-family:var(--mono)">2:14</span></div>
+          <div class="timer"><i></i></div>
+          <div class="dots"><i class="ok"></i><i class="ok"></i><i class="no"></i><i class="ok"></i><i class="ok"></i><i class="now"></i><i></i><i></i><i></i><i></i></div>
+          <div class="bossq">6,048 ÷ 24</div>
+          <div class="ansrow"><span>Quotient</span><div class="box">252</div><span>R</span><div class="box sm">0</div></div>
+          <div class="stars" id="bossStars"></div>
+        </div>
+      </div>
+      <div class="foot"><span>Bright EngMath · Multiply &amp; Divide Quest</span><span>For single classroom use only</span></div>
+    </div></div>
+</div>
+
+<!-- ================= 4. WORKSHEETS ================= -->
+<h2>4 · ใบงานตัวอย่าง ชุดละ 1 หน้า <small>ป้ายเกรด + รหัสมาตรฐานมุมขวาบนทุกหน้า</small></h2>
+<div class="wsbar themebar">
+  <button id="szA4" aria-pressed="true">A4</button><button id="szLt" aria-pressed="false">US Letter</button>
+  <button id="ink" aria-pressed="false">Ink-saver</button>
+</div>
+<div class="sheets" id="sheets">
+
+<!-- SET 1 -->
+<div class="sheet" style="--w:var(--w4)">
+  <div class="sh-head"><div><div class="sub">Set 1 · Learn &amp; Practice · World 1 · Level 6</div><div class="t">Two-Digit × Two-Digit: Area Model to Partial Products</div></div>
+    <div class="corner"><span class="gr">GRADE 4</span><span class="sc">4.NBT.B.5</span></div></div>
+  <div class="namel">Name <span></span> Date <span style="flex:.5"></span></div>
+  <div class="teach">
+    <div><div class="lab">How it works · 34 × 26</div>
+      <ol><li>Break each factor into tens and ones: <b>30 + 4</b> and <b>20 + 6</b>.</li>
+      <li>Draw a rectangle. Split it into 4 parts.</li>
+      <li>Multiply to find each part.</li>
+      <li>Add the partial products: 600 + 180 + 80 + 24 = <b>884</b>.</li></ol>
+      <div style="margin-top:.4em;font:600 1em var(--mono);line-height:1.5">&nbsp;&nbsp;&nbsp;34<br>× &nbsp;26<br><span style="border-top:1.5px solid #111;display:inline-block">&nbsp;&nbsp;&nbsp;24&nbsp; ← 6 × 4<br>&nbsp;180&nbsp; ← 6 × 30<br>&nbsp;&nbsp;80&nbsp; ← 20 × 4<br>+600&nbsp; ← 20 × 30</span><br><span style="border-top:1.5px solid #111;display:inline-block">&nbsp;884</span></div>
+    </div>
+    <div id="am1"></div>
+  </div>
+  <div class="sec"><div class="h"><i>A</i> Fill in the area model. Then add.</div>
+    <div class="probs"><div class="pb"><span class="num">1.</span><div id="am2"></div></div><div class="pb"><span class="num">2.</span><div id="am3"></div></div></div></div>
+  <div class="sec"><div class="h"><i>B</i> Use partial products. Keep each digit in its own box.</div>
+    <div class="probs"><div class="pb"><span class="num">3.</span><div class="gridbox" data-g="56,24"></div></div><div class="pb"><span class="num">4.</span><div class="gridbox" data-g="67,38"></div></div></div></div>
+  <div class="sec"><div class="h"><i>C</i> On your own. Use any method.</div>
+    <div class="probs"><div class="pb"><span class="num">5.</span><b style="font:600 1.15em var(--mono)">78 × 46 = ______</b></div><div class="pb"><span class="num">6.</span><b style="font:600 1.15em var(--mono)">89 × 53 = ______</b></div></div></div>
+  <div class="wp"><div><b>7.</b> Mr. Okafor's class orders 28 boxes of markers. Each box holds 36 markers. How many markers does the class get?<br><br>Estimate first: ____ × ____ = ______<br><br>Answer: ______ markers</div><div class="workbox"></div></div>
+  <div class="sh-foot"><span>© Bright EngMath · Multiply &amp; Divide Quest</span><span>For single classroom use only</span><span>Page 11</span></div>
+</div>
+
+<!-- SET 2 -->
+<div class="sheet" style="--w:var(--w6)">
+  <div class="sh-head"><div><div class="sub">Set 2 · Fluency &amp; Step-by-Step Drills · Long Division</div><div class="t">Long Division Organizer: Fading Support</div></div>
+    <div class="corner"><span class="gr">GRADE 6</span><span class="sc">6.NS.B.2</span></div></div>
+  <div class="namel">Name <span></span> Date <span style="flex:.5"></span></div>
+  <div style="font-size:.95em">Every cycle has four moves: <b>D</b>ivide · <b>M</b>ultiply · <b>S</b>ubtract · <b>B</b>ring down. Support gets lighter as you go.</div>
+
+  <div class="tier"><div><span class="badge">FULL SUPPORT</span><div class="gridbox" data-ld="8742,21,3"></div></div>
+    <div><b>1.&nbsp; 8,742 ÷ 21</b><div style="font-size:.85em;margin-top:.3em">Multiples of 21</div>
+      <div class="mult" id="mult21"></div>
+      <table class="dmsb"><tr><th>Cycle</th><th>Divide</th><th>Multiply</th><th>Subtract</th><th>Bring down</th></tr>
+      <tr><td>1</td><td>87 ÷ 21 → ___</td><td>___ × 21 = ___</td><td>87 − ___ = ___</td><td>bring down ___</td></tr>
+      <tr><td>2</td><td>___ ÷ 21 → ___</td><td>___ × 21 = ___</td><td>___ − ___ = ___</td><td>bring down ___</td></tr>
+      <tr><td>3</td><td>___ ÷ 21 → ___</td><td>___ × 21 = ___</td><td>___ − ___ = ___</td><td>remainder ___</td></tr></table>
+      <div style="margin-top:.4em">Answer: ________ R ______</div></div></div>
+
+  <div class="tier"><div><span class="badge">SOME SUPPORT</span><div class="gridbox" data-ld="9476,23,3"></div></div>
+    <div><b>2.&nbsp; 9,476 ÷ 23</b><div style="margin-top:.4em;font:700 1.6em/1.3 var(--sans);letter-spacing:.35em;color:#777">D M S B</div>
+      <div style="font-size:.9em">Tick a letter each time you finish that move.</div>
+      <div style="margin-top:.8em">Check: quotient × 23 + remainder = 9,476?<br>__________________________</div>
+      <div style="margin-top:.6em">Answer: ________ R ______</div></div></div>
+
+  <div class="tier"><div><span class="badge">ON YOUR OWN</span><div class="gridbox" data-ld="7384,36,3"></div></div>
+    <div><b>3.&nbsp; 7,384 ÷ 36</b><div style="font-size:.9em;margin-top:.4em">Watch out: one step will put a <b>0</b> in the quotient.</div>
+      <div style="margin-top:.8em">Answer: ________ R ______</div></div></div>
+  <div class="sh-foot"><span>© Bright EngMath · Multiply &amp; Divide Quest</span><span>For single classroom use only</span><span>Page 4</span></div>
+</div>
+
+<!-- SET 3 -->
+<div class="sheet" style="--w:var(--w5)">
+  <div class="sh-head"><div><div class="sub">Set 3 · Games &amp; Puzzles · Secret Code</div><div class="t">Decimal Point Detective</div></div>
+    <div class="corner"><span class="gr">GRADE 5</span><span class="sc">5.NBT.B.7</span></div></div>
+  <div class="namel">Name <span></span> Date <span style="flex:.5"></span></div>
+  <div style="font-size:.95em">Multiply. Find your answer in the code key and write its letter in the box. Careful: some answers in the key have the decimal point in the wrong place.</div>
+  <div class="cprobs" id="cprobs" style="margin-top:.6em"></div>
+  <div class="lab" style="margin-top:.8em">Code key</div>
+  <div class="code" id="codekey"></div>
+  <div class="riddle"><div class="q">What did the zero say to the eight?</div>
+    <div class="blanks" id="blanks"></div></div>
+  <div style="font-size:.9em;border:1px dashed #111;padding:.5em .7em"><b>Think about it:</b> You multiplied 0.25 × 0.4. Why is the product smaller than both factors? ______________________________________________</div>
+  <div class="sh-foot"><span>© Bright EngMath · Multiply &amp; Divide Quest</span><span>For single classroom use only</span><span>Page 6</span></div>
+</div>
+</div>
+
+<!-- ================= CONFIRM ================= -->
+<h2>5 · สิ่งที่ต้องการให้ยืนยัน</h2>
+<div class="cfm"><ol>
+<li><b>ธีม</b> — A Drafting Table (แนะนำ) / B Transit Lines / C Print Shop</li>
+<li><b>จำนวนด่าน 26 ด่าน</b> (G4 = 9, G5 = 9, G6 = 8) → Set 1 = 52 หน้า + ปก/สารบัญ/เฉลย</li>
+<li><b>Long Division Coach ใน G4</b> — เปิดเป็นด่านเสริมหาร 1 หลัก (ตามที่ครูนิยมสอน) หรือคง G4 ไว้แค่ partial quotients/area model ตามมาตรฐานตรงตัว</li>
+<li><b>ชื่อระดับรางวัล</b> — Point → Segment → Triangle → Square → Pentagon → Hexagon → Octagon → Circle ตามด้านบน หรือจะตั้งชื่อใหม่</li>
+<li>ข้อความในใบงาน/แอปทั้งหมดเป็นภาษาอังกฤษ สะกดแบบอเมริกัน ตัวเลขทุกข้อในเอกสารนี้ตรวจด้วยโค้ดแล้ว (Python <code>Fraction/Decimal</code>)</li>
+</ol>
+<p style="margin:8px 0 0">พอยืนยันแล้ว จะสร้างตามลำดับ: generator โจทย์ + ตัวตรวจคำตอบ → แอป HTML ไฟล์เดียว → ทดสอบ headless browser → ใบงาน 3 ชุด (PDF A4/Letter/ink-saver + เฉลย) → Teacher Guide, HOW-TO-USE, Freebie → แพ็ก ZIP 10 listing → thumbnails, คำอธิบาย, tags, ราคา, สคริปต์คลิป</p></div>
+</div>
+
+<script>
+/* ---------- rank ladder ---------- */
+const RANKS=[[1,'Point',0],[4,'Segment',2],[8,'Triangle',3],[12,'Square',4],[16,'Pentagon',5],[20,'Hexagon',6],[24,'Octagon',8],[26,'Circle',0]];
+function shape(n,c){const s=56,r=22,cx=28,cy=30;
+  if(n===0)return `<svg width="${s}" height="${s}">${c==='Point'?`<circle cx="28" cy="28" r="5" fill="#1F2A44"/>`:`<circle cx="28" cy="28" r="22" fill="none" stroke="#1F2A44" stroke-width="3"/><circle cx="28" cy="28" r="14" fill="#C8553D"/>`}</svg>`;
+  if(n===2)return `<svg width="${s}" height="${s}"><line x1="8" y1="40" x2="48" y2="16" stroke="#1F2A44" stroke-width="3"/><circle cx="8" cy="40" r="4" fill="#1F2A44"/><circle cx="48" cy="16" r="4" fill="#1F2A44"/></svg>`;
+  let p=[];for(let i=0;i<n;i++){const a=-Math.PI/2+i*2*Math.PI/n+(n%2?0:Math.PI/n);p.push((cx+r*Math.cos(a)).toFixed(1)+','+(cy+r*Math.sin(a)).toFixed(1))}
+  return `<svg width="${s}" height="${s}"><polygon points="${p.join(' ')}" fill="${n%2?'#2A7F7A':'#B8862A'}" fill-opacity=".2" stroke="#1F2A44" stroke-width="2.5"/></svg>`}
+document.getElementById('ranks').innerHTML=RANKS.map(([lv,nm,n])=>`<div class="rank">${shape(n,nm)}<b>${nm}</b><br>${lv} level${lv>1?'s':''}</div>`).join('');
+
+/* ---------- level map ---------- */
+const W=[
+ {c:'var(--w4)',t:'World 1 · Grade 4',s:'4.OA.A · 4.OA.B.4 · 4.NBT.B.5–6',L:[
+  ['Times as Many','4.OA.A.1–2','Comparison bar model (3 times as many)',['Word Problems','Estimate First']],
+  ['Factors & Multiples','4.OA.B.4','Rectangle arrays for factor pairs',['Factor Finder']],
+  ['Prime or Composite','4.OA.B.4','Arrays: only one rectangle = prime',['Factor Finder']],
+  ['× 10, 100, 1,000','4.NBT.B.5','Place value chart, digits shift left',['Estimate First','Partial Products']],
+  ['4-Digit × 1-Digit','4.NBT.B.5','Area model → partial products',['Area Model Builder','Partial Products']],
+  ['2-Digit × 2-Digit','4.NBT.B.5','Area model (4 parts) → partial products',['Area Model Builder','Partial Products','Word Problems']],
+  ['Divide: Partial Quotients','4.NBT.B.6','Area model for division + base-ten',['Partial Quotients','Area Model Builder','Estimate First']],
+  ['Remainders','4.NBT.B.6','Equal groups with leftovers',['Partial Quotients','Long Division Coach*']],
+  ['What Does the Remainder Mean?','4.OA.A.3','Bar model: round up / drop / use it',['Remainder Detective','Word Problems']]]},
+ {c:'var(--w5)',t:'World 2 · Grade 5',s:'5.NBT.A.2 · 5.NBT.B.5–7 · 5.NF.B.4 · 5.NF.B.7',L:[
+  ['Powers of 10 Patterns','5.NBT.A.2','Place value chart, exponents, point shift',['Decimal Point Drop','Estimate First']],
+  ['Standard Algorithm ×','5.NBT.B.5','Area model → partial products → standard',['Partial Products','Area Model Builder']],
+  ['Estimate with 2-Digit Divisors','5.NBT.B.6','Compatible numbers on a number line',['Estimate First','Partial Quotients']],
+  ['4-Digit ÷ 2-Digit','5.NBT.B.6','Area model + partial quotients → algorithm',['Partial Quotients','Long Division Coach']],
+  ['Multiply Decimals','5.NBT.B.7','Hundredths grid area model',['Decimal Point Drop','Area Model Builder']],
+  ['Divide Decimals','5.NBT.B.7','Base-ten blocks shared into groups',['Decimal Point Drop','Long Division Coach']],
+  ['Fraction × Whole Number','5.NF.B.4a','Fraction strips / number line',['Word Problems','Estimate First']],
+  ['Fraction × Fraction','5.NF.B.4b','Area model with overlapping shading',['Area Model Builder']],
+  ['Unit Fractions & Whole Numbers ÷','5.NF.B.7','Fraction strips: how many 1/3 in 4?',['Word Problems','Remainder Detective']]]},
+ {c:'var(--w6)',t:'World 3 · Grade 6',s:'6.NS.A.1 · 6.NS.B.2–4',L:[
+  ['Long Division Fluency','6.NS.B.2','Algorithm cycle with zeros in quotient',['Long Division Coach','Estimate First']],
+  ['Add & Subtract Decimals','6.NS.B.3','Place value chart, line up the points',['Decimal Point Drop']],
+  ['Multiply Decimals Fluently','6.NS.B.3','Estimate → place the point',['Decimal Point Drop','Estimate First']],
+  ['Divide Decimals Fluently','6.NS.B.3','Scale both numbers by 10, 100',['Long Division Coach','Decimal Point Drop']],
+  ['Fraction ÷ Fraction','6.NS.A.1','Fraction bars: how many groups? → reciprocal',['Word Problems','Area Model Builder']],
+  ['GCF & LCM','6.NS.B.4','Factor rectangles, multiples on a line',['Factor Finder']],
+  ['Distributive Property & GCF','6.NS.B.4','Area model: 36 + 8 = 4(9 + 2)',['Area Model Builder','Factor Finder']],
+  ['Multi-Step Word Problems','6.NS.A.1 · B.2–4','Bar models for each step',['Word Problems','Remainder Detective','Estimate First']]]}];
+let n=0;document.getElementById('worlds').innerHTML=W.map(w=>`<div class="wcol" style="--c:${w.c}"><h3 style="color:${w.c}">${w.t}</h3><div class="std">${w.s}</div>`+
+ w.L.map((l,i)=>`<div class="lv"><div class="n">${i+1}</div><div><b>${l[0]}</b> <span class="std">${l[1]}</span><div class="m">Learn: ${l[2]}</div><div class="g">${l[3].map(g=>`<span class="${g.startsWith('Long')?'ldc':''}">${g}</span>`).join('')}</div></div></div>`).join('')+`</div>`).join('')+
+ `<div style="font-size:12px;color:#555;grid-column:1/-1">* Long Division Coach ใน G4 = ตัวเลือกเสริม (ดูข้อ 3 ด้านล่าง)</div>`;
+
+/* ---------- Long division engine ---------- */
+function longDiv(str,d){const ds=[...str].map(Number);let cur=0,st=false,cy=[];
+  for(let i=0;i<ds.length;i++){cur=cur*10+ds[i];if(!st&&cur<d&&i<ds.length-1)continue;st=true;
+    const q=Math.floor(cur/d),p=q*d,r=cur-p;cy.push({end:i,cur,q,prod:p,rem:r,next:i+1<ds.length?ds[i+1]:null});cur=r}
+  const steps=[];cy.forEach((c,k)=>{['divide','multiply','subtract'].forEach(t=>steps.push({t,k}));if(c.next!==null)steps.push({t:'bring',k})});
+  return {str,ds,d,cy,steps,q:Math.floor(+str/d),r:+str%d}}
+const PL=['ones','tens','hundreds','thousands','ten thousands'];
+function place(P,col){return PL[P.ds.length-1-col]}
+const u=(n,p)=>n===1?p.replace(/s$/,''):p;
+/* build cell map: done = number of completed steps; act = active step index or -1; typed = string */
+function boardHTML(P,done,act,typed,err){
+  const n=P.ds.length,rows=2+P.cy.length*2,cells={};
+  const put=(r,c,v,cls)=>{cells[r+','+c]={v,cls:(cells[r+','+c]?.cls||'')+' '+(cls||'')}};
+  P.ds.forEach((v,i)=>put(1,i+1,v,'dd'+(i===0?' first':'')));
+  const isDone=i=>i<done, si=(t,k)=>P.steps.findIndex(s=>s.t===t&&s.k===k);
+  const placeNum=(r,end,val,cls)=>{const s=String(val);for(let j=0;j<s.length;j++)put(r,end-s.length+1+j,s[j],cls)};
+  const tgt=(r,end,len,cls)=>{for(let j=0;j<len;j++)put(r,end-len+1+j,'',cls)};
+  P.cy.forEach((c,k)=>{const rp=2+k*2,rr=3+k*2;
+    let i=si('divide',k);
+    if(isDone(i))put(0,c.end+1,c.q,'q');else if(i===act){put(0,c.end+1,typed||'','tgt typ'+(err?' err':''));}
+    i=si('multiply',k);
+    if(isDone(i)){placeNum(rp,c.end+1,c.prod,'ul');put(rp,c.end+1-String(c.prod).length,'−','g')}
+    else if(i===act){const L=String(c.prod).length;const s=typed||'';tgt(rp,c.end+1,L,'tgt ul'+(err?' err':''));for(let j=0;j<s.length;j++)put(rp,c.end+1-s.length+1+j,s[j],'typ');put(rp,c.end+1-L,'−','g')}
+    i=si('subtract',k);
+    if(isDone(i))placeNum(rr,c.end+1,c.rem,'');
+    else if(i===act){const L=String(c.rem).length;tgt(rr,c.end+1,L,'tgt'+(err?' err':''));const s=typed||'';for(let j=0;j<s.length;j++)put(rr,c.end+1-s.length+1+j,s[j],'typ')}
+    i=si('bring',k);
+    if(i>=0){if(isDone(i))put(rr,c.end+2,c.next,'');else if(i===act){put(rr,c.end+2,'','tgt');put(1,c.end+2,c.next,'src')}}
+    // highlight working number for divide
+    if(si('divide',k)===act){const s=String(c.cur);/* highlight source rows */
+      if(k===0)for(let j=0;j<=c.end;j++)put(1,j+1,P.ds[j],'src');else{const pr=3+(k-1)*2;for(let j=c.end-s.length+1;j<=c.end;j++)if(cells[pr+','+(j+1)])cells[pr+','+(j+1)].cls+=' src'}}
+  });
+  let h=`<div class="dv"><div class="dvs">${P.d}</div></div><div class="ldg" style="grid-template-columns:repeat(${n+1},auto)">`;
+  for(let r=0;r<rows;r++)for(let c=0;c<=n;c++){const x=cells[r+','+c];h+=`<div class="c ${x?x.cls:''}">${x?x.v:''}</div>`}
+  return h+'</div>'}
+function stepsHTML(P,act){const t=P.steps[act]?.t;return ['divide','multiply','subtract','bring'].map(s=>`<span class="${s===t?'on':''}">${{divide:'Divide',multiply:'Multiply',subtract:'Subtract',bring:'Bring Down'}[s]}</span>`).join('')}
+function explain(P,i){if(i>=P.steps.length)return `<b>Done!</b> ${P.str.replace(/\B(?=(\d{3})+(?!\d))/g,',')} ÷ ${P.d} = <span class="k">${P.q}</span>${P.r?` R <span class="k">${P.r}</span>`:''}. Check: ${P.q} × ${P.d}${P.r?` + ${P.r}`:''} = ${(P.q*P.d+P.r).toLocaleString('en-US')}. ✓`;
+  const s=P.steps[i],c=P.cy[s.k],pl=place(P,c.end);
+  if(s.t==='divide')return c.q===0?`<b>Divide.</b> ${c.cur} ${pl} ÷ ${P.d}. ${P.d} is bigger than ${c.cur}, so each group gets <span class="k">0</span> ${pl}. Write 0 in the quotient — don't skip it!`:`<b>Divide.</b> Share ${c.cur} ${pl} into ${P.d} equal groups. Each group gets <span class="k">${c.q}</span> ${u(c.q,pl)}.`;
+  if(s.t==='multiply')return `<b>Multiply.</b> ${c.q} × ${P.d} = <span class="k">${c.prod}</span>. That's how many ${pl} we used.`;
+  if(s.t==='subtract')return `<b>Subtract.</b> ${c.cur} − ${c.prod} = <span class="k">${c.rem}</span> ${u(c.rem,pl)} left over. ${c.rem<P.d?`${c.rem} is less than ${P.d}, so the divide step was right.`:''}`;
+  return c.rem===0?`<b>Bring down.</b> Nothing is left over, so just bring down the ${c.next}. Now we have <span class="k">${c.next}</span> ${u(c.next,PL[P.ds.length-2-c.end])}.`:`<b>Bring down.</b> Trade the ${c.rem} leftover ${u(c.rem,pl)} for ${c.rem*10} ${u(c.rem*10,PL[P.ds.length-2-c.end])} and bring down the ${c.next}. Now we have <span class="k">${c.rem*10+c.next}</span> ${u(c.rem*10+c.next,PL[P.ds.length-2-c.end])}.`}
+
+/* LEARN */
+const LP=longDiv('4215',7);let li=0;
+function learn(){
+  document.getElementById('learnBoard').innerHTML=boardHTML(LP,li+(li<LP.steps.length?1:0),-1);
+  document.getElementById('learnSteps').innerHTML=stepsHTML(LP,li);
+  document.getElementById('learnMsg').innerHTML=explain(LP,li);
+  const s=LP.steps[Math.min(li,LP.steps.length-1)],c=LP.cy[s.k];
+  const heads=['Th','H','T','O'];let vals=['','','',''];vals[c.end]=c.cur;
+  if(li>=LP.steps.length){vals=['','','',''];}
+  document.getElementById('learnPvc').innerHTML=heads.map(h=>`<div>${h}</div>`).join('')+vals.map((v,i)=>`<div class="${v!==''?'on':''}">${v===''?'·':v}</div>`).join('');
+  const pl=place(LP,c.end);
+  document.getElementById('learnShare').innerHTML=(li>=LP.steps.length)?'':Array.from({length:LP.d},()=>`<div>${c.q} ${u(c.q,pl)}</div>`).join('')+(c.rem?`<div class="r">${c.rem} left</div>`:'');
+  document.getElementById('lBack').disabled=li===0;document.getElementById('lNext').textContent=li>=LP.steps.length?'Start again':'Next'}
+document.getElementById('lNext').onclick=()=>{li=li>=LP.steps.length?0:li+1;learn()};
+document.getElementById('lBack').onclick=()=>{if(li>0)li--;learn()};
+learn();
+
+/* PRACTICE */
+const POOL=[['8136',4],['5274',6],['9632',8],['6045',5],['7152',3],['4908',12],['8265',15]];
+let PP,pi,typed,tries,pk=0;
+function newP(){const [a,b]=POOL[pk++%POOL.length];PP=longDiv(a,b);pi=0;typed='';tries=0;renderP('Start with <b>Divide</b>. Look at the highlighted digits.')}
+function renderP(m,cls,err){
+  document.getElementById('pBoard').innerHTML=boardHTML(PP,pi,pi<PP.steps.length?pi:-1,typed,err);
+  document.getElementById('pSteps').innerHTML=stepsHTML(PP,pi);
+  const M=document.getElementById('pMsg');M.className='msg '+(cls||'');M.innerHTML=m;
+  const t=PP.steps[pi]?.t;document.getElementById('pPrompt').textContent=t?{divide:'How many in each group?',multiply:'Multiply',subtract:'Subtract',bring:'Bring down the next digit'}[t]:'Finished';
+  const pad=document.getElementById('pad');
+  pad.innerHTML=t==='bring'?`<button class="wide" style="grid-column:1/-1" data-k="B">Bring down ${PP.cy[PP.steps[pi].k].next} ↓</button>`:t?[7,8,9,4,5,6,1,2,3].map(k=>`<button data-k="${k}">${k}</button>`).join('')+`<button data-k="0" class="wide">0</button><button data-k="D" aria-label="Delete">⌫</button>`:'';
+  document.getElementById('pCheck').style.display=t&&t!=='bring'?'':'none'}
+function key(k){const t=PP.steps[pi]?.t;if(!t)return;
+  if(t==='bring'){if(k==='B'){pi++;typed='';tries=0;renderP(explain(PP,pi-1).replace('<b>Bring down.</b>','<b>Nice.</b>')+' Now divide again.','good')}return}
+  if(k==='D')typed=typed.slice(0,-1);else if(/\d/.test(k)&&typed.length<4)typed+=k;
+  renderP(document.getElementById('pMsg').innerHTML,document.getElementById('pMsg').className.replace('msg',''))}
+function check(){const s=PP.steps[pi];if(!s||s.t==='bring'||typed==='')return;const c=PP.cy[s.k],v=+typed,d=PP.d;
+  const want={divide:c.q,multiply:c.prod,subtract:c.rem}[s.t];
+  if(v===want){pi++;typed='';tries=0;const nx=PP.steps[pi];renderP(pi>=PP.steps.length?explain(PP,pi):`Correct! Next: <b>${{divide:'Divide',multiply:'Multiply',subtract:'Subtract',bring:'Bring Down'}[nx.t]}</b>.`,'good');return}
+  tries++;let m;
+  if(s.t==='divide')m=v*d>c.cur?`${v} × ${d} = ${v*d}. That is more than ${c.cur}. Try a smaller number.`:`${v} × ${d} = ${v*d}, and ${c.cur} − ${v*d} = ${c.cur-v*d}. That is still ${d} or more, so you can fit another group. Try a bigger number.`;
+  else if(s.t==='multiply')m=`Multiply the digit you just wrote by the divisor: ${c.q} × ${d}.`;
+  else m=`Subtract the bottom number from the top number: ${c.cur} − ${c.prod}.`;
+  if(tries>=2){m+=`<br>Here's the step: ${explain(PP,pi)}`;pi++;typed='';tries=0}
+  renderP(m,'bad',tries>0);const b=document.getElementById('pBoard');b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake')}
+document.getElementById('pad').onclick=e=>{const k=e.target.closest('button')?.dataset.k;if(k)key(k)};
+document.getElementById('pCheck').onclick=check;document.getElementById('pNew').onclick=newP;
+document.addEventListener('keydown',e=>{if(e.target.closest('input,textarea'))return;const box=document.getElementById('pBoard').getBoundingClientRect();if(box.bottom<0||box.top>innerHeight)return;
+  if(/^\d$/.test(e.key))key(e.key);else if(e.key==='Backspace')key('D');else if(e.key==='Enter'){PP.steps[pi]?.t==='bring'?key('B'):check()}});
+PP=longDiv('4215',7);pi=0;typed='';tries=0;pk=0;renderP('Start with <b>Divide</b>. 4 thousands can\'t be shared into 7 groups, so we look at <b>42 hundreds</b>.');
+
+/* boss stars */
+document.getElementById('bossStars').innerHTML=[['8–9 correct',1],['10 correct',2],['10 correct in under 4:00',3]].map(([t,s])=>`<div>${Array.from({length:3},(_,i)=>`<svg width="22" height="22" style="display:inline"><polygon points="11,1 14,8 21,8 15.5,13 17.5,21 11,16.5 4.5,21 6.5,13 1,8 8,8" fill="${i<s?'var(--a)':'none'}" stroke="var(--app-line)" stroke-width="1.5"/></svg>`).join('')}<br>${t}</div>`).join('');
+
+/* theme switch */
+document.querySelectorAll('[data-th]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-th]').forEach(x=>x.setAttribute('aria-pressed',x===b));document.querySelectorAll('.app').forEach(a=>a.dataset.t=b.dataset.th)});
+
+/* ---------- worksheets ---------- */
+function areaModel(a,b,show){const [at,ao]=[a-a%10,a%10],[bt,bo]=[b-b%10,b%10];
+  const W=230,H=128,x0=34,y0=22,cl=x=>Math.min(.74,Math.max(.62,x)),w1=Math.round(W*cl(at/a)),h1=Math.round(H*cl(bt/b));
+  const cell=(x,y,w,h,v)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="#fff" fill-ink stroke="#111" stroke-width="1.5"/><text x="${x+w/2}" y="${y+h/2+5}" text-anchor="middle" font-family="Menlo,monospace" font-size="${Math.min(14,Math.max(9,w/4))}">${v}</text>`;
+  const p=show?[at*bt,ao*bt,at*bo,ao*bo]:['','','',''];
+  return `<svg viewBox="0 0 ${W+x0+10} ${H+y0+(show?6:30)}" style="width:100%;max-width:300px">
+  <text x="${x0+w1/2}" y="15" text-anchor="middle" font-size="13" font-weight="700">${at}</text><text x="${x0+w1+(W-w1)/2}" y="15" text-anchor="middle" font-size="13" font-weight="700">${ao}</text>
+  <text x="${x0-6}" y="${y0+h1/2+5}" text-anchor="end" font-size="13" font-weight="700">${bt}</text><text x="${x0-6}" y="${y0+h1+(H-h1)/2+5}" text-anchor="end" font-size="13" font-weight="700">${bo}</text>
+  ${cell(x0,y0,w1,h1,p[0])}${cell(x0+w1,y0,W-w1,h1,p[1])}${cell(x0,y0+h1,w1,H-h1,p[2])}${cell(x0+w1,y0+h1,W-w1,H-h1,p[3])}
+  ${show?'':`<text x="${x0}" y="${H+y0+22}" font-size="12">${a} × ${b} = ____ + ____ + ____ + ____ = ______</text>`}</svg>`}
+document.getElementById('am1').innerHTML=areaModel(34,26,true);
+document.getElementById('am2').innerHTML=areaModel(23,15,false);
+document.getElementById('am3').innerHTML=areaModel(41,32,false);
+function gcells(rows,cols,f){let h='';for(let c=0;c<cols;c++)for(let r=0;r<rows;r++){const o=f(r,c)||{};h+=`<div class="gcell ${o.cls||''}" style="grid-row:${r+1};grid-column:${c+1}">${o.v??''}</div>`}return h}
+document.querySelectorAll('[data-g]').forEach(el=>{const [a,b]=el.dataset.g.split(',');const cols=5;
+  el.innerHTML=gcells(8,cols,(r,c)=>{const sa=a.padStart(cols,' '),sb=('×'+b).padStart(cols,' ');
+    if(r===0)return{v:sa[c].trim()};if(r===1)return{v:sb[c].trim(),cls:'bb'};if(r===6)return{cls:'bt'};return{}})});
+document.querySelectorAll('[data-ld]').forEach(el=>{const [a,d]=el.dataset.ld.split(','),n=a.length;
+  el.innerHTML=gcells(9,n,(r,c)=>r===1?{v:a[c],cls:'bt'+(c===0?' bl':'')}:{});
+  el.insertAdjacentHTML('beforebegin',`<div style="float:left;font:600 1.1em var(--mono);margin-top:1.7em;line-height:1.7em;padding-right:.35em">${d}</div>`)});
+document.getElementById('mult21').innerHTML=Array.from({length:9},(_,i)=>`<div><small>×${i+1}</small>${21*(i+1)}</div>`).join('');
+/* secret code: exact decimal multiply with BigInt */
+function dmul(a,b){const sc=s=>(s.split('.')[1]||'').length,ia=BigInt(a.replace('.','')),ib=BigInt(b.replace('.',''));let k=sc(a)+sc(b),v=(ia*ib).toString().padStart(k+1,'0');
+  let s=k?v.slice(0,-k)+'.'+v.slice(-k):v;if(s.includes('.'))s=s.replace(/0+$/,'').replace(/\.$/,'');return s}
+const CP=[['N','2.4','3'],['I','0.6','0.8'],['C','1.25','4'],['E','3.6','0.5'],['B','0.9','0.7'],['L','4.5','1.2'],['T','0.25','0.4']].map(([L,a,b])=>({L,a,b,ans:dmul(a,b)}));
+const DECOY=[['A','0.72'],['R','4.8'],['S','0.5'],['O','18'],['U','6.3'],['M','0.54'],['P','0.01']];
+const real=CP.map(p=>p.ans);if(DECOY.some(d=>real.includes(d[1])))console.error('decoy clash');
+document.getElementById('cprobs').innerHTML=CP.map((p,i)=>`<div><span><b>${p.a} × ${p.b}</b></span><span class="lt"></span></div>`).join('')+`<div style="border-style:dashed;font-size:.85em;color:#444">Estimate first! 2.4 × 3 is close to 2 × 3 = 6.</div>`;
+const key2=[...CP.map(p=>[p.L,p.ans]),...DECOY].sort((x,y)=>parseFloat(x[1])-parseFloat(y[1]));
+document.getElementById('codekey').innerHTML=key2.map(([L,v])=>`<div><b>${L}</b>${v}</div>`).join('');
+const ansOf=L=>CP.find(p=>p.L===L).ans;
+document.getElementById('blanks').innerHTML=[...'NICE BELT'].map(ch=>ch===' '?'<div class="gap"></div>':`<div><span></span><small>${ansOf(ch)}</small></div>`).join('')+'<div><span style="border:0">!</span></div>';
+/* size + ink toggles */
+const sz=(L)=>{document.querySelectorAll('.sheet').forEach(s=>s.classList.toggle('letter',L));szA4.setAttribute('aria-pressed',!L);szLt.setAttribute('aria-pressed',L)};
+szA4.onclick=()=>sz(false);szLt.onclick=()=>sz(true);
+ink.onclick=()=>{const on=ink.getAttribute('aria-pressed')!=='true';ink.setAttribute('aria-pressed',on);document.querySelectorAll('.sheet').forEach(s=>s.classList.toggle('ink',on))};
+</script>
+</body>
+</html>

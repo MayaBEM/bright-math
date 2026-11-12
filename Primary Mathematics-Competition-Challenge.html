@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bright EngMath Primary Mathematics Competition Challenge</title>
+<style>
+/* =====================================================================
+   Bright EngMath — Primary Mathematics Competition Challenge
+   Single-file quiz website. Works fully offline. No external libraries.
+   Theme: deep blue · purple · soft gold · white
+   ===================================================================== */
+:root{
+  --navy:#1c2a56;          /* deep blue */
+  --navy-dark:#141f42;
+  --purple:#5b3fa8;        /* purple accent */
+  --purple-soft:#efeafb;
+  --gold:#d9a93c;          /* soft gold */
+  --gold-soft:#f7ecd2;
+  --white:#ffffff;
+  --bg:#f4f5fa;
+  --ink:#22263a;
+  --muted:#6a7089;
+  --line:#e3e6f0;
+  --green:#2e8b57;
+  --green-soft:#e4f3ea;
+  --red:#c0392b;
+  --red-soft:#fbe9e7;
+  --radius:16px;
+  --shadow:0 4px 18px rgba(28,42,86,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:"Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  background:var(--bg); color:var(--ink); line-height:1.55; min-height:100vh;
+  display:flex; flex-direction:column;
+}
+
+/* ---- Header ------------------------------------------------------- */
+header{
+  background:linear-gradient(120deg, var(--navy) 0%, var(--purple) 100%);
+  color:var(--white); padding:14px 20px;
+}
+.h-inner{max-width:920px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.h-logo{
+  width:40px;height:40px;border-radius:12px;background:var(--gold);
+  color:var(--navy-dark);font-weight:800;font-size:1.15rem;
+  display:grid;place-items:center;flex:none;
+}
+.h-brand b{font-size:1.02rem;display:block}
+.h-brand span{font-size:.75rem;opacity:.85}
+
+main{flex:1;width:100%;max-width:920px;margin:0 auto;padding:22px 16px 40px}
+
+/* ---- Cards & buttons ---------------------------------------------- */
+.card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px}
+.btn{
+  display:inline-block;border:0;border-radius:12px;cursor:pointer;
+  font:inherit;font-weight:700;padding:12px 22px;transition:background .15s, transform .05s;
+  text-align:center;
+}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:var(--navy);color:var(--white)}
+.btn-primary:hover{background:var(--navy-dark)}
+.btn-gold{background:var(--gold);color:var(--navy-dark)}
+.btn-gold:hover{background:#c99a2e}
+.btn-ghost{background:var(--purple-soft);color:var(--purple)}
+.btn-ghost:hover{background:#e2d8f6}
+.btn-outline{background:var(--white);color:var(--navy);border:2px solid var(--line)}
+.btn-outline:hover{border-color:var(--navy)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.hidden{display:none !important}
+
+/* ---- Welcome screen ------------------------------------------------ */
+.welcome{text-align:center;padding:44px 26px}
+.medal{
+  width:76px;height:76px;margin:0 auto 16px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #f2d891, var(--gold));
+  display:grid;place-items:center;font-size:2rem;
+  border:4px solid var(--purple-soft);
+}
+.welcome h1{color:var(--navy);font-size:1.55rem;margin-bottom:6px}
+.welcome .sub{color:var(--purple);font-weight:600;margin-bottom:22px}
+.instructions{
+  text-align:left;background:var(--purple-soft);border-radius:12px;
+  padding:18px 22px;margin:0 auto 26px;max-width:520px;
+}
+.instructions h2{font-size:.95rem;color:var(--purple);margin-bottom:8px}
+.instructions li{margin-left:20px;margin-bottom:5px;font-size:.92rem}
+
+/* ---- Quiz screen ---------------------------------------------------- */
+.q-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.q-count{font-weight:800;color:var(--navy)}
+.q-answered{font-size:.82rem;color:var(--muted)}
+.progress{height:9px;background:var(--line);border-radius:6px;overflow:hidden;margin-bottom:18px}
+.progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--purple),var(--gold));border-radius:6px;transition:width .2s}
+
+.q-text{font-size:1.08rem;font-weight:700;color:var(--ink);margin-bottom:18px;white-space:pre-line}
+.choices{display:grid;gap:10px}
+.choice{
+  display:flex;align-items:center;gap:12px;width:100%;text-align:left;
+  background:var(--white);border:2px solid var(--line);border-radius:12px;
+  padding:12px 14px;cursor:pointer;font:inherit;font-size:.98rem;transition:border-color .12s, background .12s;
+}
+.choice:hover{border-color:var(--purple)}
+.choice .letter{
+  width:32px;height:32px;border-radius:9px;background:var(--purple-soft);color:var(--purple);
+  font-weight:800;display:grid;place-items:center;flex:none;
+}
+.choice.selected{border-color:var(--purple);background:var(--purple-soft)}
+.choice.selected .letter{background:var(--purple);color:var(--white)}
+
+.q-nav{display:flex;gap:10px;margin-top:22px}
+.q-nav .btn{flex:1}
+
+/* ---- Question navigator -------------------------------------------- */
+.navigator{margin-top:18px}
+.navigator h3{font-size:.82rem;color:var(--muted);font-weight:600;margin-bottom:8px}
+.nav-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
+.nav-grid button{
+  aspect-ratio:1;border:2px solid var(--line);border-radius:9px;background:var(--white);
+  font:inherit;font-size:.8rem;font-weight:700;color:var(--muted);cursor:pointer;
+}
+.nav-grid button.answered{background:var(--gold-soft);border-color:var(--gold);color:var(--navy)}
+.nav-grid button.current{border-color:var(--purple);color:var(--purple);box-shadow:0 0 0 2px var(--purple-soft)}
+.legend{display:flex;gap:16px;margin-top:10px;font-size:.75rem;color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:4px;margin-right:5px;vertical-align:-1px}
+.legend .l-a{background:var(--gold-soft);border:1px solid var(--gold)}
+.legend .l-u{background:var(--white);border:1px solid var(--line)}
+
+/* ---- Confirm modal --------------------------------------------------- */
+.overlay{
+  position:fixed;inset:0;background:rgba(20,31,66,.55);display:grid;place-items:center;
+  padding:20px;z-index:50;
+}
+.modal{background:var(--white);border-radius:var(--radius);padding:26px;max-width:400px;width:100%;text-align:center}
+.modal h3{color:var(--navy);margin-bottom:8px}
+.modal p{color:var(--muted);font-size:.92rem;margin-bottom:18px}
+.modal .btn{width:100%;margin-top:8px}
+
+/* ---- Results ---------------------------------------------------------- */
+.score-card{text-align:center;padding:36px 26px}
+.score-card h2{color:var(--navy);margin-bottom:18px}
+.score-ring{
+  width:150px;height:150px;border-radius:50%;margin:0 auto 18px;
+  background:conic-gradient(var(--gold) calc(var(--p)*1%), var(--line) 0);
+  display:grid;place-items:center;
+}
+.score-ring .inner{
+  width:118px;height:118px;border-radius:50%;background:var(--white);
+  display:grid;place-items:center;
+}
+.score-ring b{font-size:1.7rem;color:var(--navy);display:block;line-height:1.1}
+.score-ring span{font-size:.78rem;color:var(--muted)}
+.score-stats{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:22px}
+.stat{background:var(--purple-soft);border-radius:12px;padding:12px 20px;min-width:120px}
+.stat b{display:block;font-size:1.25rem;color:var(--purple)}
+.stat span{font-size:.78rem;color:var(--muted)}
+.score-acts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+/* ---- Review ----------------------------------------------------------- */
+.review{margin-top:26px}
+.review h2{color:var(--navy);font-size:1.15rem;margin-bottom:14px}
+.r-item{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:14px;border-left:6px solid var(--line)}
+.r-item.correct{border-left-color:var(--green)}
+.r-item.incorrect{border-left-color:var(--red)}
+.r-item.unanswered{border-left-color:var(--gold)}
+.r-head{display:flex;justify-content:space-between;gap:10px;align-items:baseline;margin-bottom:10px}
+.r-head b{color:var(--navy)}
+.r-badge{font-size:.72rem;font-weight:800;padding:4px 10px;border-radius:20px;white-space:nowrap}
+.r-badge.correct{background:var(--green-soft);color:var(--green)}
+.r-badge.incorrect{background:var(--red-soft);color:var(--red)}
+.r-badge.unanswered{background:var(--gold-soft);color:#9c7717}
+.r-q{font-weight:600;margin-bottom:10px;white-space:pre-line}
+.r-choices{display:grid;gap:6px;margin-bottom:10px}
+.r-choice{border:1.5px solid var(--line);border-radius:9px;padding:7px 12px;font-size:.9rem;display:flex;gap:8px}
+.r-choice .rl{font-weight:800;color:var(--muted);flex:none}
+.r-choice.is-correct{border-color:var(--green);background:var(--green-soft)}
+.r-choice.is-correct .rl{color:var(--green)}
+.r-choice.is-wrong{border-color:var(--red);background:var(--red-soft)}
+.r-choice.is-wrong .rl{color:var(--red)}
+.r-meta{font-size:.85rem;margin-bottom:6px}
+.r-meta b.ok{color:var(--green)} .r-meta b.no{color:var(--red)} .r-meta b.none{color:#9c7717}
+.r-why{background:var(--purple-soft);border-radius:9px;padding:10px 14px;font-size:.87rem;color:var(--ink)}
+.r-why b{color:var(--purple)}
+
+/* ---- Footer ----------------------------------------------------------- */
+footer{background:var(--navy);color:#cdd3ea;text-align:center;padding:20px 16px;font-size:.8rem}
+footer .disclaimer{font-size:.7rem;opacity:.7;margin-top:6px;max-width:560px;margin-left:auto;margin-right:auto}
+
+/* ---- Responsive -------------------------------------------------------- */
+@media (max-width:560px){
+  .card{padding:20px 16px}
+  .nav-grid{grid-template-columns:repeat(6,1fr)}
+  .q-nav{flex-wrap:wrap}
+  .welcome h1{font-size:1.25rem}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="h-inner">
+    <div class="h-logo">B</div>
+    <div class="h-brand">
+      <b>Bright EngMath</b>
+      <span>Primary Mathematics Competition Challenge</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- 1) WELCOME SCREEN -->
+  <section id="screenWelcome" class="card welcome">
+    <div class="medal">🏅</div>
+    <h1>Bright EngMath Primary Mathematics Competition Challenge</h1>
+    <div class="sub">Original international-style mathematics practice for young learners</div>
+    <div class="instructions">
+      <h2>Instructions</h2>
+      <ul>
+        <li>There are <b>30 multiple-choice questions</b> (A, B, C, D).</li>
+        <li>Answer one question at a time. You can move back and forth freely.</li>
+        <li>Use the question navigator to jump to any question.</li>
+        <li>Your answers are kept while you move between questions.</li>
+        <li>Correct answers are shown only <b>after</b> you submit the quiz.</li>
+        <li>No calculator needed — try to solve everything yourself! ✏️</li>
+      </ul>
+    </div>
+    <button class="btn btn-gold" id="startBtn" style="font-size:1.05rem;padding:14px 40px">Start Quiz →</button>
+  </section>
+
+  <!-- 2) QUIZ SCREEN -->
+  <section id="screenQuiz" class="hidden">
+    <div class="card">
+      <div class="q-top">
+        <span class="q-count" id="qCount">Question 1 of 30</span>
+        <span class="q-answered" id="qAnswered">0 answered</span>
+      </div>
+      <div class="progress"><div class="bar" id="progressBar"></div></div>
+      <div class="q-text" id="qText"></div>
+      <div class="choices" id="qChoices"></div>
+      <div class="q-nav">
+        <button class="btn btn-outline" id="prevBtn">← Previous</button>
+        <button class="btn btn-primary" id="nextBtn">Next →</button>
+        <button class="btn btn-gold hidden" id="submitBtn">Submit Quiz ✔</button>
+      </div>
+    </div>
+    <div class="card navigator" style="margin-top:14px">
+      <h3>Question navigator — tap any number</h3>
+      <div class="nav-grid" id="navGrid"></div>
+      <div class="legend">
+        <span><i class="l-a"></i>Answered</span>
+        <span><i class="l-u"></i>Not answered</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3) RESULTS SCREEN -->
+  <section id="screenResults" class="hidden">
+    <div class="card score-card">
+      <h2>🏆 Your Result</h2>
+      <div class="score-ring" id="scoreRing" style="--p:0">
+        <div class="inner"><div><b id="scorePct">0%</b><span>score</span></div></div>
+      </div>
+      <div class="score-stats">
+        <div class="stat"><b id="statCorrect">0</b><span>Correct answers</span></div>
+        <div class="stat"><b id="statScore">0 / 30</b><span>Score out of 30</span></div>
+        <div class="stat"><b id="statPct">0%</b><span>Percentage</span></div>
+      </div>
+      <div class="score-acts">
+        <button class="btn btn-gold" id="restartBtn">↺ Restart Quiz</button>
+        <button class="btn btn-outline" id="homeBtn">🏠 Home</button>
+      </div>
+    </div>
+    <div class="review">
+      <h2>📖 Review Answers</h2>
+      <div id="reviewList"></div>
+      <div style="text-align:center;margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-gold" id="restartBtn2">↺ Restart Quiz</button>
+        <button class="btn btn-outline" id="homeBtn2">🏠 Home</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Confirm submit modal -->
+  <div class="overlay hidden" id="confirmOverlay">
+    <div class="modal">
+      <h3>Submit your quiz?</h3>
+      <p id="confirmText">You still have unanswered questions.</p>
+      <button class="btn btn-gold" id="confirmYes">Yes, submit my answers</button>
+      <button class="btn btn-outline" id="confirmNo">No, keep working</button>
+    </div>
+  </div>
+</main>
+
+<footer>
+  Original practice questions created by Bright EngMath © 2026
+  <div class="disclaimer">This independent practice material is inspired by international mathematics competition formats and is not an official competition paper.</div>
+</footer>
+
+<script>
+/* =====================================================================
+   QUESTION BANK — 30 questions (q, choices A–D, answer, explanation)
+   ===================================================================== */
+const QUESTIONS = [
+  { q: 'What is the least three-digit multiple of 14?',
+    choices: ['98', '112', '126', '140'], answer: 'B',
+    why: '14 × 8 = 112 is the first multiple of 14 with three digits (98 has only two digits).' },
+  { q: 'How many positive divisors does 60 have?',
+    choices: ['8', '10', '12', '14'], answer: 'C',
+    why: '60 = 2² × 3 × 5, so it has (2+1)(1+1)(1+1) = 12 divisors.' },
+  { q: 'What is the sum of the first 10 even positive integers?',
+    choices: ['100', '110', '120', '130'], answer: 'B',
+    why: '2 + 4 + … + 20 = 2 × (1 + 2 + … + 10) = 2 × 55 = 110.' },
+  { q: 'What is the smallest positive integer that leaves a remainder of 1 when divided by 4 and a remainder of 3 when divided by 5?',
+    choices: ['9', '11', '13', '17'], answer: 'C',
+    why: '13 ÷ 4 = 3 remainder 1, and 13 ÷ 5 = 2 remainder 3. ✓' },
+  { q: 'What is the greatest two-digit prime number?',
+    choices: ['89', '97', '99', '101'], answer: 'B',
+    why: '97 is prime. 99 = 9 × 11 is not prime, and 101 has three digits.' },
+  { q: 'How many integers n between 0 and 9 inclusive make 3n + 2 divisible by 5?',
+    choices: ['1', '2', '3', '4'], answer: 'B',
+    why: '3n + 2 is divisible by 5 when n = 1 (gives 5) or n = 6 (gives 20) → 2 values.' },
+  { q: 'I think of a number, double it, subtract 7, and the result is 23. What was my number?',
+    choices: ['12', '14', '15', '17'], answer: 'C',
+    why: '2x − 7 = 23 → 2x = 30 → x = 15.' },
+  { q: 'A rectangular garden has a perimeter of 30 meters and an area of 54 square meters. What are the length and width of the garden?',
+    choices: ['27 m and 2 m', '18 m and 3 m', '8 m and 7 m', '9 m and 6 m'], answer: 'D',
+    why: 'Length + width = 30 ÷ 2 = 15 and length × width = 54 → 9 and 6.' },
+  { q: 'A magical plant in a greenhouse doubles in height every day. It takes 20 days for the plant to grow to the full height of the greenhouse. On which day was the plant exactly half the height of the greenhouse?',
+    choices: ['Day 10', 'Day 15', 'Day 19', 'Day 2'], answer: 'C',
+    why: 'The plant doubles each day, so it was half the height one day before it was full: Day 19.' },
+  { q: 'If today is Wednesday, what day will it be 100 days from now?',
+    choices: ['Sunday', 'Saturday', 'Monday', 'Friday'], answer: 'D',
+    why: '100 ÷ 7 = 14 remainder 2, so it is 2 days after Wednesday → Friday.' },
+  { q: 'A pizza was cut into 8 equal slices. Mia ate 1/4 of it. Then Juan ate half of what was left. How many slices are still uneaten?',
+    choices: ['2', '3', '4', '5'], answer: 'B',
+    why: 'Mia ate 1/4 × 8 = 2 slices → 6 left. Juan ate half of 6 = 3 slices → 3 slices remain.' },
+  { q: 'If you add me to myself and then subtract 4, you get 20. What number am I?',
+    choices: ['10', '12', '14', '16'], answer: 'B',
+    why: '2x − 4 = 20 → 2x = 24 → x = 12.' },
+  { q: 'Simplify: 120 ÷ 3 + 60 ÷ 2 + 30 ÷ 5',
+    choices: ['65', '76', '78', '80'], answer: 'B',
+    why: '40 + 30 + 6 = 76.' },
+  { q: 'Simplify: (100 × 2) × (10 × 1) ÷ (20 × 1)',
+    choices: ['80', '90', '100', '110'], answer: 'C',
+    why: '200 × 10 ÷ 20 = 2000 ÷ 20 = 100.' },
+  { q: 'Simplify: 6 ÷ 2 + 6 ÷ 3 + 6 ÷ 6',
+    choices: ['1.5', '3', '6', '7'], answer: 'C',
+    why: '3 + 2 + 1 = 6.' },
+  { q: 'Find the value of 60 ÷ 3 + 60 ÷ 2 − 60 ÷ 6',
+    choices: ['35', '40', '45', '50'], answer: 'B',
+    why: '20 + 30 − 10 = 40.' },
+  { q: 'Find the value of 21 × 5 − 20 × 5 + 42 ÷ 6',
+    choices: ['10', '11', '12', '13'], answer: 'C',
+    why: '105 − 100 + 7 = 12.' },
+  { q: 'Find the sum: 2 + 4 + 6 + 8 + 10 + … + 30',
+    choices: ['320', '280', '240', '220'], answer: 'C',
+    why: '2 + 4 + … + 30 = 2 × (1 + 2 + … + 15) = 2 × 120 = 240.' },
+  { q: 'A right triangle has legs 9 cm and 12 cm. What is the length of the hypotenuse?',
+    choices: ['15 cm', '18 cm', '20 cm', '21 cm'], answer: 'A',
+    why: '√(9² + 12²) = √(81 + 144) = √225 = 15 cm (a 3-4-5 triangle scaled by 3).' },
+  { q: 'A regular pentagon can be divided by lines from its center to its vertices. How many congruent isosceles triangles are formed, and what is the measure of each central angle?',
+    choices: ['4 triangles, 72°', '5 triangles, 72°', '5 triangles, 60°', '6 triangles, 60°'], answer: 'B',
+    why: 'A pentagon has 5 vertices → 5 triangles, and each central angle is 360° ÷ 5 = 72°.' },
+  { q: 'A cuboid has dimensions 6 cm × 4 cm × 2 cm. What is its total surface area?',
+    choices: ['56 cm²', '64 cm²', '72 cm²', '88 cm²'], answer: 'D',
+    why: 'Surface area = 2(6×4 + 6×2 + 4×2) = 2(24 + 12 + 8) = 88 cm².' },
+  { q: 'The minute hand moves from the 4 to the 11 on a clock. Through how many degrees has it turned?',
+    choices: ['180°', '210°', '240°', '270°'], answer: 'B',
+    why: 'From 4 to 11 is 7 number intervals, and each interval is 30° → 7 × 30° = 210°.' },
+  { q: 'The description below represents the area of which geometric figure?\n“The product of pi (π) and the square of its radius”',
+    choices: ['Sphere', 'Triangle', 'Circle', 'Ellipse'], answer: 'C',
+    why: 'A = πr² is the area formula of a circle.' },
+  { q: 'Nicha wants to find the area of a lotus pond in her backyard in Bangkok. The pond is shaped like a trapezoid with bases of 8 meters and 5 meters, and the depth is consistently 3 meters.',
+    choices: ['19.5 square meters', '21.5 square meters', '29 square meters', '31.5 square meters'], answer: 'A',
+    why: 'Trapezoid area = ½ × (8 + 5) × 3 = ½ × 13 × 3 = 19.5 m².' },
+  { q: 'How many counting numbers between 1 and 100 (inclusive) are NOT divisible by 4 or 5?',
+    choices: ['40', '45', '50', '60'], answer: 'D',
+    why: 'Divisible by 4: 25 numbers; by 5: 20; by both (20): 5. So 25 + 20 − 5 = 40 are divisible → 100 − 40 = 60 are not.' },
+  { q: 'How many counting numbers below 120 are divisible by BOTH 6 and 8?',
+    choices: ['2', '3', '4', '5'], answer: 'C',
+    why: 'LCM of 6 and 8 is 24 → 24, 48, 72, 96 (120 itself is not below 120) → 4 numbers.' },
+  { q: 'How many counting numbers from 1 to 200 (inclusive) are NOT divisible by 3?',
+    choices: ['132', '133', '134', '135'], answer: 'C',
+    why: 'Divisible by 3: 200 ÷ 3 = 66 numbers → 200 − 66 = 134 are not divisible by 3.' },
+  { q: 'You have 96 cookies. If each box holds 8 cookies, and each crate holds 4 boxes, how many full crates can you fill?',
+    choices: ['2', '3', '4', '5'], answer: 'B',
+    why: '96 ÷ 8 = 12 boxes → 12 ÷ 4 = 3 full crates.' },
+  { q: 'You have 6 shirts and 6 pants. A shirt and pants of the same color cannot be worn together. How many valid outfit combinations can you make?',
+    choices: ['30', '31', '35', '36'], answer: 'A',
+    why: '6 × 6 = 36 total combinations − 6 same-color pairs = 30 valid outfits.' },
+  { q: 'From a team of 6 students, how many unique pairs of 2 students can be formed?',
+    choices: ['15', '12', '10', '8'], answer: 'A',
+    why: 'Pairs = (6 × 5) ÷ 2 = 15.' },
+];
+
+/* =====================================================================
+   QUIZ ENGINE
+   ===================================================================== */
+const LETTERS = ['A', 'B', 'C', 'D'];
+const TOTAL = QUESTIONS.length;
+let current = 0;                          // index of the question on screen
+let answers = new Array(TOTAL).fill(null); // 'A'..'D' or null
+
+const $ = (id) => document.getElementById(id);
+const screens = { welcome: $('screenWelcome'), quiz: $('screenQuiz'), results: $('screenResults') };
+
+function show(name) {
+  Object.keys(screens).forEach(k => screens[k].classList.toggle('hidden', k !== name));
+  window.scrollTo(0, 0);
+}
+
+/* ---- Quiz rendering ---- */
+function renderQuestion() {
+  const item = QUESTIONS[current];
+  $('qCount').textContent = 'Question ' + (current + 1) + ' of ' + TOTAL;
+  const done = answers.filter(a => a !== null).length;
+  $('qAnswered').textContent = done + ' answered';
+  $('progressBar').style.width = ((current + 1) / TOTAL * 100) + '%';
+  $('qText').textContent = (current + 1) + '. ' + item.q;
+
+  $('qChoices').innerHTML = item.choices.map((c, i) =>
+    '<button type="button" class="choice' + (answers[current] === LETTERS[i] ? ' selected' : '') +
+    '" data-letter="' + LETTERS[i] + '">' +
+      '<span class="letter">' + LETTERS[i] + '</span><span>' + c + '</span>' +
+    '</button>').join('');
+  Array.from($('qChoices').children).forEach(btn =>
+    btn.addEventListener('click', () => {
+      answers[current] = btn.dataset.letter;
+      renderQuestion();   // keeps selection highlighted + updates navigator
+      renderNavigator();
+    }));
+
+  $('prevBtn').disabled = current === 0;
+  const last = current === TOTAL - 1;
+  $('nextBtn').classList.toggle('hidden', last);
+  $('submitBtn').classList.toggle('hidden', !last);
+}
+
+function renderNavigator() {
+  $('navGrid').innerHTML = QUESTIONS.map((_, i) =>
+    '<button type="button" class="' +
+      (answers[i] !== null ? 'answered ' : '') + (i === current ? 'current' : '') +
+    '" data-go="' + i + '">' + (i + 1) + '</button>').join('');
+  Array.from($('navGrid').children).forEach(btn =>
+    btn.addEventListener('click', () => { current = +btn.dataset.go; renderQuestion(); renderNavigator(); }));
+}
+
+/* ---- Submit + scoring ---- */
+function askSubmit() {
+  const unanswered = answers.filter(a => a === null).length;
+  $('confirmText').textContent = unanswered
+    ? 'You still have ' + unanswered + ' unanswered question' + (unanswered > 1 ? 's' : '') + '. Submit anyway?'
+    : 'You answered all ' + TOTAL + ' questions. Ready to see your score?';
+  $('confirmOverlay').classList.remove('hidden');
+}
+
+function submitQuiz() {
+  $('confirmOverlay').classList.add('hidden');
+  const correct = QUESTIONS.reduce((n, item, i) => n + (answers[i] === item.answer ? 1 : 0), 0);
+  const pct = Math.round(correct / TOTAL * 100);
+  $('statCorrect').textContent = correct;
+  $('statScore').textContent = correct + ' / ' + TOTAL;
+  $('statPct').textContent = pct + '%';
+  $('scorePct').textContent = pct + '%';
+  $('scoreRing').style.setProperty('--p', pct);
+  renderReview();
+  show('results');
+}
+
+/* ---- Review ---- */
+function renderReview() {
+  $('reviewList').innerHTML = QUESTIONS.map((item, i) => {
+    const my = answers[i];
+    const state = my === null ? 'unanswered' : (my === item.answer ? 'correct' : 'incorrect');
+    const badge = { correct: '✔ Correct', incorrect: '✘ Incorrect', unanswered: '— Not answered' }[state];
+    const choices = item.choices.map((c, j) => {
+      const L = LETTERS[j];
+      let cls = '';
+      if (L === item.answer) cls = ' is-correct';
+      else if (L === my) cls = ' is-wrong';
+      return '<div class="r-choice' + cls + '"><span class="rl">' + L + '</span><span>' + c +
+        (L === item.answer ? ' ✔' : (L === my ? ' ✘' : '')) + '</span></div>';
+    }).join('');
+    const myText = my === null
+      ? '<b class="none">Not answered</b>'
+      : 'Your answer: <b class="' + (state === 'correct' ? 'ok' : 'no') + '">' + my + '</b>';
+    return '<div class="r-item ' + state + '">' +
+      '<div class="r-head"><b>Question ' + (i + 1) + '</b><span class="r-badge ' + state + '">' + badge + '</span></div>' +
+      '<div class="r-q">' + item.q + '</div>' +
+      '<div class="r-choices">' + choices + '</div>' +
+      '<div class="r-meta">' + myText + ' &nbsp;·&nbsp; Correct answer: <b class="ok">' + item.answer + '</b></div>' +
+      '<div class="r-why"><b>Why:</b> ' + item.why + '</div>' +
+    '</div>';
+  }).join('');
+}
+
+/* ---- Reset / navigation ---- */
+function startQuiz() { current = 0; answers = new Array(TOTAL).fill(null); renderQuestion(); renderNavigator(); show('quiz'); }
+function goHome()    { current = 0; answers = new Array(TOTAL).fill(null); show('welcome'); }
+
+/* ---- Wire buttons ---- */
+$('startBtn').addEventListener('click', startQuiz);
+$('prevBtn').addEventListener('click', () => { if (current > 0) { current--; renderQuestion(); renderNavigator(); } });
+$('nextBtn').addEventListener('click', () => { if (current < TOTAL - 1) { current++; renderQuestion(); renderNavigator(); } });
+$('submitBtn').addEventListener('click', askSubmit);
+$('confirmYes').addEventListener('click', submitQuiz);
+$('confirmNo').addEventListener('click', () => $('confirmOverlay').classList.add('hidden'));
+$('restartBtn').addEventListener('click', startQuiz);
+$('restartBtn2').addEventListener('click', startQuiz);
+$('homeBtn').addEventListener('click', goHome);
+$('homeBtn2').addEventListener('click', goHome);
+</script>
+</body>
+</html>

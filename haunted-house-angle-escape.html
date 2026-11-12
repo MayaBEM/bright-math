@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Haunted House Angle Escape</title>
+<meta name="description" content="A friendly Halloween angles escape room for Grade 4: classify, turn, measure, draw and find missing angles.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#1d1127; --night-2:#281734; --panel:#311f40; --panel-2:#3b2750; --line:#4f3766;
+  --text:#fff6e8; --muted:#cdbcd6; --orange:#ff8c2e; --orange-dark:#c95f12; --candle:#ffd166;
+  --slime:#8fdc7c; --teal:#8fe3ee; --coral:#ff7b6b; --ink:#140a1b; --paper:#fff6e8;
+  --wood:#9b6a3f; --wood-dark:#5e3d22; --straw:#e9c46a; --green:#5aa04a; --green-dark:#2f6b2a;
+  --radius:14px; --head:"Fredoka", "Trebuchet MS", system-ui, sans-serif;
+  --body:"Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--night);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.5}
+body{min-height:100vh;background:radial-gradient(1200px 600px at 80% -10%, #3a2148 0%, transparent 60%), var(--night)}
+button,input{font:inherit}
+h1,h2,h3{font-family:var(--head);font-weight:600;line-height:1.15;margin:0}
+.wrap{max-width:1080px;margin:0 auto;padding:16px 16px 48px}
+.topbar{display:flex;align-items:center;gap:12px;justify-content:space-between;padding:6px 0 14px;border-bottom:1px solid var(--line);margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--head);font-weight:600;font-size:18px}
+.brand svg{width:34px;height:34px}
+.lockmini{display:flex;gap:6px}
+.lockmini span{width:28px;height:36px;border-radius:8px;border:2px solid var(--line);display:grid;place-items:center;font-family:var(--head);font-weight:700;color:var(--candle);background:var(--night-2)}
+.btn{appearance:none;border:2px solid transparent;border-radius:12px;padding:12px 20px;min-height:48px;cursor:pointer;font-weight:700;background:var(--orange);color:#24110a;transition:transform .12s ease, background .15s}
+.btn:hover{background:#ffa04f}
+.btn:active{transform:translateY(1px)}
+.btn:focus-visible,.card:focus-visible,.bin:focus-visible,.room:focus-visible{outline:3px solid var(--candle);outline-offset:3px}
+.btn.ghost{background:transparent;color:var(--text);border-color:var(--line)}
+.btn.ghost:hover{background:var(--panel-2)}
+.btn.small{padding:8px 14px;min-height:42px;font-size:15px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.muted{color:var(--muted)}
+/* intro */
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;padding:20px 0}
+.hero h1{font-size:clamp(34px,6vw,58px);font-weight:700;letter-spacing:.2px}
+.hero h1 em{font-style:normal;color:var(--orange)}
+.hero p.lead{font-size:19px;color:var(--muted);max-width:52ch}
+.goals{list-style:none;padding:0;margin:18px 0;display:grid;gap:8px}
+.goals li{display:flex;gap:10px;align-items:flex-start}
+.goals li b{color:var(--candle);font-family:var(--head);min-width:24px}
+.namebox{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.namebox input{flex:1 1 220px;min-height:50px;border-radius:12px;border:2px solid var(--line);background:var(--night-2);color:var(--text);padding:10px 14px}
+.hero-art svg{width:100%;height:auto;display:block}
+/* map */
+.mapgrid{display:grid;grid-template-columns:1fr 320px;gap:24px;align-items:start}
+.house svg{width:100%;height:auto;display:block}
+.room{cursor:pointer}
+.room .win{transition:fill .2s}
+.room.locked{cursor:not-allowed}
+.side{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.side h2{font-size:22px;margin-bottom:6px}
+.roomlist{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:8px}
+.roomlist button{width:100%;text-align:left;display:flex;gap:12px;align-items:center;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--night-2);color:var(--text);cursor:pointer;min-height:56px}
+.roomlist button[disabled]{opacity:.5;cursor:not-allowed}
+.roomlist .num{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--panel-2);font-family:var(--head);font-weight:700;flex:none}
+.roomlist .done .num{background:var(--slime);color:var(--ink)}
+.roomlist small{display:block;color:var(--muted);font-size:13px;line-height:1.3}
+.digit{margin-left:auto;font-family:var(--head);font-weight:700;color:var(--candle);font-size:20px}
+/* room */
+.roomhead{display:flex;gap:16px;align-items:center;margin-bottom:6px;flex-wrap:wrap}
+.roomhead .ic{width:60px;height:60px;flex:none;background:#fff6e8;border-radius:50%;padding:6px}
+.roomhead h1{font-size:clamp(26px,4vw,36px)}
+.roomhead .std{font-size:13px;color:var(--muted);border:1px solid var(--line);padding:2px 8px;border-radius:99px}
+.story{color:var(--muted);margin:4px 0 14px;max-width:70ch}
+.steps{display:flex;gap:8px;margin:10px 0 16px}
+.steps span{flex:1;height:8px;border-radius:99px;background:var(--panel-2)}
+.steps span.on{background:var(--orange)}
+.steps span.ok{background:var(--slime)}
+.task{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.task .q{font-size:19px;font-weight:700;margin-bottom:12px}
+.task .q small{display:block;font-weight:400;color:var(--muted);font-size:15px}
+.stage{background:var(--night-2);border-radius:12px;border:1px solid var(--line);overflow:hidden;position:relative}
+.stage svg{display:block;width:100%;height:auto;touch-action:none;user-select:none;-webkit-user-select:none}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;align-items:center}
+.readout{font-family:var(--head);font-size:26px;font-weight:700;color:var(--candle);min-width:110px}
+.answer{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+.answer label{font-weight:700}
+.answer input{width:120px;min-height:50px;border-radius:12px;border:2px solid var(--line);background:var(--night);color:var(--text);padding:8px 12px;font-size:22px;font-family:var(--head);text-align:center}
+.answer .unit{color:var(--muted)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;align-items:center}
+.actions .spacer{flex:1}
+.feedback{margin-top:14px;border-radius:12px;padding:12px 14px;display:none}
+.feedback.show{display:block}
+.feedback.good{background:rgba(143,220,124,.14);border:1px solid var(--slime)}
+.feedback.bad{background:rgba(255,123,107,.12);border:1px solid var(--coral)}
+.feedback.hint{background:rgba(255,209,102,.1);border:1px solid var(--candle)}
+.feedback.sol{background:rgba(143,227,238,.1);border:1px solid var(--teal)}
+.feedback b.tag{font-family:var(--head);display:block;margin-bottom:2px}
+/* classify */
+.pool{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;min-height:120px}
+.card{appearance:none;border:2px solid var(--line);background:var(--night-2);border-radius:12px;padding:6px;cursor:pointer;color:var(--text);position:relative;min-height:100px}
+.card svg{width:100%;height:auto;display:block}
+.card .id{position:absolute;left:8px;top:4px;font-family:var(--head);font-weight:700;color:var(--candle)}
+.card.sel{border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,140,46,.35)}
+.card.wrong{border-color:var(--coral)}
+.card.wrong::after{content:"✗";position:absolute;right:8px;top:2px;color:var(--coral);font-weight:700}
+.card.right{border-color:var(--slime)}
+.card.right::after{content:"✓";position:absolute;right:8px;top:2px;color:var(--slime);font-weight:700}
+.bins{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
+.bin{appearance:none;text-align:left;border:2px dashed var(--line);border-radius:12px;padding:10px;background:transparent;color:var(--text);cursor:pointer;min-height:150px;display:flex;flex-direction:column;gap:6px}
+.bin.ready{border-color:var(--orange);background:rgba(255,140,46,.06)}
+.bin h3{font-size:18px}
+.binbtn{appearance:none;background:none;border:none;color:inherit;padding:0;text-align:left;cursor:pointer;min-height:32px}
+.binbtn:focus-visible{outline:3px solid var(--candle);outline-offset:3px;border-radius:6px}
+.bin small{color:var(--muted);font-size:13px;line-height:1.25}
+.bin .held{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.bin .held .card{min-height:0;padding:2px}
+.bin .held .card .id{font-size:13px;left:5px}
+.choices{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}
+.choice{appearance:none;border:2px solid var(--line);background:var(--night-2);color:var(--text);border-radius:12px;padding:14px;min-height:56px;cursor:pointer;font-weight:700;text-align:left}
+.choice.sel{border-color:var(--orange);background:rgba(255,140,46,.1)}
+/* modal & cert */
+.modal{position:fixed;inset:0;background:rgba(10,4,14,.72);display:grid;place-items:center;padding:16px;z-index:20}
+.modal .box{background:var(--panel);border:1px solid var(--line);border-radius:18px;max-width:440px;width:100%;padding:24px;text-align:center}
+.modal .big{font-family:var(--head);font-size:72px;font-weight:700;color:var(--candle);line-height:1;margin:8px 0}
+.lockpad{display:flex;gap:8px;justify-content:center;margin:18px 0;flex-wrap:wrap}
+.lockpad input{width:52px;height:64px;border-radius:12px;border:2px solid var(--line);background:var(--night-2);color:var(--candle);text-align:center;font-size:30px;font-family:var(--head);font-weight:700}
+.cert{background:var(--paper);color:#2a1630;border-radius:16px;padding:32px;text-align:center;max-width:820px;margin:0 auto;border:10px double var(--orange)}
+.cert h1{font-size:40px;color:#3b1d4a}
+.cert .who{font-family:var(--head);font-size:40px;color:var(--orange-dark);border-bottom:2px solid #3b1d4a;display:inline-block;padding:0 24px;margin:12px 0}
+.cert .art{display:flex;justify-content:center;gap:18px;margin:12px 0}
+.cert .art svg{width:60px;height:60px}
+.foot{margin-top:28px;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;color:var(--muted);font-size:14px;border-top:1px solid var(--line);padding-top:12px}
+.linkbtn{background:none;border:none;color:var(--muted);text-decoration:underline;cursor:pointer;padding:6px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (max-width:820px){
+  .hero{grid-template-columns:1fr}
+  .hero-art{max-width:420px}
+  .mapgrid{grid-template-columns:1fr}
+  .pool,.bins{grid-template-columns:repeat(2,1fr)}
+  .choices{grid-template-columns:1fr}
+}
+@media (max-width:420px){
+  html,body{font-size:16px}
+  .task{padding:12px}
+  .lockmini span{width:22px;height:30px;font-size:14px}
+  .brand span{display:none}
+  .lockpad input{width:42px;height:56px;font-size:26px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media print{
+  body{background:#fff}
+  .noprint{display:none!important}
+  .cert{border-color:#c95f12}
+}
+</style>
+</head>
+<body>
+<div class="wrap" id="app" aria-live="polite"></div>
+<script>
+const C = {"title": "Haunted House Angle Escape", "subtitle": "A Halloween angles escape room", "grade": "Grade 4 · Primary 4–5 · Cambridge Stage 4–5", "standards": ["4.MD.5", "4.MD.6", "4.MD.7", "4.G.1"], "lockCode": "547286", "rooms": [{"id": "gate", "name": "Front Gate", "icon": "cat", "skill": "Identify acute, right, obtuse and straight angles", "standard": "4.G.1, 4.MD.5", "story": "The creaky front gate swings open to different angles. Sort each gate angle into the right group to get past the black cat on guard.", "digitRule": "Lock digit = the number of OBTUSE angles in all three tasks.", "digit": 5, "tasks": [{"type": "classify", "prompt": "Sort the four gate angles. Tap a card, then tap the group it belongs to.", "items": [{"id": "A", "deg": 25, "rot": 0}, {"id": "B", "deg": 90, "rot": 0}, {"id": "C", "deg": 125, "rot": 0}, {"id": "D", "deg": 180, "rot": 0}], "hint1": "Compare each angle with a right angle (a square corner, 90°). Smaller than a square corner = acute. Bigger than a square corner but less than a flat line = obtuse. A flat line = straight (180°).", "hint2": "Look for the little square: it marks a right angle. Hold the corner of a sheet of paper on each angle in your mind.", "solution": "A = 25° is smaller than a right angle, so it is acute. B has a square corner, so it is right (90°). C = 125° opens wider than a square corner, so it is obtuse. D is a flat line, so it is straight (180°). Obtuse angles so far: 1."}, {"type": "classify", "prompt": "The gate is spinning around! The angles are turned, but their size has not changed. Sort them.", "items": [{"id": "E", "deg": 60, "rot": 35}, {"id": "F", "deg": 160, "rot": 200}, {"id": "G", "deg": 90, "rot": 120}, {"id": "H", "deg": 140, "rot": 290}], "hint1": "Turning an angle does not change its size. Only look at how far apart the two rays open.", "hint2": "Imagine turning the page until one ray is flat along the bottom. Then compare with a square corner.", "solution": "E = 60° is acute. F = 160° is obtuse (nearly flat, but not quite). G = 90° is right — see the square marker. H = 140° is obtuse. Obtuse angles in this task: 2."}, {"type": "classify", "prompt": "Tricky gate! These angles are labelled. Read each measure carefully before you sort.", "items": [{"id": "I", "deg": 89, "rot": 0, "label": true}, {"id": "J", "deg": 91, "rot": 0, "label": true}, {"id": "K", "deg": 179, "rot": 0, "label": true}, {"id": "L", "deg": 90, "rot": 0, "label": true}], "hint1": "Acute: less than 90°. Right: exactly 90°. Obtuse: more than 90° but less than 180°. Straight: exactly 180°.", "hint2": "89° is just under 90°. 91° is just over 90°. 179° is just under 180°, so it is not a straight angle.", "solution": "I = 89° is acute. J = 91° is obtuse. K = 179° is obtuse (straight needs exactly 180°). L = 90° is right. Obtuse in this task: 2. Total obtuse angles: 1 + 2 + 2 = 5, so the lock digit is 5."}]}, {"id": "pumpkin", "name": "Pumpkin Patch", "icon": "pumpkin", "skill": "Angles as turns: 1/4, 1/2, 3/4 and full turns", "standard": "4.MD.5", "story": "The giant pumpkin spins on its stem. Watch the stem to see how far it turns.", "digitRule": "Lock digit = your answer to Task 3.", "digit": 4, "tasks": [{"type": "choice", "prompt": "The pumpkin's stem started pointing up (to 12). It turned clockwise and now points down (to 6). What turn did it make?", "diagram": {"kind": "pumpkin", "from": 0, "turn": 180}, "options": ["1/4 turn (90°)", "1/2 turn (180°)", "3/4 turn (270°)", "Full turn (360°)"], "answer": 1, "hint1": "A full turn is 360°. Each quarter turn is 90° — like going from 12 to 3 on a clock.", "hint2": "Count the quarter turns from 12: 12 → 3 is one, 3 → 6 is two. Two quarters make a half.", "solution": "From 12 to 6 is two quarter turns: 90° + 90° = 180°. That is a 1/2 turn."}, {"type": "spin", "prompt": "Spin the pumpkin a 3/4 turn clockwise. Then tell the witch how many degrees it turned.", "target": 270, "answer": 270, "hint1": "A 3/4 turn is three quarter turns. Each quarter turn is 90°.", "hint2": "Stem path: 12 → 3 → 6 → 9. Stop when the stem points to 9.", "solution": "Three quarter turns: 90° + 90° + 90° = 270°. The stem ends pointing at 9."}, {"type": "number", "prompt": "A bat hops around the pumpkin. Each hop is a 1/4 turn (90°). After its last hop, the bat has made one full turn (360°). How many hops did it make?", "diagram": {"kind": "hops", "hop": 90, "count": 4}, "answer": 4, "unit": "hops", "wrong": {"3": "Three hops is only 270° — a 3/4 turn. The bat needs to get all the way back to the start.", "90": "90° is the size of one hop. The question asks how many hops."}, "hint1": "A full turn is 360°. How many 90° pieces fit into 360°?", "hint2": "Count by 90s: 90, 180, 270, 360. Count how many numbers you said.", "solution": "90 + 90 + 90 + 90 = 360, so the bat made 4 hops. The lock digit is 4."}]}, {"id": "kitchen", "name": "Witch's Kitchen", "icon": "cauldron", "skill": "Measure angles with a protractor", "standard": "4.MD.6", "story": "The witch left her broomsticks and spoon at odd angles. Use the magic protractor to measure them.", "digitRule": "Lock digit = the TENS digit of your answer to Task 3.", "digit": 7, "tasks": [{"type": "measure", "prompt": "Measure the angle between the two broomsticks. Drag the protractor so its centre dot sits on the vertex and its 0 line lies along one broomstick.", "diagram": {"kind": "angle", "deg": 35, "rot": 0, "theme": "broom"}, "answer": 35, "tolerance": 1, "hint1": "Line up the centre dot with the vertex (the corner point). Line up the 0° line with one ray. Then read where the other ray crosses the scale.", "hint2": "This angle is smaller than a right angle, so the answer must be less than 90°. Use the scale that starts at 0 on the bottom ray.", "solution": "With the protractor centred on the vertex and the bottom ray on 0°, the top broomstick crosses 35° on the inner scale. The angle is acute, so 35° (not 145°) makes sense."}, {"type": "measure", "prompt": "This broomstick points LEFT. Measure the angle. Watch out — which scale starts at 0 on this broomstick?", "diagram": {"kind": "angle", "deg": 125, "rot": 180, "dir": -1, "theme": "broom"}, "answer": 125, "tolerance": 1, "hint1": "A protractor has two scales. Always use the scale that reads 0 on the ray you lined up with.", "hint2": "The bottom broomstick points left, so follow the OUTER scale, which starts at 0 on the left. The angle is obtuse, so the answer must be more than 90°.", "solution": "The flat broomstick points left, where the outer scale reads 0. Follow the outer scale round to the other broomstick: 125°. Reading 55° would be the wrong scale — 55° is acute, but this angle is clearly obtuse."}, {"type": "measure", "prompt": "The spoon leans in the cauldron. Neither ray is flat! Rotate the protractor so its 0 line lies along the cauldron rim ray, then measure.", "diagram": {"kind": "angle", "deg": 70, "rot": 20, "theme": "spoon"}, "answer": 70, "tolerance": 1, "hint1": "You can turn the protractor. Use the rotate handle (or the ⟲ ⟳ buttons) until the 0° line lies exactly on one ray.", "hint2": "Snap the centre onto the vertex first, then rotate until the protractor snaps onto the rim ray. The angle is acute, so expect less than 90°.", "solution": "With the protractor turned 20° to match the rim ray, the spoon crosses 70° on the scale that starts at 0 on the rim. 70° is acute, which matches the picture. Tens digit of 70 = 7, so the lock digit is 7."}]}, {"id": "library", "name": "Spooky Library", "icon": "book", "skill": "Draw an angle of a given size", "standard": "4.MD.6", "story": "A secret bookshelf door opens only when you draw the exact angle. Turn the ray — it will point at a magic book.", "digitRule": "Lock digit = the number on the book your ray points to in Task 3.", "digit": 2, "tasks": [{"type": "construct", "prompt": "Turn the ray to make a 60° angle with the floor ray. Which book does it point to?", "rot": 0, "dir": 1, "target": 60, "books": [{"deg": 30, "n": 5}, {"deg": 60, "n": 3}, {"deg": 90, "n": 8}, {"deg": 120, "n": 1}, {"deg": 150, "n": 6}], "hint1": "Start at the floor ray (0°) and turn counter-clockwise. 60° is less than a right angle.", "hint2": "Turn to 90° (straight up), then come back down by 30°.", "solution": "Turning the ray 60° up from the floor ray points it at book 3. 120° (book 1) would be the wrong scale: 180° − 60°."}, {"type": "construct", "prompt": "Make a 135° angle with the floor ray. Which book does it point to?", "rot": 0, "dir": 1, "target": 135, "books": [{"deg": 20, "n": 7}, {"deg": 45, "n": 4}, {"deg": 90, "n": 9}, {"deg": 135, "n": 6}, {"deg": 165, "n": 2}], "hint1": "135° is obtuse: more than 90° and less than 180°.", "hint2": "Go up to 90° (straight up), then keep turning 45° more — halfway to the flat line on the other side.", "solution": "90° + 45° = 135°. The ray points at book 6. Book 4 sits at 45° — that is the reading on the wrong scale."}, {"type": "construct", "prompt": "This floor ray points LEFT. Make a 115° angle, measured from the floor ray. Which book does it point to?", "rot": 180, "dir": -1, "target": 115, "books": [{"deg": 30, "n": 3}, {"deg": 65, "n": 9}, {"deg": 90, "n": 5}, {"deg": 115, "n": 2}, {"deg": 150, "n": 7}], "hint1": "Measure from the floor ray, which points left. The angle opens up and over to the right.", "hint2": "115° is obtuse, so the ray must lean past straight-up toward the right side. If you use the scale that starts at 0 on the right, you will get 65° — the wrong book.", "solution": "Starting at the left floor ray, turn 90° to straight up, then 25° more: 115°. The ray points at book 2. Book 9 (65°) is the wrong-scale trap. The lock digit is 2."}]}, {"id": "attic", "name": "Bat Attic", "icon": "bat", "skill": "Missing angles on a straight line (180°) and around a point (360°)", "standard": "4.MD.7", "story": "Bats are hanging from the beams. Some angle labels have fallen off — work out the missing ones.", "digitRule": "Lock digit = the TENS digit of your answer to Task 3.", "digit": 8, "tasks": [{"type": "number", "prompt": "The beam is a straight line. One angle is 128°. Find the missing angle x.", "diagram": {"kind": "line", "parts": [128, "x"]}, "answer": 52, "unit": "°", "wrong": {"128": "That is the angle you were given. Find the OTHER part of the straight line.", "232": "Angles on a straight line add to 180°, not 360°."}, "hint1": "Angles on a straight line add up to 180°.", "hint2": "128° + x = 180°. Count on from 128 to 180: 128 → 130 → 180.", "solution": "180° − 128° = 52°. Check: 128° + 52° = 180°. ✓"}, {"type": "number", "prompt": "Three beams meet at a point. Two angles are 90° and 140°. Find x.", "diagram": {"kind": "point", "parts": [90, 140, "x"]}, "answer": 130, "unit": "°", "wrong": {"50": "Angles around a point add to 360°, not 180°."}, "hint1": "Angles all the way around a point add up to 360° — a full turn.", "hint2": "First add the angles you know: 90° + 140° = 230°. Then find what is left of 360°.", "solution": "90° + 140° = 230°. 360° − 230° = 130°. Check: 90° + 140° + 130° = 360°. ✓"}, {"type": "number", "prompt": "Two bats hang on rays from one point on the straight beam. The angles are 35°, x and 65°. Find x.", "diagram": {"kind": "line", "parts": [35, "x", 65]}, "answer": 80, "unit": "°", "wrong": {"100": "That is 35° + 65°. Now take that away from 180°.", "260": "Angles on a straight line add to 180°, not 360°."}, "hint1": "All the angles on a straight line add to 180°, even when there are three of them.", "hint2": "35° + 65° = 100°. What do you add to 100° to make 180°?", "solution": "35° + 65° = 100°. 180° − 100° = 80°. Tens digit of 80 = 8, so the lock digit is 8."}]}, {"id": "treasure", "name": "Treasure Room", "icon": "key", "skill": "Two-step problems: angles split into parts", "standard": "4.MD.7", "story": "The treasure chest has a lid that opens in parts. Solve the angle puzzles to find the last digit.", "digitRule": "Lock digit = the TENS digit of your answer to Task 3.", "digit": 6, "tasks": [{"type": "number", "prompt": "The chest lid is open 75°. A candle ray splits it into 30° and x. Find x.", "diagram": {"kind": "split", "parts": [30, "x"], "whole": 75, "rot": 0}, "answer": 45, "unit": "°", "wrong": {"105": "The parts are smaller than the whole angle. Subtract: 75° − 30°."}, "hint1": "When an angle is split into parts, the parts add up to the whole angle.", "hint2": "30° + x = 75°. Take 30 away from 75.", "solution": "75° − 30° = 45°. Check: 30° + 45° = 75°. ✓"}, {"type": "number", "prompt": "A 160° angle is split into three parts: 40°, 55° and x. Find x.", "diagram": {"kind": "split", "parts": [40, 55, "x"], "whole": 160, "rot": 10}, "answer": 65, "unit": "°", "wrong": {"120": "That is 160° − 40°. You still need to take away the 55°.", "105": "That is 160° − 55°. You still need to take away the 40°."}, "hint1": "Step 1: add the parts you know. Step 2: subtract from the whole.", "hint2": "40° + 55° = 95°. Then 160° − 95° = ?", "solution": "40° + 55° = 95°. 160° − 95° = 65°. Check: 40° + 55° + 65° = 160°. ✓"}, {"type": "number", "prompt": "Three angles sit on a straight line. ∠1 = 47°. ∠2 is 20° more than ∠1. Find ∠3.", "diagram": {"kind": "line", "parts": [47, 67, "x"], "names": ["∠1", "∠2", "∠3"], "hide": [1]}, "answer": 66, "unit": "°", "wrong": {"67": "67° is ∠2. Now use the straight line to find ∠3.", "114": "114° is ∠1 + ∠2 together. Subtract from 180° to find ∠3.", "133": "You subtracted only ∠1. Take away ∠2 as well."}, "hint1": "Step 1: find ∠2. Step 2: angles on a straight line add to 180°.", "hint2": "∠2 = 47° + 20° = 67°. Then ∠1 + ∠2 = 47° + 67° = 114°. What is left of 180°?", "solution": "∠2 = 47° + 20° = 67°. ∠1 + ∠2 = 114°. ∠3 = 180° − 114° = 66°. Tens digit of 66 = 6, so the lock digit is 6."}]}], "vocab": [{"word": "vertex", "def": "The corner point where two rays meet to make an angle.", "art": "cat"}, {"word": "ray", "def": "A straight path that starts at a point and goes on forever in one direction.", "art": "broom"}, {"word": "degree (°)", "def": "The unit we use to measure the size of an angle. A full turn is 360°.", "art": "moon"}, {"word": "protractor", "def": "A tool for measuring and drawing angles in degrees.", "art": "cauldron"}, {"word": "acute angle", "def": "An angle less than 90°.", "art": "bat"}, {"word": "right angle", "def": "An angle of exactly 90° — a square corner.", "art": "book"}, {"word": "obtuse angle", "def": "An angle more than 90° but less than 180°.", "art": "pumpkin"}, {"word": "reflex angle", "def": "An angle more than 180° but less than 360°.", "art": "ghost"}]};
+const ART = {"pumpkin": [{"t": "ellipse", "cx": 32, "cy": 60, "rx": 24, "ry": 30, "fill": "orange", "stroke": "orangeDark"}, {"t": "ellipse", "cx": 68, "cy": 60, "rx": 24, "ry": 30, "fill": "orange", "stroke": "orangeDark"}, {"t": "ellipse", "cx": 50, "cy": 60, "rx": 19, "ry": 32, "fill": "orange", "stroke": "orangeDark"}, {"t": "path", "d": "M46 30 C46 22 48 15 55 10 L59 14 C54 18 53 23 54 30 Z", "fill": "green", "stroke": "greenDark"}], "jack": [{"t": "ellipse", "cx": 32, "cy": 60, "rx": 24, "ry": 30, "fill": "orange", "stroke": "orangeDark"}, {"t": "ellipse", "cx": 68, "cy": 60, "rx": 24, "ry": 30, "fill": "orange", "stroke": "orangeDark"}, {"t": "ellipse", "cx": 50, "cy": 60, "rx": 19, "ry": 32, "fill": "orange", "stroke": "orangeDark"}, {"t": "path", "d": "M46 30 C46 22 48 15 55 10 L59 14 C54 18 53 23 54 30 Z", "fill": "green", "stroke": "greenDark"}, {"t": "path", "d": "M30 52 L38 42 L46 52 Z", "fill": "ink"}, {"t": "path", "d": "M54 52 L62 42 L70 52 Z", "fill": "ink"}, {"t": "path", "d": "M28 64 C36 80 64 80 72 64 C64 70 58 71 50 71 C42 71 36 70 28 64 Z", "fill": "ink"}], "bat": [{"t": "path", "d": "M50 42 C44 35 33 31 14 34 C20 38 21 43 18 48 C26 46 31 48 33 55 C38 50 44 50 50 56 C56 50 62 50 67 55 C69 48 74 46 82 48 C79 43 80 38 86 34 C67 31 56 35 50 42 Z", "fill": "ink", "stroke": "ink"}, {"t": "ellipse", "cx": 50, "cy": 46, "rx": 8, "ry": 10, "fill": "ink"}, {"t": "path", "d": "M43 40 L44 30 L48 37 Z", "fill": "ink"}, {"t": "path", "d": "M57 40 L56 30 L52 37 Z", "fill": "ink"}, {"t": "circle", "cx": 46.5, "cy": 44, "r": 1.8, "fill": "candle"}, {"t": "circle", "cx": 53.5, "cy": 44, "r": 1.8, "fill": "candle"}], "cat": [{"t": "path", "d": "M64 88 C78 88 86 80 82 68 C80 63 84 61 87 66 C92 78 84 95 64 95 Z", "fill": "ink"}, {"t": "path", "d": "M34 92 C29 76 31 61 40 53 C35 47 35 40 37 33 L35 18 L45 28 C48 27 52 27 55 28 L65 18 L63 33 C65 40 65 47 60 53 C69 61 71 76 66 92 Z", "fill": "ink"}, {"t": "ellipse", "cx": 44, "cy": 39, "rx": 3, "ry": 4, "fill": "candle"}, {"t": "ellipse", "cx": 56, "cy": 39, "rx": 3, "ry": 4, "fill": "candle"}], "cauldron": [{"t": "path", "d": "M28 82 L22 94 L28 94 L34 84 Z", "fill": "ink"}, {"t": "path", "d": "M72 82 L78 94 L72 94 L66 84 Z", "fill": "ink"}, {"t": "path", "d": "M17 42 C13 70 29 89 50 89 C71 89 87 70 83 42 Z", "fill": "ink"}, {"t": "ellipse", "cx": 50, "cy": 41, "rx": 36, "ry": 9, "fill": "ink"}, {"t": "ellipse", "cx": 50, "cy": 40, "rx": 30, "ry": 6, "fill": "slime"}, {"t": "circle", "cx": 40, "cy": 31, "r": 5, "fill": "slime"}, {"t": "circle", "cx": 58, "cy": 25, "r": 4, "fill": "slime"}, {"t": "circle", "cx": 50, "cy": 15, "r": 2.6, "fill": "slime"}], "broom": [{"t": "path", "d": "M14 12 L19 9 L70 66 L65 70 Z", "fill": "wood", "stroke": "woodDark"}, {"t": "path", "d": "M62 66 L74 58 L95 88 L88 94 L72 92 Z", "fill": "straw", "stroke": "woodDark"}, {"t": "path", "d": "M61 64 L73 56 L77 61 L65 69 Z", "fill": "orangeDark"}], "moon": [{"t": "path", "d": "M58 10 C36 16 26 42 38 63 C50 84 78 88 92 74 C70 76 52 63 49 43 C47 29 51 18 58 10 Z", "fill": "candle", "stroke": "orangeDark"}], "book": [{"t": "rect", "x": 24, "y": 14, "w": 52, "h": 72, "rx": 3, "fill": "orange", "stroke": "orangeDark"}, {"t": "rect", "x": 24, "y": 14, "w": 10, "h": 72, "rx": 2, "fill": "orangeDark"}, {"t": "rect", "x": 42, "y": 28, "w": 26, "h": 6, "rx": 1, "fill": "paper"}], "ghost": [{"t": "path", "d": "M28 88 L28 46 C28 18 72 18 72 46 L72 88 L64 80 L57 88 L50 80 L43 88 L36 80 Z", "fill": "paper", "stroke": "ink"}, {"t": "ellipse", "cx": 42, "cy": 46, "rx": 4, "ry": 6, "fill": "ink"}, {"t": "ellipse", "cx": 58, "cy": 46, "rx": 4, "ry": 6, "fill": "ink"}, {"t": "ellipse", "cx": 50, "cy": 62, "rx": 5, "ry": 4, "fill": "ink"}], "key": [{"t": "circle", "cx": 30, "cy": 50, "r": 18, "fill": "candle", "stroke": "orangeDark"}, {"t": "circle", "cx": 30, "cy": 50, "r": 8, "fill": "night"}, {"t": "path", "d": "M46 45 L90 45 L90 55 L84 55 L84 66 L76 66 L76 55 L70 55 L70 63 L62 63 L62 55 L46 55 Z", "fill": "candle", "stroke": "orangeDark"}]};
+const KEY = "hhae-v1";
+const PAL = {orange:"#ff8c2e",orangeDark:"#c95f12",green:"#5aa04a",greenDark:"#2f6b2a",ink:"#140a1b",candle:"#ffd166",slime:"#8fdc7c",wood:"#9b6a3f",woodDark:"#5e3d22",straw:"#e9c46a",paper:"#fff6e8",night:"#1d1127"};
+const RAY = "#fff6e8", ARC = "#ff8c2e", LBL = "#ffd166";
+
+/* ---------- state ---------- */
+function blank(){return {name:"",rooms:{}}}
+let S = blank();
+try{ const raw = localStorage.getItem(KEY); if(raw) S = Object.assign(blank(), JSON.parse(raw)); }catch(e){}
+const DEMO=/demo=/.test(location.hash);
+if(DEMO) S=blank();
+function save(){ if(DEMO) return; try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+function roomState(id){ return S.rooms[id] || (S.rooms[id] = {done:false, tasks:[]}); }
+function roomOpen(i){ return i===0 || S.teacher || roomState(C.rooms[i-1].id).done; }
+function allDone(){ return C.rooms.every(r=>roomState(r.id).done); }
+function totalStars(){ let s=0; C.rooms.forEach(r=>roomState(r.id).tasks.forEach(t=>s+=(t&&t.stars)||0)); return s; }
+
+/* ---------- svg helpers ---------- */
+const NS="http://www.w3.org/2000/svg";
+const rad=d=>d*Math.PI/180;
+const P=(vx,vy,r,a)=>[vx+r*Math.cos(rad(a)), vy-r*Math.sin(rad(a))];
+const f=n=>Math.round(n*100)/100;
+function arc(vx,vy,r,a1,a2){ const [x1,y1]=P(vx,vy,r,a1),[x2,y2]=P(vx,vy,r,a2); const large=(a2-a1)>180?1:0; return `M${f(x1)} ${f(y1)} A${r} ${r} 0 ${large} 0 ${f(x2)} ${f(y2)}`; }
+function icon(name, x, y, size, extra=""){
+  const s=size/100; let out=`<g transform="translate(${f(x)} ${f(y)}) scale(${f(s)})" ${extra}>`;
+  for(const p of ART[name]){
+    const st = p.stroke?` stroke="${PAL[p.stroke]}" stroke-width="2"`:p.fill==="ink"?` stroke="#b9a3c9" stroke-width="${f(2/s)>4?4:2.5}"`:"";
+    const fl = ` fill="${PAL[p.fill]}"`;
+    if(p.t==="ellipse") out+=`<ellipse cx="${p.cx}" cy="${p.cy}" rx="${p.rx}" ry="${p.ry}"${fl}${st}/>`;
+    else if(p.t==="circle") out+=`<circle cx="${p.cx}" cy="${p.cy}" r="${p.r}"${fl}${st}/>`;
+    else if(p.t==="rect") out+=`<rect x="${p.x}" y="${p.y}" width="${p.w}" height="${p.h}" rx="${p.rx||0}"${fl}${st}/>`;
+    else out+=`<path d="${p.d}"${fl}${st} stroke-linejoin="round"/>`;
+  }
+  return out+"</g>";
+}
+function iconSvg(name, cls=""){ return `<svg viewBox="0 0 100 100" class="${cls}" aria-hidden="true">${icon(name,0,0,100)}</svg>`; }
+function rayLine(vx,vy,len,a,w=5,col=RAY){ const [x,y]=P(vx,vy,len,a); return `<line x1="${f(vx)}" y1="${f(vy)}" x2="${f(x)}" y2="${f(y)}" stroke="${col}" stroke-width="${w}" stroke-linecap="round"/>`; }
+function angleMark(vx,vy,lo,deg,r,opts={}){
+  if(deg===90){ const a=P(vx,vy,r*0.7,lo), b=P(vx,vy,r*0.7*Math.SQRT2,lo+45), c=P(vx,vy,r*0.7,lo+90);
+    return `<path d="M${f(a[0])} ${f(a[1])} L${f(b[0])} ${f(b[1])} L${f(c[0])} ${f(c[1])}" fill="none" stroke="${opts.col||ARC}" stroke-width="${opts.w||3}"/>`; }
+  return `<path d="${arc(vx,vy,r,lo,lo+deg)}" fill="none" stroke="${opts.col||ARC}" stroke-width="${opts.w||3}"/>`;
+}
+function label(x,y,text,size=20,col=LBL,weight=700){ return `<text x="${f(x)}" y="${f(y)}" font-size="${size}" font-family="Fredoka,system-ui,sans-serif" font-weight="${weight}" fill="${col}" text-anchor="middle" dominant-baseline="central">${text}</text>`; }
+function dot(x,y,r=5,col=RAY){ return `<circle cx="${f(x)}" cy="${f(y)}" r="${r}" fill="${col}"/>`; }
+
+/* small card angle (classify) */
+function cardAngle(it, guide){
+  const lo=it.rot, len=48; let s=`<svg viewBox="-62 -58 124 116" aria-label="Angle ${it.id}${it.label?`, ${it.deg} degrees`:""}">`;
+  // keep the vertex centred; for straight angles centre is fine as well
+  if(guide && it.deg!==90 && it.deg!==180) s+=rayLine(0,0,40,lo+90,2,"#8fe3ee").replace("/>",' stroke-dasharray="4 4"/>');
+  s+=angleMark(0,0,lo,it.deg,16,{w:2.5});
+  s+=rayLine(0,0,len,lo,4)+rayLine(0,0,len,lo+it.deg,4)+dot(0,0,4);
+  if(it.label){ const [x,y]=P(0,0,30,lo+it.deg/2+(it.deg>150?18:0)); s+=label(x,y+ (it.deg>150?-6:0),it.deg+"°",14); }
+  return s+"</svg>";
+}
+
+/* ---------- diagrams for number / choice tasks ---------- */
+function diagram(d, hint){
+  if(d.kind==="line") return lineDiagram(d,hint);
+  if(d.kind==="point") return pointDiagram(d,hint);
+  if(d.kind==="split") return splitDiagram(d,hint);
+  if(d.kind==="pumpkin") return pumpkinDiagram(d,hint);
+  if(d.kind==="hops") return hopsDiagram(d,hint);
+  return "";
+}
+function partLabel(v,i,d){ if(d.names){ if(v==="x") return d.names[i]+" = ?"; if(d.hide&&d.hide.includes(i)) return d.names[i]; return `${d.names[i]} = ${v}°`; } return v==="x"?"x":v+"°"; }
+function partsValues(d,total){ const known=d.parts.filter(p=>p!=="x").reduce((a,b)=>a+b,0); return d.parts.map(p=>p==="x"?total-known:p); }
+function lineDiagram(d,hint){
+  const vx=320,vy=300,L=280; const vals=partsValues(d,180);
+  let s=`<svg viewBox="0 0 640 380" role="img" aria-label="Angles on a straight line">`;
+  s+=`<rect x="20" y="${vy+6}" width="600" height="18" rx="4" fill="#4a2f2a"/>`;
+  if(hint>=2) s+=`<path d="${arc(vx,vy,150,0,180)}" fill="none" stroke="#8fe3ee" stroke-width="3" stroke-dasharray="8 6"/>`+label(vx,vy-170,"180° altogether",18,"#8fe3ee");
+  s+=rayLine(vx,vy,L,0)+rayLine(vx,vy,L,180);
+  let a=0; vals.forEach((v,i)=>{ const r=v<45?118:84; s+=angleMark(vx,vy,a,v,r>100?100:62,{w:3});
+    const [lx,ly]=P(vx,vy,r+(v<45?30:26),a+v/2); s+=label(lx,ly,partLabel(d.parts[i],i,d),d.names?18:22,d.parts[i]==="x"?"#ff8c2e":LBL);
+    a+=v; if(i<vals.length-1){ s+=rayLine(vx,vy,230,a); const [bx,by]=P(vx,vy,240,a); s+=icon("bat",bx-36,by-42,72); } });
+  return s+dot(vx,vy,6)+"</svg>";
+}
+function pointDiagram(d,hint){
+  const vx=320,vy=210; const vals=partsValues(d,360);
+  let s=`<svg viewBox="0 0 640 420" role="img" aria-label="Angles around a point">`;
+  if(hint>=2) s+=`<circle cx="${vx}" cy="${vy}" r="150" fill="none" stroke="#8fe3ee" stroke-width="3" stroke-dasharray="8 6"/>`+label(vx+170,vy-150,"360° all the way round",17,"#8fe3ee");
+  let a=0; vals.forEach((v,i)=>{ s+=rayLine(vx,vy,185,a); s+=angleMark(vx,vy,a,v,v===90?60:52,{w:3});
+    const [lx,ly]=P(vx,vy,92,a+v/2); s+=label(lx,ly,partLabel(d.parts[i],i,d),24,d.parts[i]==="x"?"#ff8c2e":LBL); a+=v; });
+  s+=icon("bat",vx+150,vy-36,60);
+  return s+dot(vx,vy,6)+"</svg>";
+}
+function splitDiagram(d,hint){
+  const rot=d.rot||0, vx=rot+d.whole>120?330:180, vy=330; const vals=partsValues(d,d.whole);
+  let s=`<svg viewBox="0 0 640 400" role="img" aria-label="An angle split into parts">`;
+  s+=icon("key",540,vy-20,90);
+  s+=`<path d="${arc(vx,vy,hint>=2?250:240,rot,rot+d.whole)}" fill="none" stroke="${hint>=2?"#8fe3ee":"#c95f12"}" stroke-width="${hint>=2?4:3}" ${hint>=2?'stroke-dasharray="8 6"':''}/>`;
+  { const [lx,ly]=P(vx,vy,282,rot+d.whole/2); s+=label(lx,ly,(hint>=2?"whole = ":"")+d.whole+"°",22,hint>=2?"#8fe3ee":"#ff8c2e"); }
+  let a=rot; s+=rayLine(vx,vy,300,a);
+  vals.forEach((v,i)=>{ s+=angleMark(vx,vy,a,v,i%2?120:100,{w:3}); const [lx,ly]=P(vx,vy,i%2?160:140,a+v/2); s+=label(lx,ly,partLabel(d.parts[i],i,d),22,d.parts[i]==="x"?"#ff8c2e":LBL); a+=v; s+=rayLine(vx,vy,i<vals.length-1?220:300,a); });
+  return s+dot(vx,vy,6)+"</svg>";
+}
+function clockMarks(cx,cy,r){ let s=""; [["12",90],["3",0],["6",270],["9",180]].forEach(([t,a])=>{ const [x,y]=P(cx,cy,r,a); s+=label(x,y,t,22,"#cdbcd6",600); }); return s; }
+function pumpkinDiagram(d,hint){
+  const cx=320,cy=200; let s=`<svg viewBox="0 0 640 400" role="img" aria-label="Pumpkin stem turning from 12 to 6">`;
+  s+=`<circle cx="${cx}" cy="${cy}" r="150" fill="none" stroke="#4f3766" stroke-width="2"/>`+clockMarks(cx,cy,172);
+  if(hint>=2){ [0,270].forEach(a=>{ const [x,y]=P(cx,cy,150,a); s+=dot(x,y,8,"#8fe3ee"); }); s+=label(cx+120,cy-110,"¼",22,"#8fe3ee")+label(cx+120,cy+110,"¼",22,"#8fe3ee"); }
+  s+=`<g transform="rotate(${d.turn} ${cx} ${cy})">${icon("pumpkin",cx-110,cy-125,220)}</g>`;
+  s+=`<line x1="${cx}" y1="${cy}" x2="${cx}" y2="${cy-140}" stroke="#cdbcd6" stroke-width="3" stroke-dasharray="6 6"/>`;
+  s+=`<path d="${arc(cx,cy,128,-90,90)}" fill="none" stroke="${ARC}" stroke-width="4" marker-start="url(#ah)"/>`;
+  s+=`<defs><marker id="ah" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="${ARC}"/></marker></defs>`;
+  s+=label(cx-210,cy-150,"start: 12",17,"#cdbcd6",500)+label(cx-210,cy+150,"end: 6",17,"#cdbcd6",500);
+  return s+"</svg>";
+}
+function hopsDiagram(d,hint){
+  const cx=320,cy=200; let s=`<svg viewBox="0 0 640 400" role="img" aria-label="A bat hopping around a pumpkin in quarter turns">`;
+  s+=`<circle cx="${cx}" cy="${cy}" r="140" fill="none" stroke="#4f3766" stroke-width="3" stroke-dasharray="10 8"/>`;
+  s+=icon("jack",cx-70,cy-70,140);
+  s+=icon("bat",cx-34,cy-140-34,68);
+  const [ax,ay]=P(cx,cy,140,40); s+=`<path d="${arc(cx,cy,160,20,80)}" fill="none" stroke="${ARC}" stroke-width="4"/>`;
+  s+=label(ax+70,ay-30,"1 hop = 90°",19,LBL);
+  if(hint>=2){ [0,270,180].forEach((a,i)=>{ const [x,y]=P(cx,cy,140,a); s+=dot(x,y,10,"#8fe3ee")+label(x,y+28,["90°","180°","270°"][i],16,"#8fe3ee"); }); const [x,y]=P(cx,cy,140,90); s+=label(x+40,y+6,"360°",16,"#8fe3ee"); }
+  return s+"</svg>";
+}
+
+/* ---------- app shell ---------- */
+const app=document.getElementById("app");
+let view={name:"intro"};
+function go(v){ view=v; render(); window.scrollTo(0,0); }
+function topbar(){
+  const code=C.rooms.map(r=>roomState(r.id).done?r.digit:"·");
+  return `<div class="topbar noprint"><div class="brand">${iconSvg("jack")}<span>${C.title}</span></div>
+  <div class="lockmini" aria-label="Lock code so far">${code.map(c=>`<span>${c}</span>`).join("")}</div></div>`;
+}
+function render(){
+  if(view.name==="intro") return renderIntro();
+  if(view.name==="map") return renderMap();
+  if(view.name==="room") return renderRoom();
+  if(view.name==="lock") return renderLock();
+  if(view.name==="cert") return renderCert();
+}
+function houseSvg(big){
+  const wins=[[110,360],[290,360],[110,250],[290,250],[110,140],[290,140]]; // gate low-left .. treasure top
+  let s=`<svg viewBox="0 0 520 520" role="img" aria-label="Haunted house map with six rooms">`;
+  s+=icon("moon",410,0,100);
+  s+=`<path d="M60 470 L60 200 L260 60 L460 200 L460 470 Z" fill="#2b1838" stroke="#4f3766" stroke-width="4"/>`;
+  s+=`<path d="M36 214 L260 44 L484 214" fill="none" stroke="#ff8c2e" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>`;
+  s+=`<rect x="360" y="84" width="36" height="66" fill="#2b1838" stroke="#4f3766" stroke-width="4"/>`;
+  s+=`<rect x="0" y="468" width="520" height="52" fill="#1a3a22"/>`;
+  if(big){
+    C.rooms.forEach((r,i)=>{ const [x,y]=wins[i]; const st=roomState(r.id); const open=roomOpen(i);
+      const fill=st.done?"#8fdc7c":open?"#ffd166":"#3b2750";
+      s+=`<g class="room ${open?"":"locked"}" data-room="${i}" tabindex="${open?0:-1}" role="button" aria-label="Room ${i+1}: ${r.name}${st.done?", solved":open?"":", locked"}">
+        <rect class="win" x="${x}" y="${y}" width="140" height="90" rx="10" fill="${fill}" stroke="#140a1b" stroke-width="4"/>
+        <line x1="${x+70}" y1="${y}" x2="${x+70}" y2="${y+90}" stroke="#140a1b" stroke-width="3" opacity=".35"/>
+        ${icon(r.icon,x+38,y+10,64)}
+        <rect x="${x+4}" y="${y+64}" width="40" height="22" rx="6" fill="#140a1b"/>${label(x+24,y+75,i+1,15,"#fff6e8")}
+        ${st.done?`<rect x="${x+98}" y="${y+60}" width="38" height="26" rx="6" fill="#140a1b"/>${label(x+117,y+73,r.digit,18,"#ffd166")}`:""}
+        ${!open?`<text x="${x+117}" y="${y+76}" font-size="20" text-anchor="middle">🔒</text>`:""}
+      </g>`; });
+  } else {
+    wins.forEach(([x,y],i)=>{ s+=`<rect x="${x}" y="${y}" width="140" height="90" rx="10" fill="${i%2?"#ffd166":"#ff8c2e"}" opacity="${.55+.07*i}" stroke="#140a1b" stroke-width="4"/>`; });
+  }
+  s+=icon("cat",0,400,80)+icon("pumpkin",452,412,64)+icon("bat",60,20,70)+icon("bat",150,70,46);
+  return s+"</svg>";
+}
+function renderIntro(){
+  const started = Object.keys(S.rooms).length>0;
+  app.innerHTML = topbar()+`<section class="hero">
+    <div><h1>Haunted House <em>Angle</em> Escape</h1>
+      <p class="lead">Six spooky rooms. Each room hides one digit of the lock code. Measure, turn, draw and work out angles to escape before midnight!</p>
+      <ul class="goals">
+        <li><b>1</b><span>Name angles: acute, right, obtuse, straight</span></li>
+        <li><b>2</b><span>See angles as turns: ¼, ½, ¾ and full</span></li>
+        <li><b>3</b><span>Measure and draw angles with a protractor</span></li>
+        <li><b>4</b><span>Find missing angles that add up to 180° or 360°</span></li>
+      </ul>
+      <div class="namebox"><label class="sr" for="nm">Your name</label>
+        <input id="nm" placeholder="Type your name" maxlength="28" value="${esc(S.name)}" autocomplete="off">
+        <button class="btn" id="start">${started?"Continue":"Start the escape"}</button></div>
+      <p class="muted" style="font-size:14px;margin-top:10px">${C.grade} · CCSS ${C.standards.join(", ")}</p>
+    </div>
+    <div class="hero-art">${houseSvg(false)}</div></section>`;
+  document.getElementById("start").onclick=()=>{ S.name=document.getElementById("nm").value.trim(); save(); go({name:"map"}); };
+}
+function esc(s){ return String(s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function renderMap(){
+  app.innerHTML = topbar()+`<div class="mapgrid"><div class="house">${houseSvg(true)}</div>
+  <aside class="side"><h2>The Haunted House</h2><p class="muted" style="margin:0">Solve a room to win its lock digit. Rooms open in order.</p>
+  <ul class="roomlist">${C.rooms.map((r,i)=>{ const st=roomState(r.id); return `<li class="${st.done?"done":""}"><button data-room="${i}" ${roomOpen(i)?"":"disabled"}><span class="num">${st.done?"✓":i+1}</span><span>${r.name}<small>${r.skill}</small></span>${st.done?`<span class="digit" aria-label="digit">${r.digit}</span>`:""}</button></li>`; }).join("")}</ul>
+  <div class="actions"><button class="btn" id="lockbtn" ${allDone()?"":"disabled"}>Open the lock</button></div>
+  </aside></div>
+  <div class="foot noprint"><span>Progress saves on this device.</span><span><button class="linkbtn" id="unlock">Teacher: unlock all rooms</button><button class="linkbtn" id="reset">Reset progress</button></span></div>`;
+  app.querySelectorAll("[data-room]").forEach(el=>{ const i=+el.dataset.room; const openIt=()=>{ if(roomOpen(i)) go({name:"room",i,t:firstUnsolved(i)}); }; el.onclick=openIt; el.onkeydown=e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); openIt(); } }; });
+  document.getElementById("lockbtn").onclick=()=>go({name:"lock"});
+  document.getElementById("reset").onclick=()=>{ if(confirm("Reset all progress on this device?")){ const n=S.name; S=blank(); S.name=n; save(); render(); } };
+  document.getElementById("unlock").onclick=()=>{ S.teacher=true; save(); render(); };
+}
+function firstUnsolved(i){ const st=roomState(C.rooms[i].id); const k=C.rooms[i].tasks.findIndex((_,j)=>!(st.tasks[j]&&st.tasks[j].solved)); return k<0?0:k; }
+
+/* ---------- room / task ---------- */
+let T={}; // live task state
+function renderRoom(){
+  const room=C.rooms[view.i], task=room.tasks[view.t], st=roomState(room.id);
+  T={hint:0, wrong:0, solved:!!(st.tasks[view.t]&&st.tasks[view.t].solved), showSol:false};
+  app.innerHTML = topbar()+`<div class="roomhead">${iconSvg(room.icon,"ic")}<div><p class="muted" style="margin:0;font-size:14px">Room ${view.i+1} of 6</p><h1>${room.name}</h1></div><span class="std">${room.standard}</span>
+    <button class="btn ghost small noprint" id="back" style="margin-left:auto">← Map</button></div>
+    <p class="story">${room.story}</p>
+    <div class="steps" aria-label="Task progress">${room.tasks.map((_,j)=>`<span class="${(st.tasks[j]&&st.tasks[j].solved)?"ok":j===view.t?"on":""}"></span>`).join("")}</div>
+    <section class="task" id="task"><div class="q">Task ${view.t+1}. ${task.prompt}</div><div id="body"></div>
+      <div class="actions"><button class="btn" id="check">Check answer</button>
+      <button class="btn ghost small" id="h1">Hint 1</button><button class="btn ghost small" id="h2" disabled>Hint 2</button><button class="btn ghost small" id="sol" disabled>Show solution</button>
+      <span class="spacer"></span><button class="btn" id="next" style="display:none">${view.t<2?"Next task →":"Collect lock digit"}</button></div>
+      <div id="fb" class="feedback" role="status"></div><div id="hintbox"></div></section>`;
+  document.getElementById("back").onclick=()=>go({name:"map"});
+  document.getElementById("h1").onclick=()=>showHint(1);
+  document.getElementById("h2").onclick=()=>showHint(2);
+  document.getElementById("sol").onclick=()=>showSolution();
+  document.getElementById("check").onclick=()=>check();
+  document.getElementById("next").onclick=()=>nextTask();
+  TASKS[task.type].mount(task);
+  if(T.solved) markSolved(true);
+}
+function fb(kind,tag,msg){ const el=document.getElementById("fb"); el.className="feedback show "+kind; el.innerHTML=`<b class="tag">${tag}</b>${msg}`; }
+function showHint(n){
+  const task=C.rooms[view.i].tasks[view.t];
+  T.hint=Math.max(T.hint,n);
+  const hb=document.getElementById("hintbox");
+  hb.innerHTML=`<div class="feedback show hint"><b class="tag">Hint 1 · Remember</b>${task.hint1}</div>`+(T.hint>=2?`<div class="feedback show hint"><b class="tag">Hint 2 · Look at the picture</b>${task.hint2}</div>`:"");
+  document.getElementById("h2").disabled=false;
+  if(T.hint>=2){ document.getElementById("sol").disabled=false; TASKS[task.type].hintVisual&&TASKS[task.type].hintVisual(task); }
+}
+function showSolution(){
+  const task=C.rooms[view.i].tasks[view.t]; T.showSol=true;
+  document.getElementById("hintbox").insertAdjacentHTML("beforeend",`<div class="feedback show sol"><b class="tag">Worked solution</b>${task.solution}<br><span class="muted">Now enter the answer yourself to continue.</span></div>`);
+  document.getElementById("sol").disabled=true;
+}
+function check(){
+  if(T.solved) return;
+  const task=C.rooms[view.i].tasks[view.t];
+  const res=TASKS[task.type].check(task);
+  if(res===null) return;
+  if(res.ok){ markSolved(false); }
+  else { T.wrong++; fb("bad","Not yet",res.msg||"Have another look."); if(T.wrong>=3) document.getElementById("sol").disabled=false; }
+}
+function markSolved(already){
+  const room=C.rooms[view.i], st=roomState(room.id);
+  if(!already){ const stars=T.showSol?1:T.hint>0?2:3; st.tasks[view.t]={solved:true,stars}; save(); }
+  T.solved=true;
+  const s=st.tasks[view.t].stars;
+  fb("good","Correct!",`${"★".repeat(s)}${"☆".repeat(3-s)} ${C.rooms[view.i].tasks[view.t].solution}`);
+  document.getElementById("check").disabled=true;
+  const nx=document.getElementById("next"); nx.style.display=""; nx.focus({preventScroll:true});
+  document.querySelectorAll(".steps span")[view.t].className="ok";
+  TASKS[room.tasks[view.t].type].lock&&TASKS[room.tasks[view.t].type].lock(room.tasks[view.t]);
+}
+function nextTask(){
+  const room=C.rooms[view.i], st=roomState(room.id);
+  if(view.t<2) return go({name:"room",i:view.i,t:view.t+1});
+  st.done=room.tasks.every((_,j)=>st.tasks[j]&&st.tasks[j].solved); save();
+  const m=document.createElement("div"); m.className="modal"; m.innerHTML=`<div class="box" role="dialog" aria-modal="true" aria-label="Lock digit">${iconSvg("key")}
+    <h2>${room.name} escaped!</h2><p class="muted">${room.digitRule}</p><div class="big">${room.digit}</div>
+    <p>Write it in box ${view.i+1} of your lock code.</p><button class="btn" id="ok">${allDone()?"Go to the lock":"Back to the map"}</button></div>`;
+  document.body.appendChild(m); const ok=m.querySelector("#ok"); ok.focus();
+  ok.onclick=()=>{ m.remove(); go({name:"map"}); };
+}
+function parseNum(id){ const v=(document.getElementById(id)||{}).value; if(v==null) return NaN; const m=String(v).replace(/[°\s]/g,"").match(/^-?\d+$/); return m?parseInt(m[0],10):NaN; }
+function numberBox(label,unit){ return `<div class="answer"><label for="ans">${label}</label><input id="ans" inputmode="numeric" autocomplete="off" aria-describedby="unit"><span class="unit" id="unit">${unit||""}</span></div>`; }
+function needNum(){ fb("bad","Type a number","Enter your answer as a whole number first."); return null; }
+document.addEventListener("keydown",e=>{ if(e.key==="Enter" && e.target && e.target.id==="ans"){ check(); } });
+
+/* ---------- task types ---------- */
+const TYPES=["acute","right","obtuse","straight"];
+const TYPE_INFO={acute:"less than 90°",right:"exactly 90°",obtuse:"between 90° and 180°",straight:"exactly 180°"};
+const typeOf=d=>d<90?"acute":d===90?"right":d<180?"obtuse":"straight";
+const TASKS={
+  classify:{
+    mount(task){ T.place={}; T.sel=null; this.draw(task); },
+    draw(task){
+      const items=task.items, g=T.hint>=2;
+      const card=(it,small)=>`<button class="card ${T.sel===it.id?"sel":""} ${T.marks&&T.marks[it.id]||""}" data-id="${it.id}" aria-pressed="${T.sel===it.id}"><span class="id">${it.id}</span>${cardAngle(it,g)}</button>`;
+      const pool=items.filter(it=>!T.place[it.id]);
+      document.getElementById("body").innerHTML=`<div class="pool" aria-label="Angle cards">${pool.map(it=>card(it)).join("")||`<p class="muted" style="grid-column:1/-1;margin:auto">All cards sorted — press <b>Check answer</b>.</p>`}</div>
+       <div class="bins">${TYPES.map(t=>`<div class="bin ${T.sel?"ready":""}" data-bin="${t}" role="group" aria-label="${t} angles, ${TYPE_INFO[t]}"><button class="binbtn" data-bin="${t}"><h3>${t[0].toUpperCase()+t.slice(1)}</h3></button><small>${TYPE_INFO[t]}</small><div class="held">${items.filter(it=>T.place[it.id]===t).map(it=>card(it,true)).join("")}</div></div>`).join("")}</div>`;
+      document.querySelectorAll(".card").forEach(el=>el.onclick=e=>{ e.stopPropagation(); if(T.solved) return; T.sel=T.sel===el.dataset.id?null:el.dataset.id; this.draw(task); });
+      document.querySelectorAll(".bin").forEach(el=>el.onclick=()=>{ if(T.solved||!T.sel) return; T.place[T.sel]=el.dataset.bin; if(T.marks) delete T.marks[T.sel]; T.sel=null; this.draw(task); });
+    },
+    hintVisual(task){ this.draw(task); },
+    check(task){
+      const left=task.items.filter(it=>!T.place[it.id]);
+      if(left.length){ fb("bad","Keep sorting",`Put every card in a group first (${left.length} left).`); return null; }
+      T.marks={}; const wrong=[];
+      task.items.forEach(it=>{ const ok=T.place[it.id]===typeOf(it.deg); T.marks[it.id]=ok?"right":"wrong"; if(!ok) wrong.push(it); });
+      this.draw(task);
+      if(!wrong.length) return {ok:true};
+      const w=wrong[0], t=typeOf(w.deg);
+      let msg=`${wrong.length} card${wrong.length>1?"s are":" is"} in the wrong group (marked ✗). Tap a card to move it.`;
+      if(w.label && (w.deg===89||w.deg===91)) msg+=` Look closely at ${w.id}: ${w.deg}° is ${w.deg<90?"just under":"just over"} 90°.`;
+      else if(w.deg===179) msg+=` ${w.id} is 179° — a straight angle must be exactly 180°.`;
+      else msg+=` Hint: card ${w.id} is ${TYPE_INFO[t]}.`;
+      return {ok:false,msg};
+    },
+    lock(){ document.querySelectorAll(".card,.binbtn").forEach(b=>b.disabled=true); }
+  },
+  choice:{
+    mount(task){ T.pick=null; this.draw(task); },
+    draw(task){ document.getElementById("body").innerHTML=`<div class="stage">${diagram(task.diagram,T.hint)}</div><div class="choices" role="radiogroup">${task.options.map((o,k)=>`<button class="choice ${T.pick===k?"sel":""}" role="radio" aria-checked="${T.pick===k}" data-k="${k}">${o}</button>`).join("")}</div>`;
+      document.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{ if(T.solved) return; T.pick=+b.dataset.k; this.draw(task); }); },
+    hintVisual(task){ this.draw(task); },
+    check(task){ if(T.pick===null){ fb("bad","Choose one","Tap the turn you think is right."); return null; }
+      if(T.pick===task.answer) return {ok:true};
+      const m={0:"A 1/4 turn would stop at 3. The stem went further.",2:"A 3/4 turn would stop at 9. Count the quarter turns again.",3:"A full turn goes all the way back to 12."};
+      return {ok:false,msg:m[T.pick]||"Count the quarter turns."}; },
+    lock(){ document.querySelectorAll(".choice").forEach(b=>b.disabled=true); }
+  },
+  spin:{
+    mount(task){ T.turn=0; this.draw(task); },
+    svg(task){ const cx=320,cy=210; let s=`<svg viewBox="0 0 640 420" id="spinsvg" role="img" aria-label="Pumpkin you can spin. Turned ${T.turn} degrees">`;
+      s+=`<circle cx="${cx}" cy="${cy}" r="150" fill="none" stroke="#4f3766" stroke-width="2"/>`+clockMarks(cx,cy,175);
+      if(T.turn>0) s+=`<path d="${T.turn>=360?`M${cx} ${cy-125} A125 125 0 1 1 ${cx-0.01} ${cy-125}`:arc(cx,cy,125,90-T.turn,90)}" fill="none" stroke="${ARC}" stroke-width="6" stroke-linecap="round"/>`;
+      if(T.hint>=2) [0,270,180].forEach(a=>{ const [x,y]=P(cx,cy,150,a); s+=dot(x,y,9,"#8fe3ee"); });
+      s+=`<line x1="${cx}" y1="${cy}" x2="${cx}" y2="${cy-150}" stroke="#cdbcd6" stroke-width="2" stroke-dasharray="6 6"/>`;
+      s+=`<g id="pk" transform="rotate(${T.turn} ${cx} ${cy})" style="cursor:grab">${icon("pumpkin",cx-100,cy-114,200)}<circle cx="${cx+8}" cy="${cy-84}" r="22" fill="none" stroke="${LBL}" stroke-width="4"/></g>`;
+      return s+"</svg>"; },
+    draw(task){
+      document.getElementById("body").innerHTML=`<div class="stage">${this.svg(task)}</div>
+      <div class="tools"><span class="readout" id="ro">${T.turn}°</span><span class="muted" id="rofrac">${fracName(T.turn)}</span>
+      <span class="spacer" style="flex:1"></span><button class="btn small" id="q">¼ turn clockwise ⟳</button><button class="btn ghost small" id="rs">Reset</button></div>
+      ${numberBox("How many degrees did it turn?","°")}`;
+      const self=this; document.getElementById("q").onclick=()=>{ if(T.solved) return; T.turn=Math.min(360,T.turn+90); self.refresh(task); };
+      document.getElementById("rs").onclick=()=>{ if(T.solved) return; T.turn=0; self.refresh(task); };
+      this.bindDrag(task);
+    },
+    refresh(task){ const st=document.querySelector(".stage"); st.innerHTML=this.svg(task); document.getElementById("ro").textContent=T.turn+"°"; document.getElementById("rofrac").textContent=fracName(T.turn); this.bindDrag(task); },
+    bindDrag(task){ const svg=document.getElementById("spinsvg"); let last=null; const self=this;
+      const ang=e=>{ const p=svgPt(svg,e); return (Math.atan2(p.x-320,-(p.y-210))*180/Math.PI+360)%360; };
+      svg.onpointerdown=e=>{ if(T.solved) return; svg.setPointerCapture(e.pointerId); last=ang(e); T.raw=T.turn; };
+      svg.onpointermove=e=>{ if(last===null) return; const a=ang(e); let d=a-last; if(d>180) d-=360; if(d<-180) d+=360; last=a; T.raw=Math.max(0,Math.min(360,T.raw+d)); const snapped=Math.round(T.raw/15)*15; if(snapped!==T.turn){ T.turn=snapped; const g=svg.querySelector("#pk"); g.setAttribute("transform",`rotate(${T.turn} 320 210)`); document.getElementById("ro").textContent=T.turn+"°"; document.getElementById("rofrac").textContent=fracName(T.turn);} };
+      svg.onpointerup=svg.onpointercancel=()=>{ if(last===null) return; last=null; T.turn=Math.round(T.turn/90)*90; self.refresh(task); };
+    },
+    hintVisual(task){ this.refresh(task); },
+    check(task){ const n=parseNum("ans");
+      if(T.turn!==task.target) return {ok:false,msg:T.turn===0?"Spin the pumpkin first: drag it round, or tap ¼ turn.":`Your pumpkin turned ${T.turn}° (${fracName(T.turn)}). A 3/4 turn stops with the stem at 9.`};
+      if(isNaN(n)) return needNum();
+      if(n!==task.answer) return {ok:false,msg:`The pumpkin is in the right place! Now count the degrees: each quarter turn is 90°.`};
+      return {ok:true}; },
+    lock(){ document.getElementById("q").disabled=true; document.getElementById("rs").disabled=true; document.getElementById("ans").disabled=true; }
+  },
+  number:{
+    mount(task){ this.draw(task); },
+    draw(task){ const v=(document.getElementById("ans")||{}).value||""; document.getElementById("body").innerHTML=`<div class="stage">${diagram(task.diagram,T.hint)}</div>${numberBox(task.unit==="hops"?"Number of hops:":"x =",task.unit==="°"?"°":task.unit)}`; document.getElementById("ans").value=v; },
+    hintVisual(task){ this.draw(task); },
+    check(task){ const n=parseNum("ans"); if(isNaN(n)) return needNum(); if(n===task.answer) return {ok:true};
+      return {ok:false,msg:(task.wrong&&task.wrong[String(n)])||"Check your adding and subtracting, then try again. Hint 1 can help."}; },
+    lock(){ document.getElementById("ans").disabled=true; }
+  },
+  measure:{
+    mount(task){ const d=task.diagram; T.dir=d.dir||1; T.lo=T.dir>0?d.rot:d.rot-d.deg; T.hi=T.lo+d.deg;
+      T.v=d.rot===180?{x:400,y:320}:d.rot===0?{x:210,y:320}:{x:240,y:345};
+      T.pr={x:T.v.x+60,y:T.v.y+75,r:0}; T.zoom=window.innerWidth<640; this.draw(task); },
+    svgBody(task){ const d=task.diagram, v=T.v; const W=640,H=480;
+      const vb=T.zoom?`${v.x-215} ${v.y-255} 430 340`:`0 0 ${W} ${H}`;
+      let s=`<svg viewBox="${vb}" id="msvg" role="img" aria-label="Angle to measure with a draggable protractor">`;
+      s+=`<rect x="-400" y="-400" width="1440" height="1300" fill="transparent"/>`;
+      if(d.theme==="spoon") s+=icon("cauldron",v.x-120,v.y-60,240,'opacity=".35"');
+      const len=270; const dec=(a)=>{ const [x,y]=P(v.x,v.y,len,a); return d.theme==="broom"?`<g transform="translate(${f(x)} ${f(y)}) rotate(${f(-a)})"><path d="M0 -12 L34 -18 L40 0 L34 18 L0 12 Z" fill="#e9c46a" stroke="#5e3d22" stroke-width="2"/></g>`:""; };
+      s+=angleMark(v.x,v.y,T.lo,d.deg,34,{w:3});
+      s+=rayLine(v.x,v.y,len,T.lo,6,d.theme==="broom"?"#c9915d":RAY)+rayLine(v.x,v.y,len,T.hi,6,d.theme==="broom"?"#c9915d":RAY)+dec(T.lo)+dec(T.hi)+dot(v.x,v.y,7,"#ff8c2e");
+      s+=this.protractor(task);
+      return s+"</svg>"; },
+    protractor(task){ const R=190, p=T.pr; const scale=T.hint>=2?this.scaleFor(task):null;
+      let g=`<g id="prot" transform="translate(${f(p.x)} ${f(p.y)}) rotate(${f(-p.r)})">`;
+      g+=`<path d="M${-R} 0 A${R} ${R} 0 0 1 ${R} 0 Z" fill="rgba(143,227,238,.16)" stroke="#8fe3ee" stroke-width="2.5" style="cursor:move" data-drag="move"/>`;
+      g+=`<path d="M${-R+62} 0 A${R-62} ${R-62} 0 0 1 ${R-62} 0" fill="none" stroke="#8fe3ee" stroke-width="1" opacity=".6" pointer-events="none"/>`;
+      if(scale) g+=`<path d="${scale==="outer"?`M${-R+16} 0 A${R-16} ${R-16} 0 0 1 ${R-16} 0`:`M${-R+44} 0 A${R-44} ${R-44} 0 0 1 ${R-44} 0`}" fill="none" stroke="#ff8c2e" stroke-width="22" opacity=".35" pointer-events="none"/>`;
+      for(let a=0;a<=180;a++){ const L=a%10===0?16:a%5===0?10:5; const c=Math.cos(rad(a)), s2=-Math.sin(rad(a));
+        g+=`<line x1="${f(R*c)}" y1="${f(R*s2)}" x2="${f((R-L)*c)}" y2="${f((R-L)*s2)}" stroke="#fff6e8" stroke-width="${a%10===0?1.6:1}" pointer-events="none"/>`;
+        if(a%10===0){ const ot=180-a, it=a; const [ox,oy]=[(R-28)*c,(R-28)*s2], [ix,iy]=[(R-50)*c,(R-50)*s2];
+          const dimO=scale==="inner"?.35:1, dimI=scale==="outer"?.35:1;
+          g+=`<text x="${f(ox)}" y="${f(oy)}" transform="rotate(${90-a} ${f(ox)} ${f(oy)})" font-size="17" font-weight="700" fill="#ffd166" opacity="${dimO}" text-anchor="middle" dominant-baseline="central" font-family="Atkinson Hyperlegible,system-ui" pointer-events="none" ${ot>=100?'textLength="23" lengthAdjust="spacingAndGlyphs"':''}>${ot}</text>`;
+          g+=`<text x="${f(ix)}" y="${f(iy)}" transform="rotate(${90-a} ${f(ix)} ${f(iy)})" font-size="14" fill="#8fe3ee" opacity="${dimI}" text-anchor="middle" dominant-baseline="central" font-family="Atkinson Hyperlegible,system-ui" pointer-events="none" ${it>=100?'textLength="19" lengthAdjust="spacingAndGlyphs"':''}>${it}</text>`; } }
+      g+=`<line x1="${-R}" y1="0" x2="${R}" y2="0" stroke="#8fe3ee" stroke-width="2" pointer-events="none"/>`;
+      g+=`<line x1="0" y1="-14" x2="0" y2="0" stroke="#fff6e8" stroke-width="2" pointer-events="none"/><circle r="5" fill="none" stroke="#fff6e8" stroke-width="2" pointer-events="none"/>`;
+      [[R+24,0],[-R-24,0],[0,-R-26]].forEach(([x,y])=>{ g+=`<g data-drag="rot" style="cursor:grab"><circle cx="${x}" cy="${y}" r="22" fill="#ff8c2e" stroke="#140a1b" stroke-width="3"/><text x="${x}" y="${y+1}" font-size="22" text-anchor="middle" dominant-baseline="central" fill="#140a1b" pointer-events="none">⟳</text></g>`; });
+      return g+"</g>"; },
+    scaleFor(task){ return (task.diagram.rot===180)?"outer":"inner"; },
+    draw(task){
+      document.getElementById("body").innerHTML=`<div class="stage" id="mstage">${this.svgBody(task)}</div>
+       <div class="tools"><button class="btn ghost small" id="rl" aria-label="Rotate protractor anticlockwise 1 degree">⟲ 1°</button><button class="btn ghost small" id="rr" aria-label="Rotate protractor clockwise 1 degree">⟳ 1°</button>
+       <button class="btn ghost small" id="zm" aria-pressed="${T.zoom}">${T.zoom?"Zoom out":"Zoom in"}</button><span class="muted" id="snapmsg" style="font-size:14px"></span></div>
+       ${numberBox("The angle measures","°")}`;
+      const self=this;
+      document.getElementById("rl").onclick=()=>{ T.pr.r+=1; self.snap(); self.refresh(task); };
+      document.getElementById("rr").onclick=()=>{ T.pr.r-=1; self.snap(); self.refresh(task); };
+      document.getElementById("zm").onclick=()=>{ T.zoom=!T.zoom; const v=document.getElementById("ans").value; self.draw(task); document.getElementById("ans").value=v; };
+      this.bind(task);
+    },
+    refresh(task){ document.getElementById("mstage").innerHTML=this.svgBody(task); this.bind(task); this.status(); },
+    status(){ const el=document.getElementById("snapmsg"); if(!el) return; const onV=Math.hypot(T.pr.x-T.v.x,T.pr.y-T.v.y)<0.5; const al=this.aligned(); el.textContent=(onV?"✓ centre on vertex":"")+(onV&&al?" · ":"")+(al?"✓ 0 line on a ray":""); },
+    aligned(){ const n=a=>((a%360)+360)%360; return [T.lo, T.hi-180].some(c=>Math.abs(n(T.pr.r)-n(c))<0.01); },
+    snap(){ if(Math.hypot(T.pr.x-T.v.x,T.pr.y-T.v.y)<16){ T.pr.x=T.v.x; T.pr.y=T.v.y; }
+      const n=a=>((a%360)+360)%360; for(const c of [T.lo,T.hi-180]){ let d=n(T.pr.r)-n(c); if(d>180) d-=360; if(d<-180) d+=360; if(Math.abs(d)<=3){ T.pr.r=c; break; } } },
+    bind(task){ const svg=document.getElementById("msvg"); let mode=null, off=null, a0=0, r0=0; const self=this;
+      svg.onpointerdown=e=>{ if(T.solved) return; const t=e.target.closest("[data-drag]"); if(!t) return; mode=t.dataset.drag; svg.setPointerCapture(e.pointerId); const p=svgPt(svg,e);
+        if(mode==="move") off={x:p.x-T.pr.x,y:p.y-T.pr.y}; else { a0=Math.atan2(-(p.y-T.pr.y),p.x-T.pr.x)*180/Math.PI; r0=T.pr.r; } e.preventDefault(); };
+      svg.onpointermove=e=>{ if(!mode) return; const p=svgPt(svg,e);
+        if(mode==="move"){ T.pr.x=p.x-off.x; T.pr.y=p.y-off.y; } else { const a=Math.atan2(-(p.y-T.pr.y),p.x-T.pr.x)*180/Math.PI; T.pr.r=Math.round(r0+(a-a0)); }
+        self.snap(); svg.querySelector("#prot").setAttribute("transform",`translate(${f(T.pr.x)} ${f(T.pr.y)}) rotate(${f(-T.pr.r)})`); self.status(); };
+      svg.onpointerup=svg.onpointercancel=()=>{ mode=null; };
+    },
+    hintVisual(task){ T.pr={x:T.v.x,y:T.v.y,r:T.lo}; if(task.diagram.rot===180) T.pr.r=T.hi-180; this.refresh(task);
+      document.getElementById("snapmsg").textContent="The protractor is now lined up. The orange band shows which scale to read."; },
+    check(task){ const n=parseNum("ans"); if(isNaN(n)) return needNum(); const d=task.diagram.deg;
+      if(Math.abs(n-d)<=task.tolerance) return {ok:true};
+      if(Math.abs(n-(180-d))<=task.tolerance) return {ok:false,msg:`Which scale? ${n}° is the reading on the other scale. This angle is ${d<90?"acute, so it must be less than 90°":"obtuse, so it must be more than 90°"}. Use the scale that starts at 0 on the ray you lined up.`};
+      return {ok:false,msg:"Not quite. Check that the centre dot is exactly on the vertex and the 0 line lies along one ray."}; },
+    lock(){ document.getElementById("ans").disabled=true; }
+  },
+  construct:{
+    mount(task){ T.ang=0; T.guide=true; this.draw(task); },
+    vx:320, vy:350, R:250,
+    dirAt(task,a){ return task.rot+task.dir*a; },
+    svgBody(task){ return `<svg viewBox="30 62 580 322" id="csvg" role="img" aria-label="Turn the ray to draw an angle">${this.svgInner(task)}</svg>`; },
+    svgInner(task){ const vx=this.vx,vy=this.vy; let s=`<rect x="0" y="${vy+4}" width="640" height="80" fill="#24142f"/>`;
+      s+=`<rect width="640" height="430" fill="transparent"/>`;
+      if(T.guide){ const R=190; s+=`<path d="M${vx-R} ${vy} A${R} ${R} 0 0 1 ${vx+R} ${vy} Z" fill="rgba(143,227,238,.08)" stroke="#8fe3ee" stroke-width="1.5" opacity=".8"/>`;
+        for(let a=0;a<=180;a+=10){ const [x1,y1]=P(vx,vy,R,a),[x2,y2]=P(vx,vy,R-12,a); s+=`<line x1="${f(x1)}" y1="${f(y1)}" x2="${f(x2)}" y2="${f(y2)}" stroke="#8fe3ee"/>`;
+          const val=task.rot===180?180-a:a; const [lx,ly]=P(vx,vy,R-28,a); s+=`<text x="${f(lx)}" y="${f(ly)}" font-size="17" font-weight="700" fill="#8fe3ee" transform="rotate(${90-a} ${f(lx)} ${f(ly)})" ${val>=100?'textLength="25" lengthAdjust="spacingAndGlyphs"':""} text-anchor="middle" dominant-baseline="central">${val}</text>`; } }
+      task.books.forEach(b=>{ const [x,y]=P(vx,vy,this.R,this.dirAt(task,b.deg)); const hit=T.solved&&b.deg===task.target;
+        s+=`<g transform="translate(${f(x)} ${f(y)})"><rect x="-21" y="-29" width="42" height="58" rx="4" fill="${hit?"#8fdc7c":"#ff8c2e"}" stroke="#140a1b" stroke-width="3"/><rect x="-21" y="-29" width="8" height="58" fill="#c95f12"/>${label(4,1,b.n,28,"#140a1b")}</g>`; });
+      if(T.hint>=2){ s+=rayLine(vx,vy,220,90,3,"#8fe3ee").replace("/>",' stroke-dasharray="8 6"/>')+label(vx+(task.dir>0?-34:34),vy-200,"90°",16,"#8fe3ee"); }
+      s+=rayLine(vx,vy,280,task.rot,6);
+      const lo=task.dir>0?task.rot:task.rot-T.ang; if(T.ang>0) s+=angleMark(vx,vy,lo,T.ang,46,{w:4});
+      const a=this.dirAt(task,T.ang); s+=rayLine(vx,vy,230,a,6,"#ffd166");
+      const [hx,hy]=P(vx,vy,200,a); s+=`<circle cx="${f(hx)}" cy="${f(hy)}" r="20" fill="#ffd166" stroke="#140a1b" stroke-width="3" style="cursor:grab"/>`;
+      s+=dot(vx,vy,7,"#ff8c2e");
+      return s; },
+    draw(task){
+      document.getElementById("body").innerHTML=`<div class="stage" id="cstage">${this.svgBody(task)}</div>
+       <div class="tools"><span class="readout" id="cro" aria-live="polite">${T.ang}°</span>
+       <button class="btn ghost small" id="m1" aria-label="Decrease 1 degree">−1°</button><button class="btn ghost small" id="p1" aria-label="Increase 1 degree">+1°</button>
+       <label style="display:flex;gap:6px;align-items:center;margin-left:auto"><input type="checkbox" id="gd" ${T.guide?"checked":""} style="width:22px;height:22px"> Protractor guide</label></div>`;
+      const self=this; const step=d=>{ if(T.solved) return; T.ang=Math.max(0,Math.min(180,T.ang+d)); self.refresh(task); };
+      document.getElementById("m1").onclick=()=>step(-1); document.getElementById("p1").onclick=()=>step(1);
+      document.getElementById("gd").onchange=e=>{ T.guide=e.target.checked; self.refresh(task); };
+      this.bind(task);
+    },
+    refresh(task){ document.getElementById("csvg").innerHTML=this.svgInner(task); document.getElementById("cro").textContent=T.ang+"°"; },
+    bind(task){ const svg=document.getElementById("csvg"); let on=false; const self=this;
+      const upd=e=>{ const p=svgPt(svg,e); let a=Math.atan2(-(p.y-self.vy),p.x-self.vx)*180/Math.PI; let m=task.dir*(a-task.rot); m=((m%360)+360)%360; if(m>270) m=0; else if(m>180) m=180; m=Math.round(m); if(m!==T.ang){ T.ang=m; self.refresh(task); } };
+      svg.onpointerdown=e=>{ if(T.solved) return; on=true; svg.setPointerCapture(e.pointerId); upd(e); };
+      svg.onpointermove=e=>{ if(on) upd(e); };
+      svg.onpointerup=svg.onpointercancel=()=>{ on=false; };
+    },
+    hintVisual(task){ this.refresh(task); },
+    check(task){ if(T.ang===task.target){ return {ok:true}; }
+      if(T.ang===180-task.target) return {ok:false,msg:`Your ray makes ${T.ang}° — that is the reading on the wrong scale. Measure from the floor ray: ${task.target}° is ${task.target<90?"acute":"obtuse"}.`};
+      const b=task.books.reduce((best,b)=>Math.abs(b.deg-T.ang)<Math.abs(best.deg-T.ang)?b:best);
+      return {ok:false,msg:`Your angle is ${T.ang}°. You need ${task.target}°. ${T.ang<task.target?"Turn further.":"Turn back a little."}`}; },
+    lock(task){ this.refresh(task); document.querySelectorAll("#m1,#p1").forEach(b=>b.disabled=true);
+      const b=task.books.find(b=>b.deg===task.target); document.getElementById("fb").insertAdjacentHTML("beforeend",`<br><b>The ray points to book ${b.n}.</b>`); }
+  }
+};
+function fracName(t){ return {0:"no turn",90:"¼ turn",180:"½ turn",270:"¾ turn",360:"full turn"}[t]||"between quarter turns"; }
+function svgPt(svg,e){ const pt=svg.createSVGPoint(); pt.x=e.clientX; pt.y=e.clientY; return pt.matrixTransform(svg.getScreenCTM().inverse()); }
+
+/* ---------- lock + certificate ---------- */
+function renderLock(){
+  app.innerHTML=topbar()+`<section class="task" style="max-width:640px;margin:0 auto;text-align:center">${iconSvg("key")}
+   <h1 style="font-size:32px">The Lock</h1><p class="muted">Type the six digits you collected, in room order (Room 1 → Room 6).</p>
+   <div class="lockpad">${C.rooms.map((_,i)=>`<input maxlength="1" inputmode="numeric" aria-label="Digit ${i+1}" data-i="${i}">`).join("")}</div>
+   <div class="actions" style="justify-content:center"><button class="btn" id="open">Unlock the door</button><button class="btn ghost" id="bk">← Map</button></div>
+   <div id="fb" class="feedback" role="status"></div></section>`;
+  const ins=[...document.querySelectorAll(".lockpad input")];
+  ins.forEach((el,i)=>{ el.oninput=()=>{ el.value=el.value.replace(/\D/g,"").slice(-1); if(el.value&&ins[i+1]) ins[i+1].focus(); }; el.onkeydown=e=>{ if(e.key==="Backspace"&&!el.value&&ins[i-1]) ins[i-1].focus(); if(e.key==="Enter") open(); }; });
+  ins[0].focus();
+  const open=()=>{ const code=ins.map(i=>i.value).join(""); if(code===C.lockCode){ S.escaped=S.escaped||new Date().toISOString(); save(); go({name:"cert"}); } else fb("bad","The lock stays shut",code.length<6?"Fill in all six boxes.":"Check each digit against your rooms on the map, in order."); };
+  document.getElementById("open").onclick=open; document.getElementById("bk").onclick=()=>go({name:"map"});
+}
+function renderCert(){
+  const d=new Date(S.escaped||Date.now()); const stars=totalStars();
+  app.innerHTML=topbar()+`<div class="cert"><div class="art">${["bat","jack","cat","cauldron","ghost"].map(n=>iconSvg(n)).join("")}</div>
+   <p style="letter-spacing:3px;text-transform:uppercase;margin:0;font-weight:700">Certificate of Escape</p><h1>Haunted House Angle Escape</h1>
+   <p style="margin:10px 0 0">This certifies that</p><div class="who">${esc(S.name)||"Angle Expert"}</div>
+   <p>escaped all six rooms by classifying, turning, measuring, drawing and solving angles.</p>
+   <p style="font-family:var(--head);font-size:22px;color:#c95f12">Lock code ${C.lockCode} · ${stars} / 54 ★</p>
+   <p style="color:#6b4a72">${d.toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"})}</p></div>
+   <div class="actions noprint" style="justify-content:center"><input id="cn" placeholder="Name on certificate" value="${esc(S.name)}" style="min-height:48px;border-radius:12px;border:2px solid var(--line);background:var(--night-2);color:var(--text);padding:8px 12px">
+   <button class="btn ghost" id="upd">Update name</button><button class="btn" id="pr">Print certificate</button><button class="btn ghost" id="mp">← Map</button></div>`;
+  document.getElementById("pr").onclick=()=>window.print();
+  document.getElementById("upd").onclick=()=>{ S.name=document.getElementById("cn").value.trim(); save(); render(); };
+  document.getElementById("mp").onclick=()=>go({name:"map"});
+}
+window.HHAE={go,state:()=>S,C};
+render();
+/* demo links for screenshots / teacher projection, e.g. #demo=2-1-2 (room 3, task 2, hint 2) */
+(function(){ const m=location.hash.match(/demo=(\d)-(\d)(?:-(\d))?/); if(!m) return; S.teacher=true; if(!S.name) S.name="Alex";
+  const i=+m[1], t=+m[2]; if(m[1]==="9"){ C.rooms.forEach((r,k)=>{ if(k<4){ const st=roomState(r.id); st.done=true; st.tasks=[{solved:true,stars:3},{solved:true,stars:3},{solved:true,stars:2}]; } }); return go({name:"map"}); }
+  go({name:"room",i,t}); if(m[3]) showHint(+m[3]); })();
+</script>
+</body>
+</html>

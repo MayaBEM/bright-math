@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Types of Angles Practice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#fff8ee; --paper2:#fdeeda; --card:#fffdf8;
+  --ink:#2b3a42; --ink-mute:#5f7078; --line:#2b3a42;
+  --coral:#ef6f53; --coral-soft:#fde3dc;
+  --teal:#149a8e; --teal-soft:#d6efeb;
+  --amber:#f2b134; --amber-soft:#fcecc8;
+  --sky:#3f97cf; --sky-soft:#dcedf7;
+  --sage:#7fa25a; --sage-soft:#e6efd9;
+  --grape:#a86fb0; --grape-soft:#f0e3f2;
+  --ok:#149a8e; --ok-soft:#d6efeb;
+  --no:#e05a48; --no-soft:#fbe0da;
+  --shadow:3px 4px 0 rgba(43,58,66,.16);
+  --shadow-h:5px 7px 0 rgba(43,58,66,.20);
+  --r:16px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Nunito',system-ui,-apple-system,'Segoe UI',sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(var(--paper2) 1.2px, transparent 1.3px);
+  background-size:22px 22px;
+}
+h1,h2,h3,.display{font-family:'Baloo 2','Nunito',sans-serif;line-height:1.15;letter-spacing:.2px}
+.wrap{max-width:920px;margin:0 auto;padding:20px 18px 70px}
+.hidden{display:none!important}
+
+/* Header */
+.topbar{display:flex;align-items:center;gap:12px;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:46px;height:46px;border:2.5px solid var(--line);border-radius:13px;background:var(--amber);
+  display:grid;place-items:center;box-shadow:var(--shadow);flex:none}
+.logo svg{display:block}
+.brand h1{font-size:1.35rem;margin:0}
+.brand p{margin:0;font-size:.82rem;color:var(--ink-mute);font-weight:700}
+.btn-home{border:2.5px solid var(--line);background:var(--card);color:var(--ink);font-weight:800;
+  font-family:'Nunito';padding:8px 15px;border-radius:12px;cursor:pointer;box-shadow:var(--shadow);
+  font-size:.9rem;display:inline-flex;align-items:center;gap:7px;transition:transform .12s}
+.btn-home:hover{transform:translate(-1px,-2px);box-shadow:var(--shadow-h)}
+.btn-home:active{transform:translate(1px,2px);box-shadow:1px 1px 0 rgba(43,58,66,.16)}
+
+/* Hero */
+.hero{background:var(--card);border:2.5px solid var(--line);border-radius:var(--r);
+  padding:26px 26px 24px;box-shadow:var(--shadow);position:relative;overflow:hidden;margin-bottom:26px}
+.hero::after{content:"";position:absolute;right:-40px;top:-40px;width:150px;height:150px;
+  background:var(--coral-soft);border-radius:50%;z-index:0}
+.hero-inner{position:relative;z-index:1;max-width:600px}
+.eyebrow{display:inline-block;background:var(--teal-soft);border:2px solid var(--line);
+  border-radius:20px;padding:3px 13px;font-weight:800;font-size:.78rem;margin-bottom:12px}
+.hero h2{font-size:2rem;margin:0 0 10px}
+.hero p{margin:0 0 6px;color:var(--ink-mute);font-weight:600;font-size:1rem}
+
+/* Section titles */
+.sec-title{display:flex;align-items:center;gap:10px;margin:30px 0 14px}
+.sec-title h3{font-size:1.25rem;margin:0}
+.sec-title .bar{height:3px;background:var(--line);flex:1;border-radius:3px;opacity:.15}
+
+/* Cards grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.menu-card{border:2.5px solid var(--line);border-radius:var(--r);padding:20px;cursor:pointer;
+  box-shadow:var(--shadow);transition:transform .13s,box-shadow .13s;position:relative;background:var(--card)}
+.menu-card:hover{transform:translate(-2px,-3px);box-shadow:var(--shadow-h)}
+.menu-card:active{transform:translate(1px,2px)}
+.menu-card .tag{display:inline-block;font-weight:800;font-size:.74rem;padding:2px 10px;border:2px solid var(--line);
+  border-radius:14px;background:#fff;margin-bottom:10px}
+.menu-card h4{font-family:'Baloo 2';font-size:1.2rem;margin:0 0 6px}
+.menu-card p{margin:0 0 14px;font-size:.9rem;color:var(--ink-mute);font-weight:600}
+.menu-card .meta{font-size:.82rem;font-weight:800;display:flex;align-items:center;gap:6px}
+.menu-card .go{position:absolute;right:16px;bottom:16px;width:34px;height:34px;border:2.5px solid var(--line);
+  border-radius:10px;display:grid;place-items:center;background:#fff}
+.c-learn{background:var(--sky-soft)}
+.c-a{background:var(--sage-soft)}
+.c-b{background:var(--amber-soft)}
+.c-c{background:var(--coral-soft)}
+.pill{font-size:.72rem;font-weight:800;padding:2px 9px;border-radius:12px;border:2px solid var(--line);background:#fff}
+
+/* Learn / reference */
+.learn-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:15px}
+.a-card{border:2.5px solid var(--line);border-radius:var(--r);background:var(--card);overflow:hidden;
+  box-shadow:var(--shadow);display:flex;flex-direction:column}
+.a-card .fig{background:#fffdf8;border-bottom:2.5px solid var(--line);display:grid;place-items:center;padding:8px}
+.a-card .body{padding:12px 14px 14px}
+.a-card h4{font-family:'Baloo 2';font-size:1.08rem;margin:0 0 3px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.a-card .th{font-size:.82rem;color:var(--ink-mute);font-weight:700;margin:0 0 6px}
+.a-card .def{font-size:.88rem;margin:0;font-weight:600}
+.dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--line);flex:none}
+.learn-note{background:var(--amber-soft);border:2.5px solid var(--line);border-radius:var(--r);
+  padding:16px 18px;margin-top:20px;box-shadow:var(--shadow)}
+.learn-note h4{margin:0 0 8px;font-family:'Baloo 2';font-size:1.1rem}
+.learn-note ul{margin:0;padding-left:20px}
+.learn-note li{font-weight:600;margin-bottom:5px;font-size:.92rem}
+.learn-note b{color:var(--coral)}
+
+/* Quiz */
+.quiz-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.quiz-head .set-name{font-family:'Baloo 2';font-size:1.15rem}
+.qcount{font-weight:800;font-size:.9rem;color:var(--ink-mute)}
+.progress{height:12px;background:#fff;border:2.5px solid var(--line);border-radius:20px;overflow:hidden;margin-bottom:20px}
+.progress .fill{height:100%;background:var(--teal);width:0;transition:width .35s ease;border-right:2.5px solid var(--line)}
+.qcard{background:var(--card);border:2.5px solid var(--line);border-radius:var(--r);padding:22px;box-shadow:var(--shadow)}
+.qtype{display:inline-block;font-size:.72rem;font-weight:800;padding:2px 10px;border:2px solid var(--line);
+  border-radius:12px;background:#fff;margin-bottom:12px}
+.qtext{font-size:1.18rem;font-weight:700;margin:0 0 6px;font-family:'Baloo 2'}
+.qtext-th{font-size:.92rem;color:var(--ink-mute);font-weight:700;margin:0 0 16px}
+.qfig{display:grid;place-items:center;background:#fffdf8;border:2.5px solid var(--line);border-radius:14px;
+  padding:12px;margin:0 auto 18px;max-width:320px}
+.opts{display:grid;gap:11px}
+.opt{display:flex;align-items:center;gap:12px;border:2.5px solid var(--line);background:#fff;border-radius:13px;
+  padding:13px 15px;cursor:pointer;font-weight:700;font-size:1rem;transition:transform .1s,background .1s;text-align:left;
+  width:100%;font-family:'Nunito';color:var(--ink)}
+.opt:hover:not(:disabled){transform:translate(-1px,-2px);box-shadow:var(--shadow)}
+.opt .key{width:30px;height:30px;flex:none;border:2px solid var(--line);border-radius:8px;display:grid;place-items:center;
+  font-family:'Baloo 2';font-weight:800;background:var(--paper2)}
+.opt.sel{background:var(--sky-soft)}
+.opt.correct{background:var(--ok-soft);border-color:var(--ok)}
+.opt.correct .key{background:var(--ok);color:#fff;border-color:var(--ok)}
+.opt.wrong{background:var(--no-soft);border-color:var(--no)}
+.opt.wrong .key{background:var(--no);color:#fff;border-color:var(--no)}
+.opt.muted{opacity:.55}
+.opt:disabled{cursor:default}
+.mark{margin-left:auto;font-weight:800;font-size:1.15rem}
+
+/* Feedback */
+.fb{margin-top:18px;border:2.5px solid var(--line);border-radius:14px;padding:15px 17px;font-weight:600;
+  animation:pop .25s ease}
+@keyframes pop{from{transform:scale(.98);opacity:0}to{transform:scale(1);opacity:1}}
+.fb.good{background:var(--ok-soft)}
+.fb.bad{background:var(--no-soft)}
+.fb .fb-title{font-family:'Baloo 2';font-size:1.05rem;display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.fb p{margin:0;font-size:.94rem}
+.actions{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap}
+.btn{border:2.5px solid var(--line);font-weight:800;font-family:'Nunito';padding:13px 24px;border-radius:13px;
+  cursor:pointer;box-shadow:var(--shadow);font-size:1rem;transition:transform .12s;flex:1;min-width:140px;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn:hover:not(:disabled){transform:translate(-1px,-2px);box-shadow:var(--shadow-h)}
+.btn:active:not(:disabled){transform:translate(1px,2px);box-shadow:1px 1px 0 rgba(43,58,66,.16)}
+.btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+.btn-primary{background:var(--coral);color:#fff}
+.btn-teal{background:var(--teal);color:#fff}
+.btn-ghost{background:#fff;color:var(--ink);flex:0 0 auto;min-width:0}
+
+/* Result */
+.result{background:var(--card);border:2.5px solid var(--line);border-radius:var(--r);padding:30px 26px;
+  box-shadow:var(--shadow);text-align:center}
+.scorering{width:150px;height:150px;margin:6px auto 14px;position:relative}
+.scorering .num{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.scorering .num b{font-family:'Baloo 2';font-size:2.5rem;line-height:1;display:block}
+.scorering .num span{font-size:.82rem;font-weight:800;color:var(--ink-mute)}
+.result h2{font-size:1.8rem;margin:0 0 4px}
+.result .msg{color:var(--ink-mute);font-weight:700;margin:0 0 22px}
+.review{text-align:left;margin:24px 0 0}
+.review h4{font-family:'Baloo 2';margin:0 0 12px;font-size:1.1rem}
+.rev-item{display:flex;gap:11px;align-items:flex-start;padding:11px 13px;border:2px solid var(--line);
+  border-radius:11px;margin-bottom:9px;background:#fff;font-size:.9rem;font-weight:600}
+.rev-item .ic{width:24px;height:24px;flex:none;border-radius:7px;display:grid;place-items:center;color:#fff;
+  font-weight:800;border:2px solid var(--line);font-size:.85rem}
+.rev-item .ic.y{background:var(--ok)}
+.rev-item .ic.n{background:var(--no)}
+.rev-item .ra{color:var(--ink-mute);font-weight:700}
+
+footer{text-align:center;color:var(--ink-mute);font-weight:700;font-size:.82rem;margin-top:40px}
+.tips{background:var(--sky-soft);border:2.5px solid var(--line);border-radius:var(--r);padding:14px 18px;
+  margin:22px 0;box-shadow:var(--shadow);font-weight:600;font-size:.92rem;display:flex;gap:12px;align-items:flex-start}
+.tips svg{flex:none;margin-top:2px}
+@media (max-width:520px){
+  .hero h2{font-size:1.55rem}
+  .wrap{padding:16px 13px 60px}
+  .qcard{padding:17px}
+  .btn{min-width:120px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">
+        <svg width="26" height="26" viewBox="0 0 26 26"><path d="M4 21 L4 6" stroke="#2b3a42" stroke-width="2.6" stroke-linecap="round"/><path d="M4 21 L22 21" stroke="#2b3a42" stroke-width="2.6" stroke-linecap="round"/><path d="M4 21 L20 9" stroke="#2b3a42" stroke-width="2.6" stroke-linecap="round"/><path d="M13 21 A9 9 0 0 0 10.8 15.2" fill="none" stroke="#ef6f53" stroke-width="2.4"/></svg>
+      </div>
+      <div>
+        <h1>Types of Angles</h1>
+        <p>Types of Angles · teaching tool + quizzes</p>
+      </div>
+    </div>
+    <button class="btn-home hidden" id="homeBtn" onclick="goHome()">
+      <svg width="15" height="15" viewBox="0 0 16 16"><path d="M8 2 L2 7 V14 H6 V10 H10 V14 H14 V7 Z" fill="none" stroke="#2b3a42" stroke-width="1.8" stroke-linejoin="round"/></svg>
+      Home
+    </button>
+  </div>
+
+  <!-- ============ HOME ============ -->
+  <section id="home">
+    <div class="hero">
+      <div class="hero-inner">
+        <span class="eyebrow">✏️ Geometry · Angles</span>
+        <h2>Master Every Type of Angle</h2>
+        <p>A teaching tool plus 3 quiz sets of 15 questions each — covering all 6 basic angle types and the special angle pairs.</p>
+        <p>Great for teaching the whole class (big screen / Zoom) and for students to practise on their phones.</p>
+      </div>
+    </div>
+
+    <div class="sec-title"><h3>📖 Start here</h3><div class="bar"></div></div>
+    <div class="grid">
+      <div class="menu-card c-learn" onclick="openLearn()">
+        <span class="tag">Lesson · Reference</span>
+        <h4>Learn the Types of Angles</h4>
+        <p>Summary cards for every angle type, with pictures and definitions — ready to teach from.</p>
+        <div class="meta">🔍 12 angle types + memory tricks</div>
+        <div class="go"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M4 8 H12 M9 5 L12 8 L9 11" fill="none" stroke="#2b3a42" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </div>
+
+    <div class="sec-title"><h3>📝 3 Quiz Sets</h3><div class="bar"></div></div>
+    <div class="grid" id="setGrid"></div>
+
+    <div class="tips">
+      <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9" fill="none" stroke="#2b3a42" stroke-width="2"/><path d="M11 6.5 V11.5 M11 15 h.01" stroke="#2b3a42" stroke-width="2.2" stroke-linecap="round"/></svg>
+      <div><b>For teachers:</b> Open the “Learn” page to review the vocabulary with your class first, then work through the quiz sets one at a time. Every question gives an instant answer and explanation — perfect for live teaching or setting as homework.</div>
+    </div>
+  </section>
+
+  <!-- ============ LEARN ============ -->
+  <section id="learn" class="hidden">
+    <div class="sec-title"><h3>📖 Types of Angles</h3><div class="bar"></div></div>
+    <div class="learn-grid" id="learnBasic"></div>
+
+    <div class="sec-title"><h3>🔗 Angle Pairs</h3><div class="bar"></div></div>
+    <div class="learn-grid" id="learnPairs"></div>
+
+    <div class="learn-note">
+      <h4>💡 Memory Tricks</h4>
+      <ul>
+        <li><b>A</b>cute = <b>A</b> cute little angle → the small one, less than 90°</li>
+        <li><b>Right</b> angle = a square 90° corner (think of a book or a wall corner)</li>
+        <li><b>Ob</b>tuse = the “wide” one, more than 90° but not yet a straight 180°</li>
+        <li><b>Reflex</b> = the “bent-back” one, more than 180° (past a half-turn)</li>
+        <li><b>C</b>omplementary → <b>C</b> = <b>C</b>orner (90°) · <b>S</b>upplementary → <b>S</b> = <b>S</b>traight (180°)</li>
+        <li><b>Vertical</b> angles sit opposite each other in an “X” and are always equal</li>
+      </ul>
+    </div>
+    <div class="actions" style="margin-top:24px">
+      <button class="btn btn-teal" onclick="goHome()">← Back to home</button>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section id="quiz" class="hidden">
+    <div class="quiz-head">
+      <span class="set-name" id="qSetName"></span>
+      <span class="qcount" id="qCount"></span>
+    </div>
+    <div class="progress"><div class="fill" id="qFill"></div></div>
+    <div id="qArea"></div>
+  </section>
+
+  <!-- ============ RESULT ============ -->
+  <section id="result" class="hidden"></section>
+
+  <footer>Types of Angles Practice · a math teaching resource · Bright EngMath</footer>
+</div>
+
+<script>
+/* ============================================================
+   DIAGRAM ENGINE  (all inline SVG, honest geometry)
+   ============================================================ */
+const D2R = d => d*Math.PI/180;
+// screen coords: x right, y down. angle measured clockwise from east.
+function pt(cx,cy,r,adeg){return [cx+r*Math.cos(D2R(adeg)), cy+r*Math.sin(D2R(adeg))];}
+function fmt(p){return p[0].toFixed(1)+","+p[1].toFixed(1);}
+
+// wedge fill between screen angles aStart->aEnd (clockwise, increasing)
+function wedge(cx,cy,r,aStart,aEnd,fill){
+  const a=pt(cx,cy,r,aStart), b=pt(cx,cy,r,aEnd);
+  const large=(aEnd-aStart)>180?1:0;
+  return `<path d="M${cx},${cy} L${fmt(a)} A${r},${r} 0 ${large} 1 ${fmt(b)} Z" fill="${fill}" stroke="#2b3a42" stroke-width="1.6"/>`;
+}
+// arc stroke only
+function arcStroke(cx,cy,r,aStart,aEnd,color){
+  const a=pt(cx,cy,r,aStart), b=pt(cx,cy,r,aEnd);
+  const large=(aEnd-aStart)>180?1:0;
+  return `<path d="M${fmt(a)} A${r},${r} 0 ${large} 1 ${fmt(b)}" fill="none" stroke="${color}" stroke-width="2.6"/>`;
+}
+function line(x1,y1,x2,y2,w=3){return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#2b3a42" stroke-width="${w}" stroke-linecap="round"/>`;}
+function dot(x,y,r=3.6,c="#ef6f53"){return `<circle cx="${x}" cy="${y}" r="${r}" fill="${c}" stroke="#2b3a42" stroke-width="1.4"/>`;}
+function txt(x,y,s,size=13,color="#2b3a42",weight=800){return `<text x="${x}" y="${y}" font-family="Baloo 2,Nunito,sans-serif" font-size="${size}" font-weight="${weight}" fill="${color}" text-anchor="middle" dominant-baseline="middle">${s}</text>`;}
+
+// ---- single angle (theta degrees), opens CCW visually from east baseline ----
+// we draw ray1 to the east (screen 0), ray2 up-left by theta -> use screen angle -theta (upwards)
+function svgAngle(theta,opts={}){
+  const {size=190,label=null,arcColor="#ef6f53",fill=null}=opts;
+  const cx=size*0.30, cy=size*0.66, L=size*0.52;
+  const a1=0;               // baseline east
+  const a2=-theta;          // rotate upward (screen: negative = up)
+  const e1=pt(cx,cy,L,a1), e2=pt(cx,cy,L,a2);
+  const ar=Math.min(34, L*0.42);
+  let arc;
+  // arc from a2 up to a1 (increasing screen angle from -theta to 0)
+  if(fill){ arc = wedge(cx,cy,ar,a2,a1,fill); }
+  else { arc = arcStroke(cx,cy,ar,a2,a1,arcColor); }
+  let extra="";
+  if(label){
+    const mid=(a1+a2)/2;
+    const lp=pt(cx,cy,ar+16,mid);
+    extra=txt(lp[0],lp[1],label,13.5,"#2b3a42");
+  }
+  return svgWrap(size,size,
+    arc+
+    line(cx,cy,e1[0],e1[1])+line(cx,cy,e2[0],e2[1])+
+    dot(cx,cy,4,"#f2b134")+extra
+  );
+}
+// ---- right angle (square marker) ----
+function svgRight(opts={}){
+  const {size=190}=opts;
+  const cx=size*0.30, cy=size*0.70, L=size*0.52;
+  const e1=[cx+L,cy], e2=[cx,cy-L];
+  const s=15;
+  const sq=`<path d="M${cx+s},${cy} L${cx+s},${cy-s} L${cx},${cy-s}" fill="none" stroke="#ef6f53" stroke-width="2.6"/>`;
+  return svgWrap(size,size, sq+line(cx,cy,e1[0],e1[1])+line(cx,cy,e2[0],e2[1])+dot(cx,cy,4,"#f2b134"));
+}
+// ---- straight angle 180 ----
+function svgStraight(opts={}){
+  const {size=190,label=null}=opts;
+  const cx=size/2, cy=size*0.55, L=size*0.40;
+  const ar=26;
+  const arc=arcStroke(cx,cy,ar,180,360,"#ef6f53"); // upper half arc (180->360 goes over the top)
+  let extra=label?txt(cx,cy-ar-14,label,13.5):"";
+  return svgWrap(size,size*0.9, arc+line(cx-L,cy,cx+L,cy)+dot(cx,cy,4,"#f2b134")+extra);
+}
+// ---- reflex ( >180 ) : draw the big arc on the outside ----
+function svgReflex(theta,opts={}){
+  const {size=190,label=null}=opts;
+  const cx=size*0.5, cy=size*0.48, L=size*0.42;
+  const a1=0, a2=-theta;                 // ray1 east, ray2 at -theta
+  const e1=pt(cx,cy,L,a1), e2=pt(cx,cy,L,a2);
+  const ar=30;
+  // reflex arc: sweep the LONG way round (theta deg, >180) from ray2 back to ray1
+  const arc=arcStroke(cx,cy,ar,a2,a1,"#a86fb0");
+  const mid=-theta/2;                    // label sits on the reflex (outer) side
+  const lp=pt(cx,cy,ar+18,mid);
+  let extra=label?txt(lp[0],lp[1],label,13.5):"";
+  return svgWrap(size,size, arc+line(cx,cy,e1[0],e1[1])+line(cx,cy,e2[0],e2[1])+dot(cx,cy,4,"#f2b134")+extra);
+}
+// ---- full angle 360 ----
+function svgFull(opts={}){
+  const {size=190,label=null}=opts;
+  const cx=size/2, cy=size/2, r=size*0.32;
+  const arc=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#ef6f53" stroke-width="2.6"/>`;
+  // small directional arrow on the circle to show the sense of a full turn
+  const arw=`<path d="M${cx+r-5},${cy-6} l6,6 l-6,6" fill="none" stroke="#ef6f53" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>`;
+  let extra=label?txt(cx,cy-r-10,label,14):"";
+  return svgWrap(size,size, arc+arw+line(cx,cy,cx+r,cy)+dot(cx,cy,4,"#f2b134")+extra);
+}
+// ---- two adjacent angles sharing a ray (for complementary / supplementary / adjacent) ----
+function svgTwoAngles(t1,t2,opts={}){
+  // baseline east; middle ray at -t1 ; outer ray at -(t1+t2)
+  const {size=200,l1=null,l2=null,c1="#149a8e",c2="#3f97cf"}=opts;
+  const cx=size*0.26, cy=size*0.74, L=size*0.62;
+  const aBase=0, aMid=-t1, aTop=-(t1+t2);
+  const eB=pt(cx,cy,L,aBase), eM=pt(cx,cy,L,aMid), eT=pt(cx,cy,L,aTop);
+  const ar1=30, ar2=52;
+  const w1=wedge(cx,cy,ar1,aMid,aBase,c1+"55");
+  const w2=wedge(cx,cy,ar2,aTop,aMid,c2+"55");
+  let ex="";
+  if(l1){const m=(aBase+aMid)/2;const p=pt(cx,cy,ar1-11,m);ex+=txt(p[0],p[1],l1,12);}
+  if(l2){const m=(aMid+aTop)/2;const p=pt(cx,cy,ar2-16,m);ex+=txt(p[0],p[1],l2,12);}
+  return svgWrap(size,size,
+    w2+w1+line(cx,cy,eB[0],eB[1])+line(cx,cy,eT[0],eT[1])+
+    line(cx,cy,eM[0],eM[1])+dot(cx,cy,4,"#f2b134")+ex);
+}
+// ---- intersecting lines; mark angle theta at east-side ----
+function svgIntersect(theta,opts={}){
+  const {size=220,markLabel=null,markKind="one"}=opts;
+  const cx=size/2, cy=size/2, L=size*0.42;
+  const aDown=theta;         // line B going down-right at screen angle theta
+  const b1=pt(cx,cy,L,aDown), b2=pt(cx,cy,L,aDown+180);
+  const h1=[cx+L,cy], h2=[cx-L,cy];
+  let marks="";
+  // marked angle: between east(0) and line B down(theta)
+  marks+=wedge(cx,cy,28,0,theta,"#f2b13455");
+  if(markKind==="vertical"){ marks+=wedge(cx,cy,28,180,180+theta,"#3f97cf55"); }
+  if(markKind==="adjacent"){ marks+=wedge(cx,cy,40,theta,180,"#3f97cf55"); }
+  let ex="";
+  if(markLabel){const p=pt(cx,cy,44,theta/2);ex+=txt(p[0],p[1],markLabel,13,"#2b3a42");}
+  return svgWrap(size,size,
+    marks+line(h2[0],h2[1],h1[0],h1[1])+line(b2[0],b2[1],b1[0],b1[1])+dot(cx,cy,4,"#ef6f53")+ex);
+}
+// ---- parallel lines + transversal; shade two marked angles ----
+function svgParallel(kind,opts={}){
+  // kind: "corresponding" | "alternate"
+  const size=240,h=200;
+  const y1=68,y2=140,xl=20,xr=222;
+  // transversal from (60,18) to (182,190)
+  const P0=[60,18], P1=[182,190];
+  const dx=P1[0]-P0[0], dy=P1[1]-P0[1];
+  const uAt=y=>(y-P0[1])/dy;
+  const T1=[P0[0]+dx*uAt(y1), y1];
+  const T2=[P0[0]+dx*uAt(y2), y2];
+  const tAng=Math.atan2(dy,dx)*180/Math.PI; // ~54.8 down-right
+  let shade="";
+  if(kind==="corresponding"){
+    shade+=wedge(T1[0],T1[1],24,0,tAng,"#149a8e55");
+    shade+=wedge(T2[0],T2[1],24,0,tAng,"#3f97cf55");
+  } else { // alternate interior
+    shade+=wedge(T1[0],T1[1],24,0,tAng,"#149a8e55");
+    shade+=wedge(T2[0],T2[1],24,180,180+tAng,"#3f97cf55");
+  }
+  // parallel arrow marks
+  const par=`<path d="M110 ${y1-6} l7 6 l-7 6" fill="none" stroke="#2b3a42" stroke-width="2"/>`+
+            `<path d="M110 ${y2-6} l7 6 l-7 6" fill="none" stroke="#2b3a42" stroke-width="2"/>`;
+  return svgWrap(size,h,
+    shade+
+    line(xl,y1,xr,y1)+line(xl,y2,xr,y2)+
+    line(P0[0],P0[1],P1[0],P1[1])+
+    dot(T1[0],T1[1],3.5)+dot(T2[0],T2[1],3.5)+
+    par+
+    txt(T1[0]+34,T1[1]+14,"a",14,"#149a8e")+
+    txt(T2[0]+(kind==="corresponding"?34:-34),T2[1]+(kind==="corresponding"?14:-14),"b",14,"#3f97cf")
+  );
+}
+function svgWrap(w,h,inner){
+  return `<svg viewBox="0 0 ${w} ${h}" width="100%" style="max-width:${w}px;display:block" role="img">${inner}</svg>`;
+}
+
+/* build a diagram from a spec object */
+function diagram(spec){
+  if(!spec) return "";
+  switch(spec.type){
+    case "angle":   return svgAngle(spec.deg,{label:spec.label,fill:spec.fill,arcColor:spec.color});
+    case "right":   return svgRight();
+    case "straight":return svgStraight({label:spec.label});
+    case "reflex":  return svgReflex(spec.deg,{label:spec.label});
+    case "full":    return svgFull({label:spec.label});
+    case "two":     return svgTwoAngles(spec.t1,spec.t2,{l1:spec.l1,l2:spec.l2});
+    case "intersect":return svgIntersect(spec.deg,{markLabel:spec.label,markKind:spec.kind});
+    case "parallel":return svgParallel(spec.kind);
+    default:return "";
+  }
+}
+
+/* ============================================================
+   REFERENCE CONTENT
+   ============================================================ */
+const BASIC=[
+  {name:"Acute angle",def:"Greater than 0° and less than 90°",color:"var(--sage)",fig:{type:"angle",deg:45,label:"45°"}},
+  {name:"Right angle",def:"Exactly 90° (shown with a small square marker)",color:"var(--coral)",fig:{type:"right"}},
+  {name:"Obtuse angle",def:"Greater than 90° and less than 180°",color:"var(--teal)",fig:{type:"angle",deg:130,label:"130°"}},
+  {name:"Straight angle",def:"Exactly 180° (forms a straight line)",color:"var(--amber)",fig:{type:"straight",label:"180°"}},
+  {name:"Reflex angle",def:"Greater than 180° and less than 360°",color:"var(--grape)",fig:{type:"reflex",deg:250,label:"250°"}},
+  {name:"Full angle",def:"Exactly 360° — one complete turn (revolution)",color:"var(--sky)",fig:{type:"full",label:"360°"}},
+];
+
+const PAIRS=[
+  {name:"Complementary",def:"Two angles that add up to 90°",color:"var(--teal)",fig:{type:"two",t1:55,t2:35,l1:"55°",l2:"35°"}},
+  {name:"Supplementary",def:"Two angles that add up to 180°",color:"var(--coral)",fig:{type:"two",t1:120,t2:60,l1:"120°",l2:"60°"}},
+  {name:"Adjacent angles",def:"Share a common vertex and side, but do not overlap",color:"var(--sage)",fig:{type:"two",t1:60,t2:70,l1:"a",l2:"b"}},
+  {name:"Vertical angles",def:"Opposite angles made when two lines cross — always equal",color:"var(--amber)",fig:{type:"intersect",deg:55,kind:"vertical"}},
+  {name:"Alternate angles",def:"Opposite sides of the transversal, between parallel lines — equal",color:"var(--sky)",fig:{type:"parallel",kind:"alternate"}},
+  {name:"Corresponding",def:"Same position at each crossing of parallel lines — equal",color:"var(--grape)",fig:{type:"parallel",kind:"corresponding"}},
+];
+
+/* ============================================================
+   QUESTION BANK — 3 sets × 15
+   answer = index of correct option
+   ============================================================ */
+const SETS=[
+{
+  id:"A", name:"Set 1 · Name the Angle", cls:"c-a", color:"var(--sage)",
+  desc:"Identify and name each type of angle from its picture and size", level:"Foundation", accent:"var(--sage)",
+  qs:[
+   {t:"MCQ",q:"An angle measures 45°. What type of angle is it?",
+    fig:{type:"angle",deg:45,label:"45°"},
+    opts:["Acute angle","Right angle","Obtuse angle","Reflex angle"],a:0,
+    ex:"45° is between 0° and 90°, so it is an Acute angle.",
+    why:{2:"An obtuse angle must be more than 90°.",3:"A reflex angle must be more than 180°."}},
+
+   {t:"MCQ",q:"What do we call an angle that is exactly 90°?",
+    fig:{type:"right"},
+    opts:["Right angle","Straight angle","Acute angle","Full angle"],a:0,
+    ex:"An angle of exactly 90° is a Right angle — look for the small square marker at the corner.",
+    why:{1:"A straight angle is 180°."}},
+
+   {t:"MCQ",q:"An angle measures 130°. What type is it?",
+    fig:{type:"angle",deg:130,label:"130°"},
+    opts:["Acute angle","Right angle","Obtuse angle","Straight angle"],a:2,
+    ex:"130° is more than 90° but less than 180°, so it is an Obtuse angle.",
+    why:{0:"An acute angle must be less than 90°.",3:"A straight angle is exactly 180°."}},
+
+   {t:"MCQ",q:"An angle that forms a perfectly straight line measures ___ and is called a ___.",
+    fig:{type:"straight",label:"180°"},
+    opts:["90°, Right angle","180°, Straight angle","360°, Full angle","270°, Reflex angle"],a:1,
+    ex:"A straight line is an angle of 180°, called a Straight angle."},
+
+   {t:"MCQ",q:"An angle measures 250°. What type is it?",
+    fig:{type:"reflex",deg:250,label:"250°"},
+    opts:["Obtuse angle","Straight angle","Reflex angle","Full angle"],a:2,
+    ex:"250° is more than 180° but less than 360°, so it is a Reflex angle.",
+    why:{0:"Obtuse is less than 180°.",3:"A full angle is exactly 360°."}},
+
+   {t:"MCQ",q:"A complete turn (one full rotation) measures how many degrees?",
+    fig:{type:"full",label:"360°"},
+    opts:["180°","270°","360°","90°"],a:2,
+    ex:"One complete turn is 360°, called a Full angle (or revolution)."},
+
+   {t:"MCQ",q:"Which of these measures is an acute angle?",
+    fig:null,
+    opts:["95°","180°","62°","270°"],a:2,
+    ex:"An acute angle must be less than 90°. Only 62° fits.",
+    why:{0:"95° is obtuse.",1:"180° is straight.",3:"270° is reflex."}},
+
+   {t:"MCQ",q:"Look at the angle. What type is it?",
+    fig:{type:"angle",deg:70},
+    opts:["Acute angle","Right angle","Obtuse angle","Reflex angle"],a:0,
+    ex:"This angle opens less than a right angle (less than 90°), so it is Acute."},
+
+   {t:"MCQ",q:"Look at the angle marked with a small square. What type is it?",
+    fig:{type:"right"},
+    opts:["Acute angle","Right angle","Obtuse angle","Straight angle"],a:1,
+    ex:"A small square marker at the corner always means a Right angle (90°)."},
+
+   {t:"MCQ",q:"Complete the definition: \"An obtuse angle is ___.\"",
+    fig:null,
+    opts:["less than 90°","exactly 90°","greater than 90° and less than 180°","greater than 180°"],a:2,
+    ex:"An obtuse angle is greater than 90° and less than 180°."},
+
+   {t:"MCQ",q:"Look at the angle. What type is it?",
+    fig:{type:"reflex",deg:200},
+    opts:["Obtuse angle","Straight angle","Reflex angle","Acute angle"],a:2,
+    ex:"This angle opens past a straight line (more than 180°), so it is Reflex."},
+
+   {t:"MCQ",q:"Which measure is a straight angle?",
+    fig:null,
+    opts:["90°","180°","360°","45°"],a:1,
+    ex:"A straight angle is exactly 180°."},
+
+   {t:"MCQ",q:"An angle measures 160°. What type is it?",
+    fig:{type:"angle",deg:160,label:"160°"},
+    opts:["Acute angle","Obtuse angle","Right angle","Reflex angle"],a:1,
+    ex:"160° is more than 90° but still less than 180°, so it is an Obtuse angle.",
+    why:{3:"Reflex must be more than 180°."}},
+
+   {t:"MCQ",q:"What is the name of an angle that measures exactly 360°?",
+    fig:{type:"full",label:"360°"},
+    opts:["Straight angle","Reflex angle","Full (Revolution) angle","Right angle"],a:2,
+    ex:"Exactly 360° is a Full angle, also called a Revolution angle."},
+
+   {t:"MCQ",q:"An angle measures 89°. Is it acute or right?",
+    fig:{type:"angle",deg:89},
+    opts:["Acute (because it is less than 90°)","Right (because it is close to 90°)","Obtuse","Straight"],a:0,
+    ex:"89° is still less than 90°, so it is Acute. A right angle must be exactly 90°, not just close.",
+    why:{1:"A right angle must be exactly 90°, not just nearby."}},
+  ]
+},
+{
+  id:"B", name:"Set 2 · Angle Pairs", cls:"c-b", color:"var(--amber)",
+  desc:"Complementary, supplementary, vertical, and angles on parallel lines", level:"Intermediate", accent:"var(--amber)",
+  qs:[
+   {t:"MCQ",q:"Two angles that add up to 90° are called ___.",
+    fig:{type:"two",t1:55,t2:35,l1:"55°",l2:"35°"},
+    opts:["Supplementary angles","Complementary angles","Vertical angles","Adjacent angles"],a:1,
+    ex:"Angles that add up to 90° are Complementary (remember: C = Corner, 90°).",
+    why:{0:"Supplementary angles add up to 180°."}},
+
+   {t:"MCQ",q:"Two angles that add up to 180° are called ___.",
+    fig:{type:"two",t1:120,t2:60,l1:"120°",l2:"60°"},
+    opts:["Complementary angles","Supplementary angles","Corresponding angles","Right angles"],a:1,
+    ex:"Angles that add up to 180° are Supplementary (remember: S = Straight, 180°).",
+    why:{0:"Complementary angles add up to 90°."}},
+
+   {t:"Numeric",q:"What is the complement of a 30° angle?",
+    fig:null,
+    opts:["150°","70°","60°","330°"],a:2,
+    ex:"Complements add up to 90° → 90° − 30° = 60°."},
+
+   {t:"Numeric",q:"What is the supplement of a 110° angle?",
+    fig:null,
+    opts:["70°","20°","90°","250°"],a:0,
+    ex:"Supplements add up to 180° → 180° − 110° = 70°."},
+
+   {t:"MCQ",q:"When two straight lines cross, the angles opposite each other are called ___.",
+    fig:{type:"intersect",deg:55,kind:"vertical"},
+    opts:["Adjacent angles","Vertical (opposite) angles","Complementary angles","Corresponding angles"],a:1,
+    ex:"Opposite angles at a crossing are Vertical angles, and they are always equal."},
+
+   {t:"MCQ",q:"Vertical (opposite) angles are always ___.",
+    fig:null,
+    opts:["equal","supplementary","complementary","reflex"],a:0,
+    ex:"Vertical angles are always equal."},
+
+   {t:"MCQ",q:"Adjacent angles are two angles that ___.",
+    fig:{type:"two",t1:60,t2:70,l1:"a",l2:"b"},
+    opts:["are always equal","share a common vertex and side but do not overlap","always add to 90°","are on opposite sides of a point"],a:1,
+    ex:"Adjacent angles share a common vertex and side but do not overlap."},
+
+   {t:"MCQ",q:"The two shaded angles are in the same position at each crossing of the parallel lines. What are they called?",
+    fig:{type:"parallel",kind:"corresponding"},
+    opts:["Alternate angles","Corresponding angles","Vertical angles","Complementary angles"],a:1,
+    ex:"Angles in the same position at each crossing are Corresponding angles, and they are equal."},
+
+   {t:"MCQ",q:"The two shaded angles are on opposite sides of the transversal, between the parallel lines. What are they called?",
+    fig:{type:"parallel",kind:"alternate"},
+    opts:["Corresponding angles","Alternate angles","Adjacent angles","Right angles"],a:1,
+    ex:"Angles between the parallel lines on opposite sides of the transversal are Alternate (interior) angles, and they are equal."},
+
+   {t:"Numeric",q:"Two angles are complementary. One of them is 25°. What is the other?",
+    fig:null,
+    opts:["65°","75°","155°","25°"],a:0,
+    ex:"Complementary angles add up to 90° → 90° − 25° = 65°."},
+
+   {t:"MCQ",q:"Angles that lie on a straight line always add up to ___.",
+    fig:null,
+    opts:["90°","180°","270°","360°"],a:1,
+    ex:"Angles on a straight line always add up to 180°."},
+
+   {t:"Numeric",q:"Two straight lines cross. One angle is 70°. What is the angle vertically opposite to it?",
+    fig:{type:"intersect",deg:70,kind:"vertical",label:"70°"},
+    opts:["20°","110°","70°","90°"],a:2,
+    ex:"Vertical (opposite) angles are always equal → 70°."},
+
+   {t:"Numeric",q:"Two straight lines cross. One angle is 70°. What is the angle next to it on the straight line?",
+    fig:{type:"intersect",deg:70,kind:"adjacent",label:"70°"},
+    opts:["110°","70°","20°","90°"],a:0,
+    ex:"Angles next to each other on a straight line add up to 180° → 180° − 70° = 110°."},
+
+   {t:"MCQ",q:"On parallel lines, corresponding angles are always ___.",
+    fig:null,
+    opts:["equal","complementary","adding up to 180°","reflex"],a:0,
+    ex:"Corresponding angles on parallel lines are always equal."},
+
+   {t:"Numeric",q:"What is the supplement of a right angle (90°)?",
+    fig:null,
+    opts:["0°","45°","90°","180°"],a:2,
+    ex:"Supplements add up to 180° → 180° − 90° = 90°."},
+  ]
+},
+{
+  id:"C", name:"Set 3 · Calculate & Apply", cls:"c-c", color:"var(--coral)",
+  desc:"Find missing angles, solve word problems, and apply angles to real life", level:"Challenge", accent:"var(--coral)",
+  qs:[
+   {t:"Numeric",q:"Two angles are complementary. One angle is 35°. Find the other angle.",
+    fig:{type:"two",t1:55,t2:35,l1:"?",l2:"35°"},
+    opts:["55°","65°","145°","35°"],a:0,
+    ex:"90° − 35° = 55°."},
+
+   {t:"Numeric",q:"Find the supplement of 45°.",
+    fig:null,
+    opts:["45°","55°","135°","315°"],a:2,
+    ex:"180° − 45° = 135°."},
+
+   {t:"Numeric",q:"Three angles sit on a straight line: 40°, 90°, and x°. Find x.",
+    fig:null,
+    opts:["30°","50°","130°","90°"],a:1,
+    ex:"Angles on a straight line add up to 180° → 40° + 90° + x = 180° → x = 50°."},
+
+   {t:"Numeric",q:"Three angles meet around a point: 120°, 90°, and x°. Find x.",
+    fig:null,
+    opts:["150°","210°","90°","30°"],a:0,
+    ex:"Angles around a point add up to 360° → 120° + 90° + x = 360° → x = 150°."},
+
+   {t:"Numeric",q:"Two angles are supplementary. One angle is three times the other. Find the larger angle.",
+    fig:null,
+    opts:["45°","60°","135°","120°"],a:2,
+    ex:"Let the smaller angle = x and the larger = 3x → x + 3x = 180° → 4x = 180° → x = 45° → larger = 3 × 45° = 135°."},
+
+   {t:"Numeric",q:"An interior angle is 110°. What is the reflex angle that goes around the outside of it?",
+    fig:null,
+    opts:["70°","250°","290°","360°"],a:1,
+    ex:"An interior angle and its reflex add up to 360° → 360° − 110° = 250°."},
+
+   {t:"MCQ",q:"A clock shows exactly 3:00. What type of angle do the hands make?",
+    fig:{type:"right"},
+    opts:["Acute angle","Right angle (90°)","Obtuse angle","Straight angle"],a:1,
+    ex:"At 3:00 the hands are 3 hours apart × 30° = 90°, a Right angle."},
+
+   {t:"MCQ",q:"A clock shows exactly 6:00. What type of angle do the hands make?",
+    fig:{type:"straight",label:"180°"},
+    opts:["Right angle","Obtuse angle","Straight angle (180°)","Reflex angle"],a:2,
+    ex:"At 6:00 the hands point exactly opposite = 6 × 30° = 180°, a Straight angle."},
+
+   {t:"Numeric",q:"Two vertical (opposite) angles are (2x + 10)° and 50°. Find x.",
+    fig:{type:"intersect",deg:50,kind:"vertical",label:"50°"},
+    opts:["x = 15","x = 20","x = 25","x = 30"],a:1,
+    ex:"Vertical angles are equal → 2x + 10 = 50 → 2x = 40 → x = 20."},
+
+   {t:"Numeric",q:"Two complementary angles are x° and (x + 20)°. Find x.",
+    fig:null,
+    opts:["x = 35","x = 45","x = 55","x = 70"],a:0,
+    ex:"Complementary angles add up to 90° → x + (x + 20) = 90 → 2x = 70 → x = 35."},
+
+   {t:"MCQ",q:"An angle is equal to its own supplement. What is its size?",
+    fig:null,
+    opts:["45°","60°","90°","180°"],a:2,
+    ex:"Let the angle = x, its supplement = x → x + x = 180° → x = 90° (a right angle)."},
+
+   {t:"Numeric",q:"Find the reflex angle of a 90° angle.",
+    fig:null,
+    opts:["180°","270°","90°","360°"],a:1,
+    ex:"Reflex = 360° − 90° = 270°."},
+
+   {t:"Numeric",q:"Two parallel lines are cut by a transversal. One angle is 65°. Its corresponding angle is ___.",
+    fig:{type:"parallel",kind:"corresponding"},
+    opts:["115°","25°","65°","90°"],a:2,
+    ex:"Corresponding angles on parallel lines are equal → 65°."},
+
+   {t:"Numeric",q:"Two parallel lines are cut by a transversal. One angle is 72°. Its alternate angle is ___.",
+    fig:{type:"parallel",kind:"alternate"},
+    opts:["108°","72°","18°","90°"],a:1,
+    ex:"Alternate angles on parallel lines are equal → 72°."},
+
+   {t:"MCQ",q:"A clock shows exactly 5:00. What type of angle do the hands make?",
+    fig:{type:"angle",deg:150,label:"150°"},
+    opts:["Acute angle","Right angle","Obtuse angle","Reflex angle"],a:2,
+    ex:"5:00 = 5 × 30° = 150°, which is more than 90° but less than 180°, so it is an Obtuse angle.",
+    why:{1:"90° is 3:00.",3:"Reflex must be more than 180°."}},
+  ]
+}
+];
+
+/* ============================================================
+   RENDER: HOME
+   ============================================================ */
+const $=id=>document.getElementById(id);
+const KEYS=["A","B","C","D"];
+function show(sec){["home","learn","quiz","result"].forEach(s=>$(s).classList.toggle("hidden",s!==sec));
+  $("homeBtn").classList.toggle("hidden",sec==="home");window.scrollTo({top:0,behavior:"smooth"});}
+
+function renderHome(){
+  $("setGrid").innerHTML=SETS.map((s,i)=>`
+    <div class="menu-card ${s.cls}" onclick="startQuiz(${i})">
+      <span class="tag">${s.level}</span>
+      <h4>${s.name}</h4>
+      <p>${s.desc}</p>
+      <div class="meta"><span class="pill">15 questions</span></div>
+      <div class="go"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M4 8 H12 M9 5 L12 8 L9 11" fill="none" stroke="#2b3a42" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>`).join("");
+}
+function goHome(){show("home");}
+
+/* LEARN */
+function learnCard(a){
+  return `<div class="a-card">
+    <div class="fig">${diagram(a.fig)}</div>
+    <div class="body">
+      <h4><span class="dot" style="background:${a.color}"></span>${a.name}</h4>
+      <p class="def">${a.def}</p>
+    </div>
+  </div>`;
+}
+function openLearn(){
+  $("learnBasic").innerHTML=BASIC.map(learnCard).join("");
+  $("learnPairs").innerHTML=PAIRS.map(learnCard).join("");
+  show("learn");
+}
+
+/* ============================================================
+   QUIZ ENGINE
+   ============================================================ */
+let cur=0, idx=0, answered=false, chosen=-1, results=[];
+function startQuiz(i){
+  cur=i;idx=0;results=[];
+  $("qSetName").textContent=SETS[i].name;
+  show("quiz");renderQ();
+}
+function renderQ(){
+  const set=SETS[cur], q=set.qs[idx];
+  answered=false;chosen=-1;
+  $("qCount").textContent=`Question ${idx+1} of ${set.qs.length}`;
+  $("qFill").style.width=((idx)/set.qs.length*100)+"%";
+  $("qArea").innerHTML=`
+    <div class="qcard">
+      <span class="qtype">${q.t}</span>
+      <p class="qtext">${idx+1}. ${q.q}</p>
+      ${q.qth?`<p class="qtext-th">${q.qth}</p>`:""}
+      ${q.fig?`<div class="qfig">${diagram(q.fig)}</div>`:""}
+      <div class="opts" id="opts">
+        ${q.opts.map((o,k)=>`
+          <button class="opt" id="opt${k}" onclick="pick(${k})">
+            <span class="key">${KEYS[k]}</span>
+            <span>${o}</span>
+            <span class="mark" id="mk${k}"></span>
+          </button>`).join("")}
+      </div>
+      <div id="fb"></div>
+      <div class="actions">
+        <button class="btn btn-primary" id="checkBtn" onclick="check()" disabled>Check answer</button>
+      </div>
+    </div>`;
+}
+function pick(k){
+  if(answered)return;
+  chosen=k;
+  document.querySelectorAll(".opt").forEach((el,i)=>el.classList.toggle("sel",i===k));
+  $("checkBtn").disabled=false;
+}
+function check(){
+  if(answered||chosen<0)return;
+  answered=true;
+  const q=SETS[cur].qs[idx];
+  const correct=(chosen===q.a);
+  results.push({correct,chosen,q});
+  document.querySelectorAll(".opt").forEach((el,i)=>{
+    el.disabled=true;el.classList.remove("sel");
+    if(i===q.a){el.classList.add("correct");$("mk"+i).textContent="✓";}
+    else if(i===chosen){el.classList.add("wrong");$("mk"+i).textContent="✗";}
+    else el.classList.add("muted");
+  });
+  let whyTxt = (!correct && q.why && q.why[chosen])?`<p style="margin-top:7px"><b>Why that’s not right:</b> ${q.why[chosen]}</p>`:"";
+  $("fb").innerHTML=`
+    <div class="fb ${correct?'good':'bad'}">
+      <div class="fb-title">${correct?"🎉 Correct!":"💡 Not quite · Answer: "+KEYS[q.a]+". "+q.opts[q.a]}</div>
+      <p>${q.ex}</p>${whyTxt}
+    </div>`;
+  const last=(idx===SETS[cur].qs.length-1);
+  $("checkBtn").outerHTML=`<button class="btn btn-teal" onclick="next()">${last?"See results · Finish 🏁":"Next →"}</button>`;
+  $("qFill").style.width=((idx+1)/SETS[cur].qs.length*100)+"%";
+}
+function next(){
+  if(idx<SETS[cur].qs.length-1){idx++;renderQ();}
+  else renderResult();
+}
+
+/* ============================================================
+   RESULT
+   ============================================================ */
+function renderResult(){
+  const set=SETS[cur];
+  const score=results.filter(r=>r.correct).length;
+  const total=results.length;
+  const pct=Math.round(score/total*100);
+  let msg,emoji;
+  if(pct===100){msg="Perfect — full marks! 🌟";emoji="🏆";}
+  else if(pct>=80){msg="Excellent! You’ve got this.";emoji="🎉";}
+  else if(pct>=60){msg="Nice work — review a little more.";emoji="👍";}
+  else{msg="Keep going — review the lesson and try again.";emoji="💪";}
+  const C=2*Math.PI*62;
+  const off=C*(1-score/total);
+  const rev=results.map((r,i)=>`
+    <div class="rev-item">
+      <span class="ic ${r.correct?'y':'n'}">${r.correct?'✓':'✗'}</span>
+      <div><b>Q${i+1}.</b> ${r.q.q}
+      ${!r.correct?`<br><span class="ra">Answer: ${KEYS[r.q.a]}. ${r.q.opts[r.q.a]}</span>`:""}</div>
+    </div>`).join("");
+  $("result").innerHTML=`
+    <div class="result">
+      <div style="font-size:2.6rem">${emoji}</div>
+      <div class="scorering">
+        <svg width="150" height="150" viewBox="0 0 150 150">
+          <circle cx="75" cy="75" r="62" fill="none" stroke="#efe3cf" stroke-width="14"/>
+          <circle cx="75" cy="75" r="62" fill="none" stroke="${set.accent}" stroke-width="14" stroke-linecap="round"
+            stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}" transform="rotate(-90 75 75)"
+            style="transition:stroke-dashoffset 1s ease"/>
+        </svg>
+        <div class="num"><b>${score}/${total}</b><span>${pct}%</span></div>
+      </div>
+      <h2>${set.name}</h2>
+      <p class="msg">${msg}</p>
+      <div class="actions">
+        <button class="btn btn-primary" onclick="startQuiz(${cur})">🔄 Try this set again</button>
+        ${cur<SETS.length-1?`<button class="btn btn-teal" onclick="startQuiz(${cur+1})">Next set →</button>`:`<button class="btn btn-teal" onclick="goHome()">🏠 Home</button>`}
+      </div>
+      <div class="review">
+        <h4>📋 Review your answers</h4>
+        ${rev}
+      </div>
+      <div class="actions"><button class="btn btn-ghost" style="flex:1" onclick="goHome()">← Back to home</button></div>
+    </div>`;
+  show("result");
+}
+
+renderHome();
+</script>
+</body>
+</html>

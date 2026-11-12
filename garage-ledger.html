@@ -1,0 +1,1011 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="เว็บคิดต้นทุนของแต่งรถ เงินจม จุดคุ้มทุน และกำไร-ขาดทุนตอนขาย">
+<style>html{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>บัญชีโรงรถ</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap">
+<style>
+/* ---------- tokens: light (default, un-stamped) ---------- */
+:root{
+  --bg:#F4F6F7;
+  --surface:#FFFFFF;
+  --surface-2:#EBEFF1;
+  --line:#DCE3E7;
+  --line-soft:#E9EEF0;
+  --ink:#0F161A;
+  --ink-2:#48575F;
+  --ink-3:#7A8A93;
+  --accent:#E0700A;
+  --accent-soft:#FBEAD6;
+  --accent-ink:#9C4E05;
+  --pos:#0B7D5B;
+  --pos-soft:#DCF0E8;
+  --neg:#BE3A2B;
+  --neg-soft:#FAE3DF;
+  --shadow:0 1px 2px rgba(15,22,26,.05), 0 8px 24px -16px rgba(15,22,26,.18);
+  --radius:10px;
+  --sans:"IBM Plex Sans Thai","Noto Sans Thai",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono","SFMono-Regular",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D1215;
+    --surface:#151C21;
+    --surface-2:#1D262B;
+    --line:#28333A;
+    --line-soft:#202A30;
+    --ink:#E9EFF2;
+    --ink-2:#9FAFB9;
+    --ink-3:#6D7F8A;
+    --accent:#FF9F2E;
+    --accent-soft:#33240F;
+    --accent-ink:#FFB65E;
+    --pos:#3ECB9B;
+    --pos-soft:#102E26;
+    --neg:#FF7565;
+    --neg-soft:#331B18;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D1215;
+  --surface:#151C21;
+  --surface-2:#1D262B;
+  --line:#28333A;
+  --line-soft:#202A30;
+  --ink:#E9EFF2;
+  --ink-2:#9FAFB9;
+  --ink-3:#6D7F8A;
+  --accent:#FF9F2E;
+  --accent-soft:#33240F;
+  --accent-ink:#FFB65E;
+  --pos:#3ECB9B;
+  --pos-soft:#102E26;
+  --neg:#FF7565;
+  --neg-soft:#331B18;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:15px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{margin:0;text-wrap:balance;font-weight:600;letter-spacing:-.01em}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.lbl{
+  font-family:var(--mono);font-size:10.5px;font-weight:500;
+  text-transform:uppercase;letter-spacing:.11em;color:var(--ink-3);
+}
+
+/* ---------- shell ---------- */
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 72px}
+
+.topbar{
+  position:sticky;top:0;z-index:30;
+  background:color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.topbar-in{
+  max-width:1080px;margin:0 auto;padding:12px 20px;
+  display:flex;align-items:center;gap:12px;
+}
+.brand{display:flex;align-items:center;gap:11px;min-width:0}
+.gauge{flex:none;width:30px;height:30px;display:block}
+.brand h1{font-size:17px;line-height:1.15}
+.brand .tag{font-size:11.5px;color:var(--ink-3);line-height:1.2;margin-top:1px}
+.spacer{flex:1}
+.sync{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;
+  color:var(--ink-3);text-transform:uppercase;white-space:nowrap;
+}
+.sync i{width:6px;height:6px;border-radius:50%;background:var(--ink-3);display:block}
+.sync.ok i{background:var(--pos)}
+.sync.local i{background:var(--accent)}
+.sync.warn i{background:var(--neg)}
+.sync.warn{color:var(--neg)}
+
+/* ---------- tabs ---------- */
+.tabs{
+  display:flex;gap:6px;overflow-x:auto;padding:14px 0 2px;
+  scrollbar-width:none;
+}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  flex:none;border:1px solid var(--line);background:var(--surface);
+  padding:7px 13px;border-radius:999px;font-size:13.5px;font-weight:500;
+  color:var(--ink-2);white-space:nowrap;transition:border-color .12s, color .12s;
+}
+.tab:hover{border-color:var(--ink-3);color:var(--ink)}
+.tab[aria-current="true"]{
+  background:var(--ink);border-color:var(--ink);color:var(--bg);
+}
+.tab.ghost{border-style:dashed;color:var(--ink-3)}
+.tab .dot{
+  display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:var(--pos);margin-right:6px;vertical-align:1px;
+}
+
+/* ---------- car head ---------- */
+.carhead{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;margin:26px 0 18px}
+.carhead h2{font-size:26px;letter-spacing:-.02em}
+.carhead .meta{font-size:13px;color:var(--ink-3);margin-top:3px}
+.pill{
+  display:inline-flex;align-items:center;gap:5px;
+  font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.08em;
+  text-transform:uppercase;padding:3px 8px;border-radius:5px;
+  background:var(--surface-2);color:var(--ink-2);
+}
+.pill.sold{background:var(--pos-soft);color:var(--pos)}
+.pill.loss{background:var(--neg-soft);color:var(--neg)}
+.linkbtn{
+  background:none;border:none;padding:4px 2px;font-size:13px;color:var(--ink-3);
+  text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line);
+}
+.linkbtn:hover{color:var(--ink)}
+.linkbtn.danger:hover{color:var(--neg)}
+
+/* ---------- stat tiles ---------- */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.stat{background:var(--surface);padding:15px 16px 16px;display:flex;flex-direction:column;gap:7px;min-width:0}
+.stat .v{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:22px;
+  font-weight:500;letter-spacing:-.03em;line-height:1.05}
+.stat .s{font-size:11.5px;color:var(--ink-3);line-height:1.35}
+.stat.hero{background:var(--surface-2)}
+.stat.hero .v{font-size:26px;font-weight:600}
+.v.pos{color:var(--pos)}
+.v.neg{color:var(--neg)}
+
+/* ---------- panels ---------- */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;align-items:start}
+.panel{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px 17px 17px;box-shadow:var(--shadow);min-width:0;
+}
+.panel-head{display:flex;align-items:baseline;gap:10px;margin-bottom:16px}
+.panel-head h3{font-size:14px}
+.panel-head .side{margin-left:auto;font-size:11.5px;color:var(--ink-3)}
+.empty{
+  color:var(--ink-3);font-size:13px;text-align:center;padding:26px 8px;
+  border:1px dashed var(--line);border-radius:8px;
+}
+
+/* ---------- bar chart ---------- */
+.bars{display:flex;flex-direction:column;gap:11px}
+.bar-row{display:grid;grid-template-columns:1fr auto;gap:4px 10px;cursor:default}
+.bar-row .name{font-size:13px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-row .val{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:12.5px;color:var(--ink)}
+.bar-track{grid-column:1/-1;height:9px;background:var(--surface-2);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;background:var(--accent);transition:width .35s cubic-bezier(.2,.7,.3,1)}
+.bar-row:hover .bar-fill{filter:brightness(1.08)}
+
+/* diverging */
+.dvg{display:flex;flex-direction:column;gap:12px;position:relative}
+.dvg-row{display:grid;grid-template-columns:1fr;gap:4px}
+.dvg-top{display:flex;align-items:baseline;gap:8px}
+.dvg-top .name{font-size:13px;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dvg-top .val{margin-left:auto;font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:12.5px}
+.dvg-track{position:relative;height:9px;background:var(--surface-2);border-radius:4px}
+.dvg-track::before{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:var(--line)}
+.dvg-fill{position:absolute;top:0;height:100%;border-radius:4px}
+
+/* ---------- trend svg ---------- */
+.trend{width:100%;height:auto;display:block;overflow:visible}
+.trend .grid{stroke:var(--line-soft);stroke-width:1}
+.trend .axis{fill:var(--ink-3);font-family:var(--mono);font-size:9.5px;letter-spacing:.04em}
+.trend .line{fill:none;stroke:var(--accent);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.trend .cap{fill:var(--accent);stroke:var(--surface);stroke-width:2}
+.trend .cross{stroke:var(--ink-3);stroke-width:1;stroke-dasharray:3 3}
+
+/* ---------- table ---------- */
+.tablewrap{overflow-x:auto;margin:0 -17px;padding:0 17px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+.tablewrap table{min-width:540px}
+th{
+  text-align:left;font-family:var(--mono);font-size:10px;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
+  padding:0 10px 8px 0;border-bottom:1px solid var(--line);white-space:nowrap;
+}
+td{padding:10px 10px 10px 0;border-bottom:1px solid var(--line-soft);vertical-align:top}
+tr:last-child td{border-bottom:none}
+th.r,td.r{text-align:right;padding-right:0}
+td.r{font-family:var(--mono);font-variant-numeric:tabular-nums}
+tbody tr:hover{background:var(--surface-2)}
+.pname{font-weight:500}
+.psub{font-size:11.5px;color:var(--ink-3);margin-top:2px}
+.rowacts{display:flex;gap:8px;justify-content:flex-end}
+.iconbtn{
+  border:1px solid var(--line);background:var(--surface);border-radius:6px;
+  width:26px;height:26px;display:grid;place-items:center;color:var(--ink-3);
+  font-size:12px;line-height:1;
+}
+.iconbtn:hover{border-color:var(--ink-3);color:var(--ink)}
+.iconbtn.danger:hover{border-color:var(--neg);color:var(--neg)}
+tfoot td{border-top:1px solid var(--line);border-bottom:none;padding-top:11px;font-weight:600}
+
+/* ---------- buttons ---------- */
+.btn{
+  border:1px solid var(--line);background:var(--surface);border-radius:8px;
+  padding:8px 14px;font-size:13.5px;font-weight:500;color:var(--ink-2);
+  transition:border-color .12s,color .12s,background .12s;
+}
+.btn:hover{border-color:var(--ink-3);color:var(--ink)}
+.btn.primary{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.btn.primary:hover{filter:brightness(1.25)}
+.btn.accent{background:var(--accent);border-color:var(--accent);color:#fff}
+:root[data-theme="dark"] .btn.accent,
+:root:not([data-theme="light"]) .btn.accent{color:#1A1206}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .btn.accent{color:#fff}}
+.btn.accent:hover{filter:brightness(1.06)}
+.btn.tiny{padding:5px 10px;font-size:12.5px;border-radius:7px}
+.bar-actions{display:flex;gap:6px}
+.foot{
+  margin-top:34px;padding-top:16px;border-top:1px solid var(--line);
+  display:flex;gap:14px;flex-wrap:wrap;align-items:center;
+  font-size:12px;color:var(--ink-3);line-height:1.6;
+}
+.foot .grow{flex:1;min-width:240px}
+.btnrow{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
+
+/* ---------- form ---------- */
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3)}
+.field input,.field select{
+  background:var(--bg);border:1px solid var(--line);border-radius:7px;
+  padding:8px 10px;font-size:14px;width:100%;
+}
+.field input:focus,.field select:focus{border-color:var(--accent);outline:none}
+.field input.num-in{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.formgrid .full{grid-column:1/-1}
+
+/* ---------- modal ---------- */
+.scrim{
+  position:fixed;inset:0;background:rgba(8,12,15,.45);z-index:60;
+  display:grid;place-items:center;padding:20px;
+}
+.sheet{
+  background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  width:min(480px,100%);max-height:88vh;overflow:auto;padding:20px;
+  box-shadow:0 24px 60px -20px rgba(0,0,0,.5);
+}
+.sheet h3{font-size:16px;margin-bottom:15px}
+.sheet .btnrow{justify-content:flex-end;margin-top:19px}
+
+/* ---------- tooltip ---------- */
+#tip{
+  position:fixed;z-index:80;pointer-events:none;opacity:0;transition:opacity .1s;
+  background:var(--ink);color:var(--bg);border-radius:7px;padding:7px 10px;
+  font-size:12px;line-height:1.4;white-space:nowrap;box-shadow:0 6px 18px -6px rgba(0,0,0,.4);
+}
+#tip b{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:600}
+#tip.on{opacity:1}
+
+/* ---------- misc ---------- */
+.note{
+  display:flex;gap:9px;align-items:flex-start;margin-top:16px;padding:11px 13px;
+  background:var(--accent-soft);border-radius:8px;font-size:12.5px;color:var(--accent-ink);
+}
+.note .lbl{color:inherit;opacity:.8}
+.hint{font-size:12.5px;color:var(--ink-3);margin-top:14px;line-height:1.55}
+.zero{padding:46px 20px;text-align:center}
+.zero h2{font-size:20px;margin-bottom:8px}
+.zero p{color:var(--ink-3);font-size:14px;max-width:44ch;margin:0 auto}
+
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+
+@media (max-width:820px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .grid2{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .wrap{padding:0 14px 64px}
+  .topbar-in{padding:11px 14px}
+  .carhead h2{font-size:22px}
+  .stat .v{font-size:19px}
+  .stat.hero .v{font-size:22px}
+  .formgrid{grid-template-columns:1fr}
+  .brand .tag{display:none}
+  .bar-actions .btn.tiny{padding:5px 8px;font-size:11.5px}
+}
+</style>
+
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-in">
+    <div class="brand">
+      <svg class="gauge" viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="16" cy="16" r="13" fill="none" stroke="var(--line)" stroke-width="2.5"/>
+        <path d="M16 3 A13 13 0 0 1 27.3 22.5" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="16" y1="16" x2="22.5" y2="9.5" stroke="var(--ink)" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="16" cy="16" r="2.2" fill="var(--ink)"/>
+      </svg>
+      <div>
+        <h1>บัญชีโรงรถ</h1>
+        <p class="tag">ต้นทุนของแต่ง · เงินจม · กำไรตอนขาย</p>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <div class="bar-actions">
+      <button class="btn tiny" data-act="export" title="ดาวน์โหลดไฟล์สำรองข้อมูล">สำรองไฟล์</button>
+      <button class="btn tiny" data-act="import" title="โหลดไฟล์สำรองกลับเข้ามา">กู้คืน</button>
+      <input type="file" id="importFile" accept=".json,application/json" hidden>
+    </div>
+    <span class="sync" id="syncDot"><i></i><span id="syncText">เก็บในเครื่องนี้</span></span>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="tabs" id="tabs"></nav>
+  <main id="main"></main>
+  <footer class="foot">
+    <span class="grow">ข้อมูลทั้งหมดเก็บอยู่ในเบราว์เซอร์ของเครื่องนี้เท่านั้น ไม่ได้ส่งขึ้นอินเทอร์เน็ตที่ไหน — ถ้าล้างข้อมูลเบราว์เซอร์หรือย้ายไปเครื่องอื่น ข้อมูลจะไม่ตามไปด้วย จึงควรกด “สำรองไฟล์” เก็บไว้เป็นระยะ แล้วใช้ “กู้คืน” ตอนย้ายเครื่อง</span>
+    <button class="btn tiny" data-act="export">สำรองไฟล์</button>
+  </footer>
+</div>
+
+<div id="tip" role="status"></div>
+<div id="modalRoot"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ============ constants ============ */
+const CATS = ["ล้อ / ยาง","ช่วงล่าง","เครื่องยนต์","ท่อ / ไอเสีย","เบรก","แต่งนอก","แต่งใน","เครื่องเสียง","ไฟ","ฟิล์ม / สี","ค่าแรง / ช่าง","อื่น ๆ"];
+const LS_KEY = "garage-ledger-v1";
+const THAI_MONTH = ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."];
+
+/* ============ state ============ */
+let state = { cars: [], active: null };
+let saveTimer = null, storageOK = true;
+
+const uid = () => Math.random().toString(36).slice(2,9) + Date.now().toString(36).slice(-3);
+const $ = (s,r) => (r||document).querySelector(s);
+const esc = s => String(s==null?"":s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+/* ============ formatting ============ */
+function fmt(n){
+  const v = Math.round(Number(n)||0);
+  return v.toLocaleString("en-US");
+}
+function money(n){ return "฿" + fmt(n); }
+function signed(n){
+  const v = Math.round(Number(n)||0);
+  return (v>0?"+":v<0?"−":"") + "฿" + fmt(Math.abs(v));
+}
+function shortDate(iso){
+  if(!iso) return "—";
+  const d = new Date(iso+"T00:00:00");
+  if(isNaN(d)) return "—";
+  return d.getDate() + " " + THAI_MONTH[d.getMonth()] + " " + String((d.getFullYear()+543)%100).padStart(2,"0");
+}
+function today(){ return new Date().toISOString().slice(0,10); }
+function parseNum(v){
+  const n = parseFloat(String(v==null?"":v).replace(/[^0-9.\-]/g,""));
+  return isFinite(n) ? n : 0;
+}
+
+/* ============ math ============ */
+function calc(car){
+  const parts = car.parts || [];
+  let partsCost = 0, soldCost = 0, partsRevenue = 0, soldCount = 0;
+  for(const p of parts){
+    const c = (Number(p.price)||0) * (Number(p.qty)||1);
+    partsCost += c;
+    if(p.sold){ soldCost += c; partsRevenue += Number(p.sold.price)||0; soldCount++; }
+  }
+  const baseCost = Number(car.basePrice)||0;
+  const totalCost = baseCost + partsCost;
+  const carRevenue = car.sold ? (Number(car.sellPrice)||0) : 0;
+  const revenue = partsRevenue + carRevenue;
+  const profit = revenue - totalCost;
+  const sunk = totalCost - partsRevenue;
+  return {
+    parts, count: parts.length, soldCount,
+    partsCost, soldCost, partsRevenue, baseCost, totalCost,
+    carRevenue, revenue, profit, sunk,
+    partsProfit: partsRevenue - soldCost,
+    pct: totalCost > 0 ? (profit/totalCost*100) : 0,
+    keptCost: partsCost - soldCost
+  };
+}
+function byCategory(car){
+  const map = new Map();
+  for(const p of car.parts||[]){
+    const c = (Number(p.price)||0)*(Number(p.qty)||1);
+    map.set(p.cat||"อื่น ๆ", (map.get(p.cat||"อื่น ๆ")||0) + c);
+  }
+  return [...map.entries()].map(([label,value])=>({label,value})).sort((a,b)=>b.value-a.value);
+}
+function cumulative(car){
+  const rows = (car.parts||[]).filter(p=>p.date).sort((a,b)=>a.date<b.date?-1:1);
+  let run = Number(car.basePrice)||0;
+  const pts = [];
+  if(run>0 && rows.length) pts.push({date: rows[0].date, value: run, label:"ราคารถตั้งต้น"});
+  for(const p of rows){
+    run += (Number(p.price)||0)*(Number(p.qty)||1);
+    pts.push({date:p.date, value:run, label:p.name});
+  }
+  return pts;
+}
+
+/* ============ persistence ============ */
+function serialize(){ return JSON.stringify({cars: state.cars}); }
+
+function scheduleSave(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(save, 300);
+}
+function save(){
+  saveTimer = null;
+  try{
+    localStorage.setItem(LS_KEY, serialize());
+    storageOK = true;
+    const d = new Date();
+    setSync("ok", "บันทึกแล้ว " + String(d.getHours()).padStart(2,"0") + ":" + String(d.getMinutes()).padStart(2,"0"));
+  }catch(err){
+    storageOK = false;
+    setSync("warn", "บันทึกไม่ได้ — กดสำรองไฟล์");
+  }
+}
+function setSync(cls, text){
+  const el = document.getElementById("syncDot");
+  if(!el) return;
+  el.className = "sync " + (cls||"");
+  document.getElementById("syncText").textContent = text;
+}
+function loadLocal(){
+  try{
+    const raw = localStorage.getItem(LS_KEY);
+    if(raw){ const d = JSON.parse(raw); if(d && Array.isArray(d.cars)) state.cars = d.cars; }
+  }catch(e){ storageOK = false; }
+}
+
+/* ---------- ไฟล์สำรอง ---------- */
+function exportJSON(){
+  const payload = { app:"garage-ledger", version:1, exportedAt:new Date().toISOString(), cars:state.cars };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "garage-ledger-" + today() + ".json";
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 3000);
+  setSync("ok", "ดาวน์โหลดไฟล์สำรองแล้ว");
+}
+function importJSON(file){
+  if(!file) return;
+  const r = new FileReader();
+  r.onload = () => {
+    let d = null;
+    try{ d = JSON.parse(r.result); }catch(e){}
+    if(!d || !Array.isArray(d.cars)){
+      alert("อ่านไฟล์ไม่ได้ — ต้องเป็นไฟล์ .json ที่กดสำรองออกมาจากเว็บนี้");
+      return;
+    }
+    if(state.cars.length && !confirm("ไฟล์นี้มี " + d.cars.length + " คัน — จะเขียนทับข้อมูลที่มีอยู่ตอนนี้ทั้งหมด ยืนยันไหม?")) return;
+    state.cars = d.cars;
+    state.active = null;
+    commit();
+    setSync("ok", "กู้คืนข้อมูลแล้ว");
+  };
+  r.onerror = () => alert("เปิดไฟล์ไม่สำเร็จ ลองใหม่อีกครั้ง");
+  r.readAsText(file);
+}
+
+/* ============ tooltip ============ */
+const tip = $("#tip");
+function showTip(e, html){
+  tip.innerHTML = html;
+  tip.classList.add("on");
+  const r = tip.getBoundingClientRect();
+  let x = e.clientX + 14, y = e.clientY - r.height - 10;
+  if(x + r.width > innerWidth - 8) x = e.clientX - r.width - 14;
+  if(y < 8) y = e.clientY + 16;
+  tip.style.left = x + "px";
+  tip.style.top = y + "px";
+}
+function hideTip(){ tip.classList.remove("on"); }
+document.addEventListener("scroll", hideTip, true);
+
+/* ============ charts ============ */
+function barChart(rows, total){
+  if(!rows.length) return '<div class="empty">ยังไม่มีรายการของแต่ง</div>';
+  const max = Math.max(...rows.map(r=>r.value)) || 1;
+  return '<div class="bars">' + rows.map(r=>{
+    const pct = total>0 ? (r.value/total*100) : 0;
+    return '<div class="bar-row" data-tip="' + esc(r.label + " · " + money(r.value) + " · " + pct.toFixed(1) + "% ของต้นทุน") + '">'
+      + '<div class="name">' + esc(r.label) + '</div>'
+      + '<div class="val">' + money(r.value) + '</div>'
+      + '<div class="bar-track"><div class="bar-fill" style="width:' + (r.value/max*100).toFixed(2) + '%"></div></div>'
+      + '</div>';
+  }).join("") + '</div>';
+}
+
+function divergingChart(rows){
+  if(!rows.length) return '<div class="empty">ยังไม่มีคันไหนขายออก</div>';
+  const max = Math.max(...rows.map(r=>Math.abs(r.value))) || 1;
+  return '<div class="dvg">' + rows.map(r=>{
+    const w = Math.abs(r.value)/max*50;
+    const pos = r.value >= 0;
+    const style = pos
+      ? 'left:50%;width:' + w.toFixed(2) + '%;background:var(--pos)'
+      : 'right:50%;width:' + w.toFixed(2) + '%;background:var(--neg)';
+    return '<div class="dvg-row" data-tip="' + esc(r.label + " · " + (pos?"กำไร ":"ขาดทุน ") + money(Math.abs(r.value))) + '">'
+      + '<div class="dvg-top"><span class="name">' + esc(r.label) + '</span>'
+      + '<span class="val ' + (pos?"v pos":"v neg") + '">' + signed(r.value) + '</span></div>'
+      + '<div class="dvg-track"><div class="dvg-fill" style="' + style + '"></div></div>'
+      + '</div>';
+  }).join("") + '</div>';
+}
+
+function niceMax(v){
+  if(!(v>0)) return 1;
+  const mag = Math.pow(10, Math.floor(Math.log10(v)));
+  const n = v/mag;
+  const step = n<=1?1 : n<=2?2 : n<=2.5?2.5 : n<=5?5 : 10;
+  return step*mag;
+}
+function axisNum(t){
+  if(t >= 1000000) return (t/1000000).toFixed(t%1000000?1:0) + "M";
+  if(t >= 1000) return (t/1000).toFixed(t%1000?1:0) + "k";
+  return String(Math.round(t));
+}
+function trendChart(pts){
+  if(pts.length < 2) return '<div class="empty">ใส่ของแต่งอย่างน้อย 2 รายการ (พร้อมวันที่) เพื่อดูกราฟ</div>';
+  const W = 640, H = 180, PL = 46, PR = 10, PT = 12, PB = 24;
+  const xs = pts.map(p=>new Date(p.date+"T00:00:00").getTime());
+  const x0 = Math.min(...xs), x1 = Math.max(...xs);
+  const span = (x1-x0) || 1;
+  const yMax = niceMax(Math.max(...pts.map(p=>p.value)) * 1.04);
+  const X = t => PL + (t-x0)/span * (W-PL-PR);
+  const Y = v => H-PB - (v/yMax) * (H-PT-PB);
+
+  const ticks = [0, yMax/2, yMax];
+  let g = "";
+  for(const t of ticks){
+    const y = Y(t);
+    g += '<line class="grid" x1="' + PL + '" y1="' + y.toFixed(1) + '" x2="' + (W-PR) + '" y2="' + y.toFixed(1) + '"/>';
+    g += '<text class="axis" x="' + (PL-7) + '" y="' + (y+3.2).toFixed(1) + '" text-anchor="end">' + axisNum(t) + '</text>';
+  }
+  const d = pts.map((p,i)=> (i?"L":"M") + X(xs[i]).toFixed(1) + " " + Y(p.value).toFixed(1)).join(" ");
+  const area = d + " L " + X(xs[xs.length-1]).toFixed(1) + " " + (H-PB) + " L " + X(x0).toFixed(1) + " " + (H-PB) + " Z";
+  const last = pts[pts.length-1];
+
+  const dots = pts.map((p,i)=>'<circle class="hit" r="9" cx="' + X(xs[i]).toFixed(1) + '" cy="' + Y(p.value).toFixed(1) + '" fill="transparent" data-tip="'
+    + esc(shortDate(p.date) + " · " + p.label + " · รวม " + money(p.value)) + '"/>').join("");
+
+  return '<svg class="trend" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="ยอดต้นทุนสะสมตามเวลา">'
+    + '<defs><linearGradient id="tg" x1="0" y1="0" x2="0" y2="1">'
+    + '<stop offset="0%" stop-color="var(--accent)" stop-opacity=".22"/>'
+    + '<stop offset="100%" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs>'
+    + g
+    + '<path d="' + area + '" fill="url(#tg)"/>'
+    + '<path class="line" d="' + d + '"/>'
+    + '<circle class="cap" r="4.5" cx="' + X(xs[xs.length-1]).toFixed(1) + '" cy="' + Y(last.value).toFixed(1) + '"/>'
+    + dots
+    + '<text class="axis" x="' + PL + '" y="' + (H-6) + '">' + shortDate(pts[0].date) + '</text>'
+    + '<text class="axis" x="' + (W-PR) + '" y="' + (H-6) + '" text-anchor="end">' + shortDate(last.date) + '</text>'
+    + '</svg>';
+}
+
+/* ============ render ============ */
+function render(){
+  renderTabs();
+  const car = state.cars.find(c=>c.id===state.active);
+  const main = $("#main");
+  if(!state.cars.length){ main.innerHTML = zeroState(); }
+  else if(!car){ main.innerHTML = overview(); }
+  else { main.innerHTML = carView(car); }
+  bindTips();
+}
+
+function renderTabs(){
+  const t = $("#tabs");
+  let html = "";
+  if(state.cars.length){
+    html += '<button class="tab" data-act="overview" aria-current="' + (!state.active) + '">ภาพรวมทุกคัน</button>';
+    for(const c of state.cars){
+      html += '<button class="tab" data-act="pick" data-id="' + c.id + '" aria-current="' + (state.active===c.id) + '">'
+        + (c.sold?'<span class="dot"></span>':'') + esc(c.name) + '</button>';
+    }
+  }
+  html += '<button class="tab ghost" data-act="addcar">+ เพิ่มคัน</button>';
+  t.innerHTML = html;
+}
+
+function zeroState(){
+  return '<div class="zero">'
+    + '<h2>เริ่มจากรถคันแรก</h2>'
+    + '<p>บันทึกว่าซื้ออะไหล่อะไรมาบ้าง ราคาเท่าไหร่ แล้วเว็บจะคิดต้นทุนรวม เงินที่จมไป จุดคุ้มทุน และกำไร–ขาดทุนตอนขายให้อัตโนมัติ</p>'
+    + '<div class="btnrow" style="justify-content:center">'
+    + '<button class="btn accent" data-act="addcar">เพิ่มรถคันแรก</button>'
+    + '<button class="btn" data-act="demo">ลองดูข้อมูลตัวอย่าง</button>'
+    + '</div></div>';
+}
+
+function statTile(label, value, sub, cls, hero){
+  return '<div class="stat' + (hero?" hero":"") + '">'
+    + '<span class="lbl">' + esc(label) + '</span>'
+    + '<span class="v ' + (cls||"") + '">' + value + '</span>'
+    + '<span class="s">' + (sub||"") + '</span></div>';
+}
+
+function carView(car){
+  const k = calc(car);
+  const cats = byCategory(car);
+
+  let stats;
+  if(car.sold){
+    stats = statTile("ต้นทุนรวม", money(k.totalCost), "รถ " + money(k.baseCost) + " + ของแต่ง " + money(k.partsCost))
+      + statTile("รายรับรวม", money(k.revenue), "ขายรถ " + money(k.carRevenue) + " + ขายอะไหล่ " + money(k.partsRevenue))
+      + statTile(k.profit>=0?"กำไร":"ขาดทุน", signed(k.profit), (k.profit>=0?"+":"") + k.pct.toFixed(1) + "% จากต้นทุน", k.profit>=0?"pos":"neg", true)
+      + statTile("ของแต่ง", fmt(k.count) + " ชิ้น", "ขายต่อไปแล้ว " + fmt(k.soldCount) + " ชิ้น");
+  }else{
+    const top = cats[0];
+    stats = statTile("ต้นทุนรวม", money(k.totalCost), (k.baseCost? "รถ " + money(k.baseCost) + " + ":"") + "ของแต่ง " + money(k.partsCost))
+      + statTile("ของแต่ง", fmt(k.count) + " ชิ้น", top ? "ลงหนักสุด: " + esc(top.label) + " " + money(top.value) : "ยังไม่ได้บันทึกรายการ")
+      + statTile("เงินจมอยู่ตอนนี้", money(k.sunk), "ต้องขายรถได้ไม่ต่ำกว่านี้ถึงเท่าทุน", "", true)
+      + statTile("ขายอะไหล่คืนมา", money(k.partsRevenue), k.soldCount ? "จาก " + fmt(k.soldCount) + " รายการ · " + signed(k.partsProfit) : "ถอดของเดิมขายต่อได้ กดปุ่ม ฿ ที่รายการ");
+  }
+
+  const soldPill = car.sold
+    ? '<span class="pill ' + (k.profit>=0?"sold":"loss") + '">ขายแล้ว ' + shortDate(car.sellDate) + '</span>'
+    : '<span class="pill">ยังไม่ขาย</span>';
+
+  return '<div class="carhead">'
+    + '<div><h2>' + esc(car.name) + '</h2>'
+    + '<div class="meta">' + soldPill + (car.note? ' &nbsp;' + esc(car.note) : "") + '</div></div>'
+    + '<div class="spacer" style="flex:1"></div>'
+    + '<div class="btnrow" style="margin:0">'
+    + '<button class="btn accent" data-act="addpart">+ เพิ่มของแต่ง</button>'
+    + '<button class="btn" data-act="sellcar">' + (car.sold?"แก้ข้อมูลการขาย":"บันทึกการขายรถ") + '</button>'
+    + '<button class="btn" data-act="editcar">แก้ข้อมูลรถ</button>'
+    + '</div></div>'
+
+    + '<section class="stats">' + stats + '</section>'
+
+    + '<div class="grid2">'
+    + '<section class="panel"><div class="panel-head"><h3>ต้นทุนแยกตามหมวด</h3>'
+    + '<span class="side">' + money(k.partsCost) + '</span></div>'
+    + barChart(cats, k.partsCost) + '</section>'
+    + '<section class="panel"><div class="panel-head"><h3>ต้นทุนสะสมตามเวลา</h3>'
+    + '<span class="side">' + money(k.totalCost) + '</span></div>'
+    + trendChart(cumulative(car)) + '</section>'
+    + '</div>'
+
+    + '<section class="panel" style="margin-top:16px">'
+    + '<div class="panel-head"><h3>รายการของแต่ง</h3><span class="side">' + fmt(k.count) + ' รายการ</span></div>'
+    + partsTable(car, k) + '</section>'
+
+    + (car.sold ? saleBreakdown(car, k) : '<p class="hint">ทริค: อะไหล่เดิมที่ถอดออกแล้วขายต่อ ให้กด “ขายแล้ว” ที่รายการนั้น ระบบจะหักคืนจากเงินจมให้อัตโนมัติ</p>');
+}
+
+function partsTable(car, k){
+  if(!(car.parts||[]).length){
+    return '<div class="empty">ยังไม่มีรายการ — กด “เพิ่มของแต่ง” เพื่อเริ่มบันทึก</div>';
+  }
+  const rows = car.parts.slice().sort((a,b)=>(b.date||"")<(a.date||"")?-1:1);
+  let body = "";
+  for(const p of rows){
+    const cost = (Number(p.price)||0)*(Number(p.qty)||1);
+    const sold = p.sold ? Number(p.sold.price)||0 : null;
+    const pl = sold===null ? null : sold - cost;
+    body += '<tr>'
+      + '<td><div class="pname">' + esc(p.name) + '</div>'
+      + '<div class="psub">' + esc(p.cat||"อื่น ๆ") + (p.shop? " · " + esc(p.shop) : "") + (p.qty>1? " · x" + fmt(p.qty) : "") + '</div></td>'
+      + '<td class="r">' + shortDate(p.date) + '</td>'
+      + '<td class="r">' + money(cost) + '</td>'
+      + '<td class="r">' + (sold===null ? '<span style="color:var(--ink-3)">—</span>' : money(sold)) + '</td>'
+      + '<td class="r">' + (pl===null ? '<span style="color:var(--ink-3)">—</span>'
+          : '<span class="' + (pl>=0?"v pos":"v neg") + '">' + signed(pl) + '</span>') + '</td>'
+      + '<td class="r"><div class="rowacts">'
+      + '<button class="iconbtn" title="' + (p.sold?"แก้ราคาขาย":"บันทึกว่าขายแล้ว") + '" data-act="sellpart" data-id="' + p.id + '">฿</button>'
+      + '<button class="iconbtn" title="แก้ไข" data-act="editpart" data-id="' + p.id + '">✎</button>'
+      + '<button class="iconbtn danger" title="ลบ" data-act="delpart" data-id="' + p.id + '">✕</button>'
+      + '</div></td></tr>';
+  }
+  return '<div class="tablewrap"><table>'
+    + '<thead><tr><th>รายการ</th><th class="r">วันที่</th><th class="r">ต้นทุน</th><th class="r">ขายต่อได้</th><th class="r">กำไร/ขาดทุน</th><th class="r"></th></tr></thead>'
+    + '<tbody>' + body + '</tbody>'
+    + '<tfoot><tr><td>รวม</td><td class="r"></td><td class="r">' + money(k.partsCost) + '</td>'
+    + '<td class="r">' + money(k.partsRevenue) + '</td>'
+    + '<td class="r"><span class="' + (k.partsProfit>=0?"v pos":"v neg") + '">' + (k.soldCount? signed(k.partsProfit) : "—") + '</span></td>'
+    + '<td class="r"></td></tr></tfoot></table></div>';
+}
+
+function saleBreakdown(car, k){
+  const line = (label, v, cls) => '<tr><td>' + esc(label) + '</td><td class="r"><span class="' + (cls||"") + '">' + v + '</span></td></tr>';
+  return '<section class="panel" style="margin-top:16px">'
+    + '<div class="panel-head"><h3>สรุปตอนขาย</h3></div>'
+    + '<table>'
+    + line("ราคารถตอนซื้อ", "− " + money(k.baseCost))
+    + line("ของแต่งทั้งหมด", "− " + money(k.partsCost))
+    + line("ขายอะไหล่แยกได้", "+ " + money(k.partsRevenue))
+    + line("ขายรถได้", "+ " + money(k.carRevenue))
+    + '<tfoot><tr><td>' + (k.profit>=0?"กำไรสุทธิ":"ขาดทุนสุทธิ") + '</td>'
+    + '<td class="r"><span class="' + (k.profit>=0?"v pos":"v neg") + '">' + signed(k.profit)
+    + ' <span style="font-size:11px;opacity:.75">(' + (k.profit>=0?"+":"") + k.pct.toFixed(1) + '%)</span></span></td></tr></tfoot>'
+    + '</table></section>';
+}
+
+function overview(){
+  const cars = state.cars;
+  let totalCost=0, totalRev=0, totalParts=0, sunk=0;
+  const catMap = new Map();
+  const profitRows = [];
+  for(const c of cars){
+    const k = calc(c);
+    totalCost += k.totalCost; totalRev += k.revenue; totalParts += k.count;
+    if(!c.sold) sunk += k.sunk; else profitRows.push({label:c.name, value:k.profit});
+    for(const r of byCategory(c)) catMap.set(r.label, (catMap.get(r.label)||0)+r.value);
+  }
+  const realized = profitRows.reduce((s,r)=>s+r.value,0);
+  const cats = [...catMap.entries()].map(([label,value])=>({label,value})).sort((a,b)=>b.value-a.value);
+  const catTotal = cats.reduce((s,r)=>s+r.value,0);
+
+  const stats = statTile("รถทั้งหมด", fmt(cars.length) + " คัน", fmt(cars.filter(c=>c.sold).length) + " คันขายไปแล้ว · ของแต่ง " + fmt(totalParts) + " ชิ้น")
+    + statTile("ลงทุนไปทั้งหมด", money(totalCost), "รวมค่ารถและของแต่งทุกคัน")
+    + statTile("เงินจมในคันที่ยังไม่ขาย", money(sunk), "หักเงินที่ขายอะไหล่คืนมาแล้ว")
+    + statTile(realized>=0?"กำไรที่รับรู้แล้ว":"ขาดทุนที่รับรู้แล้ว", signed(realized), "จากคันที่ขายออกไปแล้วเท่านั้น", realized>=0?"pos":"neg", true);
+
+  const soldChart = profitRows.length
+    ? '<section class="panel"><div class="panel-head"><h3>กำไร–ขาดทุนรายคัน</h3><span class="side">เฉพาะคันที่ขายแล้ว</span></div>'
+      + divergingChart(profitRows) + '</section>'
+    : '<section class="panel"><div class="panel-head"><h3>ต้นทุนรายคัน</h3><span class="side">' + money(totalCost) + '</span></div>'
+      + barChart(cars.map(c=>({label:c.name, value:calc(c).totalCost})).sort((a,b)=>b.value-a.value), totalCost) + '</section>';
+
+  let tbody = "";
+  for(const c of cars){
+    const k = calc(c);
+    tbody += '<tr>'
+      + '<td><div class="pname">' + esc(c.name) + '</div><div class="psub">' + fmt(k.count) + ' รายการ</div></td>'
+      + '<td class="r">' + money(k.totalCost) + '</td>'
+      + '<td class="r">' + money(k.revenue) + '</td>'
+      + '<td class="r">' + (c.sold
+          ? '<span class="' + (k.profit>=0?"v pos":"v neg") + '">' + signed(k.profit) + '</span>'
+          : '<span style="color:var(--ink-3)">จม ' + money(k.sunk) + '</span>') + '</td>'
+      + '<td class="r"><button class="btn" style="padding:4px 10px;font-size:12.5px" data-act="pick" data-id="' + c.id + '">เปิด</button></td>'
+      + '</tr>';
+  }
+
+  return '<div class="carhead"><div><h2>ภาพรวมทุกคัน</h2>'
+    + '<div class="meta">รวมทุกโปรเจกต์ที่บันทึกไว้</div></div></div>'
+    + '<section class="stats">' + stats + '</section>'
+    + '<div class="grid2">' + soldChart
+    + '<section class="panel"><div class="panel-head"><h3>ของแต่งแยกตามหมวด</h3><span class="side">' + money(catTotal) + '</span></div>'
+    + barChart(cats, catTotal) + '</section></div>'
+    + '<section class="panel" style="margin-top:16px"><div class="panel-head"><h3>ตารางสรุป</h3></div>'
+    + '<div class="tablewrap"><table><thead><tr><th>คัน</th><th class="r">ต้นทุนรวม</th><th class="r">รายรับ</th><th class="r">ผลลัพธ์</th><th class="r"></th></tr></thead>'
+    + '<tbody>' + tbody + '</tbody></table></div></section>';
+}
+
+/* ============ modal ============ */
+function closeModal(){ $("#modalRoot").innerHTML = ""; document.removeEventListener("keydown", escClose); }
+function escClose(e){ if(e.key === "Escape") closeModal(); }
+function openModal(title, fieldsHtml, onSave, extra){
+  $("#modalRoot").innerHTML = '<div class="scrim" data-scrim="1"><form class="sheet" id="sheetForm">'
+    + '<h3>' + esc(title) + '</h3>'
+    + '<div class="formgrid">' + fieldsHtml + '</div>'
+    + '<div class="btnrow">'
+    + (extra || "")
+    + '<button type="button" class="btn" data-act="cancel">ยกเลิก</button>'
+    + '<button type="submit" class="btn accent">บันทึก</button>'
+    + '</div></form></div>';
+  document.addEventListener("keydown", escClose);
+  const form = $("#sheetForm");
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const data = {};
+    for(const el of form.querySelectorAll("[name]")) data[el.name] = el.value;
+    if(onSave(data) !== false){ closeModal(); commit(); }
+  });
+  const first = form.querySelector("input,select");
+  if(first) setTimeout(()=>first.focus(), 30);
+}
+function field(name, label, value, type, opts){
+  if(type === "select"){
+    return '<div class="field' + (opts && opts.full ? " full":"") + '"><label for="f_' + name + '">' + esc(label) + '</label>'
+      + '<select id="f_' + name + '" name="' + name + '">'
+      + opts.list.map(o=>'<option' + (o===value?" selected":"") + '>' + esc(o) + '</option>').join("")
+      + '</select></div>';
+  }
+  return '<div class="field' + (opts && opts.full ? " full":"") + '"><label for="f_' + name + '">' + esc(label) + '</label>'
+    + '<input id="f_' + name + '" name="' + name + '" type="' + (type||"text") + '"'
+    + (type === "number" ? ' inputmode="decimal" class="num-in" min="0" step="any"' : '')
+    + ' value="' + esc(value==null?"":value) + '"'
+    + (opts && opts.placeholder ? ' placeholder="' + esc(opts.placeholder) + '"' : '')
+    + (opts && opts.required ? ' required' : '') + '></div>';
+}
+
+/* ============ actions ============ */
+function commit(){ scheduleSave(); render(); }
+function activeCar(){ return state.cars.find(c=>c.id===state.active); }
+
+function addCar(existing){
+  const c = existing || {};
+  openModal(existing ? "แก้ข้อมูลรถ" : "เพิ่มรถคันใหม่",
+    field("name","ชื่อเรียก / รุ่น", c.name, "text", {full:true, required:true, placeholder:"เช่น Civic FD ขาว"})
+    + field("basePrice","ราคารถตอนซื้อ (ถ้ามี)", c.basePrice, "number", {placeholder:"0"})
+    + field("note","โน้ต", c.note, "text", {placeholder:"ปี, สี, ทะเบียน"}),
+    data => {
+      if(!data.name.trim()) return false;
+      if(existing){
+        existing.name = data.name.trim();
+        existing.basePrice = parseNum(data.basePrice);
+        existing.note = data.note.trim();
+      }else{
+        const car = { id: uid(), name: data.name.trim(), basePrice: parseNum(data.basePrice),
+          note: data.note.trim(), parts: [], sold:false, sellPrice:0, sellDate:"" };
+        state.cars.push(car);
+        state.active = car.id;
+      }
+      return true;
+    },
+    existing ? '<button type="button" class="btn" data-act="delcar" style="margin-right:auto;color:var(--neg)">ลบคันนี้</button>' : ""
+  );
+}
+
+function addPart(existing){
+  const p = existing || {};
+  openModal(existing ? "แก้ไขรายการ" : "เพิ่มของแต่ง",
+    field("name","ชื่อของ", p.name, "text", {full:true, required:true, placeholder:"เช่น ล้อ Rays TE37 17 นิ้ว"})
+    + field("cat","หมวด", p.cat || CATS[0], "select", {list:CATS})
+    + field("price","ราคาต่อชิ้น", p.price, "number", {required:true, placeholder:"0"})
+    + field("qty","จำนวน", p.qty==null?1:p.qty, "number", {placeholder:"1"})
+    + field("date","วันที่ซื้อ", p.date || today(), "date")
+    + field("shop","ซื้อจากร้าน", p.shop, "text", {full:true, placeholder:"ชื่อร้าน / เพจ"}),
+    data => {
+      const car = activeCar(); if(!car) return false;
+      if(!data.name.trim()) return false;
+      const body = {
+        name: data.name.trim(), cat: data.cat, price: parseNum(data.price),
+        qty: Math.max(1, parseNum(data.qty)||1), date: data.date, shop: data.shop.trim()
+      };
+      if(existing) Object.assign(existing, body);
+      else car.parts.push(Object.assign({id: uid(), sold:null}, body));
+      return true;
+    });
+}
+
+function sellPart(p){
+  const cost = (Number(p.price)||0)*(Number(p.qty)||1);
+  openModal("ขายต่อ: " + p.name,
+    field("price","ขายได้เท่าไหร่", p.sold ? p.sold.price : "", "number", {required:true, placeholder:"0"})
+    + field("date","วันที่ขาย", p.sold ? p.sold.date : today(), "date")
+    + '<div class="note full"><span class="lbl">ต้นทุน</span> ' + money(cost)
+    + ' — ใส่ราคาขายแล้วระบบจะคิดกำไร/ขาดทุนให้</div>',
+    data => {
+      const v = parseNum(data.price);
+      p.sold = { price: v, date: data.date };
+      return true;
+    },
+    p.sold ? '<button type="button" class="btn" data-act="unsellpart" data-id="' + p.id + '" style="margin-right:auto">ยกเลิกการขาย</button>' : ""
+  );
+}
+
+function sellCar(car){
+  const k = calc(car);
+  openModal(car.sold ? "แก้ข้อมูลการขายรถ" : "บันทึกการขายรถ",
+    field("price","ขายรถได้เท่าไหร่", car.sold ? car.sellPrice : "", "number", {required:true, placeholder:"0"})
+    + field("date","วันที่ขาย", car.sellDate || today(), "date")
+    + '<div class="note full"><span class="lbl">คุ้มทุนที่</span> ' + money(k.sunk)
+    + ' — ต้นทุนรวม ' + money(k.totalCost) + ' หักเงินที่ขายอะไหล่คืนมาแล้ว ' + money(k.partsRevenue) + '</div>',
+    data => {
+      car.sellPrice = parseNum(data.price);
+      car.sellDate = data.date;
+      car.sold = true;
+      return true;
+    },
+    car.sold ? '<button type="button" class="btn" data-act="unsellcar" style="margin-right:auto">ยังไม่ได้ขาย</button>' : ""
+  );
+}
+
+function demo(){
+  const c1 = { id: uid(), name:"Civic FD ขาว", basePrice: 320000, note:"ปี 2010 · โปรเจกต์แรก", sold:false, sellPrice:0, sellDate:"", parts:[
+    {id:uid(), name:"ล้อ Rays TE37 17\"", cat:"ล้อ / ยาง", price:38000, qty:1, date:"2026-02-14", shop:"ร้านล้อสุขุมวิท", sold:null},
+    {id:uid(), name:"ยาง Michelin PS4 215/45", cat:"ล้อ / ยาง", price:6200, qty:4, date:"2026-02-14", shop:"ร้านล้อสุขุมวิท", sold:null},
+    {id:uid(), name:"โช๊ค Tein Street Basis", cat:"ช่วงล่าง", price:24500, qty:1, date:"2026-03-02", shop:"เพจ JDM Parts", sold:null},
+    {id:uid(), name:"ท่อกลาง + ปลาย Fujitsubo", cat:"ท่อ / ไอเสีย", price:18000, qty:1, date:"2026-03-20", shop:"อู่พี่ตั้ม", sold:null},
+    {id:uid(), name:"ล้อเดิมติดรถ (ถอดขาย)", cat:"ล้อ / ยาง", price:0, qty:1, date:"2026-02-15", shop:"", sold:{price:7500, date:"2026-02-28"}},
+    {id:uid(), name:"ค่าแรงติดตั้งช่วงล่าง", cat:"ค่าแรง / ช่าง", price:3500, qty:1, date:"2026-03-02", shop:"อู่พี่ตั้ม", sold:null},
+    {id:uid(), name:"ฟิล์ม Lamina รอบคัน", cat:"ฟิล์ม / สี", price:12000, qty:1, date:"2026-04-06", shop:"ร้านฟิล์มรัชดา", sold:null}
+  ]};
+  const c2 = { id: uid(), name:"Vios Gen2 ดำ", basePrice: 195000, note:"คันซื้อมาแต่งขายต่อ", sold:true, sellPrice:268000, sellDate:"2026-07-18", parts:[
+    {id:uid(), name:"ล้อ Enkei 16\" + ยาง", cat:"ล้อ / ยาง", price:21000, qty:1, date:"2026-05-03", shop:"ตลาดนัดรถ", sold:null},
+    {id:uid(), name:"สปริงโหลด Tanabe", cat:"ช่วงล่าง", price:8500, qty:1, date:"2026-05-10", shop:"เพจของแต่ง", sold:null},
+    {id:uid(), name:"สเกิร์ตรอบคัน + ทำสี", cat:"แต่งนอก", price:14000, qty:1, date:"2026-05-24", shop:"อู่สีเจ", sold:null},
+    {id:uid(), name:"เครื่องเสียง Pioneer + ลำโพง", cat:"เครื่องเสียง", price:9800, qty:1, date:"2026-06-08", shop:"บ้านหม้อ", sold:null},
+    {id:uid(), name:"ล้อเดิม + ยางเดิม", cat:"ล้อ / ยาง", price:0, qty:1, date:"2026-05-04", shop:"", sold:{price:5000, date:"2026-05-20"}}
+  ]};
+  state.cars = [c1, c2];
+  state.active = c1.id;
+  commit();
+}
+
+/* ============ events ============ */
+document.addEventListener("click", e => {
+  const scrim = e.target.closest("[data-scrim]");
+  if(scrim && e.target === scrim){ closeModal(); return; }
+  const el = e.target.closest("[data-act]");
+  if(!el) return;
+  const act = el.dataset.act, id = el.dataset.id;
+  const car = activeCar();
+
+  if(act === "overview"){ state.active = null; render(); }
+  else if(act === "pick"){ state.active = id; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+  else if(act === "addcar"){ addCar(null); }
+  else if(act === "editcar" && car){ addCar(car); }
+  else if(act === "delcar" && car){
+    if(confirm("ลบ “" + car.name + "” และรายการทั้งหมดในคันนี้?")){
+      state.cars = state.cars.filter(c=>c.id!==car.id);
+      state.active = null; closeModal(); commit();
+    }
+  }
+  else if(act === "addpart" && car){ addPart(null); }
+  else if(act === "editpart" && car){ addPart(car.parts.find(p=>p.id===id)); }
+  else if(act === "delpart" && car){
+    const p = car.parts.find(x=>x.id===id);
+    if(p && confirm("ลบ “" + p.name + "”?")){ car.parts = car.parts.filter(x=>x.id!==id); commit(); }
+  }
+  else if(act === "sellpart" && car){ sellPart(car.parts.find(p=>p.id===id)); }
+  else if(act === "unsellpart" && car){
+    const p = car.parts.find(x=>x.id===id);
+    if(p){ p.sold = null; closeModal(); commit(); }
+  }
+  else if(act === "sellcar" && car){ sellCar(car); }
+  else if(act === "unsellcar" && car){ car.sold = false; car.sellPrice = 0; car.sellDate = ""; closeModal(); commit(); }
+  else if(act === "cancel"){ closeModal(); }
+  else if(act === "demo"){ demo(); }
+  else if(act === "export"){ exportJSON(); }
+  else if(act === "import"){ document.getElementById("importFile").click(); }
+});
+
+document.addEventListener("change", e => {
+  if(e.target && e.target.id === "importFile"){
+    importJSON(e.target.files && e.target.files[0]);
+    e.target.value = "";
+  }
+});
+
+function bindTips(){
+  for(const el of document.querySelectorAll("[data-tip]")){
+    el.addEventListener("mousemove", ev => showTip(ev, el.dataset.tip));
+    el.addEventListener("mouseleave", hideTip);
+  }
+}
+
+/* ============ boot ============ */
+addEventListener("pagehide", () => { if(saveTimer){ clearTimeout(saveTimer); save(); } });
+document.addEventListener("visibilitychange", () => {
+  if(document.visibilityState === "hidden" && saveTimer){ clearTimeout(saveTimer); save(); }
+});
+
+loadLocal();
+render();
+if(!storageOK) setSync("warn", "เบราว์เซอร์นี้บันทึกไม่ได้");
+
+})();
+</script>
+
+</body>
+</html>

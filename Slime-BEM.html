@@ -434,6 +434,11 @@ body.scaled .btn.sm { min-height: 54px; } body.scaled .btn.sm.round { width: 54p
 body.scaled .charmbtn .charm { width: 48px; height: 48px; } body.scaled .charmbtn { padding: 3px 2px 2px; }
 body.scaled .start .title { margin-top: 4px; } body.scaled .brandlogo { height: 80px; }
 body.scaled .order3 .seg button { min-height: 40px; }
+
+/* long sentences wrap and shrink inside the bubble, never over the buttons */
+.speak > div:first-child { min-width: 0; } .bubble { min-width: 0; }
+.say { min-width: 0; overflow-wrap: anywhere; } .say .slot { white-space: normal; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.sbtns { position: relative; z-index: 2; }
 </style>
 </head>
 <body>
@@ -1769,7 +1774,7 @@ SS.D = {};
     if (withWord) return cc.n === 1 ? an(nm) + ' ' + nm + ' charm' : E.num(cc.n) + ' ' + nm + ' charms';
     return cc.n === 1 ? ch.a + ' ' + ch.name : E.num(cc.n) + ' ' + ch.pl;
   }
-  E.charmList = function (r, withWord) { return E.list(E.charmCounts(r).map(function (c) { return charmPhrase(c, withWord); })); };
+  E.charmList = function (r, withWord) { var cc = E.charmCounts(r), ph = cc.slice(0, 3).map(function (c) { return charmPhrase(c, withWord); }); if (cc.length > 3) ph.push('more'); return E.list(ph); };
   E.sparkleNames = function (r) { var o = []; if (r.glitter) o.push(D.glitters.filter(function (g) { return g.id === r.glitter; })[0].name); if (r.beads) o.push('foam beads'); if (r.sprinkles) o.push('sprinkles'); if (r.pearls) o.push('tiny pearls'); return o; };
   E.feel = function (r) { var b = D.base(r.base), o = b.tex.slice(0, 2); return o; };
   E.lookWords = function (r) { var o = []; if (r.glitter) o.push('sparkly'); if (r.beads) o.push('crunchy'); if (r.sprinkles) o.push('colorful'); if (r.pearls) o.push('shiny'); return o; };
@@ -2306,8 +2311,16 @@ SS.D = {};
     var el = document.getElementById('speak'); if (!el || !S.st) return; var st = S.st, sp = curSpeak(); st.sp = sp;
     var last = st.step === 'describe' && st.dq === 4;
     el.innerHTML = U.speakBar(sp, { fi: st.fi, back: stepIdx() > 0 || st.dq > 0 ? 'prevStep' : null, next: 'nextStep', nextLabel: last ? 'Save my slime' : 'Next', skip: (st.step === 'sparkle' || st.step === 'charms') && !sp.ready ? 'skipStep' : null });
+    U.fitSay();
   }
   U.updateSpeak = updateSpeak;
+  // the sentence always stays inside its bubble: shrink the text until it fits
+  U.fitSay = function () {
+    document.querySelectorAll('.say').forEach(function (el) {
+      el.style.fontSize = ''; var fs = parseFloat(getComputedStyle(el).fontSize), lh = fs * 1.2, i = 0;
+      while ((el.scrollHeight > lh * 2.15 || el.scrollWidth > el.clientWidth + 1) && fs > 16 && i++ < 30) { fs -= 1.5; lh = fs * 1.2; el.style.fontSize = fs + 'px'; }
+    });
+  };
   U.currentSentence = function () { var b = document.querySelector('.say[data-text]'); return b ? b.dataset.text : ''; };
   function setStep(step) {
     var st = S.st; st.step = step; st.fi = 0; S.heard = null; S.allRun = false; st.maxStep = Math.max(st.maxStep || 0, stepIdx());

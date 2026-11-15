@@ -43,6 +43,14 @@
     <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
     <symbol id="i-collapse" viewBox="0 0 24 24"><path d="M6 15l6-6 6 6"/></symbol>
     <symbol id="i-chev" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5"/></symbol>
+    <symbol id="i-select" viewBox="0 0 24 24"><path d="M6 3.5l12.5 8.2-6 1.4-2.9 5.6z"/><path d="M12.6 13.2l4 5.3"/></symbol>
+    <symbol id="i-text" viewBox="0 0 24 24"><path d="M5 7V4.5h14V7"/><path d="M12 4.5v15"/><path d="M9 19.5h6"/></symbol>
+    <symbol id="i-sh-line" viewBox="0 0 24 24"><path d="M5 19L19 5"/></symbol>
+    <symbol id="i-sh-arrow" viewBox="0 0 24 24"><path d="M5 19L18 6"/><path d="M10 5.5h8.5V14"/></symbol>
+    <symbol id="i-sh-rect" viewBox="0 0 24 24"><rect x="3.5" y="6" width="17" height="12" rx="1.2"/></symbol>
+    <symbol id="i-sh-ellipse" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="8.5" ry="6.5"/></symbol>
+    <symbol id="i-ruler" viewBox="0 0 24 24"><path d="M2.8 15.6L15.6 2.8l5.6 5.6L8.4 21.2z"/><path d="M6.4 12l1.9 1.9M8.9 9.5l1.3 1.3M11.4 7l1.9 1.9M13.9 4.5l1.3 1.3"/></symbol>
+    <symbol id="i-cover" viewBox="0 0 24 24"><rect x="4.5" y="3" width="15" height="18" rx="1.5"/><path d="M4.5 11.5h15V19.5a1.5 1.5 0 0 1-1.5 1.5H6a1.5 1.5 0 0 1-1.5-1.5z" fill="currentColor"/><path d="M10.5 8.5L12 7l1.5 1.5"/></symbol>
   </defs>
 </svg>
 
@@ -64,15 +72,31 @@
     </div>
     <span class="sep"></span>
     <div class="group" id="toolGroup">
+      <button class="tb tool" data-tool="select" data-tip="Select and move" data-key="V" aria-label="Select and move"><svg><use href="#i-select"/></svg></button>
       <button class="tb tool" data-tool="hand" data-tip="Move page" data-key="Space" aria-label="Move page"><svg><use href="#i-hand"/></svg></button>
       <button class="tb tool" data-tool="pen" data-tip="Pen" data-key="P" aria-label="Pen"><svg><use href="#i-pen"/></svg></button>
       <button class="tb tool" data-tool="hl" data-tip="Highlighter" data-key="H" aria-label="Highlighter"><svg><use href="#i-hl"/></svg></button>
       <button class="tb toggle" id="btnLine" data-tip="Straight lines" data-key="Shift" aria-label="Straight lines" aria-pressed="false"><svg><use href="#i-line"/></svg></button>
+      <div class="menu-wrap">
+        <button class="tb tool" data-tool="shape" id="btnShape" data-tip="Shapes" data-key="S" aria-label="Shapes" aria-haspopup="menu"><svg><use href="#i-sh-arrow"/></svg></button>
+        <div class="menu" id="menuShape" role="menu" hidden>
+          <button role="menuitem" class="mi-icon" data-shape="line"><svg><use href="#i-sh-line"/></svg>Line</button>
+          <button role="menuitem" class="mi-icon" data-shape="arrow"><svg><use href="#i-sh-arrow"/></svg>Arrow</button>
+          <button role="menuitem" class="mi-icon" data-shape="rect"><svg><use href="#i-sh-rect"/></svg>Rectangle</button>
+          <button role="menuitem" class="mi-icon" data-shape="ellipse"><svg><use href="#i-sh-ellipse"/></svg>Circle and ellipse</button>
+          <hr><p class="menu-note">Hold Shift for a square, a circle or 15° steps</p>
+        </div>
+      </div>
+      <button class="tb tool" data-tool="text" data-tip="Text" data-key="T" aria-label="Text"><svg><use href="#i-text"/></svg></button>
       <button class="tb tool" data-tool="eraser" data-tip="Eraser (whole strokes)" data-key="E" aria-label="Eraser"><svg><use href="#i-eraser"/></svg></button>
       <button class="tb tool" data-tool="laser" data-tip="Laser pointer" data-key="L" aria-label="Laser pointer"><svg><use href="#i-laser"/></svg></button>
     </div>
     <span class="sep"></span>
-    <button class="tb tb-wide toggle" id="btnProt" data-tip="Show / hide protractor" data-key="R" aria-pressed="false" aria-label="Protractor"><svg><use href="#i-prot"/></svg><span>Protractor</span></button>
+    <div class="group">
+      <button class="tb tb-wide toggle" id="btnProt" data-tip="Show / hide protractor" data-key="R" aria-pressed="false" aria-label="Protractor"><svg><use href="#i-prot"/></svg><span>Protractor</span></button>
+      <button class="tb toggle" id="btnRuler" data-tip="Show / hide ruler" data-key="U" aria-pressed="false" aria-label="Ruler"><svg><use href="#i-ruler"/></svg></button>
+      <button class="tb toggle" id="btnCover" data-tip="Cover and reveal the page" data-key="C" aria-pressed="false" aria-label="Cover"><svg><use href="#i-cover"/></svg></button>
+    </div>
     <span class="sep"></span>
     <div class="group swatches" id="swatches" aria-label="Colors"></div>
     <div class="group sizes" id="sizes" aria-label="Sizes"></div>
@@ -85,15 +109,11 @@
     <span class="grow"></span>
     <div class="group">
       <div class="menu-wrap">
-        <button class="tb" id="btnExport" data-tip="Export" aria-label="Export" aria-haspopup="menu"><svg><use href="#i-export"/></svg></button>
+        <button class="tb" id="btnExport" data-tip="Export and save" aria-label="Export and save" aria-haspopup="menu"><svg><use href="#i-export"/></svg></button>
         <div class="menu menu-right" id="menuExport" role="menu" hidden>
-          <button role="menuitem" id="expPng">This page as PNG<small>Includes the protractor if shown</small></button>
+          <button role="menuitem" id="expPng">This page as PNG<small>Includes the protractor and ruler if shown</small></button>
           <button role="menuitem" id="expPdf">All pages as PDF<small>Pages with your drawings</small></button>
-        </div>
-      </div>
-      <div class="menu-wrap">
-        <button class="tb" id="btnDrawings" data-tip="Save / load drawings" aria-label="Save or load drawings" aria-haspopup="menu"><svg><use href="#i-save"/></svg></button>
-        <div class="menu menu-right" id="menuDrawings" role="menu" hidden>
+          <hr>
           <button role="menuitem" id="drSave">Save drawings to file<small>A small .json file</small></button>
           <button role="menuitem" id="drLoad">Load drawings from file<small>Open the same PDF first</small></button>
         </div>
@@ -115,6 +135,7 @@
       <canvas id="cvPage"></canvas>
       <canvas id="cvInk" class="blend"></canvas>
       <canvas id="cvLiveInk" class="blend"></canvas>
+      <canvas id="cvCover"></canvas>
       <canvas id="cvProt"></canvas>
       <canvas id="cvLaser"></canvas>
 
@@ -189,8 +210,14 @@
           <dt><kbd>L</kbd></dt><dd>Laser pointer</dd>
           <dt><kbd>R</kbd></dt><dd>Show / hide protractor</dd>
           <dt><kbd>A</kbd></dt><dd>Show / hide measuring arm</dd>
+          <dt><kbd>U</kbd></dt><dd>Show / hide ruler</dd>
+          <dt><kbd>C</kbd></dt><dd>Cover and reveal the page</dd>
+          <dt><kbd>V</kbd></dt><dd>Select and move</dd>
+          <dt><kbd>T</kbd></dt><dd>Text</dd>
+          <dt><kbd>S</kbd></dt><dd>Shapes</dd>
+          <dt><kbd>Delete</kbd></dt><dd>Delete what is selected</dd>
           <dt><kbd>Shift</kbd> + draw</dt><dd>Straight line</dd>
-          <dt><kbd>Shift</kbd> + rotate</dt><dd>Snap protractor every 15°</dd>
+          <dt><kbd>Shift</kbd> + rotate</dt><dd>Snap protractor or ruler every 15°</dd>
           <dt><kbd>Space</kbd> + drag</dt><dd>Move the page</dd>
           <dt><kbd>Ctrl/⌘</kbd> <kbd>Z</kbd></dt><dd>Undo</dd>
           <dt><kbd>Ctrl/⌘</kbd> <kbd>Y</kbd></dt><dd>Redo</dd>

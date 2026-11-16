@@ -29,7 +29,7 @@ button{font:inherit;color:inherit}
 .head-sp{flex:1}
 #who{font-size:15px;display:flex;align-items:center;gap:7px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .who-dot{width:10px;height:10px;border-radius:50%;background:var(--pink);flex:none;border:2px solid var(--ink)}
-#homeBtn{background:var(--pink);border:2px solid var(--ink);color:var(--ink);border-radius:10px;padding:6px 14px;font:600 15px Poppins,sans-serif;cursor:pointer;min-height:40px}
+#homeBtn{background:#fff;border:2px solid var(--ink);color:var(--ink);border-radius:10px;padding:6px 14px;font:600 15px Poppins,sans-serif;cursor:pointer;min-height:40px}
 #homeBtn:hover{background:var(--gold)}
 .stripe{display:flex;height:6px}.stripe span{flex:1}
 main{flex:1;width:100%;max-width:1000px;margin:0 auto;padding:26px 20px 40px}
@@ -38,10 +38,10 @@ footer{text-align:center;font-size:14px;color:var(--muted);padding:18px 20px 26p
 .btn:hover{background:var(--ink2)}
 .btn:active{transform:translateY(1px)}
 .btn:disabled{opacity:.45;cursor:default;transform:none}
-.btn.big{min-height:60px;font-size:18px;padding:12px 26px;background:var(--pink);color:var(--ink)}
-.btn.big:hover{background:var(--gold)}
+.btn.big{min-height:60px;font-size:18px;padding:12px 26px}
+.btn.big:hover{background:#26315C}
 .btn.ghost{background:#fff;color:var(--ink)}
-.btn.ghost:hover{background:#FFF7FA;border-color:var(--c,var(--ink));color:var(--c,var(--ink))}
+.btn.ghost:hover{background:#F7F8FB;border-color:var(--c,var(--ink));color:var(--c,var(--ink))}
 .btn.danger{background:var(--no);border-color:var(--no)}
 .link{background:none;border:0;padding:4px 2px;color:var(--ink);text-decoration:underline;text-underline-offset:3px;cursor:pointer;font-size:16px}
 .link.danger{color:var(--no)}
@@ -54,7 +54,7 @@ footer{text-align:center;font-size:14px;color:var(--muted);padding:18px 20px 26p
 .eyebrow-line{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 6px}
 .eyebrow-line{gap:0!important;font-size:16px;font-weight:600;color:var(--muted)}
 .eyebrow-line span+span:before{content:", "}
-.title .ifw{background:var(--pink);padding:0 .14em;border:4px solid var(--ink);border-radius:2px;display:inline-block;margin-right:.12em}
+.title .ifw{background:var(--gold);padding:0 .14em;border:4px solid var(--ink);border-radius:2px;display:inline-block;margin-right:.12em}
 .title{font-size:clamp(52px,9vw,92px);line-height:1;margin:10px 0 8px;font-weight:800;letter-spacing:-2px}
 .sub{font-size:20px;margin:0 0 18px;color:var(--muted);max-width:30ch}
 .hello{font-size:20px;margin:0}
@@ -77,8 +77,8 @@ footer{text-align:center;font-size:14px;color:var(--muted);padding:18px 20px 26p
 .stop h2{margin:0;font-size:24px}
 .stop p{margin:2px 0 0;color:var(--muted);font-size:16px}
 .stop .prog{color:var(--ink);font-weight:500;font-size:15px;margin-top:4px}
-.bar{height:14px;background:#FFE3EE;border:2px solid var(--ink);border-radius:2px;overflow:hidden;margin-top:8px;max-width:340px}
-.bar span{display:block;height:100%;background:var(--pink);border-right:2px solid var(--ink)}
+.bar{height:14px;background:#fff;border:2px solid var(--ink);border-radius:2px;overflow:hidden;margin-top:8px;max-width:340px}
+.bar span{display:block;height:100%;background:var(--gold);border-right:2px solid var(--ink)}
 .bar span[style="width:0%"]{border:0}
 .legend{display:flex;flex-wrap:wrap;gap:10px 20px;margin-top:24px;font-size:15px}
 .lg{display:flex;align-items:center;gap:8px}
@@ -95,7 +95,7 @@ footer{text-align:center;font-size:14px;color:var(--muted);padding:18px 20px 26p
 /* learn list */
 .lessonlist{list-style:none;padding:0;margin:0;display:grid;gap:12px}
 .lrow{width:100%;display:flex;align-items:center;gap:16px;background:#fff;border:3px solid var(--ink);border-radius:2px;padding:14px 18px;cursor:pointer;text-align:left;min-height:72px}
-.lrow:hover{background:#FFF7FA;transform:translateY(-2px)}
+.lrow:hover{background:#F7F8FB;transform:translateY(-2px)}
 .lrow{transition:transform .12s}
 .lrow .iffy{width:52px;height:48px;flex:none}
 .lnum{width:44px;height:44px;flex:none;border-radius:2px;display:grid;place-items:center;font:800 19px Poppins;border:3px solid var(--c)}
@@ -198,6 +198,19 @@ footer{text-align:center;font-size:14px;color:var(--muted);padding:18px 20px 26p
 .exlegend span{display:flex;align-items:center;gap:6px}
 .exlegend i{width:26px;height:16px;border:2px solid var(--ink);border-radius:2px}
 .cl-if{background:var(--tint);border-bottom:3px solid var(--c);padding:1px 4px;border-radius:2px}
+/* illustrations */
+.ilrow{display:grid;grid-template-columns:1fr 44px 1fr;gap:6px;align-items:stretch;max-width:700px;margin-bottom:14px}
+.ilrow.three{grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+.ilcard{margin:0;border:2px solid var(--ink);background:#fff;display:flex;flex-direction:column}
+.ilcard.ilif{background:var(--tint)}
+.ilsvg{width:100%;height:auto;display:block;background:#F7F9FC;border-bottom:2px solid var(--ink)}
+.ilcard figcaption{padding:8px 12px;font:600 17px/1.35 Poppins}
+.ilrow.three figcaption{font-size:15px;display:flex;flex-direction:column}
+.tagc{display:block;font:600 12px Lexend;color:var(--muted);margin-bottom:2px}
+.ilarrow{display:grid;place-items:center}.ilarrow svg{width:36px;height:36px}
+.ilvis{margin-top:6px}
+.ilreal{display:block;background:var(--ink);color:#fff;font:600 13px Poppins;padding:4px 10px}
+.ilnote{margin:0 0 10px;font-weight:500;color:var(--ink)}
 /* compare */
 .subh{font:700 17px Poppins;margin:18px 0 8px}
 .tablewrap{overflow-x:auto}
@@ -221,20 +234,20 @@ footer{text-align:center;font-size:14px;color:var(--muted);padding:18px 20px 26p
 .segs{display:flex;gap:6px;margin:14px 0 16px}
 .seg{flex:1;height:14px;border-radius:2px;background:#fff;border:2px solid var(--ink)}
 .seg.ok{background:var(--ok)}.seg.no{background:var(--no)}
-.seg.cur{background:var(--pink)}
+.seg.cur{background:var(--gold)}
 .q{font-size:clamp(20px,3vw,25px);line-height:1.5;margin:0 0 18px;font-weight:500}
 .q.src{border-left:5px solid var(--ink);padding-left:14px}
 .blank{display:inline-block;width:4.2em;border-bottom:3px solid var(--ink);vertical-align:-2px;margin:0 3px}
 .opts{display:grid;gap:10px}
 .opt{display:flex;gap:14px;align-items:center;text-align:left;background:#fff;border:3px solid var(--line);border-radius:2px;padding:12px 16px;min-height:58px;cursor:pointer;font-size:19px;transition:border-color .12s,background .12s}
-.opt:hover:not(:disabled){border-color:var(--ink);background:#FFF7FA;transform:translateY(-1px)}
+.opt:hover:not(:disabled){border-color:var(--ink);background:#F7F8FB;transform:translateY(-1px)}
 .opt:disabled{cursor:default}
 .ol{flex:none;width:34px;height:34px;border-radius:2px;border:2px solid var(--ink);display:grid;place-items:center;font:700 16px Poppins}
 .opt.right{border-color:var(--ok);background:var(--okbg)}
 .opt.right .ol{background:var(--ok);border-color:var(--ok);color:#fff}
 .opt.wrong{border-color:var(--no);background:var(--nobg)}
 .opt.wrong .ol{background:var(--no);border-color:var(--no);color:#fff}
-.opt.chosen{border-color:var(--ink);background:#FFE3EE}
+.opt.chosen{border-color:var(--ink);background:#FFF3CC}
 .opt.chosen .ol{background:var(--ink);color:#fff}
 .typegrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .topt{flex-direction:column;justify-content:center;gap:6px;font:700 19px Poppins;border-color:var(--c);border-width:3px;min-height:100px}
@@ -264,7 +277,7 @@ textarea.rw{width:100%;min-height:90px;resize:vertical;line-height:1.45;margin:6
 .mcol{display:grid;gap:10px;align-content:start}
 .mi{text-align:left;background:#fff;border:3px solid var(--line);border-radius:2px;padding:12px 14px;font-size:18px;cursor:pointer;min-height:60px}
 .mi:hover:not(:disabled){border-color:var(--ink)}
-.mi.sel{border-color:var(--ink);background:var(--pink);color:var(--ink);font-weight:600}
+.mi.sel{border-color:var(--ink);background:var(--gold);color:var(--ink);font-weight:600}
 .mi.locked{border-color:var(--c);border-width:2px;border-left-width:10px;background:#F7F8FA;color:var(--ink);cursor:default;opacity:.9}
 .shake{animation:shake .35s}
 @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
@@ -282,7 +295,7 @@ div.fb.good,div.fb.bad{border:3px solid var(--ink);border-left:12px solid var(--
 /* sets */
 .setgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
 .setcard{display:flex;flex-direction:column;gap:4px;text-align:left;background:#fff;border:3px solid var(--ink);border-radius:2px;transition:transform .12s;padding:18px 20px;cursor:pointer;min-height:190px}
-.setcard:hover{background:#FFF7FA;transform:translateY(-2px)}
+.setcard:hover{background:#F7F8FB;transform:translateY(-2px)}
 .setn{display:inline-block;width:fit-content;background:var(--gold);border:2px solid var(--ink);border-radius:2px;padding:0 10px;color:var(--ink)!important}
 .setn{font:600 15px Poppins;color:var(--muted)}
 .sett{font:700 22px Poppins;line-height:1.2}
@@ -320,7 +333,7 @@ div.fb.good,div.fb.bad{border:3px solid var(--ink);border-left:12px solid var(--
 .clock.low{background:var(--no);color:#fff;border-color:var(--no)}
 .nav30{display:grid;grid-template-columns:repeat(15,1fr);gap:6px;margin:14px 0}
 .nav30 .n{min-height:38px;border:2px solid var(--line);background:#fff;border-radius:2px;font:600 14px Poppins;cursor:pointer;padding:0}
-.nav30 .n.filled{background:#FFE3EE;border-color:var(--pink)}
+.nav30 .n.filled{background:#FFF3CC;border-color:var(--gold)}
 .nav30 .n.cur{border-color:var(--ink);background:var(--ink);color:#fff}
 .part{margin:0 0 6px;font:600 16px Poppins;color:var(--muted)}
 .tqn{margin:0;font:800 22px Poppins}
@@ -399,6 +412,8 @@ div.fb.good,div.fb.bad{border:3px solid var(--ink);border-left:12px solid var(--
   .cmp tr{border-bottom:2px solid var(--ink);padding:8px 0}.cmp tbody tr:last-child{border-bottom:0}
   .cmp th,.cmp td{border:0!important;padding:3px 12px!important}
   .brandlogo{height:48px}
+  .ilrow{grid-template-columns:1fr 26px 1fr;gap:4px}.ilarrow svg{width:22px}.ilcard figcaption{font-size:14px;padding:6px 8px}
+  .ilrow.three{gap:6px}.ilrow.three figcaption{font-size:13px}
   .nav30{grid-template-columns:repeat(6,1fr)}
   .pager .btn{flex:1}
 }
@@ -424,11 +439,11 @@ div.fb.good,div.fb.bad{border:3px solid var(--ink);border-left:12px solid var(--
 const IFFY = {"happy": "<svg class=\"iffy\" viewBox=\"-12 0 162 128\" role=\"img\" aria-label=\"Iffy\"><defs><clipPath id=\"icphappy\"><path d=\"M70 10 C109 10 132 30 132 57 C132 84 109 103 74 103 C66 103 60 102 54 100 L33 121 L38 95 C20 87 8 74 8 57 C8 30 31 10 70 10 Z\"/></clipPath></defs><path d=\"M12 62 C-1 58 -5 44 1 33\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"4\" stroke-linecap=\"round\"/><circle cx=\"1\" cy=\"29\" r=\"6.5\" class=\"ifill\" fill=\"#FF8FB8\" stroke=\"#121A3A\" stroke-width=\"3.5\"/><path d=\"M129 66 C138 70 140 80 135 87\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"4\" stroke-linecap=\"round\"/><circle cx=\"134\" cy=\"90\" r=\"6\" class=\"ifill\" fill=\"#FF8FB8\" stroke=\"#121A3A\" stroke-width=\"3.5\"/><path d=\"M70 10 C109 10 132 30 132 57 C132 84 109 103 74 103 C66 103 60 102 54 100 L33 121 L38 95 C20 87 8 74 8 57 C8 30 31 10 70 10 Z\" class=\"ifill\" fill=\"#FF8FB8\"/><g clip-path=\"url(#icphappy)\"><path d=\"M0 66 C22 94 52 100 82 96 C110 92 127 78 140 56 L140 130 L0 130Z\" class=\"ishade\" fill=\"#F06A9E\"/></g><path d=\"M70 10 C109 10 132 30 132 57 C132 84 109 103 74 103 C66 103 60 102 54 100 L33 121 L38 95 C20 87 8 74 8 57 C8 30 31 10 70 10 Z\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"4.5\" stroke-linejoin=\"round\"/><path d=\"M27 35 C33 24 45 18 58 17\" class=\"ishine\" fill=\"none\" stroke=\"#FFE3EE\" stroke-width=\"5\" stroke-linecap=\"round\"/><path d=\"M46 36 Q53 31 60 34 M80 34 Q87 31 94 36\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><ellipse cx=\"54\" cy=\"52\" rx=\"6.5\" ry=\"9\" fill=\"#121A3A\"/><ellipse cx=\"86\" cy=\"52\" rx=\"6.5\" ry=\"9\" fill=\"#121A3A\"/><circle cx=\"56.3\" cy=\"47.5\" r=\"2.7\" fill=\"#fff\"/><circle cx=\"88.3\" cy=\"47.5\" r=\"2.7\" fill=\"#fff\"/><circle cx=\"52\" cy=\"56\" r=\"1.3\" fill=\"#fff\"/><circle cx=\"84\" cy=\"56\" r=\"1.3\" fill=\"#fff\"/><ellipse cx=\"38\" cy=\"69\" rx=\"7\" ry=\"4\" class=\"iblush\" fill=\"#FF6F9E\"/><ellipse cx=\"102\" cy=\"69\" rx=\"7\" ry=\"4\" class=\"iblush\" fill=\"#FF6F9E\"/><path d=\"M59 68 Q70 83 81 68 Z\" fill=\"#121A3A\" stroke=\"#121A3A\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M64 75 Q70 72 76 75 Q70 80 64 75Z\" fill=\"#FF5C8A\"/></svg>", "happy-gold": "<svg class=\"iffy\" viewBox=\"-12 0 162 128\" role=\"img\" aria-label=\"Iffy\"><defs><clipPath id=\"icghappy\"><path d=\"M70 10 C109 10 132 30 132 57 C132 84 109 103 74 103 C66 103 60 102 54 100 L33 121 L38 95 C20 87 8 74 8 57 C8 30 31 10 70 10 Z\"/></clipPath></defs><path d=\"M12 62 C-1 58 -5 44 1 33\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"4\" stroke-linecap=\"round\"/><circle cx=\"1\" cy=\"29\" r=\"6.5\" class=\"ifill\" fill=\"#F7C548\" stroke=\"#121A3A\" stroke-width=\"3.5\"/><path d=\"M129 66 C138 70 140 80 135 87\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"4\" stroke-linecap=\"round\"/><circle cx=\"134\" cy=\"90\" r=\"6\" class=\"ifill\" fill=\"#F7C548\" stroke=\"#121A3A\" stroke-width=\"3.5\"/><path d=\"M70 10 C109 10 132 30 132 57 C132 84 109 103 74 103 C66 103 60 102 54 100 L33 121 L38 95 C20 87 8 74 8 57 C8 30 31 10 70 10 Z\" class=\"ifill\" fill=\"#F7C548\"/><g clip-path=\"url(#icghappy)\"><path d=\"M0 66 C22 94 52 100 82 96 C110 92 127 78 140 56 L140 130 L0 130Z\" class=\"ishade\" fill=\"#E2A62A\"/></g><path d=\"M70 10 C109 10 132 30 132 57 C132 84 109 103 74 103 C66 103 60 102 54 100 L33 121 L38 95 C20 87 8 74 8 57 C8 30 31 10 70 10 Z\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"4.5\" stroke-linejoin=\"round\"/><path d=\"M27 35 C33 24 45 18 58 17\" class=\"ishine\" fill=\"none\" stroke=\"#FFE3EE\" stroke-width=\"5\" stroke-linecap=\"round\"/><path d=\"M46 36 Q53 31 60 34 M80 34 Q87 31 94 36\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><ellipse cx=\"54\" cy=\"52\" rx=\"6.5\" ry=\"9\" fill=\"#121A3A\"/><ellipse cx=\"86\" cy=\"52\" rx=\"6.5\" ry=\"9\" fill=\"#121A3A\"/><circle cx=\"56.3\" cy=\"47.5\" r=\"2.7\" fill=\"#fff\"/><circle cx=\"88.3\" cy=\"47.5\" r=\"2.7\" fill=\"#fff\"/><circle cx=\"52\" cy=\"56\" r=\"1.3\" fill=\"#fff\"/><circle cx=\"84\" cy=\"56\" r=\"1.3\" fill=\"#fff\"/><ellipse cx=\"38\" cy=\"69\" rx=\"7\" ry=\"4\" class=\"iblush\" fill=\"#FF6F9E\"/><ellipse cx=\"102\" cy=\"69\" rx=\"7\" ry=\"4\" class=\"iblush\" fill=\"#FF6F9E\"/><path d=\"M59 68 Q70 83 81 68 Z\" fill=\"#121A3A\" stroke=\"#121A3A\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M64 75 Q70 72 76 75 Q70 80 64 75Z\" fill=\"#FF5C8A\"/></svg>", "wow": "<svg class=\"iffy\" viewBox=\"-12 0 162 128\" role=\"img\" aria-label=\"Iffy\"><defs><clipPath id=\"icpwow\"><path d=\"M70 10 C109 10 132 30 132 57 C132 84 109 103 74 103 C66 103 60 102 54 100 L33 121 L38 95 C20 87 8 74 8 57 C8 30 31 10 70 10 Z\"/></clipPath></defs><path d=\"M12 62 C-1 58 -5 44 1 33\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"4\" stroke-linecap=\"round\"/><circle cx=\"1\" cy=\"29\" r=\"6.5\" class=\"ifill\" fill=\"#FF8FB8\" stroke=\"#121A3A\" stroke-width=\"3.5\"/><path d=\"M129 66 C138 70 140 80 135 87\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"4\" stroke-linecap=\"round\"/><circle cx=\"134\" cy=\"90\" r=\"6\" class=\"ifill\" fill=\"#FF8FB8\" stroke=\"#121A3A\" stroke-width=\"3.5\"/><path d=\"M70 10 C109 10 132 30 132 57 C132 84 109 103 74 103 C66 103 60 102 54 100 L33 121 L38 95 C20 87 8 74 8 57 C8 30 31 10 70 10 Z\" class=\"ifill\" fill=\"#FF8FB8\"/><g clip-path=\"url(#icpwow)\"><path d=\"M0 66 C22 94 52 100 82 96 C110 92 127 78 140 56 L140 130 L0 130Z\" class=\"ishade\" fill=\"#F06A9E\"/></g><path d=\"M70 10 C109 10 132 30 132 57 C132 84 109 103 74 103 C66 103 60 102 54 100 L33 121 L38 95 C20 87 8 74 8 57 C8 30 31 10 70 10 Z\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"4.5\" stroke-linejoin=\"round\"/><path d=\"M27 35 C33 24 45 18 58 17\" class=\"ishine\" fill=\"none\" stroke=\"#FFE3EE\" stroke-width=\"5\" stroke-linecap=\"round\"/><path d=\"M45 31 Q53 25 61 29 M79 29 Q87 25 95 31\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><ellipse cx=\"54\" cy=\"52\" rx=\"6.5\" ry=\"9\" fill=\"#121A3A\"/><ellipse cx=\"86\" cy=\"52\" rx=\"6.5\" ry=\"9\" fill=\"#121A3A\"/><circle cx=\"56.3\" cy=\"47.5\" r=\"2.7\" fill=\"#fff\"/><circle cx=\"88.3\" cy=\"47.5\" r=\"2.7\" fill=\"#fff\"/><circle cx=\"52\" cy=\"56\" r=\"1.3\" fill=\"#fff\"/><circle cx=\"84\" cy=\"56\" r=\"1.3\" fill=\"#fff\"/><ellipse cx=\"38\" cy=\"69\" rx=\"7\" ry=\"4\" class=\"iblush\" fill=\"#FF6F9E\"/><ellipse cx=\"102\" cy=\"69\" rx=\"7\" ry=\"4\" class=\"iblush\" fill=\"#FF6F9E\"/><ellipse cx=\"70\" cy=\"74\" rx=\"7\" ry=\"8.5\" fill=\"#121A3A\"/><path d=\"M65 78 Q70 75 75 78 Q70 82 65 78Z\" fill=\"#FF5C8A\"/></svg>", "wow-gold": "<svg class=\"iffy\" viewBox=\"-12 0 162 128\" role=\"img\" aria-label=\"Iffy\"><defs><clipPath id=\"icgwow\"><path d=\"M70 10 C109 10 132 30 132 57 C132 84 109 103 74 103 C66 103 60 102 54 100 L33 121 L38 95 C20 87 8 74 8 57 C8 30 31 10 70 10 Z\"/></clipPath></defs><path d=\"M12 62 C-1 58 -5 44 1 33\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"4\" stroke-linecap=\"round\"/><circle cx=\"1\" cy=\"29\" r=\"6.5\" class=\"ifill\" fill=\"#F7C548\" stroke=\"#121A3A\" stroke-width=\"3.5\"/><path d=\"M129 66 C138 70 140 80 135 87\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"4\" stroke-linecap=\"round\"/><circle cx=\"134\" cy=\"90\" r=\"6\" class=\"ifill\" fill=\"#F7C548\" stroke=\"#121A3A\" stroke-width=\"3.5\"/><path d=\"M70 10 C109 10 132 30 132 57 C132 84 109 103 74 103 C66 103 60 102 54 100 L33 121 L38 95 C20 87 8 74 8 57 C8 30 31 10 70 10 Z\" class=\"ifill\" fill=\"#F7C548\"/><g clip-path=\"url(#icgwow)\"><path d=\"M0 66 C22 94 52 100 82 96 C110 92 127 78 140 56 L140 130 L0 130Z\" class=\"ishade\" fill=\"#E2A62A\"/></g><path d=\"M70 10 C109 10 132 30 132 57 C132 84 109 103 74 103 C66 103 60 102 54 100 L33 121 L38 95 C20 87 8 74 8 57 C8 30 31 10 70 10 Z\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"4.5\" stroke-linejoin=\"round\"/><path d=\"M27 35 C33 24 45 18 58 17\" class=\"ishine\" fill=\"none\" stroke=\"#FFE3EE\" stroke-width=\"5\" stroke-linecap=\"round\"/><path d=\"M45 31 Q53 25 61 29 M79 29 Q87 25 95 31\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><ellipse cx=\"54\" cy=\"52\" rx=\"6.5\" ry=\"9\" fill=\"#121A3A\"/><ellipse cx=\"86\" cy=\"52\" rx=\"6.5\" ry=\"9\" fill=\"#121A3A\"/><circle cx=\"56.3\" cy=\"47.5\" r=\"2.7\" fill=\"#fff\"/><circle cx=\"88.3\" cy=\"47.5\" r=\"2.7\" fill=\"#fff\"/><circle cx=\"52\" cy=\"56\" r=\"1.3\" fill=\"#fff\"/><circle cx=\"84\" cy=\"56\" r=\"1.3\" fill=\"#fff\"/><ellipse cx=\"38\" cy=\"69\" rx=\"7\" ry=\"4\" class=\"iblush\" fill=\"#FF6F9E\"/><ellipse cx=\"102\" cy=\"69\" rx=\"7\" ry=\"4\" class=\"iblush\" fill=\"#FF6F9E\"/><ellipse cx=\"70\" cy=\"74\" rx=\"7\" ry=\"8.5\" fill=\"#121A3A\"/><path d=\"M65 78 Q70 75 75 78 Q70 82 65 78Z\" fill=\"#FF5C8A\"/></svg>", "oops": "<svg class=\"iffy\" viewBox=\"-12 0 162 128\" role=\"img\" aria-label=\"Iffy\"><defs><clipPath id=\"icpoops\"><path d=\"M70 10 C109 10 132 30 132 57 C132 84 109 103 74 103 C66 103 60 102 54 100 L33 121 L38 95 C20 87 8 74 8 57 C8 30 31 10 70 10 Z\"/></clipPath></defs><path d=\"M12 66 C8 60 14 52 22 50\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"4\" stroke-linecap=\"round\"/><circle cx=\"25\" cy=\"49\" r=\"6\" class=\"ifill\" fill=\"#FF8FB8\" stroke=\"#121A3A\" stroke-width=\"3.5\"/><path d=\"M129 66 C138 70 140 80 135 87\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"4\" stroke-linecap=\"round\"/><circle cx=\"134\" cy=\"90\" r=\"6\" class=\"ifill\" fill=\"#FF8FB8\" stroke=\"#121A3A\" stroke-width=\"3.5\"/><path d=\"M70 10 C109 10 132 30 132 57 C132 84 109 103 74 103 C66 103 60 102 54 100 L33 121 L38 95 C20 87 8 74 8 57 C8 30 31 10 70 10 Z\" class=\"ifill\" fill=\"#FF8FB8\"/><g clip-path=\"url(#icpoops)\"><path d=\"M0 66 C22 94 52 100 82 96 C110 92 127 78 140 56 L140 130 L0 130Z\" class=\"ishade\" fill=\"#F06A9E\"/></g><path d=\"M70 10 C109 10 132 30 132 57 C132 84 109 103 74 103 C66 103 60 102 54 100 L33 121 L38 95 C20 87 8 74 8 57 C8 30 31 10 70 10 Z\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"4.5\" stroke-linejoin=\"round\"/><path d=\"M27 35 C33 24 45 18 58 17\" class=\"ishine\" fill=\"none\" stroke=\"#FFE3EE\" stroke-width=\"5\" stroke-linecap=\"round\"/><path d=\"M46 38 Q53 35 60 32 M94 38 Q87 35 80 32\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><ellipse cx=\"54\" cy=\"52\" rx=\"6.5\" ry=\"9\" fill=\"#121A3A\"/><ellipse cx=\"86\" cy=\"52\" rx=\"6.5\" ry=\"9\" fill=\"#121A3A\"/><circle cx=\"56.3\" cy=\"47.5\" r=\"2.7\" fill=\"#fff\"/><circle cx=\"88.3\" cy=\"47.5\" r=\"2.7\" fill=\"#fff\"/><circle cx=\"52\" cy=\"56\" r=\"1.3\" fill=\"#fff\"/><circle cx=\"84\" cy=\"56\" r=\"1.3\" fill=\"#fff\"/><ellipse cx=\"38\" cy=\"69\" rx=\"7\" ry=\"4\" class=\"iblush\" fill=\"#FF6F9E\"/><ellipse cx=\"102\" cy=\"69\" rx=\"7\" ry=\"4\" class=\"iblush\" fill=\"#FF6F9E\"/><path d=\"M60 75 Q65 70 70 75 Q75 80 80 75\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><path d=\"M108 30 Q113 38 108 42 Q103 38 108 30Z\" fill=\"#9FD3FF\" stroke=\"#121A3A\" stroke-width=\"2\"/></svg>", "oops-gold": "<svg class=\"iffy\" viewBox=\"-12 0 162 128\" role=\"img\" aria-label=\"Iffy\"><defs><clipPath id=\"icgoops\"><path d=\"M70 10 C109 10 132 30 132 57 C132 84 109 103 74 103 C66 103 60 102 54 100 L33 121 L38 95 C20 87 8 74 8 57 C8 30 31 10 70 10 Z\"/></clipPath></defs><path d=\"M12 66 C8 60 14 52 22 50\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"4\" stroke-linecap=\"round\"/><circle cx=\"25\" cy=\"49\" r=\"6\" class=\"ifill\" fill=\"#F7C548\" stroke=\"#121A3A\" stroke-width=\"3.5\"/><path d=\"M129 66 C138 70 140 80 135 87\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"4\" stroke-linecap=\"round\"/><circle cx=\"134\" cy=\"90\" r=\"6\" class=\"ifill\" fill=\"#F7C548\" stroke=\"#121A3A\" stroke-width=\"3.5\"/><path d=\"M70 10 C109 10 132 30 132 57 C132 84 109 103 74 103 C66 103 60 102 54 100 L33 121 L38 95 C20 87 8 74 8 57 C8 30 31 10 70 10 Z\" class=\"ifill\" fill=\"#F7C548\"/><g clip-path=\"url(#icgoops)\"><path d=\"M0 66 C22 94 52 100 82 96 C110 92 127 78 140 56 L140 130 L0 130Z\" class=\"ishade\" fill=\"#E2A62A\"/></g><path d=\"M70 10 C109 10 132 30 132 57 C132 84 109 103 74 103 C66 103 60 102 54 100 L33 121 L38 95 C20 87 8 74 8 57 C8 30 31 10 70 10 Z\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"4.5\" stroke-linejoin=\"round\"/><path d=\"M27 35 C33 24 45 18 58 17\" class=\"ishine\" fill=\"none\" stroke=\"#FFE3EE\" stroke-width=\"5\" stroke-linecap=\"round\"/><path d=\"M46 38 Q53 35 60 32 M94 38 Q87 35 80 32\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><ellipse cx=\"54\" cy=\"52\" rx=\"6.5\" ry=\"9\" fill=\"#121A3A\"/><ellipse cx=\"86\" cy=\"52\" rx=\"6.5\" ry=\"9\" fill=\"#121A3A\"/><circle cx=\"56.3\" cy=\"47.5\" r=\"2.7\" fill=\"#fff\"/><circle cx=\"88.3\" cy=\"47.5\" r=\"2.7\" fill=\"#fff\"/><circle cx=\"52\" cy=\"56\" r=\"1.3\" fill=\"#fff\"/><circle cx=\"84\" cy=\"56\" r=\"1.3\" fill=\"#fff\"/><ellipse cx=\"38\" cy=\"69\" rx=\"7\" ry=\"4\" class=\"iblush\" fill=\"#FF6F9E\"/><ellipse cx=\"102\" cy=\"69\" rx=\"7\" ry=\"4\" class=\"iblush\" fill=\"#FF6F9E\"/><path d=\"M60 75 Q65 70 70 75 Q75 80 80 75\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><path d=\"M108 30 Q113 38 108 42 Q103 38 108 30Z\" fill=\"#9FD3FF\" stroke=\"#121A3A\" stroke-width=\"2\"/></svg>", "think": "<svg class=\"iffy\" viewBox=\"-12 0 162 128\" role=\"img\" aria-label=\"Iffy\"><defs><clipPath id=\"icpthink\"><path d=\"M70 10 C109 10 132 30 132 57 C132 84 109 103 74 103 C66 103 60 102 54 100 L33 121 L38 95 C20 87 8 74 8 57 C8 30 31 10 70 10 Z\"/></clipPath></defs><path d=\"M14 70 C14 82 30 88 44 84\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"4\" stroke-linecap=\"round\"/><circle cx=\"47\" cy=\"83\" r=\"6\" class=\"ifill\" fill=\"#FF8FB8\" stroke=\"#121A3A\" stroke-width=\"3.5\"/><path d=\"M129 66 C138 70 140 80 135 87\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"4\" stroke-linecap=\"round\"/><circle cx=\"134\" cy=\"90\" r=\"6\" class=\"ifill\" fill=\"#FF8FB8\" stroke=\"#121A3A\" stroke-width=\"3.5\"/><path d=\"M70 10 C109 10 132 30 132 57 C132 84 109 103 74 103 C66 103 60 102 54 100 L33 121 L38 95 C20 87 8 74 8 57 C8 30 31 10 70 10 Z\" class=\"ifill\" fill=\"#FF8FB8\"/><g clip-path=\"url(#icpthink)\"><path d=\"M0 66 C22 94 52 100 82 96 C110 92 127 78 140 56 L140 130 L0 130Z\" class=\"ishade\" fill=\"#F06A9E\"/></g><path d=\"M70 10 C109 10 132 30 132 57 C132 84 109 103 74 103 C66 103 60 102 54 100 L33 121 L38 95 C20 87 8 74 8 57 C8 30 31 10 70 10 Z\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"4.5\" stroke-linejoin=\"round\"/><path d=\"M27 35 C33 24 45 18 58 17\" class=\"ishine\" fill=\"none\" stroke=\"#FFE3EE\" stroke-width=\"5\" stroke-linecap=\"round\"/><path d=\"M46 33 Q53 30 60 33 M80 35 L94 34\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><ellipse cx=\"54\" cy=\"49\" rx=\"6.5\" ry=\"9\" fill=\"#121A3A\"/><ellipse cx=\"86\" cy=\"49\" rx=\"6.5\" ry=\"9\" fill=\"#121A3A\"/><circle cx=\"56.3\" cy=\"44.5\" r=\"2.7\" fill=\"#fff\"/><circle cx=\"88.3\" cy=\"44.5\" r=\"2.7\" fill=\"#fff\"/><circle cx=\"52\" cy=\"53\" r=\"1.3\" fill=\"#fff\"/><circle cx=\"84\" cy=\"53\" r=\"1.3\" fill=\"#fff\"/><ellipse cx=\"38\" cy=\"69\" rx=\"7\" ry=\"4\" class=\"iblush\" fill=\"#FF6F9E\"/><ellipse cx=\"102\" cy=\"69\" rx=\"7\" ry=\"4\" class=\"iblush\" fill=\"#FF6F9E\"/><path d=\"M62 74 Q70 71 79 73\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"3.5\" stroke-linecap=\"round\"/></svg>", "think-gold": "<svg class=\"iffy\" viewBox=\"-12 0 162 128\" role=\"img\" aria-label=\"Iffy\"><defs><clipPath id=\"icgthink\"><path d=\"M70 10 C109 10 132 30 132 57 C132 84 109 103 74 103 C66 103 60 102 54 100 L33 121 L38 95 C20 87 8 74 8 57 C8 30 31 10 70 10 Z\"/></clipPath></defs><path d=\"M14 70 C14 82 30 88 44 84\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"4\" stroke-linecap=\"round\"/><circle cx=\"47\" cy=\"83\" r=\"6\" class=\"ifill\" fill=\"#F7C548\" stroke=\"#121A3A\" stroke-width=\"3.5\"/><path d=\"M129 66 C138 70 140 80 135 87\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"4\" stroke-linecap=\"round\"/><circle cx=\"134\" cy=\"90\" r=\"6\" class=\"ifill\" fill=\"#F7C548\" stroke=\"#121A3A\" stroke-width=\"3.5\"/><path d=\"M70 10 C109 10 132 30 132 57 C132 84 109 103 74 103 C66 103 60 102 54 100 L33 121 L38 95 C20 87 8 74 8 57 C8 30 31 10 70 10 Z\" class=\"ifill\" fill=\"#F7C548\"/><g clip-path=\"url(#icgthink)\"><path d=\"M0 66 C22 94 52 100 82 96 C110 92 127 78 140 56 L140 130 L0 130Z\" class=\"ishade\" fill=\"#E2A62A\"/></g><path d=\"M70 10 C109 10 132 30 132 57 C132 84 109 103 74 103 C66 103 60 102 54 100 L33 121 L38 95 C20 87 8 74 8 57 C8 30 31 10 70 10 Z\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"4.5\" stroke-linejoin=\"round\"/><path d=\"M27 35 C33 24 45 18 58 17\" class=\"ishine\" fill=\"none\" stroke=\"#FFE3EE\" stroke-width=\"5\" stroke-linecap=\"round\"/><path d=\"M46 33 Q53 30 60 33 M80 35 L94 34\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><ellipse cx=\"54\" cy=\"49\" rx=\"6.5\" ry=\"9\" fill=\"#121A3A\"/><ellipse cx=\"86\" cy=\"49\" rx=\"6.5\" ry=\"9\" fill=\"#121A3A\"/><circle cx=\"56.3\" cy=\"44.5\" r=\"2.7\" fill=\"#fff\"/><circle cx=\"88.3\" cy=\"44.5\" r=\"2.7\" fill=\"#fff\"/><circle cx=\"52\" cy=\"53\" r=\"1.3\" fill=\"#fff\"/><circle cx=\"84\" cy=\"53\" r=\"1.3\" fill=\"#fff\"/><ellipse cx=\"38\" cy=\"69\" rx=\"7\" ry=\"4\" class=\"iblush\" fill=\"#FF6F9E\"/><ellipse cx=\"102\" cy=\"69\" rx=\"7\" ry=\"4\" class=\"iblush\" fill=\"#FF6F9E\"/><path d=\"M62 74 Q70 71 79 73\" fill=\"none\" stroke=\"#121A3A\" stroke-width=\"3.5\" stroke-linecap=\"round\"/></svg>"};
 /* ===== CONTENT: If Clauses Exam Practice (Bright EngMath) ===== */
 const TYPES = {
-  zero:   { name: 'Zero Conditional',   short: 'Zero',   num: '0', color: '#0F7F68', tint: '#DCF0E9', pattern: 'If + present simple, present simple', use: 'always true' },
-  first:  { name: 'First Conditional',  short: 'First',  num: '1', color: '#D9650F', tint: '#FCE8D6', pattern: 'If + present simple, will + base verb', use: 'possible' },
+  zero:   { name: 'Zero Conditional',   short: 'Zero',   num: '0', color: '#0C6E5B', tint: '#DCF0E9', pattern: 'If + present simple, present simple', use: 'always true' },
+  first:  { name: 'First Conditional',  short: 'First',  num: '1', color: '#B45309', tint: '#FDEBD3', pattern: 'If + present simple, will + base verb', use: 'possible' },
   second: { name: 'Second Conditional', short: 'Second', num: '2', color: '#2756C9', tint: '#E0E8FA', pattern: 'If + past simple, would + base verb', use: 'imaginary' },
   third:  { name: 'Third Conditional',  short: 'Third',  num: '3', color: '#BC2B4B', tint: '#F8DFE5', pattern: 'If + had + past participle, would have + past participle', use: 'past that did not happen' },
-  mixed:  { name: 'Unless, Word Order & Questions', short: 'Unless & more', num: '+', color: '#D63F7E', tint: '#FDE3EE', pattern: 'unless = if + not', use: 'tools' }
+  mixed:  { name: 'Unless, Word Order & Questions', short: 'Unless & more', num: '+', color: '#0E7490', tint: '#DCF0F5', pattern: 'unless = if + not', use: 'tools' }
 };
 
 /* [[word]] = highlighted verb form in the lesson colour */
@@ -457,7 +472,7 @@ const LESSONS = [
       { q: 'Which sentence is a zero conditional?', a: 'If you touch fire, it burns you.', d: ['If I win, I will buy a cake.', 'If I were a bird, I would fly.'], ex: 'Fire always burns. It is a fact, with present simple in both parts.' }
     ] },
 
-  { id: 'first', key: 'Use the first conditional for things that can really happen. If + present simple, will + verb.', t: 'first', kicker: 'Type 1', title: 'First Conditional',
+  { id: 'first', key: 'Use the first conditional for things that can really happen. If + present simple, will + base verb.', t: 'first', kicker: 'Type 1', title: 'First Conditional',
     use: 'Use it for a <b>real possibility</b> in the future and its likely result. We use it for plans, promises and warnings.',
     formula: [['If + present simple', 'if'], [',', 'comma'], ['will + base verb', 'res']],
     formulaNote: 'The if clause talks about the future, but it uses the present simple.',
@@ -470,13 +485,13 @@ const LESSONS = [
       { q: 'Which sentence is correct?', a: 'If it is sunny, we will go swimming.', d: ['If it will be sunny, we will go swimming.', 'If it was sunny, we will go swimming.'], ex: 'No “will” in the if clause. Use the present simple: If it is sunny …' }
     ] },
 
-  { id: 'second', key: 'Use the second conditional for imaginary things. If + past simple, would + verb.', t: 'second', kicker: 'Type 2', title: 'Second Conditional',
+  { id: 'second', key: 'Use the second conditional for imaginary things. If + past simple, would + base verb.', t: 'second', kicker: 'Type 2', title: 'Second Conditional',
     use: 'Use it for <b>imaginary</b> or unreal situations now or in the future, things that are not true or very unlikely. We also use “If I were you …” to give advice.',
     formula: [['If + past simple', 'if'], [',', 'comma'], ['would + base verb', 'res']],
     formulaNote: 'The verb looks like the past, but the meaning is now or the future.',
     examples: ['If I [[had]] a million dollars, I [[would travel]] around the world.', 'If I [[were]] a bird, I [[would fly]] over the sea.', 'She [[would walk]] to school if she [[lived]] closer.', 'If I [[were]] you, I [[would tell]] the teacher.'],
     visual: 'imaginary',
-    watch: { title: 'No “would” in the if clause, and was or were?', wrong: ['If I would have a car, I would drive to work.'], right: ['If I had a car, I would drive to work.', 'If I were you, I would rest.'], note: 'No “would” in the if clause. With I, he, she and it, use “were” in tests. People often say “was” when they speak, but “were” is the safe exam answer.' },
+    watch: { title: 'No “would” in the if clause. Use were, not was.', wrong: ['If I would have a car, I would drive to work.'], right: ['If I had a car, I would drive to work.', 'If I were you, I would rest.'], note: 'No “would” in the if clause. With I, he, she and it, use “were” in tests. People often say “was” when they speak, but “were” is the safe exam answer.' },
     check: [
       { q: 'If I ___ a dog, I would walk it every day.', a: 'had', d: ['have', 'will have'], ex: 'Second conditional: If + past simple. I don’t have a dog, so it is imaginary.' },
       { q: 'If I were you, I ___ more water.', a: 'would drink', d: ['will drink', 'drank'], ex: 'Advice with “If I were you” uses would + base verb.' },
@@ -597,7 +612,7 @@ const SETS = [
       { s: '{I} {will} ask the teacher {for help} if I {were} you.', w: 1, fix: { a: 'would', d: ['can', 'am'] }, full: 'I would ask the teacher for help if I were you.', t: 'second', ex: '“If I were you” is second conditional advice: would + base verb.' },
       { s: '{Water} boils {if} you {heated} it to {100°C}.', w: 2, fix: { a: 'heat', d: ['will heat', 'had heated'] }, full: 'Water boils if you heat it to 100°C.', t: 'zero', ex: 'A fact uses present simple in both parts: boils … heat.' },
       { s: 'If he {had left} home {earlier} yesterday, he {would catch} {the train}.', w: 2, fix: { a: 'would have caught', d: ['will catch', 'had caught'] }, full: 'If he had left home earlier yesterday, he would have caught the train.', t: 'third', ex: 'Imaginary past: would have + past participle.' },
-      { s: 'Unless you {don’t} {hurry}, you will {miss} {the bus}.', w: 0, fix: { a: 'delete it (Unless you hurry)', d: ['doesn’t', 'didn’t'] }, full: 'Unless you hurry, you will miss the bus.', t: 'mixed', ex: '“Unless” already means “if not.” Don’t add “don’t.”' },
+      { s: 'Unless you {don’t} {hurry}, you will {miss} {the bus}.', w: 0, fix: { a: 'delete it (Unless you hurry)', d: ['change it to doesn’t (Unless you doesn’t hurry)', 'change it to didn’t (Unless you didn’t hurry)'] }, full: 'Unless you hurry, you will miss the bus.', t: 'mixed', ex: '“Unless” already means “if not.” Don’t add “don’t.”' },
       { s: '{If} you mix {red} and {blue} paint, you {got} purple.', w: 3, fix: { a: 'get', d: ['will got', 'would get'] }, full: 'If you mix red and blue paint, you get purple.', t: 'zero', ex: 'A color fact: present simple in both parts.' },
       { s: 'If {I} {would have} a bike, I {would ride} it {to school}.', w: 1, fix: { a: 'had', d: ['have', 'will have'] }, full: 'If I had a bike, I would ride it to school.', t: 'second', ex: 'No “would” in the if clause. Second conditional: If + past simple.' },
       { s: 'If she {studies} {hard}, she will {passes} {the exam}.', w: 2, fix: { a: 'pass', d: ['passed', 'passing'] }, full: 'If she studies hard, she will pass the exam.', t: 'first', ex: 'After “will,” use the base verb: will pass.' },
@@ -611,9 +626,9 @@ const SETS = [
       { q: 'Unless it rains, we will play soccer.', start: 'If', ans: ['If it doesn’t rain, we will play soccer.', 'We will play soccer if it doesn’t rain.'], t: 'mixed', ex: 'Unless it rains = If it doesn’t rain.' },
       { q: 'Unless you water the plants, they will die.', start: 'If', ans: ['If you don’t water the plants, they will die.', 'The plants will die if you don’t water them.'], t: 'mixed', ex: 'Unless you water = If you don’t water.' },
       { q: 'You can’t go out unless you finish your homework.', start: 'If', ans: ['If you don’t finish your homework, you can’t go out.', 'You can’t go out if you don’t finish your homework.'], t: 'mixed', ex: 'Unless you finish = If you don’t finish.' },
-      { q: 'I don’t have a bike. I can’t ride to school.', start: 'If', ans: ['If I had a bike, I could ride to school.', 'If I had a bike, I would ride to school.', 'If I had a bike, I would be able to ride to school.', 'I could ride to school if I had a bike.', 'I would ride to school if I had a bike.', 'I would be able to ride to school if I had a bike.'], t: 'second', ex: 'It is not true now, so use the second conditional: If I had …, I could / would …' },
-      { q: 'She doesn’t live near the school. She doesn’t walk to school.', start: 'If', ans: ['If she lived near the school, she would walk to school.', 'If she lived near the school, she would walk there.', 'She would walk to school if she lived near the school.', 'If she lived near school, she would walk to school.', 'If she lived near school, she would walk there.'], t: 'second', ex: 'Not true now: If she lived …, she would walk …' },
-      { q: 'Maybe I will see Ben tomorrow. Then I will give him the book.', start: 'If', ans: ['If I see Ben tomorrow, I will give him the book.', 'I will give Ben the book if I see him tomorrow.', 'I will give him the book if I see Ben tomorrow.', 'If I see Ben tomorrow, I will give the book to him.'], t: 'first', ex: 'A real possibility: If I see Ben (present simple), I will give …' },
+      { q: 'I don’t have a bike. I can’t ride to school.', start: 'If', ans: ['If I had a bike, I could ride to school.', 'If I had a bike, I would ride to school.', 'If I had a bike, I would be able to ride to school.', 'I could ride to school if I had a bike.', 'I would ride to school if I had a bike.', 'I would be able to ride to school if I had a bike.', 'If I had a bike, I could ride it to school.', 'If I had a bike, I would ride it to school.', 'If I had a bike, I could ride my bike to school.', 'If I had a bike, I would ride my bike to school.', 'I could ride it to school if I had a bike.', 'I would ride it to school if I had a bike.', 'I could ride my bike to school if I had a bike.', 'I would ride my bike to school if I had a bike.'], t: 'second', ex: 'It is not true now, so use the second conditional: If I had …, I could / would …' },
+      { q: 'She doesn’t live near the school. She doesn’t walk to school.', start: 'If', ans: ['If she lived near the school, she would walk to school.', 'If she lived near the school, she would walk there.', 'She would walk to school if she lived near the school.', 'If she lived near school, she would walk to school.', 'If she lived near school, she would walk there.', 'If she lived near the school, she would walk.', 'If she lived near the school, she could walk to school.', 'If she lived closer to the school, she would walk to school.', 'If she lived closer to school, she would walk to school.', 'If she lived closer, she would walk to school.', 'If she lived closer to the school, she would walk.', 'She would walk to school if she lived closer.', 'She would walk to school if she lived closer to the school.', 'She could walk to school if she lived near the school.'], t: 'second', ex: 'Not true now: If she lived …, she would walk …' },
+      { q: 'Maybe I will see Ben tomorrow. Then I will give him the book.', start: 'If', ans: ['If I see Ben tomorrow, I will give him the book.', 'I will give Ben the book if I see him tomorrow.', 'I will give him the book if I see Ben tomorrow.', 'If I see Ben tomorrow, I will give the book to him.', 'If I see him tomorrow, I will give him the book.'], t: 'first', ex: 'A real possibility: If I see Ben (present simple), I will give …' },
       { q: 'I’m not tall. I can’t reach the top shelf.', start: 'If', ans: ['If I were tall, I could reach the top shelf.', 'If I were taller, I could reach the top shelf.', 'If I were tall, I would be able to reach the top shelf.', 'If I were taller, I would be able to reach the top shelf.', 'I could reach the top shelf if I were tall.', 'I could reach the top shelf if I were taller.'], wasOk: true, t: 'second', ex: 'Imaginary present: If I were tall(er), I could reach …' },
       { q: 'We didn’t leave early. We missed the train.', start: 'If', challenge: true, ans: ['If we had left early, we would not have missed the train.', 'If we had left earlier, we would not have missed the train.', 'If we had left early, we would have caught the train.', 'If we had left earlier, we would have caught the train.', 'We would not have missed the train if we had left early.', 'We would not have missed the train if we had left earlier.', 'We would have caught the train if we had left early.', 'We would have caught the train if we had left earlier.'], t: 'third', ex: 'Imaginary past: If we had left early, we wouldn’t have missed the train.' }
     ] }
@@ -635,7 +650,7 @@ const TESTS = {
   A: mkTest('A', [
     { q: 'If you put oil in water, it ___ on top.', a: 'floats', d: ['will floated', 'floated', 'would floating'], t: 'zero', ex: 'A fact: present simple in both parts.' },
     { q: 'If Tim ___ his homework tonight, he will watch a movie.', a: 'finishes', d: ['will finish', 'finished', 'would finish'], t: 'first', ex: 'First conditional: If + present simple. No “will” in the if clause.' },
-    { q: 'If I ___ a superpower, I would be invisible.', a: 'had', d: ['have', 'will have', 'would have'], t: 'second', ex: 'Imaginary: If + past simple, would + base verb.' },
+    { q: 'If I ___ magic shoes, I would fly to school.', a: 'had', d: ['have', 'will have', 'would have'], t: 'second', ex: 'Imaginary: If + past simple, would + base verb.' },
     { q: 'We will go to the zoo if the weather ___ nice on Saturday.', a: 'is', d: ['will be', 'was', 'would be'], t: 'first', ex: 'The if clause uses present simple, even for Saturday.' },
     { q: 'If I were you, I ___ a jacket. It’s cold outside.', a: 'would wear', d: ['will wear', 'wore', 'wear'], t: 'second', ex: 'Advice: If I were you, I would + base verb.' },
     { q: 'If she had woken up earlier, she ___ the bus.', a: 'would have caught', d: ['would catch', 'will catch', 'had caught'], t: 'third', ex: 'Third conditional result: would have + past participle.' },
@@ -659,7 +674,7 @@ const TESTS = {
     { s: 'If I {were} a bird, I {will} {fly} over {the mountains}.', w: 1, full: 'If I were a bird, I would fly over the mountains.', t: 'second', ex: 'Imaginary result: would + base verb.' },
     { s: 'If you {leave} ice {in} {the sun}, it {melt} quickly.', w: 3, full: 'If you leave ice in the sun, it melts quickly.', t: 'zero', ex: '“It” needs -s in the present simple: melts.' },
     { s: 'If she {had} {studied} harder, she {would pass} {the test} last week.', w: 2, full: 'If she had studied harder, she would have passed the test last week.', t: 'third', ex: 'Last week = past. Use would have passed.' },
-    { s: 'What {will} you {do} if you found a wallet {in} {the street}?', w: 0, full: 'What would you do if you found a wallet in the street?', t: 'mixed', ex: '“If you found” is imaginary, so the question uses “would.”' }
+    { s: 'What {will} you {do} if you found a wallet {on} {the street}?', w: 0, full: 'What would you do if you found a wallet in the street?', t: 'mixed', ex: '“If you found” is imaginary, so the question uses “would.”' }
   ], [
     { q: '“If you don’t practice, you won’t improve.”', a: 'Unless you practice, you won’t improve.', d: ['Unless you don’t practice, you won’t improve.', 'If you practice, you won’t improve.', 'Unless you practice, you will improve.'], t: 'mixed', ex: 'If … not = unless, with a positive verb.' },
     { q: '“I don’t have a car, so I can’t drive you home.”', a: 'If I had a car, I could drive you home.', d: ['If I have a car, I can drive you home.', 'If I had a car, I couldn’t drive you home.', 'If I don’t have a car, I will drive you home.'], t: 'second', ex: 'Not true now, so use the second conditional: had … could.' },
@@ -703,6 +718,78 @@ const TESTS = {
     { q: '“When you add 5 and 5, you get 10.”', a: 'If you add 5 and 5, you get 10.', d: ['If you will add 5 and 5, you get 10.', 'Unless you add 5 and 5, you get 10.', 'If you add 5 and 5, you would get 10.'], t: 'zero', ex: 'A fact: “when” = “if” in the zero conditional.' }
   ])
 };
+/* ===== Flat vector illustrations for lessons (Bright EngMath) ===== */
+const IL = (function () {
+  const K = '#121A3A', BL = '#2E7BD6', LB = '#CFE8FF', OR = '#FF8A3D', YE = '#F7C548', RE = '#E4573D', GR = '#2FA36B', BR = '#9B5B34', PA = '#EEF1F6';
+  const sv = inner => '<svg viewBox="0 0 240 160" class="ilsvg" aria-hidden="true">' + inner + '</svg>';
+  const s = 'stroke="' + K + '" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"';
+  const ground = '<path d="M10 140 H230" ' + s + '/>';
+  const cloud = (x, y, f) => '<path transform="translate(' + x + ',' + y + ')" d="M0 40 C-16 40 -18 14 2 12 C6 -6 34 -10 42 6 C52 -4 74 2 72 20 C88 22 86 40 70 40 Z" fill="' + (f || PA) + '" ' + s + '/>';
+  const drops = (x, y) => [0, 1, 2, 3].map(i => '<path d="M' + (x + i * 18) + ' ' + (y + (i % 2) * 8) + ' l-5 12" stroke="' + BL + '" stroke-width="4" stroke-linecap="round"/>').join('');
+  const house = (x, y) => '<g transform="translate(' + x + ',' + y + ')"><rect x="0" y="40" width="96" height="62" fill="#fff" ' + s + '/><path d="M-10 44 L48 0 L106 44 Z" fill="' + RE + '" ' + s + '/>' +
+    '<rect x="14" y="56" width="30" height="24" fill="' + YE + '" ' + s + '/><path d="M29 56 V80 M14 68 H44" ' + s + '/><rect x="58" y="62" width="24" height="40" fill="' + BR + '" ' + s + '/><circle cx="76" cy="83" r="2" fill="' + K + '"/></g>';
+  const sun = (x, y, r) => '<g transform="translate(' + x + ',' + y + ')">' + [0, 45, 90, 135, 180, 225, 270, 315].map(a => '<path d="M0 ' + (-(r + 6)) + ' V' + (-(r + 14)) + '" transform="rotate(' + a + ')" ' + s + '/>').join('') + '<circle r="' + r + '" fill="' + YE + '" ' + s + '/></g>';
+  const bird = (x, y, c, up) => '<g transform="translate(' + x + ',' + y + ')">' +
+    '<path d="M-26 4 L-40 -6 L-38 12 Z" fill="' + c + '" ' + s + '/>' +
+    '<ellipse cx="0" cy="6" rx="26" ry="15" fill="' + c + '" ' + s + '/>' +
+    '<circle cx="24" cy="-6" r="12" fill="' + c + '" ' + s + '/>' +
+    '<path d="M34 -8 L48 -4 L35 0 Z" fill="' + OR + '" ' + s + '/>' +
+    '<circle cx="27" cy="-9" r="2.6" fill="' + K + '"/>' +
+    (up ? '<path d="M-8 0 L-2 -30 L14 -2 Z" fill="#fff" ' + s + '/>' : '<path d="M-12 4 C-4 -6 10 -4 14 6 C6 14 -6 12 -12 4Z" fill="#fff" ' + s + '/>') + '</g>';
+  const arrowR = '<div class="ilarrow" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M4 20 H32 M22 10 L33 20 L22 30" fill="none" stroke="' + K + '" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';
+
+  const art = {
+    rain: sv(cloud(78, 22, '#DDE3EC') + drops(84, 72) + ground),
+    home: sv(house(72, 30) + ground),
+    heat: sv('<rect x="60" y="54" width="62" height="58" fill="' + LB + '" ' + s + '/><path d="M70 64 h16" stroke="#fff" stroke-width="5" stroke-linecap="round"/>' +
+      '<path d="M168 112 C140 112 138 84 152 70 C152 82 160 84 160 84 C158 66 170 52 178 44 C178 62 200 70 196 92 C194 106 184 112 168 112 Z" fill="' + OR + '" ' + s + '/><path d="M168 108 C160 108 158 98 164 90 C166 96 172 96 172 96 C172 90 176 86 178 84 C182 94 182 108 168 108Z" fill="' + YE + '"/>' + ground),
+    melt: sv('<ellipse cx="120" cy="128" rx="74" ry="12" fill="' + LB + '" ' + s + '/><path d="M100 120 q4 -14 8 0 M128 116 q4 -16 8 0" fill="' + LB + '" ' + s + '/><path d="M160 60 q6 10 0 14 q-6 -4 0 -14Z M178 78 q5 8 0 11 q-5 -3 0 -11Z" fill="' + BL + '" stroke="' + K + '" stroke-width="2.5"/>'),
+    study: sv('<path d="M120 52 C100 42 70 40 50 46 V118 C70 112 100 114 120 124 Z" fill="#fff" ' + s + '/><path d="M120 52 C140 42 170 40 190 46 V118 C170 112 140 114 120 124 Z" fill="#fff" ' + s + '/><path d="M62 64 H104 M62 78 H104 M62 92 H96 M136 64 H178 M136 78 H178 M136 92 H170" stroke="#9AA3B8" stroke-width="3" stroke-linecap="round"/>' +
+      '<rect x="146" y="20" width="12" height="60" transform="rotate(30 152 50)" fill="' + YE + '" ' + s + '/>' + ground),
+    pass: sv('<rect x="72" y="20" width="96" height="118" fill="#fff" ' + s + '/><path d="M86 44 H130 M86 60 H150 M86 76 H140 M86 92 H150" stroke="#9AA3B8" stroke-width="3" stroke-linecap="round"/><text x="150" y="128" font-family="Poppins" font-weight="800" font-size="30" fill="' + GR + '" text-anchor="middle">A+</text><path d="M84 112 l10 10 l20 -22" fill="none" stroke="' + GR + '" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>'),
+    dream: sv('<path d="M60 112 C30 112 28 80 52 76 C48 50 82 38 98 54 C108 32 148 32 156 56 C180 48 202 70 188 92 C204 104 190 126 168 120 C158 134 128 136 116 122 C100 134 70 130 60 112Z" fill="#fff" stroke="' + K + '" stroke-width="3.5" stroke-dasharray="9 7"/>' +
+      '<circle cx="44" cy="134" r="6" fill="#fff" ' + s + '/><circle cx="28" cy="148" r="3.5" fill="#fff" ' + s + '/>' +
+      bird(118, 82, BL, false)),
+    sea: sv(sun(196, 34, 14) + '<path d="M10 110 q20 -14 40 0 t40 0 t40 0 t40 0 t40 0 t40 0 V150 H10Z" fill="' + BL + '" ' + s + '/>' +
+      bird(96, 66, '#fff', true)),
+    late: sv('<circle cx="86" cy="76" r="46" fill="#fff" ' + s + '/><path d="M86 76 V44 M86 76 L108 86" ' + s + '/><circle cx="86" cy="76" r="4" fill="' + K + '"/>' +
+      '<path d="M150 50 L196 96 M196 50 L150 96" stroke="' + RE + '" stroke-width="7" stroke-linecap="round"/><text x="173" y="128" font-family="Poppins" font-weight="700" font-size="18" fill="' + RE + '" text-anchor="middle">late!</text>'),
+    train: sv('<path d="M10 132 H230 M10 142 H230" ' + s + '/><g transform="translate(96,46)"><rect x="0" y="0" width="120" height="74" fill="' + GR + '" ' + s + '/><rect x="12" y="14" width="26" height="22" fill="' + LB + '" ' + s + '/><rect x="48" y="14" width="26" height="22" fill="' + LB + '" ' + s + '/><rect x="84" y="14" width="26" height="22" fill="' + LB + '" ' + s + '/>' +
+      '<circle cx="26" cy="80" r="9" fill="#fff" ' + s + '/><circle cx="94" cy="80" r="9" fill="#fff" ' + s + '/></g><path d="M30 64 H76 M44 82 H84 M24 100 H70" stroke="#9AA3B8" stroke-width="4" stroke-linecap="round"/>'),
+    hurry: sv('<circle cx="120" cy="72" r="48" fill="#fff" ' + s + '/><path d="M120 72 L112.9 38.7 M120 72 L101.1 83.3" ' + s + '/><circle cx="120" cy="72" r="4" fill="' + K + '"/><text x="120" y="146" font-family="Poppins" font-weight="700" font-size="17" fill="' + K + '" text-anchor="middle">7:58</text>' +
+      '<path d="M54 40 L36 32 M50 64 L30 64 M54 88 L36 96" stroke="' + OR + '" stroke-width="4" stroke-linecap="round"/>'),
+    bus: sv('<g transform="translate(70,40)"><rect x="0" y="0" width="140" height="78" fill="' + YE + '" ' + s + '/><rect x="12" y="12" width="28" height="24" fill="' + LB + '" ' + s + '/><rect x="50" y="12" width="28" height="24" fill="' + LB + '" ' + s + '/><rect x="88" y="12" width="40" height="24" fill="' + LB + '" ' + s + '/><path d="M0 52 H140" ' + s + '/>' +
+      '<circle cx="30" cy="84" r="11" fill="#fff" ' + s + '/><circle cx="110" cy="84" r="11" fill="#fff" ' + s + '/></g><path d="M18 60 H52 M10 80 H50 M22 100 H56" stroke="#9AA3B8" stroke-width="4" stroke-linecap="round"/>' + ground),
+    wallet: sv('<g transform="translate(64,52)"><rect x="0" y="10" width="112" height="70" fill="' + BR + '" ' + s + '/><path d="M0 10 H112 V40 H70 C62 40 62 56 70 56 H112" fill="#B87346" ' + s + '/><circle cx="84" cy="48" r="4" fill="' + YE + '" stroke="' + K + '" stroke-width="2.5"/></g>' +
+      '<text x="196" y="58" font-family="Poppins" font-weight="800" font-size="40" fill="' + OR + '" text-anchor="middle">?</text>' + ground),
+    police: sv('<g transform="translate(56,26)"><rect x="0" y="34" width="128" height="80" fill="#fff" ' + s + '/><rect x="-6" y="18" width="140" height="22" fill="' + BL + '" ' + s + '/><text x="64" y="34" font-family="Poppins" font-weight="800" font-size="15" fill="#fff" text-anchor="middle">POLICE</text>' +
+      '<rect x="48" y="70" width="32" height="44" fill="' + LB + '" ' + s + '/><rect x="12" y="52" width="24" height="20" fill="' + LB + '" ' + s + '/><rect x="92" y="52" width="24" height="20" fill="' + LB + '" ' + s + '/></g>' + ground),
+    always: sv(sun(120, 74, 30)),
+    maybe: sv(cloud(84, 46, '#DDE3EC') + '<text x="120" y="78" font-family="Poppins" font-weight="800" font-size="30" fill="' + K + '" text-anchor="middle">?</text>'),
+    imagine: sv('<path d="M70 106 C44 106 40 78 62 74 C58 50 90 40 104 56 C114 36 150 38 156 60 C178 56 194 76 182 96 C192 110 178 126 160 120 C150 132 122 132 112 120 C98 132 76 126 70 106Z" fill="#fff" stroke="' + K + '" stroke-width="3.5" stroke-dasharray="9 7"/><path d="M120 62 l7 15 16 2 -12 11 3 16 -14 -8 -14 8 3 -16 -12 -11 16 -2Z" fill="' + YE + '" ' + s + '/>')
+  };
+  const scenes = {
+    intro: ['rain', 'If it rains,', 'home', 'we stay inside.'],
+    zero: ['heat', 'If you heat ice,', 'melt', 'it melts.'],
+    first: ['study', 'If you study hard,', 'pass', 'you will pass the test.'],
+    second: ['dream', 'If I were a bird,', 'sea', 'I would fly over the sea.'],
+    third: ['late', 'If we had left earlier,', 'train', 'we would have caught the train.', 'Really: we left late.', 'Really: the train left without us.'],
+    unless: ['hurry', 'Unless you hurry,', 'bus', 'you will miss the bus.'],
+    questions: ['wallet', 'What would you do if you found a wallet?', 'police', 'I would take it to the police.']
+  };
+  const notes = { third: 'Real past: we left late and missed the train. The pictures show what really happened. The sentence imagines the opposite.', second: 'The dotted bubble means it is only in my imagination.' };
+  function scene(id, color, tint) {
+    if (id === 'compare') {
+      const it = [['always', 'Always true', '#0C6E5B', 'Zero'], ['maybe', 'Possible', '#B45309', 'First'], ['imagine', 'Imaginary', '#2756C9', 'Second']];
+      return '<div class="ilrow three">' + it.map(([a, t, c, n]) => '<figure class="ilcard" style="--c:' + c + '">' + art[a] + '<figcaption><b style="color:' + c + '">' + n + '</b>' + t + '</figcaption></figure>').join('') + '</div>';
+    }
+    const sc = scenes[id]; if (!sc) return '';
+    const real = (t) => t ? '<span class="ilreal">' + t + '</span>' : '';
+    return (notes[id] && id === 'third' ? '<p class="vcap ilnote">' + notes[id] + '</p>' : '') + '<div class="ilrow"><figure class="ilcard ilif">' + real(sc[4]) + art[sc[0]] + '<figcaption><span class="tagc">if clause</span>' + sc[1] + '</figcaption></figure>' + arrowR +
+      '<figure class="ilcard">' + real(sc[5]) + art[sc[2]] + '<figcaption><span class="tagc res">result</span>' + sc[3] + '</figcaption></figure></div>' + (notes[id] && id !== 'third' ? '<p class="vcap">' + notes[id] + '</p>' : '');
+  }
+  return { scene, art };
+})();
 
 </script>
 <script>
@@ -834,7 +921,7 @@ function confetti(n) {
   if (window.__noConfetti) return;
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const box = document.createElement('div'); box.className = 'confetti'; box.setAttribute('aria-hidden', 'true');
-  const cols = ['#0F7F68', '#D9650F', '#2756C9', '#BC2B4B', '#FF8FB8', '#F7C548'];
+  const cols = ['#0C6E5B', '#B45309', '#2756C9', '#BC2B4B', '#FF8FB8', '#F7C548'];
   let h = '';
   for (let i = 0; i < (n || 70); i++) {
     const round = i % 3 === 0;
@@ -917,10 +1004,10 @@ function lesson() {
     '<header class="lhead"><span class="badge">' + (l.t === 'mixed' ? (i + 1) : T.num) + '</span><div style="flex:1"><p class="kick">' + l.kicker + (l.challenge ? ' <em class="chal">Challenge</em>' : '') + '</p><h1>' + l.title + '</h1></div></header></div>' +
     '<div class="keyidea">' + iffy(l.challenge ? 'wow' : 'happy') + '<p><small>KEY IDEA</small>' + esc(l.key) + '</p></div>';
   h += step('When do we use it?') + '<p class="use">' + l.use + '</p></section>';
-  if (l.visual === 'compare') h += step('Real or unreal?') + compareHTML() + '</section>';
+  if (l.visual === 'compare') h += step('Real or unreal?') + IL.scene('compare') + compareHTML() + '</section>';
   else {
     h += step('The pattern') + formulaHTML(l.formula, l.t) + (l.formula2 ? formulaHTML(l.formula2, l.t) : '') + '<p class="fnote">' + l.formulaNote + '</p></section>';
-    h += step('Picture it') + visualHTML(l.visual, l.t) + '</section>';
+    h += step('Picture it') + IL.scene(l.id) + '<div class="ilvis">' + visualHTML(l.visual, l.t) + '</div></section>';
   }
   h += step('Examples') + (l.id === 'questions' ? '' : '<p class="exlegend"><span><i style="background:' + T.tint + ';border-color:' + T.color + '"></i>if clause (condition)</span><span><i style="background:#fff"></i>main clause (result)</span></p>') +
     '<ul class="examples">' + l.examples.map(e => exSplit(e, l.t)).join('') + '</ul></section>';
@@ -1006,7 +1093,7 @@ function qBody(it) {
 }
 function typedSentence(it) {
   const m = it.q.match(/^(.*?)___\s*\(([^)]+)\)(.*)$/);
-  return esc(m[1]) + '<input class="typed inl" aria-label="Your answer" autocomplete="off" autocapitalize="off" spellcheck="false"> <span class="hintw">(' + esc(m[2]) + ')</span>' + esc(m[3]);
+  return esc(m[1]) + '<input class="typed inl" aria-label="Your answer" autocomplete="off" autocapitalize="off" spellcheck="false"' + (/\//.test(m[2]) && !/^not /.test(m[2]) ? ' placeholder="type all the words"' : '') + '> <span class="hintw">(' + esc(m[2]) + ')</span>' + esc(m[3]);
 }
 
 /* match boards */

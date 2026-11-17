@@ -875,6 +875,129 @@ const IL = (function () {
   Object.assign(IL.art, add);
 })();
 
+/* ===== Illustrations v3: same flat line style, more accurate scenes ===== */
+(function () {
+  const K = '#121A3A', BL = '#2E7BD6', LB = '#CFE8FF', OR = '#FF8A3D', YE = '#F7C548', RE = '#E4573D', GR = '#2FA36B', BR = '#9B5B34', PA = '#E3E8F0', SK = '#F6C9A8', HA = '#3B2A20', GY = '#9AA3B8';
+  const sv = inner => '<svg viewBox="0 0 240 160" class="ilsvg" aria-hidden="true">' + inner + '</svg>';
+  const s = 'stroke="' + K + '" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"';
+  const s2 = 'stroke="' + K + '" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"';
+  const ground = (y) => '<path d="M8 ' + (y || 142) + ' H232" ' + s + '/>';
+  const T = (x, y, t, sz, c, w) => '<text x="' + x + '" y="' + y + '" font-family="Poppins" font-weight="' + (w || 800) + '" font-size="' + (sz || 16) + '" fill="' + (c || K) + '" text-anchor="middle">' + t + '</text>';
+  const sun = (x, y, r) => '<g transform="translate(' + x + ',' + y + ')">' + [0, 45, 90, 135, 180, 225, 270, 315].map(a => '<path d="M0 ' + (-(r + 5)) + ' V' + (-(r + 11)) + '" transform="rotate(' + a + ')" ' + s + '/>').join('') + '<circle r="' + r + '" fill="' + YE + '" ' + s + '/></g>';
+  const cloud = (x, y, sc, f) => '<path transform="translate(' + x + ',' + y + ') scale(' + (sc || 1) + ')" d="M0 40 C-16 40 -18 14 2 12 C6 -6 34 -10 42 6 C52 -4 74 2 72 20 C88 22 86 40 70 40 Z" fill="' + (f || PA) + '" ' + s + '/>';
+  const drops = (x, y, n) => Array.from({ length: n || 4 }, (_, i) => '<path d="M' + (x + i * 16) + ' ' + (y + (i % 2) * 7) + ' l-4 10" stroke="' + BL + '" stroke-width="3.5" stroke-linecap="round"/>').join('');
+  /* a child: feet at (x,y); pose: down | wave | hold | run | think */
+  function kid(x, y, sc, shirt, pose, face) {
+    const P = pose || 'down';
+    let arms;
+    if (P === 'wave') arms = '<path d="M-11 -56 L-17 -36" ' + s + '/><circle cx="-17" cy="-34" r="3.5" fill="' + SK + '" ' + s2 + '/><path d="M11 -56 L22 -76" ' + s + '/><circle cx="23" cy="-78" r="3.5" fill="' + SK + '" ' + s2 + '/>';
+    else if (P === 'hold') arms = '<path d="M-11 -56 L-17 -36" ' + s + '/><circle cx="-17" cy="-34" r="3.5" fill="' + SK + '" ' + s2 + '/><path d="M11 -56 L20 -52 L24 -62" ' + s + '/><circle cx="24" cy="-64" r="3.5" fill="' + SK + '" ' + s2 + '/>';
+    else if (P === 'think') arms = '<path d="M-11 -56 L-17 -36" ' + s + '/><circle cx="-17" cy="-34" r="3.5" fill="' + SK + '" ' + s2 + '/><path d="M11 -56 L16 -64 L8 -72" ' + s + '/><circle cx="7" cy="-73" r="3.5" fill="' + SK + '" ' + s2 + '/>';
+    else if (P === 'run') arms = '<path d="M-11 -56 L-22 -46" ' + s + '/><circle cx="-23" cy="-45" r="3.5" fill="' + SK + '" ' + s2 + '/><path d="M11 -56 L20 -66" ' + s + '/><circle cx="21" cy="-67" r="3.5" fill="' + SK + '" ' + s2 + '/>';
+    else arms = '<path d="M-11 -56 L-17 -36" ' + s + '/><circle cx="-17" cy="-34" r="3.5" fill="' + SK + '" ' + s2 + '/><path d="M11 -56 L17 -36" ' + s + '/><circle cx="17" cy="-34" r="3.5" fill="' + SK + '" ' + s2 + '/>';
+    const legs = P === 'run'
+      ? '<path d="M-3 -32 L-14 -16 L-10 -2" fill="none" stroke="#2E4A7D" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 -32 L12 -14 L20 -12" fill="none" stroke="#2E4A7D" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="-8" cy="-1" rx="6" ry="3" fill="' + K + '"/><ellipse cx="23" cy="-12" rx="6" ry="3" fill="' + K + '"/>'
+      : '<rect x="-9" y="-34" width="7.5" height="31" fill="#2E4A7D" ' + s2 + '/><rect x="1.5" y="-34" width="7.5" height="31" fill="#2E4A7D" ' + s2 + '/><ellipse cx="-6" cy="-1.5" rx="6.5" ry="3" fill="' + K + '"/><ellipse cx="6" cy="-1.5" rx="6.5" ry="3" fill="' + K + '"/>';
+    const mouth = face === 'sad' ? '<path d="M-4 -71 Q0 -74 4 -71" fill="none" ' + s2 + '/>' : face === 'o' ? '<ellipse cx="0" cy="-72" rx="2.2" ry="2.8" fill="' + K + '"/>' : '<path d="M-4 -73 Q0 -69 4 -73" fill="none" ' + s2 + '/>';
+    return '<g transform="translate(' + x + ',' + y + ') scale(' + (sc || 1) + ')">' + legs + arms +
+      '<path d="M-13 -32 L-12 -54 Q-12 -62 0 -62 Q12 -62 12 -54 L13 -32 Z" fill="' + (shirt || RE) + '" ' + s + '/>' +
+      '<circle cx="0" cy="-79" r="13" fill="' + SK + '" ' + s + '/>' +
+      '<path d="M-13.5 -80 C-14 -95 14 -96 13.5 -80 C10 -88 2 -89 -2 -86 C-6 -89 -10 -87 -13.5 -80 Z" fill="' + HA + '" ' + s2 + '/>' +
+      '<circle cx="-4.5" cy="-79" r="1.8" fill="' + K + '"/><circle cx="4.5" cy="-79" r="1.8" fill="' + K + '"/>' + mouth + '</g>';
+  }
+  const clock = (cx, cy, r, h, m, f) => {
+    const ha = ((h % 12) + m / 60) * 30 * Math.PI / 180, ma = m * 6 * Math.PI / 180;
+    const hx = cx + Math.sin(ha) * r * 0.5, hy = cy - Math.cos(ha) * r * 0.5, mx = cx + Math.sin(ma) * r * 0.78, my = cy - Math.cos(ma) * r * 0.78;
+    let ticks = ''; for (let i = 0; i < 12; i++) { const a = i * 30 * Math.PI / 180; ticks += '<path d="M' + (cx + Math.sin(a) * r * 0.82).toFixed(1) + ' ' + (cy - Math.cos(a) * r * 0.82).toFixed(1) + ' L' + (cx + Math.sin(a) * r * 0.92).toFixed(1) + ' ' + (cy - Math.cos(a) * r * 0.92).toFixed(1) + '" stroke="' + K + '" stroke-width="' + (i % 3 === 0 ? 3 : 1.6) + '" stroke-linecap="round"/>'; }
+    return '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="' + (f || '#fff') + '" ' + s + '/>' + ticks +
+      '<path d="M' + cx + ' ' + cy + ' L' + hx.toFixed(1) + ' ' + hy.toFixed(1) + '" stroke="' + K + '" stroke-width="4.5" stroke-linecap="round"/>' +
+      '<path d="M' + cx + ' ' + cy + ' L' + mx.toFixed(1) + ' ' + my.toFixed(1) + '" stroke="' + K + '" stroke-width="3" stroke-linecap="round"/><circle cx="' + cx + '" cy="' + cy + '" r="3.2" fill="' + RE + '"/>';
+  };
+  /* flying bird, wings up */
+  const bird = (x, y, sc, c) => '<g transform="translate(' + x + ',' + y + ') scale(' + (sc || 1) + ')">' +
+    '<path d="M-4 0 C-14 -16 -30 -20 -40 -14 C-28 -10 -18 -4 -12 4 Z" fill="' + (c || '#fff') + '" ' + s + '/>' +
+    '<path d="M-26 4 L-38 -2 L-36 12 Z" fill="' + (c || '#fff') + '" ' + s + '/>' +
+    '<ellipse cx="-6" cy="6" rx="22" ry="10" fill="' + (c || '#fff') + '" ' + s + '/>' +
+    '<circle cx="16" cy="0" r="8" fill="' + (c || '#fff') + '" ' + s + '/><path d="M23 -1 L33 2 L23 5 Z" fill="' + OR + '" ' + s2 + '/><circle cx="18" cy="-1.5" r="1.8" fill="' + K + '"/>' +
+    '<path d="M2 2 C8 -18 24 -26 34 -22 C24 -14 16 -4 10 6 Z" fill="' + (c || '#fff') + '" ' + s + '/></g>';
+  const pan = (x, y, inner) => '<g transform="translate(' + x + ',' + y + ')"><path d="M-48 0 H48 L42 18 H-42 Z" fill="#8892A6" ' + s + '/><path d="M48 4 H86" stroke="' + K + '" stroke-width="7" stroke-linecap="round"/>' + (inner || '') + '</g>';
+  const flames = (x, y) => [-28, 0, 28].map(dx => '<path transform="translate(' + (x + dx) + ',' + y + ')" d="M0 0 C-12 0 -12 -14 -4 -22 C-4 -14 2 -14 2 -14 C0 -24 6 -30 10 -34 C10 -22 16 -18 12 -8 C10 -2 6 0 0 0 Z" fill="' + OR + '" ' + s2 + '/>').join('');
+  const cube = (x, y, w) => '<g transform="translate(' + x + ',' + y + ')"><path d="M0 0 L' + w + ' 0 L' + w + ' ' + (-w) + ' L0 ' + (-w) + ' Z" fill="' + LB + '" ' + s + '/><path d="M0 ' + (-w) + ' L' + (w * 0.35) + ' ' + (-w * 1.3) + ' L' + (w * 1.35) + ' ' + (-w * 1.3) + ' L' + w + ' ' + (-w) + ' Z" fill="#E8F5FF" ' + s + '/><path d="M' + w + ' 0 L' + (w * 1.35) + ' ' + (-w * 0.3) + ' L' + (w * 1.35) + ' ' + (-w * 1.3) + ' L' + w + ' ' + (-w) + ' Z" fill="#A9D4F5" ' + s + '/><path d="M5 ' + (-w + 6) + ' h8" stroke="#fff" stroke-width="3" stroke-linecap="round"/></g>';
+
+  const A = {};
+  A.rain = sv(cloud(70, 16, 1.25, '#D3DAE6') + drops(80, 76, 5) + '<ellipse cx="70" cy="138" rx="26" ry="5" fill="' + LB + '" ' + s2 + '/><ellipse cx="170" cy="138" rx="30" ry="5" fill="' + LB + '" ' + s2 + '/>' + ground());
+  A.home = sv('<g transform="translate(70,32)"><rect x="0" y="42" width="100" height="68" fill="#fff" ' + s + '/><path d="M-10 46 L50 4 L110 46 Z" fill="' + RE + '" ' + s + '/><rect x="70" y="8" width="12" height="22" fill="#C64A35" ' + s2 + '/>' +
+    '<rect x="12" y="56" width="40" height="30" fill="' + YE + '" ' + s + '/><path d="M32 56 V86 M12 71 H52" ' + s2 + '/>' + kid(0, 0, 0, RE).slice(0, 0) +
+    '<circle cx="24" cy="66" r="5" fill="' + SK + '" ' + s2 + '/><circle cx="41" cy="67" r="4.5" fill="' + SK + '" ' + s2 + '/>' +
+    '<rect x="64" y="66" width="26" height="44" fill="' + BR + '" ' + s + '/><circle cx="84" cy="88" r="2.2" fill="' + K + '"/></g>' + drops(20, 20, 2) + drops(196, 30, 2) + ground());
+  A.heat = sv(pan(104, 92, cube(-14, 0, 26)) + flames(104, 138) + '<rect x="40" y="138" width="128" height="8" fill="#5B6478" ' + s2 + '/>');
+  A.melt = sv(pan(104, 92, '<path d="M-40 0 C-30 -6 -10 -8 0 -4 C14 -9 30 -6 40 0 Z" fill="' + LB + '" ' + s2 + '/><path d="M-6 -3 L-6 -12 L6 -14 L8 -4" fill="#E8F5FF" ' + s2 + '/>' +
+    '<path d="M-20 -20 q4 -8 0 -16 M0 -24 q4 -8 0 -16 M20 -20 q4 -8 0 -16" fill="none" stroke="' + GY + '" stroke-width="3" stroke-linecap="round"/>') + flames(104, 138) + '<rect x="40" y="138" width="128" height="8" fill="#5B6478" ' + s2 + '/>');
+  A.study = sv('<rect x="20" y="112" width="200" height="10" fill="#C9935D" ' + s + '/><path d="M40 122 V150 M200 122 V150" ' + s + '/>' +
+    '<path d="M120 50 C100 40 72 38 54 44 V108 C72 102 100 104 120 112 Z" fill="#fff" ' + s + '/><path d="M120 50 C140 40 168 38 186 44 V108 C168 102 140 104 120 112 Z" fill="#fff" ' + s + '/><path d="M120 50 V112" ' + s2 + '/>' +
+    '<path d="M64 60 H108 M64 72 H108 M64 84 H100 M132 60 H176 M132 72 H176 M132 84 H168" stroke="' + GY + '" stroke-width="2.6" stroke-linecap="round"/>' +
+    '<g transform="rotate(-25 200 92)"><rect x="196" y="56" width="10" height="46" fill="' + YE + '" ' + s2 + '/><path d="M196 102 L201 112 L206 102 Z" fill="' + SK + '" ' + s2 + '/><rect x="196" y="50" width="10" height="7" fill="' + PK() + '" ' + s2 + '/></g>');
+  function PK() { return '#FF9EBB'; }
+  A.pass = sv('<rect x="70" y="14" width="100" height="128" fill="#fff" ' + s + '/>' + T(96, 34, 'TEST', 12, K, 700) +
+    [52, 72, 92, 112].map(y => '<path d="M82 ' + (y - 5) + ' l4 4 l8 -9" fill="none" stroke="' + GR + '" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M102 ' + (y - 2) + ' H156" stroke="' + GY + '" stroke-width="2.6" stroke-linecap="round"/>').join('') +
+    '<circle cx="168" cy="34" r="22" fill="#fff" stroke="' + RE + '" stroke-width="3"/>' + T(168, 42, 'A+', 20, RE));
+  A.dream = sv(kid(52, 142, 1, BL, 'think') +
+    '<circle cx="76" cy="58" r="4" fill="#fff" ' + s2 + '/><circle cx="88" cy="46" r="6" fill="#fff" ' + s2 + '/>' +
+    '<path d="M108 52 C92 52 92 30 108 28 C108 10 136 4 148 16 C158 4 186 6 190 22 C210 22 214 46 198 52 C206 66 190 76 176 70 C166 82 140 82 132 70 C116 76 102 66 108 52Z" fill="#fff" stroke="' + K + '" stroke-width="3" stroke-dasharray="8 6"/>' +
+    bird(156, 44, 0.85, BL));
+  A.sea = sv(sun(204, 30, 13) + bird(110, 56, 1, '#fff') + '<path d="M8 110 q18 -12 36 0 t36 0 t36 0 t36 0 t36 0 t36 0 V150 H8Z" fill="' + BL + '" ' + s + '/><path d="M30 128 q10 -6 20 0 M120 132 q10 -6 20 0" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>');
+  A.late = sv(clock(84, 74, 50, 8, 15) + '<rect x="156" y="40" width="70" height="40" fill="#fff" ' + s + '/>' + T(191, 57, 'Train', 12, K, 700) + T(191, 73, '8:00', 15, RE) + '<path d="M191 80 V140" ' + s + '/>' + ground());
+  A.train = sv('<path d="M8 134 H232 M8 144 H232" ' + s2 + '/>' + Array.from({ length: 12 }, (_, i) => '<path d="M' + (14 + i * 19) + ' 134 V144" ' + s2 + '/>').join('') +
+    '<g transform="translate(92,52)"><path d="M0 0 H104 C122 0 132 18 134 40 V72 H0 Z" fill="' + GR + '" ' + s + '/><rect x="10" y="12" width="22" height="22" fill="' + LB + '" ' + s2 + '/><rect x="40" y="12" width="22" height="22" fill="' + LB + '" ' + s2 + '/><rect x="70" y="12" width="22" height="22" fill="' + LB + '" ' + s2 + '/><path d="M104 10 C118 12 124 24 126 36 H104 Z" fill="' + LB + '" ' + s2 + '/><path d="M0 50 H134" stroke="#fff" stroke-width="4"/>' +
+    '<circle cx="24" cy="76" r="9" fill="#fff" ' + s + '/><circle cx="60" cy="76" r="9" fill="#fff" ' + s + '/><circle cx="108" cy="76" r="9" fill="#fff" ' + s + '/></g><path d="M28 70 H76 M40 88 H82 M22 106 H72" stroke="' + GY + '" stroke-width="4" stroke-linecap="round"/>');
+  A.hurry = sv(clock(150, 72, 50, 7, 58) + T(150, 148, '7:58', 15) + kid(52, 142, 0.95, OR, 'run') + '<path d="M14 64 h14 M10 80 h16 M16 96 h12" stroke="' + GY + '" stroke-width="3" stroke-linecap="round"/>');
+  A.bus = sv('<g transform="translate(62,38)"><rect x="0" y="0" width="150" height="80" fill="' + YE + '" ' + s + '/><rect x="10" y="12" width="26" height="24" fill="' + LB + '" ' + s2 + '/><rect x="44" y="12" width="26" height="24" fill="' + LB + '" ' + s2 + '/><rect x="78" y="12" width="26" height="24" fill="' + LB + '" ' + s2 + '/><rect x="114" y="12" width="26" height="54" fill="' + LB + '" ' + s2 + '/><path d="M127 12 V66" ' + s2 + '/><path d="M0 50 H110" stroke="' + K + '" stroke-width="2.5"/>' +
+    '<rect x="143" y="56" width="10" height="10" fill="' + OR + '" ' + s2 + '/><circle cx="32" cy="86" r="12" fill="#fff" ' + s + '/><circle cx="32" cy="86" r="4" fill="' + K + '"/><circle cx="118" cy="86" r="12" fill="#fff" ' + s + '/><circle cx="118" cy="86" r="4" fill="' + K + '"/></g>' +
+    '<path d="M12 62 H48 M8 82 H50 M16 102 H54" stroke="' + GY + '" stroke-width="4" stroke-linecap="round"/>' + ground(136));
+  A.wallet = sv('<path d="M8 128 H232 M60 128 L44 150 M140 128 L136 150 M210 128 L222 150" ' + s2 + '/><g transform="translate(78,70) rotate(-6)"><rect x="0" y="0" width="92" height="56" fill="' + BR + '" ' + s + '/><path d="M0 0 H92 V26 H58 C50 26 50 40 58 40 H92" fill="#B87346" ' + s + '/><circle cx="70" cy="33" r="3.5" fill="' + YE + '" ' + s2 + '/><rect x="10" y="-8" width="30" height="10" fill="#7BC27B" ' + s2 + '/></g>' + T(200, 64, '?', 36, OR));
+  A.police = sv('<g transform="translate(52,24)"><rect x="0" y="40" width="136" height="78" fill="#fff" ' + s + '/><rect x="-6" y="22" width="148" height="22" fill="' + BL + '" ' + s + '/>' + T(68, 38, 'POLICE', 14, '#fff') +
+    '<rect x="54" y="74" width="28" height="44" fill="' + LB + '" ' + s + '/><path d="M68 74 V118" ' + s2 + '/><rect x="12" y="56" width="26" height="22" fill="' + LB + '" ' + s2 + '/><rect x="98" y="56" width="26" height="22" fill="' + LB + '" ' + s2 + '/><rect x="62" y="6" width="12" height="16" fill="' + RE + '" ' + s2 + '/><path d="M58 4 l-6 -4 M78 4 l6 -4" stroke="' + RE + '" stroke-width="2.5" stroke-linecap="round"/></g>' + ground());
+  A.icecream = sv(sun(198, 32, 14) + '<path d="M98 82 L120 146 L142 82 Z" fill="#E9B26B" ' + s + '/><path d="M104 92 L136 92 M108 106 L132 106 M112 120 L128 120 M110 86 L128 138 M130 86 L112 138" stroke="#B97A35" stroke-width="2"/>' +
+    '<path d="M92 84 C86 56 104 40 120 40 C138 40 156 56 148 84 C146 92 140 90 140 100 C140 108 133 108 132 98 C130 90 122 92 120 102 C118 112 110 110 110 100 C108 92 96 94 92 84Z" fill="#FF9EBB" ' + s + '/>' +
+    '<path d="M104 52 q6 -6 14 -6" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/><ellipse cx="128" cy="146" rx="18" ry="4" fill="#FF9EBB" ' + s2 + '/>' + ground(150));
+  A.plant = sv(sun(198, 32, 14) + '<path d="M86 104 H154 L146 140 H94 Z" fill="' + RE + '" ' + s + '/><path d="M82 96 H158 V106 H82Z" fill="#C64A35" ' + s + '/><path d="M90 98 H150" stroke="' + BR + '" stroke-width="4"/>' +
+    '<path d="M120 97 C118 72 126 56 144 56 C156 58 158 72 152 86" fill="none" stroke="#8C7A3A" stroke-width="4" stroke-linecap="round"/>' +
+    '<path d="M152 86 C160 92 160 104 154 110 C146 104 146 94 152 86Z" fill="#C9B458" ' + s2 + '/>' +
+    '<path d="M120 80 C110 78 100 86 98 98 C108 98 116 92 120 80Z" fill="#C9B458" ' + s2 + '/><path d="M124 64 C134 60 142 66 142 74 C134 74 126 70 124 64Z" fill="#C9B458" ' + s2 + '/>' +
+    '<path d="M24 142 l10 -6 l8 6 l10 -4 M180 142 l8 -5 l10 5 l8 -4" fill="none" stroke="' + BR + '" stroke-width="2.5"/>' + ground());
+  A.umbrella = sv(cloud(14, 10, 0.7, '#D3DAE6') + drops(18, 48, 3) + '<rect x="184" y="70" width="48" height="42" fill="#fff" ' + s2 + '/><rect x="184" y="70" width="48" height="12" fill="' + RE + '" ' + s2 + '/><path d="M196 66 v8 M220 66 v8" ' + s2 + '/>' + T(208, 101, 'Tomorrow', 8.5, K, 700) +
+    kid(118, 142, 0.95, GR, 'hold') + '<path d="M140 82 V30" ' + s + '/><path d="M140 82 q0 6 -6 6" fill="none" ' + s + '/><path d="M86 52 C86 22 112 6 140 6 C168 6 194 22 194 52 C185 45 176 45 167 52 C158 45 149 45 140 52 C131 45 122 45 113 52 C104 45 95 45 86 52Z" fill="#FF6B57" ' + s + '/><path d="M140 6 C128 20 124 36 122 48 M140 6 C152 20 156 36 158 48" fill="none" ' + s2 + '/>' + ground());
+  A.vase = sv('<rect x="20" y="96" width="120" height="8" fill="#C9935D" ' + s + '/><path d="M32 104 V140 M128 104 V140" ' + s + '/>' +
+    '<path d="M150 140 L156 120 L172 128 L166 140Z" fill="' + BL + '" ' + s2 + '/><path d="M176 140 L180 112 L196 116 L200 140Z" fill="' + BL + '" ' + s2 + '/><path d="M180 124 h14" stroke="#fff" stroke-width="2.5"/><path d="M204 140 L208 128 L220 132 L218 140Z" fill="' + BL + '" ' + s2 + '/>' +
+    '<path d="M160 116 l-10 -18 M150 98 l-6 -4 M150 98 l2 -7" fill="none" stroke="' + GR + '" stroke-width="2.5" stroke-linecap="round"/><circle cx="144" cy="92" r="5" fill="' + YE + '" ' + s2 + '/>' +
+    '<circle cx="66" cy="128" r="12" fill="#fff" ' + s + '/><path d="M57 121 Q66 128 75 121 M57 135 Q66 128 75 135" fill="none" stroke="' + RE + '" stroke-width="2"/>' +
+    '<path d="M186 96 l4 -14 M200 100 l12 -8 M172 98 l-6 -12" stroke="' + OR + '" stroke-width="3.5" stroke-linecap="round"/>' + T(196, 72, 'CRASH!', 15, RE) + ground());
+  A.snowman = sv('<circle cx="120" cy="110" r="30" fill="#fff" ' + s + '/><circle cx="120" cy="64" r="21" fill="#fff" ' + s + '/><rect x="104" y="40" width="32" height="5" fill="' + K + '"/><rect x="109" y="20" width="22" height="21" fill="' + K + '"/>' +
+    '<circle cx="113" cy="60" r="2.4" fill="' + K + '"/><circle cx="127" cy="60" r="2.4" fill="' + K + '"/><path d="M120 66 L136 70 L120 72Z" fill="' + OR + '" ' + s2 + '/>' +
+    '<path d="M102 82 C112 88 128 88 138 82 L136 90 C126 94 114 94 104 90Z" fill="' + RE + '" ' + s2 + '/><path d="M128 88 L132 104 L124 104Z" fill="' + RE + '" ' + s2 + '/>' +
+    '<path d="M92 100 L66 84 M72 88 l-4 -10 M148 100 L174 84 M168 88 l4 -10" stroke="' + BR + '" stroke-width="3.5" stroke-linecap="round"/><circle cx="120" cy="104" r="2.8" fill="' + K + '"/><circle cx="120" cy="118" r="2.8" fill="' + K + '"/>' +
+    [[34, 30], [56, 70], [196, 40], [212, 92], [176, 18], [24, 104]].map(([x, y]) => '<circle cx="' + x + '" cy="' + y + '" r="3.5" fill="#fff" stroke="' + K + '" stroke-width="2"/>').join('') + '<path d="M8 142 C60 132 180 132 232 142" fill="#fff" ' + s + '/>');
+  A.dogwag = sv(kid(44, 142, 1, OR, 'wave') +
+    '<path d="M186 104 C200 96 204 82 198 68" fill="none" stroke="' + K + '" stroke-width="4" stroke-linecap="round"/><path d="M204 64 l10 -8 M208 80 l14 -2 M204 96 l12 6" stroke="' + OR + '" stroke-width="3.5" stroke-linecap="round"/>' +
+    '<rect x="122" y="122" width="8" height="18" fill="#D9A06A" ' + s2 + '/><rect x="138" y="122" width="8" height="18" fill="#D9A06A" ' + s2 + '/><rect x="164" y="122" width="8" height="18" fill="#D9A06A" ' + s2 + '/><rect x="178" y="120" width="8" height="20" fill="#D9A06A" ' + s2 + '/>' +
+    '<rect x="114" y="94" width="78" height="34" rx="15" fill="#E2B07A" ' + s + '/><path d="M150 94 C160 106 176 106 186 98" fill="none" stroke="#C88D55" stroke-width="3"/>' +
+    '<circle cx="110" cy="84" r="20" fill="#E2B07A" ' + s + '/><ellipse cx="94" cy="92" rx="11" ry="8" fill="#F1D2AE" ' + s2 + '/><ellipse cx="86" cy="89" rx="4.5" ry="3.5" fill="' + K + '"/><path d="M90 98 Q95 101 100 97" fill="none" ' + s2 + '/><path d="M93 99 q2 6 6 2" fill="#FF7A90" ' + s2 + '/>' +
+    '<path d="M118 66 C132 62 136 82 126 92 C118 88 114 76 118 66Z" fill="' + BR + '" ' + s2 + '/><circle cx="104" cy="78" r="3" fill="' + K + '"/><circle cx="105" cy="77" r="1" fill="#fff"/>' + ground());
+  A.sick = sv('<rect x="30" y="80" width="12" height="62" fill="' + BR + '" ' + s + '/><rect x="200" y="98" width="10" height="44" fill="' + BR + '" ' + s + '/><rect x="30" y="104" width="180" height="16" fill="#fff" ' + s + '/>' +
+    '<rect x="44" y="88" width="44" height="20" rx="8" fill="#fff" ' + s + '/><circle cx="72" cy="88" r="15" fill="' + SK + '" ' + s + '/><path d="M58 84 C58 70 86 70 86 84 C80 78 64 78 58 84Z" fill="' + HA + '" ' + s2 + '/>' +
+    '<path d="M63 88 h5 M75 88 h5" stroke="' + K + '" stroke-width="2.4" stroke-linecap="round"/><path d="M71 96 L96 90" stroke="' + K + '" stroke-width="3.5" stroke-linecap="round"/><circle cx="97" cy="90" r="3" fill="' + RE + '"/>' +
+    '<path d="M84 96 C110 86 190 86 200 98 L200 108 H84 Z" fill="' + LB + '" ' + s + '/><path d="M100 98 h86" stroke="#fff" stroke-width="3"/>' +
+    '<rect x="176" y="30" width="54" height="30" fill="#fff" ' + s2 + '/>' + T(203, 52, '38°C', 16, RE) + '<path d="M104 64 q4 -6 0 -12" fill="none" stroke="' + BL + '" stroke-width="2.5"/>' + ground());
+  A.bike = sv('<circle cx="68" cy="108" r="30" fill="none" ' + s + '/><circle cx="68" cy="108" r="3.5" fill="' + K + '"/><circle cx="174" cy="108" r="30" fill="none" ' + s + '/><circle cx="174" cy="108" r="3.5" fill="' + K + '"/>' +
+    '<path d="M68 108 L114 108 L101 66 Z M114 108 L156 68 L101 66 M156 68 L174 108" fill="none" stroke="#FF6B57" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+    '<path d="M101 66 L98 56" stroke="' + K + '" stroke-width="3.5" stroke-linecap="round"/><path d="M86 54 H110" stroke="' + K + '" stroke-width="6" stroke-linecap="round"/>' +
+    '<path d="M156 68 L152 52 L164 48" fill="none" stroke="' + K + '" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="114" cy="108" r="7" fill="#fff" ' + s2 + '/><path d="M114 108 L122 118" stroke="' + K + '" stroke-width="3" stroke-linecap="round"/>' + ground(140));
+  A.beach = sv(sun(198, 30, 14) + '<path d="M8 100 q18 -12 36 0 t36 0 t36 0 t36 0 t36 0 t36 0 V120 H8Z" fill="' + BL + '" ' + s + '/><path d="M8 120 H232 V146 H8Z" fill="#F1D9A6" ' + s + '/>' +
+    '<path d="M58 126 C56 104 58 84 64 66" fill="none" stroke="' + BR + '" stroke-width="6" stroke-linecap="round"/><path d="M64 66 C46 58 34 64 28 74 M64 66 C82 56 96 62 100 72 M64 66 C56 50 44 46 34 50 M64 66 C72 50 86 46 94 52" fill="none" stroke="' + GR + '" stroke-width="5" stroke-linecap="round"/>' +
+    '<path d="M150 126 L190 126 L170 108 Z" fill="' + RE + '" ' + s2 + '/><path d="M170 108 V128" ' + s2 + '/>');
+  Object.assign(IL.art, A);
+})();
+
 /* ===== If Clauses Review: app ===== */
 (function () {
 'use strict';

@@ -82,6 +82,27 @@ input.name:focus{outline:3px solid var(--mus);outline-offset:1px}
 .fig svg{display:block;width:100%;height:auto}
 .fig .na{position:absolute;right:8px;bottom:5px;font-size:13px;color:var(--mute);font-style:italic}
 .fig.pboard{background:#f3f7fb;border-color:var(--pro)}
+.qgrid{display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "fig" "opts" "fb" "bar"}
+.qhead{grid-area:head}.qfig{grid-area:fig}.qopts{grid-area:opts}#fb{grid-area:fb}.qbar{grid-area:bar}
+.wrap.wideq{max-width:860px}
+@media (min-width:900px){
+ .wrap.wideq{max-width:1320px;padding-top:14px}
+ .wrap.wideq .sheet{padding:18px 22px 22px}
+ .qgrid.hasfig{grid-template-columns:minmax(300px,.8fr) minmax(0,1.2fr);grid-template-rows:auto auto auto 1fr;column-gap:24px;
+  grid-template-areas:"head fig" "opts fig" "bar fig" "fb fig"}
+ .qgrid.hasfig .qbar{margin-top:12px}
+ .qgrid.hasfig .qbar .btn{padding:9px 14px;font-size:15.5px}
+ .qgrid.hasfig .opt{padding:9px 12px;min-height:46px}
+ .qgrid.hasfig .fb{font-size:16px;margin-top:12px}
+ .qgrid.hasfig .qfig{align-self:start;position:sticky;top:8px}
+ .qgrid.hasfig .qfig .fig{margin:0}
+ .qgrid.hasfig .opts{grid-template-columns:1fr}
+ .qgrid.hasfig #fb{align-self:start}
+ .qgrid.hasfig .qt{font-size:19.5px}
+ .qgrid.hasfig .fig svg:not(.board-svg){max-height:calc(100vh - 40px)}
+ .qgrid.hasboard svg.board-svg{max-height:calc(100vh - 92px)}
+}
+.qgrid:not(.hasfig) .fig{display:none}
 .ptools{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px;border-top:2px solid var(--pro);background:#e8f0f9}
 .ptools button{border:2px solid var(--pro);background:#fff;color:var(--pro);font-family:Poppins;font-weight:600;font-size:14px;padding:5px 10px;min-height:38px}
 .ptools button:hover{background:#d7e6f7}
@@ -267,9 +288,12 @@ svg.board-svg{touch-action:none;user-select:none;-webkit-user-select:none}
     <div class="nav" id="nav"></div>
     <div class="key"><span><i class="nb"></i>not done</span><span><i class="nb skip"></i>skipped</span><span><i class="nb ok"></i>correct</span><span><i class="nb no"></i>wrong</span><button class="btn alt sm" id="finish" type="button">Finish test</button></div>
    </div>
-   <div id="qbox"></div>
+   <div class="qgrid" id="qgrid">
+   <div id="qbox" class="qhead"></div>
+   <div id="qfig" class="qfig"></div>
+   <div id="qopts" class="qopts"></div>
    <div id="fb"></div>
-   <div class="bar spread"><button class="btn alt" id="back" type="button">&larr; Back</button><span class="grow"></span><button class="btn alt" id="skip" type="button">Skip for now</button><button class="btn" id="check" disabled>Check answer</button><button class="btn mus hide" id="next">Next question &rarr;</button></div>
+   <div class="bar spread qbar"><button class="btn alt" id="back" type="button">&larr; Back</button><span class="grow"></span><button class="btn alt" id="skip" type="button">Skip for now</button><button class="btn" id="check" disabled>Check answer</button><button class="btn mus hide" id="next">Next question &rarr;</button></div>
   </section>
 
   <!-- END -->
@@ -569,7 +593,7 @@ function mountBoard(host,b){
  host.innerHTML=`<svg class="board-svg" viewBox="0 0 680 600" role="img" aria-label="Drawing board with a protractor"><g class="figg">${b.inner}</g><line x1="20" y1="424" x2="660" y2="424" stroke="#1f5fa8" stroke-width="1.5" stroke-dasharray="6 7" opacity=".35"/><g class="pro" tabindex="0" aria-label="Protractor. Arrow keys move it, Q and E turn it.">${PSVG}</g></svg>
  <div class="ptools"><button type="button" data-r="-10">&#8634; 10°</button><button type="button" data-r="-1">&#8634; 1°</button><button type="button" data-r="1">1° &#8635;</button><button type="button" data-r="10">10° &#8635;</button><button type="button" data-reset>Reset</button><span class="tip">Drag the protractor to move it. Drag the yellow knob to turn it. Put the centre mark on the corner of the angle.<span class="phone"> On a phone, turn it sideways for a bigger board.</span></span></div>`;
  const sv=host.querySelector("svg"),g=sv.querySelector(".pro"),fg=sv.querySelector(".figg");
- b.w=680;b.h=600;b.start=[340,588,0];
+ b.w=680;b.h=600;b.start=[340,578,0];
  {const bb=fg.getBBox();const k=Math.min(1,650/bb.width,400/bb.height);fg.setAttribute("transform",`translate(${f(340-(bb.x+bb.width/2)*k)} ${f(12+(400-bb.height*k)/2-bb.y*k)}) scale(${f(k*1000)/1000})`)}
  let st={x:b.start[0],y:b.start[1],r:b.start[2]},mode=null,off=[0,0],roff=0;
  const draw=()=>g.setAttribute("transform",`translate(${f(st.x)} ${f(st.y)}) rotate(${f(st.r)})`);draw();
@@ -594,7 +618,7 @@ let name="",cur=0,ans=[],seen=[],order=[],picked=null,t0=0,attemptNo=null,inTest
 const LET="ABCD";
 const score=()=>ans.filter(a=>a&&a.ok).length, done=()=>ans.filter(a=>a).length;
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-function show(id){["s-start","s-q","s-end"].forEach(s=>$(s).classList.toggle("hide",s!==id));window.scrollTo(0,0)}
+function show(id){["s-start","s-q","s-end"].forEach(s=>$(s).classList.toggle("hide",s!==id));document.querySelector(".wrap").classList.toggle("wideq",id==="s-q");window.scrollTo(0,0)}
 function attempts(){try{const k="be-u5-attempts-"+LV.name;const n=(+localStorage.getItem(k)||0)+1;localStorage.setItem(k,n);return n}catch(e){return null}}
 const esc=t=>t.replace(/[<>&"]/g,c=>({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c]));
 
@@ -620,25 +644,31 @@ function paintNav(){$("nav").querySelectorAll(".nb").forEach(b=>{const i=+b.data
   b.className="nb"+(a?(a.ok?" ok":" no"):(seen[i]&&i!==cur?" skip":""))+(i===cur?" cur":"")});
  $("qcount").textContent=`Question ${cur+1} of ${Q.length}`;$("qdone").textContent=`Answered: ${done()} of ${Q.length}`;$("qscore").textContent=`Score: ${score()}`;
  $("pbar").style.width=(done()/Q.length*100)+"%"}
-function go(i){cur=i;render();const t=$("s-q").getBoundingClientRect().top+window.scrollY;if(window.scrollY>t)window.scrollTo({top:t,behavior:"smooth"})}
+function go(i){cur=i;render();if($("qgrid").classList.contains("hasfig"))return;const t=$("s-q").getBoundingClientRect().top+window.scrollY;if(window.scrollY>t)window.scrollTo({top:t,behavior:"smooth"})}
 function nextOpen(from){for(let k=1;k<=Q.length;k++){const i=(from+k)%Q.length;if(!ans[i])return i}return -1}
 
 const tick='<svg viewBox="0 0 40 40"><path d="M8 21l8 8 16-17" stroke="#2c8a57"/></svg>',cross='<svg viewBox="0 0 40 40"><path d="M10 10l20 20M30 10L10 30" stroke="#cc3b2f"/></svg>';
 function render(){
  const q=Q[cur],a=ans[cur];picked=null;seen[cur]=true;
  let h=`<div class="lessonbar">${L[q.s]}</div><div class="qn">${cur+1}.</div><div class="qt">${q.q}</div>`;
- if(q.fig)h+=`<div class="fig">${typeof q.fig==="function"?q.fig():F[q.fig]()}${q.na?'<span class="na">Not drawn accurately</span>':""}</div>`;
- if(q.pb)h+=`<div class="fig pboard" id="pbhost"></div>`;
- h+=`<div class="opts${q.long?" long":""}" role="radiogroup">`+order[cur].map((oi,k)=>`<button class="opt" data-i="${oi}" role="radio" aria-checked="false"><span class="k">${LET[k]}</span><span class="t">${q.o[oi]}</span></button>`).join("")+`</div>`;
- $("qbox").innerHTML=h;$("fb").innerHTML="";
+ let fg="";
+ if(q.fig)fg+=`<div class="fig">${typeof q.fig==="function"?q.fig():F[q.fig]()}${q.na?'<span class="na">Not drawn accurately</span>':""}</div>`;
+ if(q.pb)fg+=`<div class="fig pboard" id="pbhost"></div>`;
+ const oh=`<div class="opts${q.long?" long":""}" role="radiogroup">`+order[cur].map((oi,k)=>`<button class="opt" data-i="${oi}" role="radio" aria-checked="false"><span class="k">${LET[k]}</span><span class="t">${q.o[oi]}</span></button>`).join("")+`</div>`;
+ $("qbox").innerHTML=h;$("fb").innerHTML="";$("qfig").innerHTML=fg;$("qopts").innerHTML=oh;
+ $("qgrid").classList.toggle("hasfig",!!fg);$("qgrid").classList.toggle("hasboard",!!q.pb);
  if(q.pb)mountBoard($("pbhost"),typeof q.pb==="function"?q.pb():PB[q.pb]());
- $("qbox").querySelectorAll(".opt").forEach(b=>b.onclick=()=>{if(ans[cur])return;picked=+b.dataset.i;
-  $("qbox").querySelectorAll(".opt").forEach(x=>{x.classList.toggle("sel",x===b);x.setAttribute("aria-checked",x===b)});$("check").disabled=false});
+ $("qopts").querySelectorAll(".opt").forEach(b=>b.onclick=()=>{if(ans[cur])return;picked=+b.dataset.i;
+  $("qopts").querySelectorAll(".opt").forEach(x=>{x.classList.toggle("sel",x===b);x.setAttribute("aria-checked",x===b)});$("check").disabled=false});
  if(a)showResult(false);else{$("check").classList.remove("hide");$("check").disabled=true;$("skip").classList.remove("hide");$("next").classList.add("hide")}
- $("back").disabled=cur===0;paintNav();
+ $("back").disabled=cur===0;paintNav();fitView();
 }
+const isWide=()=>window.matchMedia("(min-width:900px)").matches;
+function fitView(){if(!$("qgrid").classList.contains("hasfig"))return;
+ const g=$("qgrid").getBoundingClientRect(),f=$("qfig").getBoundingClientRect(),o=$("qopts").getBoundingClientRect();
+ if(g.top<0||Math.max(f.bottom,o.bottom)>window.innerHeight)window.scrollTo({top:window.scrollY+g.top-8,behavior:"smooth"})}
 function showResult(fresh){const q=Q[cur],a=ans[cur];
- $("qbox").querySelectorAll(".opt").forEach(b=>{b.disabled=true;const i=+b.dataset.i;b.classList.remove("sel");
+ $("qopts").querySelectorAll(".opt").forEach(b=>{b.disabled=true;const i=+b.dataset.i;b.classList.remove("sel");
   if(i===0){b.classList.add("right");b.insertAdjacentHTML("beforeend",'<span class="mark">Correct answer</span>')}
   else if(i===a.pick){b.classList.add("wrong");b.insertAdjacentHTML("beforeend",'<span class="mark">Your answer</span>')}});
  $("fb").innerHTML=`<div class="fb ${fresh?"anim":""} ${a.ok?"":"no"}">${a.ok?tick:cross}<b>${a.ok?"Correct!":"Not quite."}</b> ${q.w}</div>`;
@@ -656,7 +686,7 @@ function askFinish(){const left=Q.map((_,i)=>i).filter(i=>!ans[i]);
  dialog("Finish the test now?",`You still have <b>${left.length}</b> question${left.length>1?"s":""} to answer: Q${left.map(i=>i+1).join(", Q")}.<br>Questions with no answer count as wrong.`,
   [["Keep going","alt",null],[`Go to Q${left[0]+1}`,"alt",()=>go(left[0])],["Finish now","",finish]])}
 document.addEventListener("keydown",e=>{if($("s-q").classList.contains("hide")||!$("dlg").classList.contains("hide"))return;if(e.target.closest&&(e.target.closest(".pro")||e.target.tagName==="INPUT"))return;
- if(!ans[cur]&&["1","2","3","4","a","b","c","d","A","B","C","D"].includes(e.key)){const k="1234".includes(e.key)?+e.key-1:"abcd".indexOf(e.key.toLowerCase());const b=$("qbox").querySelectorAll(".opt")[k];if(b)b.click()}
+ if(!ans[cur]&&["1","2","3","4","a","b","c","d","A","B","C","D"].includes(e.key)){const k="1234".includes(e.key)?+e.key-1:"abcd".indexOf(e.key.toLowerCase());const b=$("qopts").querySelectorAll(".opt")[k];if(b)b.click()}
  else if(e.key==="Enter"&&e.target.tagName!=="BUTTON"){if(!ans[cur])$("check").click();else $("next").click()}});
 
 function finish(){

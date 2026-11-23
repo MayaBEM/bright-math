@@ -26,7 +26,7 @@ img{display:block;max-width:100%}
 h1,h2,h3,.disp{font-family:Poppins,'Hanken Grotesk',sans-serif;font-weight:700;line-height:1.05;letter-spacing:-.01em}
 .awn{height:22px;background:repeating-linear-gradient(90deg,var(--acc) 0 40px,var(--white) 40px 80px);position:relative;border-bottom:2px solid var(--ink)}
 .awn:after{content:'';position:absolute;left:0;right:0;top:100%;height:12px;background:radial-gradient(circle at 20px -6px,var(--acc) 0 19px,transparent 20px) 0 0/80px 12px repeat-x,radial-gradient(circle at 20px -6px,var(--white) 0 19px,transparent 20px) 40px 0/80px 12px repeat-x;pointer-events:none}
-.wrap{max-width:1080px;margin:0 auto;padding:34px 20px 70px}
+.wrap{max-width:1200px;margin:0 auto;padding:34px 20px 70px}
 .bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:22px}
 .brand{font-family:Poppins;font-weight:700;font-size:20px;color:var(--deep);display:flex;align-items:baseline;gap:10px}
 .brand small{font-family:'Hanken Grotesk';font-weight:600;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft)}
@@ -69,7 +69,10 @@ h1,h2,h3,.disp{font-family:Poppins,'Hanken Grotesk',sans-serif;font-weight:700;l
 /* shared panels */
 .panel{background:var(--white);border:2.5px solid var(--ink);border-radius:0;padding:26px}
 .ticket{background:var(--white);border:2.5px solid var(--ink);border-radius:0;overflow:hidden;position:relative}
-.ticket .ph{width:100%;aspect-ratio:2.6/1;object-fit:cover;border-bottom:2.5px solid var(--ink)}
+.ticket{display:grid;grid-template-columns:minmax(0,40%) minmax(0,1fr);align-items:stretch}
+.ticket .ph{width:100%;height:100%;align-self:stretch;aspect-ratio:auto;object-fit:contain;object-position:center center;padding:16px;border-right:2.5px solid var(--ink);background:var(--cream);min-height:260px}
+.ticket .tb:before{display:none!important}
+.ticket .tb{min-width:0}
 .ticket .tb{padding:20px 24px 24px}
 .ticket .tb:before{content:'';display:block;height:0;border-top:2px dashed var(--line);margin:-6px 0 14px}
 .place{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
@@ -125,8 +128,8 @@ h1,h2,h3,.disp{font-family:Poppins,'Hanken Grotesk',sans-serif;font-weight:700;l
 .wrapup{margin-top:16px;font-size:19px;padding:14px 18px;border-radius:0;background:var(--okT);border:2px solid var(--ok);display:none}
 .wrapup.show{display:block}
 .tape{margin-top:14px}
-.ltop{display:grid;grid-template-columns:200px 1fr;gap:20px;align-items:center}
-.ltop img{width:200px;aspect-ratio:1.4;object-fit:cover;border-radius:0;border:2.5px solid var(--ink)}
+.ltop{display:grid;grid-template-columns:230px 1fr;gap:22px;align-items:start}
+.ltop img{width:230px;height:auto;aspect-ratio:auto;object-fit:contain;border-radius:0;border:2.5px solid var(--ink)}
 
 /* quiz */
 .mc{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
@@ -157,14 +160,16 @@ h1,h2,h3,.disp{font-family:Poppins,'Hanken Grotesk',sans-serif;font-weight:700;l
 .fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;line-height:1.05;font-size:.8em;margin:0 .1em;font-variant-numeric:lining-nums}.fr .fn{border-bottom:2px solid currentColor;padding:0 .18em .1em}.fr .fd{padding:.1em .18em 0}.mx{margin-right:.08em}
 .pv{font-size:17px;color:var(--soft);min-height:1.6em;margin-top:8px}.pv b{color:var(--ink);font-size:24px}
 @keyframes pop{0%{transform:scale(.96)}60%{transform:scale(1.02)}100%{transform:scale(1)}}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
 @media (max-width:860px){
   .hero{grid-template-columns:1fr}.stage{max-width:360px}
   .menu3{grid-template-columns:1fr}
   .shift{grid-template-columns:1fr}.side{position:static}
   .glassbox{display:flex;align-items:center;gap:14px;text-align:left;padding:10px 14px}.glassbox svg{width:58px;height:auto}
   .r4{grid-template-columns:1fr 1fr}
-  .ltop{grid-template-columns:1fr}.ltop img{width:100%;aspect-ratio:2.2}
+  .ltop{grid-template-columns:1fr}.ltop img{width:100%;max-width:360px;aspect-ratio:auto}
+  .ticket{grid-template-columns:1fr}
+  .ticket .ph{border-right:none;border-bottom:2.5px solid var(--ink);height:auto;min-height:0;padding:0}
 }
 @media (max-width:560px){
   html,body{font-size:17px}.wrap{padding:26px 14px 60px}.brand small{display:none}
@@ -173,6 +178,138 @@ h1,h2,h3,.disp{font-family:Poppins,'Hanken Grotesk',sans-serif;font-weight:700;l
   .r4{grid-template-columns:1fr}.cert{padding:30px 18px}
 }
 @media print{.awn,.bar,.acts,.foot{display:none!important}body{background:#fff}.cert{border-width:2px}}
+/* ===== upgrade: full-screen layout ===== */
+html{--z:1}
+.wrap{max-width:1180px;padding:14px 22px 18px;zoom:var(--z);min-height:calc((100dvh - 34px) / var(--z));display:flex;flex-direction:column}
+.bar{margin-bottom:14px}
+.barbtns{display:flex;gap:10px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:8px;font-size:16px;padding:8px 16px;font-family:Poppins;font-weight:600}
+.pill svg{width:20px;height:20px;flex:none}
+.pill.home{background:var(--acc);color:#fff}
+.pill.home:hover{background:var(--deep)}
+.wrap>.hero{flex:1}
+.wrap>.shift{flex:1;align-items:stretch}
+.wrap>.ticket{flex:1}
+.wrap>.panel:not(.gate){flex:1;display:flex;flex-direction:column}
+.wrap>.gate{margin:auto}
+.wrap>.cert{margin-top:auto}
+.wrap>.cert+.acts{margin-bottom:auto}
+.ticket .tb{display:flex;flex-direction:column;justify-content:center}
+.side{position:static;justify-content:space-between}
+.side .glassbox{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.lbody{flex:1;display:flex;flex-direction:column;margin-top:16px}
+.lbody .r4{flex:1}
+.lbody .r4 div{display:flex;flex-direction:column;justify-content:center;padding:20px}
+.lbody .r4 i{font-size:46px}.lbody .r4 b{font-size:25px}.lbody .r4 p{font-size:18px}
+.lbody .sortq{flex:1;align-content:center}
+.lgrid{flex:1;display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:22px}
+.lmain{min-width:0;display:flex;flex-direction:column;justify-content:center}
+.board{background:var(--cream);border:2.5px solid var(--ink);padding:16px 18px;display:flex;flex-direction:column;min-height:240px}
+.board .kick{color:var(--deep)}
+.board ol{list-style:none;display:grid;gap:10px;margin-top:10px}
+.board ol:empty:before{content:'Your steps show up here as you solve them.';color:var(--soft);font-size:16px}
+.board li{background:var(--white);border:2px solid var(--ink);border-left:6px solid var(--ok);padding:8px 12px;font-size:18px;animation:rise .4s ease both}
+.board li.help{border-left-color:var(--butter)}
+.board li .bl{display:block;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--soft)}
+.board .wrapup{margin-top:auto}
+.wrapup.show{animation:rise .45s ease both}
+.reveal{flex-basis:100%;color:var(--no);font-weight:600;font-size:17px;padding-left:46px}
+.field.shown{border-color:var(--butter);background:#FFF6DC}
+.big-ans{display:inline-block;font-family:Poppins;font-weight:700;font-size:1.25em;color:var(--ink);background:#fff;border:2px solid var(--no);padding:0 10px;margin-left:6px}
+.done-grid{flex:1;display:grid;grid-template-columns:auto 1fr;gap:34px;align-items:center}
+.done-grid ol{margin:14px 0 0 0;list-style:none;display:grid;gap:12px}
+.done-grid li{display:flex;gap:14px;align-items:center;background:var(--cream);border:2px solid var(--ink);padding:12px 16px;font-size:19px}
+.done-grid li b.k{font-family:Poppins;font-size:26px;color:#fff;background:var(--acc);width:44px;height:44px;display:flex;align-items:center;justify-content:center;flex:none}
+@media (max-width:860px){
+  .ticket .ph{max-height:42vh;padding:12px;background:var(--cream)}
+  .lgrid{grid-template-columns:1fr}.board{min-height:0}
+  .done-grid{grid-template-columns:1fr;justify-items:center}
+}
+@media (max-width:560px){.pill span.t{display:none}.barbtns{gap:6px}}
+
+/* ===== upgrade: animations ===== */
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-8px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(3px)}}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-12px) rotate(-1.5deg)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes wiggle{0%,100%{transform:rotate(6deg)}50%{transform:rotate(-3deg) scale(1.06)}}
+@keyframes fillup{from{transform:translateY(var(--d,0px))}to{transform:none}}
+@keyframes tapein{from{opacity:0;transform:scaleY(.2)}to{opacity:1;transform:none}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 var(--butter)}100%{box-shadow:0 0 0 9px rgba(243,201,105,0)}}
+@keyframes stamp{0%{opacity:0;transform:scale(1.6) rotate(-8deg)}60%{opacity:1;transform:scale(.95) rotate(-8deg)}100%{transform:scale(1) rotate(-8deg)}}
+.pop{animation:rise .45s ease both}
+.tb>*,.lbody>*,.menu3>*,.r4>div,.sortq>*,.gsteps>*,.mc>button,.hero>div:first-child>*{animation:rise .5s ease both}
+.tb>*:nth-child(2),.menu3>*:nth-child(2),.r4>div:nth-child(2),.sortq>*:nth-child(2),.gsteps>*:nth-child(2),.mc>button:nth-child(2),.hero>div:first-child>*:nth-child(2){animation-delay:.07s}
+.tb>*:nth-child(3),.menu3>*:nth-child(3),.r4>div:nth-child(3),.sortq>*:nth-child(3),.gsteps>*:nth-child(3),.mc>button:nth-child(3),.hero>div:first-child>*:nth-child(3){animation-delay:.14s}
+.tb>*:nth-child(4),.r4>div:nth-child(4),.sortq>*:nth-child(4),.gsteps>*:nth-child(4),.mc>button:nth-child(4),.hero>div:first-child>*:nth-child(4){animation-delay:.21s}
+.tb>*:nth-child(5),.tb>*:nth-child(6),.tb>*:nth-child(7){animation-delay:.28s}
+.ticket .ph{animation:rise .55s ease both}
+.shake{animation:shake .45s ease}
+.stage img{filter:none}
+.stage .a{animation:bob 4.5s ease-in-out infinite}
+.stage .b{animation:bob 4.5s ease-in-out -2.2s infinite}
+.stage .disc:after{animation:spin 40s linear infinite}
+.tag{animation:wiggle 3.2s ease-in-out infinite}
+.liq.anim{animation:fillup 1.2s cubic-bezier(.3,.7,.3,1) both}
+.tape rect{transform-box:fill-box;transform-origin:bottom;animation:tapein .45s ease both}
+.tape rect:nth-of-type(1){animation-delay:0.08s}.tape rect:nth-of-type(2){animation-delay:0.16s}.tape rect:nth-of-type(3){animation-delay:0.24s}.tape rect:nth-of-type(4){animation-delay:0.32s}.tape rect:nth-of-type(5){animation-delay:0.40s}.tape rect:nth-of-type(6){animation-delay:0.48s}.tape rect:nth-of-type(7){animation-delay:0.56s}.tape rect:nth-of-type(8){animation-delay:0.64s}.tape rect:nth-of-type(9){animation-delay:0.72s}.tape rect:nth-of-type(10){animation-delay:0.80s}.tape rect:nth-of-type(11){animation-delay:0.88s}.tape rect:nth-of-type(12){animation-delay:0.96s}
+.rail button.cur{animation:pulse 1.6s ease-out infinite}
+.mc button.ok{animation:rise .3s ease both}
+.stampx{display:inline-block;animation:stamp .5s ease both}
+.bit{position:fixed;width:11px;height:11px;margin:-5px 0 0 -5px;z-index:60;pointer-events:none}
+
+/* ===== upgrade: calculator ===== */
+.calc{position:fixed;right:22px;bottom:22px;width:340px;background:var(--white);border:3px solid var(--ink);z-index:40;display:none;font-family:Poppins;box-shadow:8px 8px 0 var(--acc)}
+.calc.on{display:block;animation:rise .25s ease both}
+.calc .ch{display:flex;justify-content:space-between;align-items:center;background:var(--acc);color:#fff;padding:8px 12px;cursor:move;touch-action:none;user-select:none}
+.calc .ch button{color:#fff;font-size:20px;font-weight:700;width:34px;height:34px}
+.calc .cs{padding:10px 14px;background:var(--cream);border-bottom:3px solid var(--ink);text-align:right;min-height:132px}
+.calc .chist{font-size:14px;color:var(--soft);min-height:42px;font-family:'Hanken Grotesk'}
+.calc .ce{font-size:28px;font-weight:600;word-break:break-all;line-height:1.2}
+.calc .cr{font-size:38px;font-weight:700;color:var(--deep);min-height:46px;line-height:1.2}
+.calc .ck{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:10px}
+.calc .ck button{height:56px;border:2px solid var(--ink);background:var(--white);font-size:24px;font-weight:600}
+.calc .ck button:active{transform:translateY(2px)}
+.calc .ck button.op{background:var(--tint);color:var(--deep)}
+.calc .ck button.eq{background:var(--acc);color:#fff}
+.calc .ck button.cl{background:var(--noT);color:var(--no)}
+@media print{.calc,.bit{display:none!important}}
+
+.ticket .phw{position:relative;overflow:hidden;border-right:2.5px solid var(--ink);background:var(--cream);min-height:260px;animation:rise .55s ease both}
+.ticket .phw i{position:absolute;inset:-50px;background-position:center;background-size:cover;filter:blur(28px) saturate(1.15);opacity:.55;transform:scale(1.15)}
+.ticket .phw .ph{position:relative;border:0;background:none;padding:22px;width:100%;height:100%;min-height:0;object-fit:contain;animation:none}
+.hero h1{font-size:76px;margin:8px 0 10px}
+.stage{max-width:420px}
+.menu3{margin-top:24px}
+.topics{margin-top:18px}
+.foot{margin-top:18px}
+.brand{min-width:0}
+.brand small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar{flex-wrap:nowrap}
+.barbtns{flex:none}
+@media (max-width:860px){
+  .ticket .phw{border-right:none;border-bottom:2.5px solid var(--ink);min-height:0;height:32vh}
+  .ticket .phw .ph{padding:12px}
+  .wrap>.shift{grid-template-rows:auto auto}
+  .side{flex-direction:row;align-items:stretch;gap:14px}
+  .side .glassbox{flex:0 0 38%}
+  .side .rail{flex:1;align-content:center}
+  .side>p{display:none}
+  .side .rail button{aspect-ratio:auto;height:54px}
+  .hero h1{font-size:64px}
+}
+@media (min-width:680px) and (max-width:860px){
+  .hero{grid-template-columns:1.1fr .9fr;gap:20px}.stage{max-width:330px}
+  .menu3{grid-template-columns:repeat(3,1fr);gap:12px}.choice{padding:16px 14px}.choice h3{font-size:23px}
+  .r4{grid-template-columns:repeat(4,1fr)}
+}
+@media (max-width:560px){
+  .side{flex-direction:column}.side .glassbox{flex:none}.side>p{display:block}
+  .ticket .phw{height:auto}.ticket .phw .ph{max-height:36vh}
+  .hero h1{font-size:52px}
+}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
@@ -191,7 +328,7 @@ function save(){ try { localStorage.setItem(KEY, JSON.stringify(P)); } catch(e){
 function fx(s){ return esc(s).replace(/(^|[^\d.\/])(\d+ )?(\d+)\/(\d+)(?![\d\/])/g, (m, pre, w, n, d) => `${pre}${w ? `<span class="mx">${w.trim()}</span>` : ''}<span class="fr"><span class="fn">${n}</span><span class="fd">${d}</span></span>`); }
 function esc(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 function toast(t){ const el = $('#toast'); el.textContent = t; el.classList.add('on'); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('on'), 1800); }
-function topBar(sub){ return `<div class="bar"><div class="brand">The Shake Bar <small>${D.glabel}: ${fx(D.title)}${sub ? ', ' + sub : ''}</small></div><button class="pill" onclick="home()">Home</button></div>`; }
+function topBar(sub){ return `<div class="bar"><div class="brand">The Shake Bar <small>${D.glabel}: ${fx(D.title)}${sub ? ', ' + sub : ''}</small></div><div class="barbtns"><button class="pill" onclick="calcToggle()">${ICON.calc}<span class="t">Calculator</span></button><button class="pill home" onclick="go(home)">${ICON.home}<span class="t">Home</span></button></div></div>`; }
 function menuCard(){ return `<div class="menu"><div class="mh">MENU</div>${D.menu.map(([a,b]) => `<div><span>${fx(a)}</span><b>${fx(b)}</b></div>`).join('')}</div>`; }
 function go(fn){ fn(); window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'}); }
 
@@ -207,15 +344,15 @@ function num(s){
 const same = (a, b) => a !== null && Math.abs(a - b) < 1e-6;
 
 /* ---------- milkshake glass ---------- */
-function glass(frac, w=150){
+function glass(frac, w=150, from){
   const h = Math.round(w * 1.55), f = Math.max(0, Math.min(1, frac));
   const top = 40, bot = 200, lvl = bot - (bot - top) * f;
   const full = f >= 1;
   return `<svg viewBox="0 0 150 232" width="${w}" height="${h}" aria-hidden="true">
   <defs><clipPath id="cup${w}"><path d="M28 40 L122 40 L108 200 Q75 210 42 200 Z"/></clipPath></defs>
   <rect x="96" y="${full ? 0 : 6}" width="9" height="${full ? 70 : 64}" rx="4" transform="rotate(14 100 40)" fill="var(--acc)" stroke="var(--ink)" stroke-width="2.5"/>
-  <g clip-path="url(#cup${w})"><rect x="0" y="${lvl}" width="150" height="220" fill="var(--glass)" style="transition:y .6s"/>
-  <path d="M0 ${lvl} q18 -7 37 0 t37 0 t37 0 t39 0 V${lvl + 8} H0Z" fill="var(--acc)" opacity=".35"/></g>
+  <g clip-path="url(#cup${w})"><g class="liq${from != null && !RM ? ' anim' : ''}" style="--d:${from != null ? Math.round((bot - (bot - top) * Math.max(0, Math.min(1, from))) - lvl) : 0}px"><rect x="0" y="${lvl}" width="150" height="220" fill="var(--glass)"/>
+  <path d="M0 ${lvl} q18 -7 37 0 t37 0 t37 0 t39 0 V${lvl + 8} H0Z" fill="var(--acc)" opacity=".35"/></g></g>
   ${full ? `<path d="M30 44 q-6 -22 18 -24 q4 -18 27 -14 q22 -6 28 14 q22 2 17 24 Z" fill="#FFFDF9" stroke="var(--ink)" stroke-width="2.5"/><circle cx="80" cy="6" r="9" fill="#C8322B" stroke="var(--ink)" stroke-width="2.5"/><path d="M80 -3 q6 -10 14 -10" stroke="var(--ink)" stroke-width="2.5" fill="none"/>` : ''}
   <path d="M28 40 L122 40 L108 200 Q75 210 42 200 Z" fill="none" stroke="var(--ink)" stroke-width="3"/>
   <path d="M40 210 h70 l-8 16 h-54z" fill="var(--white)" stroke="var(--ink)" stroke-width="2.5"/>
@@ -242,7 +379,7 @@ function home(){
     <button class="choice" onclick="go(()=>quizStart())"><span class="n">Step 3: Quiz</span><h3>Taste test</h3><p>10 questions to show what you know, then a certificate.</p><span class="st">${q && q.done ? 'Best score ' + q.best + ' / 10' : 'Not taken yet'}</span></button>
   </div>
   <div class="topics"><b>In this shop:</b>${D.topics.map(t => `<span>${fx(t)}</span>`).join('')}</div>
-  <div class="foot"><span>© Bright EngMath | The Shake Bar Math, ${D.glabel}: ${fx(D.title)}</span><button onclick="go(gate)">Teacher corner</button></div>`;
+  <div class="foot"><span>© Bright EngMath | The Shake Bar Math, ${D.glabel}: ${fx(D.title)}</span><span style="display:flex;gap:18px"><button onclick="calcToggle()">Calculator</button><button onclick="go(gate)">Teacher corner</button></span></div>`;
 }
 function firstOpen(){ for (let i = 0; i < D.prac.length; i++) if (!(P.prac[i] && P.prac[i].done)) return i; return 0; }
 
@@ -259,30 +396,33 @@ function learn(i){
     <div><i>3</i><b>Plan</b><p>Which operation for each step? How many steps?</p></div>
     <div><i>4</i><b>Solve and check</b><p>Work one step at a time. Does the answer make sense in the shop?</p></div></div>`;
   if (S.kind === 'sort') body = `<div class="kick">Quick check</div><h2 style="font-size:36px;margin-top:6px">${fx(S.title)}</h2><p style="margin-top:6px">${fx(S.intro)}</p>
-    <div class="sortq">${S.items.map(([t], k) => `<div class="sitem"><p>${fx(t)}</p><div class="opts" id="so${k}">${S.opts.map(o => `<button onclick="sortPick(${k},this,'${o}')">${fx(o)}</button>`).join('')}</div></div>`).join('')}</div>
+    <div class="sortq">${S.items.map(([t], k) => `<div class="sitem"><p>${fx(t)}</p><div class="opts" id="so${k}">${S.opts.map(o => `<button data-o="${o}" onclick="sortPick(${k},this,'${o}')">${fx(o)}</button>`).join('')}</div></div>`).join('')}</div>
     <div class="wrapup" id="wu">All sorted. Nice thinking.</div>`;
-  if (S.kind === 'guided') body = `<div class="ltop"><img src="${IMG[S.photo]}" alt=""><div><div class="kick">${fx(S.title)}</div><p class="qtext">${fx(S.text)}</p></div></div>
+  if (S.kind === 'guided') body = `<div class="lgrid"><div class="lmain"><div class="ltop"><img src="${IMG[S.photo]}" alt=""><div><div class="kick">${fx(S.title)}</div><p class="qtext">${fx(S.text)}</p></div></div>
     ${S.model ? tape(S.model) : ''}
     <div class="gsteps">${S.steps.map(([t, a, u], k) => `<div class="gstep ${k ? 'lock' : ''}" id="gs${k}"><span class="k">${k + 1}</span><span>${fx(t)}</span>
       <span class="field" id="gf${k}">${u === '$' ? '<span class="pre">$</span>' : ''}<input id="gi${k}" ${k ? 'disabled' : ''} inputmode="${/\//.test(a) ? 'text' : 'decimal'}" autocomplete="off" aria-label="Step ${k + 1} answer" onkeydown="if(event.key==='Enter')gCheck(${k})">${u !== '$' ? `<span class="suf">${fx(u)}</span>` : ''}</span>
       <button class="chk" id="gb${k}" ${k ? 'disabled' : ''} onclick="gCheck(${k})">Check</button></div>`).join('')}</div>
-    ${S.steps.some(x => /\//.test(x[1])) ? '<p class="muted" style="font-size:15px;margin-top:10px">Type fractions with a slash, like 3/4.</p>' : ''}<div class="wrapup" id="wu">${fx(S.wrap)}</div>`;
+    ${S.steps.some(x => /\//.test(x[1])) ? '<p class="muted" style="font-size:15px;margin-top:10px">Type fractions with a slash, like 3/4.</p>' : ''}</div>
+    <aside class="board"><div class="kick">Your work</div><ol id="wb"></ol><div class="wrapup" id="wu">${fx(S.wrap)}</div></aside></div>`;
   const last = i === D.learn.length - 1;
-  app.innerHTML = topBar('Learn') + `<div class="panel pop">${dots}<div style="margin-top:18px">${body}</div>
+  app.innerHTML = topBar('Learn') + `<div class="panel pop">${dots}<div class="lbody">${body}</div>
     <div class="acts">${i ? `<button class="btn alt" onclick="go(()=>learn(${i - 1}))">Back</button>` : ''}
-    <button class="btn" id="lnext" ${S.kind === 'routine' ? '' : 'disabled'} onclick="lNext()">${last ? 'Finish' : 'Next'}</button></div></div>`;
+    <button class="btn" id="lnext" ${S.kind === 'routine' ? '' : 'disabled'} onclick="lNext()">${last ? 'Finish' : 'Next'}</button><button class="btn alt" onclick="go(home)">Home</button></div></div>`;
 }
 function tape(m){
   const W = 640, n = m.parts, w = W / n, fill = m.fill ?? n;
   let r = '';
   for (let k = 0; k < n; k++) r += `<rect x="${k * w}" y="22" width="${w}" height="40" fill="${k < fill ? 'var(--tint)' : '#fff'}" stroke="var(--ink)" stroke-width="2"/><text x="${k * w + w / 2}" y="48" text-anchor="middle" font-size="16" font-family="Hanken Grotesk" font-weight="600">${/^\d+\/\d+$/.test(m.label) ? `<tspan x="${k * w + w / 2}" y="39" font-size="14">${m.label.split('/')[0]}</tspan><tspan x="${k * w + w / 2}" y="57" font-size="14">${m.label.split('/')[1]}</tspan>` : esc(m.label)}</text>${/^\d+\/\d+$/.test(m.label) ? `<line x1="${k * w + w / 2 - 9}" x2="${k * w + w / 2 + 9}" y1="43" y2="43" stroke="var(--ink)" stroke-width="1.6"/>` : ''}`;
-  return `<svg class="tape" viewBox="-4 -4 ${W + 8} 72" width="100%" style="max-width:640px"><path d="M0 16 V8 H${W} V16" fill="none" stroke="var(--ink)" stroke-width="2"/><text x="${W / 2}" y="4" text-anchor="middle" font-size="15" fill="var(--soft)" font-family="Hanken Grotesk">${esc(m.total)}</text>${r}</svg>`;
+  return `<svg class="tape" viewBox="-4 -16 ${W + 8} 84" width="100%" style="max-width:640px"><path d="M0 16 V8 H${W} V16" fill="none" stroke="var(--ink)" stroke-width="2"/><text x="${W / 2}" y="4" text-anchor="middle" font-size="15" fill="var(--soft)" font-family="Hanken Grotesk">${esc(m.total)}</text>${r}</svg>`;
 }
 function sortPick(k, b, o){
   const S = L.s, right = S.items[k][1];
   if (L.got[k]) return;
-  if (o === right){ b.classList.add('ok'); L.got[k] = 1; b.parentNode.querySelectorAll('button').forEach(x => x.disabled = true); }
-  else { b.classList.add('no'); b.disabled = true; toast('Not that one. Picture the order.'); }
+  L.got[k] = 1;
+  b.parentNode.querySelectorAll('button').forEach(x => { x.disabled = true; if (x.dataset.o === right) x.classList.add('ok'); });
+  if (o === right) burst(b, 18);
+  else { b.classList.add('no', 'shake'); toast('The answer is ' + right + '.'); }
   if (Object.keys(L.got).length === S.items.length){ $('#wu').classList.add('show'); $('#lnext').disabled = false; }
 }
 function gCheck(k){
@@ -290,14 +430,40 @@ function gCheck(k){
   if (k !== L.step) return;
   const v = num(el.value);
   if (v === null){ toast('Type a number first.'); return; }
-  if (same(v, num(a))){
-    f.className = 'field ok'; el.disabled = true; $('#gb' + k).disabled = true; L.step++;
-    if (L.step < S.steps.length){ const n = $('#gs' + L.step); n.classList.remove('lock'); $('#gi' + L.step).disabled = false; $('#gb' + L.step).disabled = false; $('#gi' + L.step).focus(); }
-    else { $('#wu').classList.add('show'); $('#lnext').disabled = false; }
-  } else { f.className = 'field no'; toast('Not yet. Check that step again.'); }
+  const ok = same(v, num(a));
+  el.value = a; el.disabled = true; $('#gb' + k).disabled = true;
+  if (ok){ f.className = 'field ok'; burst(f, 16); }
+  else {
+    f.className = 'field shown shake';
+    const n = document.createElement('span'); n.className = 'reveal';
+    n.innerHTML = 'Not quite. The answer is ' + fmtU(a, u) + '.';
+    $('#gs' + k).appendChild(n);
+  }
+  board(t, a, u, ok);
+  L.step++;
+  if (L.step < S.steps.length){
+    const n = $('#gs' + L.step); n.classList.remove('lock');
+    $('#gi' + L.step).disabled = false; $('#gb' + L.step).disabled = false; $('#gi' + L.step).focus({preventScroll:true});
+  } else { $('#wu').classList.add('show'); $('#lnext').disabled = false; }
 }
-function lNext(){ P.learn = Math.max(P.learn, L.i + 1); save(); if (L.i === D.learn.length - 1){ toast('Lesson done. Time for a shift.'); go(home); } else go(() => learn(L.i + 1)); }
-
+function board(t, a, u, ok){
+  const li = document.createElement('li'); li.className = ok ? '' : 'help';
+  let txt = t.includes('___') ? fx(t).replace('___', '<b>' + fx(a) + '</b>') + (u && u !== '$' ? ' ' + fx(u) : '') : fx(t.replace(/\s*=\s*$/, '')) + ' = <b>' + fmtU(a, u) + '</b>';
+  const m = txt.match(/^([^:<]{2,40}):\s*/);
+  if (m) txt = `<span class="bl">${m[1]}</span>` + txt.slice(m[0].length);
+  li.innerHTML = txt; $('#wb').appendChild(li);
+}
+function lNext(){ P.learn = Math.max(P.learn, L.i + 1); save(); if (L.i === D.learn.length - 1) go(lessonDone); else go(() => learn(L.i + 1)); }
+function lessonDone(){
+  app.innerHTML = topBar('Learn') + `<div class="panel pop"><div class="done-grid"><div>${glass(1, 170)}</div><div>
+    <div class="kick">Lesson complete</div><h2 style="font-size:44px;color:var(--deep);margin:6px 0 4px">You know the four steps</h2>
+    <p class="lead">Read, find the facts, plan, then solve and check. Here is what to do next:</p>
+    <ol><li><b class="k">1</b><span><b>Try it on paper.</b> Do the printable worksheet <i>Try It on Paper</i> (2 pages, in your download).</span></li>
+    <li><b class="k">2</b><span><b>Work a shift.</b> Solve 24 orders and fill your milkshake glass.</span></li>
+    <li><b class="k">3</b><span><b>Taste test.</b> 10 questions, then your certificate.</span></li></ol>
+    <div class="acts"><button class="btn" onclick="go(()=>shift(firstOpen()))">Start the shift</button><button class="btn alt" onclick="go(home)">Home</button></div></div></div></div>`;
+  setTimeout(() => rain(70), 150);
+}
 /* ---------- practice shift ---------- */
 let C = {};
 function shift(i){
@@ -307,14 +473,14 @@ function shift(i){
   const suf = p.unit !== '$' ? `<span class="suf">${fx(p.unit)}</span>` : '';
   const frac = /\//.test(p.ans) || /\//.test(p.steps.join(''));
   app.innerHTML = topBar('Practice') + `<div class="shift">
-  <div class="ticket pop"><img class="ph" src="${IMG[p.photo]}" alt="">
+  <div class="ticket pop"><div class="phw"><i style="background-image:url(${IMG[p.photo]})"></i><img class="ph" src="${IMG[p.photo]}" alt=""></div>
     <div class="tb"><div class="place">Order ${i + 1} of 24: ${fx(p.place)}</div>
     <p class="qtext">${fx(p.text)}</p>${p.menu ? menuCard() : ''}
     <div class="ans"><span class="field" id="pf">${pre}<input id="pi" inputmode="decimal" autocomplete="off" aria-label="Your answer" onkeydown="if(event.key==='Enter')pCheck()" oninput="pvw(this.value)">${suf}</span>
       ${frac ? `<span class="helpk"><button onclick="ins('/')" aria-label="Type a fraction bar">/</button><button onclick="ins(' ')" aria-label="Type a space for a mixed number">space</button></span>` : ''}</div>
     ${frac ? '<div class="pv" id="pv"></div><p class="muted" style="font-size:14px;margin-top:2px">Fractions: type 3/4. Mixed numbers: type 1 1/8 with a space.</p>' : ''}
     <div class="fb" id="fb"></div>
-    <div class="acts" id="pa"><button class="btn" onclick="pCheck()">Check answer</button><button class="btn alt" onclick="pHint()">Hint</button></div></div></div>
+    <div class="acts" id="pa"><button class="btn" onclick="pCheck()">Check answer</button><button class="btn alt" onclick="pHint()">Hint</button><button class="btn alt" onclick="go(home)">Home</button></div></div></div>
   <aside class="side"><div class="glassbox">${glass(served() / 24)}<div><div class="big">${served()} / 24</div><div class="muted" style="font-size:14px;font-weight:600">orders served</div></div></div>
     <div class="rail" aria-label="Orders">${D.prac.map((_, k) => { const v = P.prac[k]; return `<button class="${k === i ? 'cur' : v && v.done ? (v.first ? 'done' : 'help') : ''}" onclick="go(()=>shift(${k}))" aria-label="Order ${k + 1}">${k + 1}</button>`; }).join('')}</div>
     <p class="muted" style="font-size:13px;text-align:center">Dark = solved on the first try. Light = solved with help.</p></aside></div>`;
@@ -326,33 +492,38 @@ function ins(c){ const el = $('#pi'); el.value += c; pvw(el.value); el.focus(); 
 function steps(p){ return `<ol>${p.steps.map(s => `<li>${fx(s)}</li>`).join('')}</ol>`; }
 function pHint(){ const p = D.prac[C.i], fb = $('#fb'); fb.className = 'fb hint show'; fb.innerHTML = `<b class="h">Hint</b>${fx(p.hint)}`; }
 function pCheck(){
-  const p = D.prac[C.i], el = $('#pi'), f = $('#pf'), fb = $('#fb');
+  const p = D.prac[C.i], el = $('#pi'), fb = $('#fb');
   const v = num(el.value);
   if (v === null){ fb.className = 'fb hint show'; fb.innerHTML = '<b class="h">Type a number</b>' + (G === 4 ? 'Use digits, like 17.' : G === 5 ? 'Use digits. For money, type 4.25. For a fraction, type 3/4.' : 'Use digits. For money, type 4.25. For a fraction, type 3/4. For a percent, type 65.'); return; }
-  C.tries++;
-  if (same(v, num(p.ans))){
-    const first = C.tries === 1;
-    P.prac[C.i] = {done:1, first}; save();
-    f.className = 'field ok';
-    showSolved(p, first, true);
-  } else {
-    f.className = 'field no';
-    if (C.tries === 1){ fb.className = 'fb no show'; fb.innerHTML = `<b class="h">Not yet</b>Check your steps. ${fx(p.hint)}`; }
-    else { fb.className = 'fb no show'; fb.innerHTML = `<b class="h">Here is one way to solve it</b>${steps(p)}<p style="margin-top:6px">Type the answer to serve this order.</p>`; }
-  }
+  const ok = same(v, num(p.ans));
+  P.prac[C.i] = {done:1, first:ok}; save();
+  showSolved(p, ok, true, ok ? null : el.value);
 }
-function showSolved(p, first, fresh){
-  const el = $('#pi'); el.value = p.ans; el.disabled = true; pvw(p.ans); $('#pf').className = 'field ok';
-  const fb = $('#fb'); fb.className = 'fb ok show';
-  fb.innerHTML = `<b class="h">${first ? 'Order up!' : 'Served. Nice work!'}</b>${steps(p)}`;
+function showSolved(p, first, fresh, wrong){
+  const el = $('#pi'), f = $('#pf'); el.value = p.ans; el.disabled = true; pvw(p.ans); f.className = 'field ok';
+  const fb = $('#fb');
+  if (wrong != null){
+    f.className = 'field shown shake';
+    fb.className = 'fb no show';
+    fb.innerHTML = `<b class="h">Not quite. The correct answer is <span class="big-ans">${fmtAns(p)}</span></b><p>You typed ${fx(String(wrong).trim())}. Here is how to solve it:</p>${steps(p)}`;
+  } else {
+    fb.className = 'fb ok show';
+    fb.innerHTML = `<b class="h">${first ? '<span class="stampx">Order up!</span>' : 'Solved with help'}</b>${steps(p)}`;
+  }
   const n = C.i < 23 ? `<button class="btn" onclick="go(()=>shift(${nextOpen(C.i)}))">Next order</button>` : '';
   $('#pa').innerHTML = (served() === 24 ? `<button class="btn" onclick="go(fullGlass)">See your shake</button>` : n) + `<button class="btn alt" onclick="go(home)">Home</button>`;
-  if (fresh){ document.querySelector('.glassbox').outerHTML = `<div class="glassbox pop">${glass(served() / 24)}<div><div class="big">${served()} / 24</div><div class="muted" style="font-size:14px;font-weight:600">orders served</div></div></div>`; const r = document.querySelectorAll('.rail button')[C.i]; r.className = 'cur'; }
+  if (fresh){
+    document.querySelector('.glassbox').outerHTML = `<div class="glassbox">${glass(served() / 24, 150, (served() - 1) / 24)}<div><div class="big">${served()} / 24</div><div class="muted" style="font-size:14px;font-weight:600">orders served</div></div></div>`;
+    const r = document.querySelectorAll('.rail button')[C.i]; r.className = 'cur';
+    if (first) burst(f);
+    if (served() === 24) setTimeout(() => rain(), 400);
+  }
 }
 function nextOpen(i){ for (let k = 1; k <= 24; k++){ const j = (i + k) % 24; if (!(P.prac[j] && P.prac[j].done)) return j; } return Math.min(i + 1, 23); }
 function fullGlass(){
   const first = Object.values(P.prac).filter(v => v.first).length;
-  app.innerHTML = topBar('Practice') + `<div class="panel pop" style="text-align:center;display:grid;justify-items:center;gap:10px">
+  setTimeout(() => rain(), 200);
+  app.innerHTML = topBar('Practice') + `<div class="panel pop" style="text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px">
     ${glass(1, 190)}<div class="kick">Shift complete</div><h2 style="font-size:44px;color:var(--deep)">All 24 orders served</h2>
     <p class="lead">${first} of them on the first try. Your shake is ready, with whipped cream and a cherry on top.</p>
     <div class="acts" style="justify-content:center"><button class="btn" onclick="go(quizStart)">Take the taste test</button><button class="btn alt" onclick="go(home)">Home</button></div></div>`;
@@ -365,19 +536,19 @@ function quizStart(){ Q = {i:0, score:0, res:[]}; quizQ(); }
 function quizQ(){
   const q = D.quiz[Q.i]; Q.opts = shuffle([q.ok, ...q.no]);
   const bar = `<div class="qnum">${D.quiz.map((_, k) => `<i class="${Q.res[k] === 1 ? 'r' : Q.res[k] === 0 ? 'w' : k === Q.i ? 'c' : ''}"></i>`).join('')}</div>`;
-  app.innerHTML = topBar('Taste test') + `<div class="ticket pop"><img class="ph" src="${IMG[q.photo]}" alt="" style="aspect-ratio:3/1">
+  app.innerHTML = topBar('Taste test') + `<div class="ticket pop"><div class="phw"><i style="background-image:url(${IMG[q.photo]})"></i><img class="ph" src="${IMG[q.photo]}" alt=""></div>
     <div class="tb">${bar}<div class="place" style="margin-top:12px">Question ${Q.i + 1} of 10</div><p class="qtext">${fx(q.text)}</p>${q.menu ? menuCard() : ''}
     <div class="mc">${Q.opts.map((o, k) => `<button onclick="qPick(${k})"><i>${'ABCD'[k]}</i>${fx(o)}</button>`).join('')}</div>
-    <div class="fb" id="fb"></div><div class="acts" id="qa"></div></div></div>`;
+    <div class="fb" id="fb"></div><div class="acts" id="qa"><button class="btn alt" onclick="go(home)">Home</button></div></div></div>`;
 }
 function qPick(k){
   const q = D.quiz[Q.i], bs = document.querySelectorAll('.mc button'), ok = Q.opts[k] === q.ok;
   bs.forEach((b, j) => { b.disabled = true; if (Q.opts[j] === q.ok) b.classList.add('ok'); });
-  if (!ok) bs[k].classList.add('no');
+  if (!ok) bs[k].classList.add('no', 'shake'); else burst(bs[k], 22);
   Q.res[Q.i] = ok ? 1 : 0; if (ok) Q.score++;
   const fb = $('#fb'); fb.className = 'fb show ' + (ok ? 'ok' : 'no');
-  fb.innerHTML = `<b class="h">${ok ? 'Correct' : 'The answer is ' + fx(q.ok)}</b>${fx(q.why)}`;
-  $('#qa').innerHTML = `<button class="btn" onclick="${Q.i < 9 ? 'Q.i++;go(quizQ)' : 'go(quizEnd)'}">${Q.i < 9 ? 'Next question' : 'See my score'}</button>`;
+  fb.innerHTML = `<b class="h">${ok ? 'Correct' : 'Not quite. The correct answer is <span class="big-ans">' + fx(q.ok) + '</span>'}</b>${fx(q.why)}`;
+  $('#qa').innerHTML = `<button class="btn" onclick="${Q.i < 9 ? 'Q.i++;go(quizQ)' : 'go(quizEnd)'}">${Q.i < 9 ? 'Next question' : 'See my score'}</button><button class="btn alt" onclick="go(home)">Home</button>`;
 }
 function quizEnd(){
   P.quiz = {done:1, best:Math.max(Q.score, (P.quiz && P.quiz.best) || 0), last:Q.score}; save();
@@ -385,9 +556,10 @@ function quizEnd(){
   const d = new Date().toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'});
   app.innerHTML = topBar('Taste test') + `<div class="cert pop"><div class="kick">The Shake Bar Math, ${D.glabel}: ${fx(D.title)}</div>
     <h2>${Q.score >= 5 ? 'Taste test certificate' : 'Taste test results'}</h2><p>This shows that</p><div class="who">${esc(P.name || 'Shake Bar problem solver')}</div>
-    <p style="font-size:20px">scored <b>${Q.score} out of 10</b> on multi-step word problems.</p><p class="muted" style="margin-top:6px">${msg}</p>
+    <p style="font-size:20px">scored <b><span id="sc">0</span> out of 10</b> on multi-step word problems.</p><p class="muted" style="margin-top:6px">${msg}</p>
     <div style="display:flex;justify-content:center;margin-top:14px">${glass(Q.score / 10, 110)}</div><p class="muted" style="font-size:14px">${d}</p></div>
     <div class="acts" style="justify-content:center"><button class="btn" onclick="window.print()">${Q.score >= 5 ? 'Print certificate' : 'Print results'}</button><button class="btn alt" onclick="go(quizStart)">Try again</button><button class="btn alt" onclick="go(home)">Home</button></div>`;
+  countUp($('#sc'), Q.score); if (Q.score >= 5) setTimeout(() => rain(), 300);
 }
 
 /* ---------- teacher corner ---------- */
@@ -405,12 +577,116 @@ function teacher(){
   <div class="acts"><button class="btn alt" onclick="window.print()">Print this page</button><button class="btn alt" onclick="if(confirmReset())go(teacher)">Reset progress</button></div>
   <h3>How to use it</h3><p>Teach the Learn screens with the whole class on a projector or screen share. Students then work a shift on their own device, or solve on paper while you take answers. The taste test works as an exit ticket. Progress is saved in this browser only, so each student should use their own device and browser.</p>
   <p style="margin-top:8px">Pairs with the printable <b>The Shake Bar Word Problems, Grade ${G}: ${fx(D.title)}</b>. All problems here are new, so you can use both.</p>
+  <p style="margin-top:8px">Your download also has a 2-page worksheet, <b>Try It on Paper</b>, with an answer key. Students do it after the Learn screens. Use the <b>Calculator</b> button at the top of every screen to show the math on the board. You can drag it anywhere and type on the keyboard.</p>
   <h3>Practice answers</h3><table><tr><th>#</th><th>Order</th><th>Answer</th><th>Work shown</th></tr>${D.prac.map((p, k) => `<tr><td>${k + 1}</td><td>${fx(p.place)}</td><td><b>${p.unit === '$' ? '$' : ''}${fx(p.ans)}${p.unit === '%' ? '%' : p.unit !== '$' ? ' ' + fx(p.unit) : ''}</b></td><td>${p.steps.map(fx).join('<br>')}</td></tr>`).join('')}</table>
   <h3>Taste test answers</h3><table><tr><th>#</th><th>Question</th><th>Answer</th></tr>${D.quiz.map((q, k) => `<tr><td>${k + 1}</td><td>${fx(q.text)}</td><td><b>${fx(q.ok)}</b></td></tr>`).join('')}</table>
   <h3>Credits</h3><p style="font-size:14px">Photos from Unsplash (Unsplash License): ${D.credits.map(c => esc(c)).join('; ')}.</p>
   <p style="font-size:14px;margin-top:6px">© Bright EngMath. For one teacher's classroom use. Please do not post this file online or share it with other teachers.</p></div>`;
 }
 function confirmReset(){ if (!confirm('Reset all progress on this device?')) return false; P = {name:'', prac:{}, learn:0, quiz:null}; save(); toast('Progress reset on this device.'); return true; }
+
+/* ---------- upgrade helpers ---------- */
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const ICON = {
+  home:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 L12 3 L21 11" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M5.5 9.5 V21 H10 V15 H14 V21 H18.5 V9.5" fill="none" stroke="currentColor" stroke-width="2.6"/></svg>',
+  calc:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="2.5" width="16" height="19" fill="none" stroke="currentColor" stroke-width="2.4"/><rect x="7" y="5.5" width="10" height="4" fill="currentColor"/><path d="M7.5 13h2M11 13h2M14.5 13h2M7.5 17h2M11 17h2M14.5 17h2" stroke="currentColor" stroke-width="2.4"/></svg>'
+};
+function fit(){
+  const w = innerWidth, h = innerHeight;
+  let z = 1;
+  if (w >= 900) z = Math.min(w / 1180, h / 800);
+  else if (w >= 680) z = Math.min(w / 800, h / 1120);
+  z = Math.max(0.72, Math.min(z, 1.75));
+  document.documentElement.style.setProperty('--z', z.toFixed(3));
+}
+addEventListener('resize', fit); fit();
+function fmtU(a, u){ return u === '$' ? '$' + fx(a) : u === '%' ? fx(a) + '%' : fx(a) + (u ? ' ' + fx(u) : ''); }
+function fmtAns(p){ return fmtU(p.ans, p.unit); }
+const BITC = ['var(--acc)', 'var(--butter)', 'var(--glass)', 'var(--deep)', '#E8436B', '#5DB8EA', '#F2861A'];
+function bit(x, y, dx, dy, rot, dur, delay){
+  const s = document.createElement('i'); s.className = 'bit';
+  s.style.left = x + 'px'; s.style.top = y + 'px'; s.style.background = BITC[Math.floor(Math.random() * BITC.length)];
+  document.body.appendChild(s);
+  const a = s.animate([{transform:'translate(0,0) rotate(0deg)', opacity:1}, {transform:`translate(${dx}px,${dy}px) rotate(${rot}deg)`, opacity:0}], {duration:dur, delay, easing:'cubic-bezier(.2,.7,.4,1)', fill:'both'});
+  a.onfinish = () => s.remove();
+}
+function burst(el, n = 28){
+  if (RM || !el) return;
+  const r = el.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
+  for (let i = 0; i < n; i++){ const a = Math.random() * Math.PI * 2, d = 70 + Math.random() * 130; bit(x, y, Math.cos(a) * d, Math.sin(a) * d - 40, Math.random() * 540 - 270, 800 + Math.random() * 500, 0); }
+}
+function rain(n = 90){
+  if (RM) return;
+  for (let i = 0; i < n; i++){ const x = Math.random() * innerWidth; bit(x, -20, Math.random() * 120 - 60, innerHeight * (0.7 + Math.random() * 0.4), Math.random() * 720 - 360, 1800 + Math.random() * 1400, Math.random() * 900); }
+}
+function countUp(el, to){
+  if (!el) return;
+  if (RM){ el.textContent = to; return; }
+  let k = 0; const t = setInterval(() => { el.textContent = k; if (k++ >= to) clearInterval(t); }, 90);
+}
+/* ---------- calculator ---------- */
+const CALC = {e:'', r:'', hist:[], fresh:false};
+function calcToggle(){
+  let c = $('#calc');
+  if (!c){ c = document.createElement('div'); c.id = 'calc'; c.className = 'calc'; c.setAttribute('role', 'dialog'); c.setAttribute('aria-label', 'Calculator'); document.body.appendChild(c); calcRender(); }
+  c.classList.toggle('on');
+}
+function calcRender(){
+  const keys = ['C','⌫','(',')','7','8','9','÷','4','5','6','×','1','2','3','−','0','.','=','+'];
+  $('#calc').innerHTML = `<div class="ch" onpointerdown="calcDrag(event)"><b>Calculator</b><button onclick="calcToggle()" aria-label="Close calculator">×</button></div>
+  <div class="cs"><div class="chist">${CALC.hist.slice(-2).map(h => `<div>${h}</div>`).join('')}</div><div class="ce">${CALC.e || '0'}</div><div class="cr">${CALC.r}</div></div>
+  <div class="ck">${keys.map(k => `<button class="${'÷×−+'.includes(k) ? 'op' : k === '=' ? 'eq' : k === 'C' ? 'cl' : ''}" onclick="calcKey('${k}')">${k}</button>`).join('')}</div>`;
+}
+function calcKey(k){
+  const ops = '÷×−+';
+  if (k === 'C'){ CALC.e = ''; CALC.r = ''; }
+  else if (k === '⌫'){ CALC.e = CALC.e.replace(/ [÷×−+] $/, '').replace(/.$/, ''); CALC.r = ''; }
+  else if (k === '='){
+    const v = calcEval(CALC.e);
+    if (v === null){ CALC.r = 'Check the numbers'; }
+    else { CALC.r = '= ' + v; CALC.hist.push(CALC.e + ' = ' + v); CALC.fresh = true; }
+  } else {
+    if (CALC.fresh){ CALC.e = ops.includes(k) ? CALC.r.replace('= ', '').replace(/,/g, '') : ''; CALC.fresh = false; CALC.r = ''; }
+    if (ops.includes(k)){ CALC.e = CALC.e.replace(/ [÷×−+] $/, ''); CALC.e += (CALC.e ? ' ' : '0 ') + k + ' '; }
+    else CALC.e += k;
+  }
+  calcRender();
+}
+function calcEval(e){
+  const t = e.replace(/\s+/g, '').match(/\d*\.?\d+|\d+\.|[()÷×−+]/g);
+  if (!t) return null;
+  const out = [], st = [], pr = {'+':1, '−':1, '×':2, '÷':2};
+  for (const x of t){
+    if (/\d/.test(x)) out.push(parseFloat(x));
+    else if (x === '(') st.push(x);
+    else if (x === ')'){ while (st.length && st[st.length - 1] !== '(') out.push(st.pop()); if (!st.length) return null; st.pop(); }
+    else { while (st.length && pr[st[st.length - 1]] >= pr[x]) out.push(st.pop()); st.push(x); }
+  }
+  while (st.length){ const o = st.pop(); if (o === '(') return null; out.push(o); }
+  const v = [];
+  for (const x of out){
+    if (typeof x === 'number'){ v.push(x); continue; }
+    const b = v.pop(), a = v.pop(); if (a === undefined || b === undefined) return null;
+    if (x === '÷' && b === 0) return null;
+    v.push(x === '+' ? a + b : x === '−' ? a - b : x === '×' ? a * b : a / b);
+  }
+  if (v.length !== 1 || !isFinite(v[0])) return null;
+  return (+v[0].toFixed(10)).toLocaleString('en-US', {maximumFractionDigits:10});
+}
+function calcDrag(ev){
+  if (ev.target.tagName === 'BUTTON') return;
+  const c = $('#calc'), r = c.getBoundingClientRect(), ox = ev.clientX - r.left, oy = ev.clientY - r.top;
+  const mv = e => { c.style.left = Math.max(0, Math.min(innerWidth - r.width, e.clientX - ox)) + 'px'; c.style.top = Math.max(0, Math.min(innerHeight - 60, e.clientY - oy)) + 'px'; c.style.right = 'auto'; c.style.bottom = 'auto'; };
+  const up = () => { removeEventListener('pointermove', mv); removeEventListener('pointerup', up); };
+  addEventListener('pointermove', mv); addEventListener('pointerup', up);
+}
+addEventListener('keydown', e => {
+  const c = $('#calc'); if (!c || !c.classList.contains('on')) return;
+  if (document.activeElement && document.activeElement.tagName === 'INPUT') return;
+  const m = {'*':'×', 'x':'×', '/':'÷', '-':'−', '+':'+', 'Enter':'=', '=':'=', 'Backspace':'⌫', 'Escape':'C', '(':'(', ')':')', '.':'.'};
+  const k = /^\d$/.test(e.key) ? e.key : m[e.key];
+  if (k){ e.preventDefault(); calcKey(k); }
+});
 
 home();
 </script>

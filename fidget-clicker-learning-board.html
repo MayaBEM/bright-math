@@ -44,7 +44,7 @@ h1,h2,h3{font-family:'Poppins','Lexend',sans-serif;font-weight:700;margin:0;line
 
 /* ---------- buttons (square UI) ---------- */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 17px/1.15 'Lexend',sans-serif;background:#fff;border:3px solid var(--ink);box-shadow:var(--sh);padding:10px 18px;border-radius:0;cursor:pointer;transition:transform .06s,box-shadow .06s;touch-action:manipulation}
-.btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
+@media (hover:hover) and (pointer:fine){ .btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)} }
 .btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
 .btn.icon{width:46px;height:46px;padding:0;font-size:22px}
 .btn.primary{background:var(--orange);font-weight:800}
@@ -79,8 +79,8 @@ h1,h2,h3{font-family:'Poppins','Lexend',sans-serif;font-weight:700;margin:0;line
 .tiles-m{display:grid;grid-template-columns:repeat(auto-fill,minmax(136px,1fr));gap:16px}
 .tile-m{display:flex;flex-direction:column;align-items:flex-start;gap:8px;text-align:left;background:#fff;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--berry);padding:12px 14px;cursor:pointer;transition:transform .06s,box-shadow .06s;min-height:136px}
 .s-math .tile-m{box-shadow:5px 5px 0 var(--sky)}
-.tile-m:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--berry)}
-.s-math .tile-m:hover{box-shadow:7px 7px 0 var(--sky)}
+@media (hover:hover) and (pointer:fine){ .tile-m:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--berry)} }
+@media (hover:hover) and (pointer:fine){ .s-math .tile-m:hover{box-shadow:7px 7px 0 var(--sky)} }
 .tile-m:active{transform:translate(4px,4px);box-shadow:1px 1px 0 var(--ink)}
 .tm-art{width:100%;height:48px;display:block}
 .tm-art svg{height:100%;width:auto;display:block;font-family:'Lexend',sans-serif}
@@ -535,7 +535,7 @@ textarea{width:100%;border:3px solid var(--ink);border-radius:0;padding:10px;fon
 .s-math h2{background:#1E6FD9}
 .hsec h2::before{display:none}
 .tile-m,.s-math .tile-m{background:var(--tc);box-shadow:5px 5px 0 var(--ink)}
-.tile-m:hover,.s-math .tile-m:hover{box-shadow:7px 7px 0 var(--ink)}
+@media (hover:hover) and (pointer:fine){ .tile-m:hover,.s-math .tile-m:hover{box-shadow:7px 7px 0 var(--ink)} }
 .tm-art{background:rgba(255,255,255,.7);border:2px solid var(--ink);padding:4px 6px;height:58px}
 .tm-txt small{opacity:1;font-weight:600}
 .home-main{padding-top:14px}
@@ -622,7 +622,7 @@ textarea{width:100%;border:3px solid var(--ink);border-radius:0;padding:10px;fon
 .tile-m:has(.ic-img) .tm-art{height:84px;background:rgba(255,255,255,.55)}
 .ic-img{animation:bob 2.6s ease-in-out infinite}
 .tile-m:nth-child(2n) .ic-img{animation-delay:-1.3s}
-.tile-m:hover .ic-img,.tile-m:active .ic-img{animation:wiggle .5s ease-in-out}
+.tile-m:active .ic-img{animation:wiggle .5s ease-in-out}
 @keyframes wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-8deg) scale(1.08)}75%{transform:rotate(8deg) scale(1.08)}}
 .intro-art .ic-img{width:72%;height:auto;max-height:90%;background:rgba(255,255,255,.75);border:3px solid var(--ink);padding:12px;animation:floaty 2.8s ease-in-out infinite}
 .sq image{pointer-events:none}
@@ -758,7 +758,7 @@ textarea{width:100%;border:3px solid var(--ink);border-radius:0;padding:10px;fon
 .tm-art .ic-img{height:100%;width:auto;filter:drop-shadow(0 3px 0 rgba(35,38,61,.25))}
 .tm-art .ic-svg{height:100%;width:auto;max-width:100%;animation:bob 2.6s ease-in-out infinite}
 .tile-m:nth-child(2n) .ic-svg{animation-delay:-1.3s}
-.tile-m:hover .ic-svg,.tile-m:active .ic-svg{animation:wiggle .5s ease-in-out}
+.tile-m:active .ic-svg{animation:wiggle .5s ease-in-out}
 .tile-m{align-items:stretch}
 .intro-art .ic-svg{width:80%}
 
@@ -836,6 +836,15 @@ textarea{width:100%;border:3px solid var(--ink);border-radius:0;padding:10px;fon
 @media (orientation:portrait),(max-width:860px) and (min-height:501px){ .wordpic .piccard{height:clamp(96px,14vh,150px)} }
 @media (max-height:500px) and (orientation:landscape){ .wordpic .piccard{height:80px} }
 @media (min-width:861px) and (min-height:501px) and (orientation:landscape){ .wordpic .piccard{height:clamp(150px,calc(100vh - 560px),340px)} }
+
+/* iPad / touch: no sticky hover, no page bounce, no callouts */
+html,body{overscroll-behavior:none}
+*{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
+input,textarea,[contenteditable]{-webkit-user-select:text;user-select:text}
+button{touch-action:manipulation}
+.key,.bub,.tg,.pb,.sl-track{touch-action:none}
+.btn:active{transform:translate(2px,2px)}
+@media (hover:hover) and (pointer:fine){ .tile-m:hover .ic-img,.tile-m:hover .ic-svg{animation:wiggle .5s ease-in-out} }
 
 </style>
 </head>
@@ -1137,17 +1146,22 @@ const A = {
         o.frequency.setTargetAtTime(50+sp*260,now,.03); og.gain.setTargetAtTime(on*sp*0.05,now,.04); } };
   }
 };
-['pointerdown','keydown','touchstart'].forEach(ev=>window.addEventListener(ev,()=>A.resume(),{capture:true,passive:true}));
+['pointerdown','keydown','touchstart','touchend','click'].forEach(ev=>window.addEventListener(ev,()=>A.resume(),{capture:true,passive:true}));
 
 /* ===== Fidget toys (all drawn in code) ===== */
 const ACTIVE_KB = new Set();
 function fitObserve(target, fn){
-  let raf=0; const ro = new ResizeObserver(()=>{ cancelAnimationFrame(raf); raf=requestAnimationFrame(fn); });
+  let raf=0, lw=-9, lh=-9; const ro = new ResizeObserver(()=>{ const w=target.clientWidth, h=target.clientHeight; if(Math.abs(w-lw)<2 && Math.abs(h-lh)<2) return; lw=w; lh=h; cancelAnimationFrame(raf); raf=requestAnimationFrame(fn); });
   ro.observe(target); requestAnimationFrame(fn); return ro;
 }
 function noTouchExtras(node){
   node.addEventListener('contextmenu', e=>e.preventDefault());
 }
+/* iPad Safari: stop pinch-zoom, double-tap zoom and long-press menus so the board stays still */
+['gesturestart','gesturechange','gestureend'].forEach(ev=>document.addEventListener(ev, e=>e.preventDefault(), {passive:false}));
+document.addEventListener('dblclick', e=>{ if(!e.target.closest('input,textarea')) e.preventDefault(); }, {passive:false});
+document.addEventListener('touchmove', e=>{ if(e.touches.length>1) e.preventDefault(); }, {passive:false});
+document.addEventListener('touchstart', e=>{ if(e.target.closest && e.target.closest('.key,.bub,.tg,.pb,.sl-track,.spin,.dial,.sq')) e.preventDefault(); }, {passive:false});
 
 /* ---------- 1. Keyboard clicker ---------- */
 function keyLayout(kind){
@@ -1210,8 +1224,11 @@ function Keyboard(o){
   };
   const lab = k => S.settings.keyCase==='upper'?k.toUpperCase():k;
   const release = (b)=>{ if(b && b.classList.contains('down')){ b.classList.remove('down'); if(!o.silent) A.key(o.sound,true); } };
-  root.addEventListener('pointerdown', e=>{ const b=e.target.closest('.key'); if(!b) return; e.preventDefault(); press(b); });
-  ['pointerup','pointercancel','pointerout'].forEach(ev=>root.addEventListener(ev, e=>{ const b=e.target.closest('.key'); if(b && !b.contains(e.relatedTarget)) release(b); }));
+  const held = new Map(); // pointerId -> key (one finger = one key, works the same on iPad and computer)
+  root.addEventListener('pointerdown', e=>{ const b=e.target.closest('.key'); if(!b) return; e.preventDefault(); try{ b.releasePointerCapture&&b.releasePointerCapture(e.pointerId); }catch(_){} held.set(e.pointerId,b); press(b); });
+  const up = e=>{ const b=held.get(e.pointerId); if(b){ held.delete(e.pointerId); release(b); } };
+  window.addEventListener('pointerup', up, true); window.addEventListener('pointercancel', up, true);
+  root.addEventListener('pointerout', e=>{ if(e.pointerType!=='mouse') return; const b=held.get(e.pointerId); if(b && !b.contains(e.relatedTarget)){ held.delete(e.pointerId); release(b); } });
   noTouchExtras(root);
   api.press = k=>{ const b=keys[k]; if(b){ press(b); setTimeout(()=>release(b),90);} };
   api.setDisabled = (k,on)=>{ if(!keys[k]) return; on?api.disabled.add(k):api.disabled.delete(k); keys[k].classList.toggle('off',on); };
@@ -2015,7 +2032,7 @@ const MODE_ORDER = {English:['spell','popsound','builder','sentence','sight'], M
 const KEY='bem-fidget-board-v1';
 const METER_MAX = 8;
 const DEF = ()=>({
-  settings:{sound:true, volume:0.75, vibrate:true, switchSound:'clicky', layout:'abc', keyCase:'lower', perRound:8, breakMin:2, pin:'1234',
+  settings:{sound:true, volume:0.75, vibrate:true, switchSound:'clicky', layout:'qwerty', layoutChosen:false, keyCase:'lower', perRound:8, breakMin:2, pin:'1234',
     modes:Object.fromEntries([...MODE_ORDER.English,...MODE_ORDER.Math].map(m=>[m,true])),
     spellCustom:'', spellUse:false, popCustom:'', popUse:false, facts:{custom:false, ops:['+','-'], range:20, tables:10}, calm:'sky', levels:{}},
   prog:{meter:0, unlocked:0, allUnlocked:false, equip:{keys:'classic', shape:'square', squishy:'dumpling', light:'lemon', bubbles:'rainbow', metal:'silver'}, wrong:{}, stars:{}}
@@ -2023,6 +2040,7 @@ const DEF = ()=>({
 let S = DEF();
 function load(){ try{ const raw=localStorage.getItem(KEY); if(raw){ const d=JSON.parse(raw), f=DEF();
   S={settings:Object.assign(f.settings,d.settings||{}), prog:Object.assign(f.prog,d.prog||{})};
+  if(!(d.settings||{}).layoutChosen) S.settings.layout='qwerty';
   S.settings.modes=Object.assign(f.settings.modes,(d.settings||{}).modes||{}); S.settings.facts=Object.assign(DEF().settings.facts,(d.settings||{}).facts||{});
   S.prog.equip=Object.assign(DEF().prog.equip,(d.prog||{}).equip||{}); } }catch(e){} }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
@@ -2432,7 +2450,7 @@ SCREENS.teacher = ()=>{
     list('popCustom','popUse','Pop the Sound word list','Your own words for “Pop the letters in the word”.'),
     card('Sound and touch', chk('Sound on', ()=>st.sound, v=>{st.sound=v; A.applyVol();}), volSlider(), chk('Vibration on phones and tablets', ()=>st.vibrate, v=>st.vibrate=v),
       el('p',{class:'small'},'Keyboard switch sound'), seg([['clicky','Clicky'],['soft','Soft'],['thock','Thock'],['bubbly','Bubbly']],()=>st.switchSound,v=>{st.switchSound=v; A.key(v);}),
-      el('p',{class:'small'},'Letter keys'), seg([['abc','A to Z order'],['qwerty','QWERTY']],()=>st.layout,v=>st.layout=v),
+      el('p',{class:'small'},'Letter keys'), seg([['qwerty','QWERTY (like a real keyboard)'],['abc','A to Z order']],()=>st.layout,v=>{st.layout=v;st.layoutChosen=true;}),
       el('p',{class:'small'},'Letters on keys'), seg([['lower','abc'],['upper','ABC']],()=>st.keyCase,v=>st.keyCase=v)),
     card('Toys and progress', el('div',{class:'row'},
       el('button',{class:'btn', type:'button', onclick:()=>{ S.prog.allUnlocked=true; save(); A.fanfare(); }},'Give all toys'),

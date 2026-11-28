@@ -1740,7 +1740,7 @@ function answerUI(q, opts) {
 function vStart() {
   crumb('Welcome');
   const tart = window.IMG && IMG.hero ? '<img src="' + IMG.hero + '" alt="A bakery counter with cakes, a tart, cupcakes and donuts" draggable="false">' : heroArt();
-  view().innerHTML = '<div class="start"><div><img class="logo-big" src="' + LOGO + '" alt="Bright EngMath"><h1>Grade 4 Fractions<br>Test Prep</h1><div class="sub">The Fraction Bakery</div><p style="font-size:20px;margin:0 0 18px">Learn, practice and get ready for your fractions test: add, subtract, multiply and divide.</p>' +
+  view().innerHTML = '<div class="start"><div><img class="logo-big" src="' + LOGO + '" alt="Bright EngMath"><h1>Grade 4 Fractions<br>Test Prep</h1><div class="sub">The Fraction Bakery</div><p style="font-size:20px;margin:0 0 18px">Learn, practise and get ready for your fractions test: add, subtract, multiply and divide.</p>' +
     '<label for="nm">Your name</label><div class="row"><input id="nm" class="txt" maxlength="24" value="' + esc(ST.name) + '" placeholder="Type your name"><button class="btn y big" id="go">Start</button></div></div><div class="hero">' + tart + '</div></div>';
   const nm = $('#nm');
   const start = () => { ST.name = nm.value.trim(); save(); ac(); play('pop'); go(vHome); };
@@ -1782,9 +1782,9 @@ function vHome() {
   crumb('Home');
   const ts = TOPICS.filter(t => ST.set.topics[t.id]);
   const b = book(); const stars = Object.keys(b).filter(k => k[0] === 't').reduce((a, k) => a + (b[k].stars || 0), 0);
-  const practiced = ts.filter(t => prog(t.id).of).length;
-  let h = '<section class="shopwrap">' + shopBanner() + '<div class="counter"><div class="ctext"><b>Welcome to the Fraction Bakery!</b> Learn a topic, practice it, then bake treats in Rush Hour to fill your shelves.' + thai('เรียนแต่ละหัวข้อ ฝึกทำ แล้วไปอบขนมใน Rush Hour เพื่อเติมชั้นขนม') +
-    '<div class="chips"><span class="chip c1">' + SSTAR(true, 20) + ' ' + stars + ' stars</span><span class="chip c2">' + BK.treatSVG('t2', 'ico') + treatCount() + ' / ' + bookIds().length + ' treats</span><span class="chip c3">' + practiced + ' / ' + ts.length + ' topics practiced</span></div></div>' +
+  const practised = ts.filter(t => prog(t.id).of).length;
+  let h = '<section class="shopwrap">' + shopBanner() + '<div class="counter"><div class="ctext"><b>Welcome to the Fraction Bakery!</b> Learn a topic, practise it, then bake treats in Rush Hour to fill your shelves.' + thai('เรียนแต่ละหัวข้อ ฝึกทำ แล้วไปอบขนมใน Rush Hour เพื่อเติมชั้นขนม') +
+    '<div class="chips"><span class="chip c1">' + SSTAR(true, 20) + ' ' + stars + ' stars</span><span class="chip c2">' + BK.treatSVG('t2', 'ico') + treatCount() + ' / ' + bookIds().length + ' treats</span><span class="chip c3">' + practised + ' / ' + ts.length + ' topics practised</span></div></div>' +
     '<div class="cbtns"><button class="btn p" id="q10h">' + icon('quick') + 'Quick 10 warm-up</button><button class="btn y" id="bkb">' + icon('book') + 'My Bakery Book</button><button class="btn sm" id="chn">Change name</button></div></div></section>';
   const nT = ts.length; const cols = nT % 3 === 0 ? 3 : nT % 4 === 0 ? 4 : nT === 10 ? 5 : nT === 5 ? 5 : 3;
   h += '<h2 class="sect">Pick a topic</h2><div class="grid topics" style="--cols:' + cols + '">';
@@ -2025,7 +2025,7 @@ function runQuiz(cfg) {
     const stars = sc / N >= 0.9 ? 3 : sc / N >= 0.7 ? 2 : 1;
     if (sc / N >= 0.7) play('cheer');
     crumb(cfg.title + ': done');
-    view().innerHTML = '<div class="panel" style="max-width:640px;margin:0 auto;text-align:center"><h2 style="font-size:32px">' + (sc === N ? 'Perfect score!' : sc / N >= 0.7 ? 'Great work!' : 'Good try! Keep practicing.') + '</h2><div class="stars">' + [1, 2, 3].map(k => STAR(k <= stars)).join('') + '</div><div class="score" style="justify-content:center"><div class="stat"><b>SCORE</b><span class="big">' + sc + '</span> / ' + N + '</div></div>' +
+    view().innerHTML = '<div class="panel" style="max-width:640px;margin:0 auto;text-align:center"><h2 style="font-size:32px">' + (sc === N ? 'Perfect score!' : sc / N >= 0.7 ? 'Great work!' : 'Good try! Keep practising.') + '</h2><div class="stars">' + [1, 2, 3].map(k => STAR(k <= stars)).join('') + '</div><div class="score" style="justify-content:center"><div class="stat"><b>SCORE</b><span class="big">' + sc + '</span> / ' + N + '</div></div>' +
       (wrong ? '<p>' + wrong + ' wrong ' + (wrong === 1 ? 'answer was' : 'answers were') + ' saved for <b>Fix my mistakes</b>.</p>' : '<p>No mistakes this time.</p>') + (skipped ? '<p class="note">' + skipped + ' ' + (skipped === 1 ? 'question was' : 'questions were') + ' not answered.</p>' : '') +
       '<div class="row" style="justify-content:center;margin-top:14px">' + (cfg.tid ? '<button class="btn y" id="again">Practice again (new numbers)</button>' : cfg.kind === 'quick' ? '<button class="btn y" id="again">Another Quick 10</button>' : '') + (ST.mist.length ? '<button class="btn p" id="fx">Fix my mistakes</button>' : '') + '<button class="btn" id="hm">Home</button></div></div>';
     const ag = $('#again'); if (ag) ag.onclick = () => { if (cfg.tid) startPractice(cfg.tid); else go(runQuiz, { title: 'Quick 10', qs: pickFrom(BANK.filter(q => enabledTopics(ST.set.topics.tc).includes(q.topic)), 10), kind: 'quick' }); };
@@ -2110,7 +2110,7 @@ function showResults(r) {
   let h = '<div class="panel"><div class="row" style="justify-content:space-between"><h2 style="font-size:32px">Mock Test ' + r.n + ' results</h2><span class="note">' + esc(r.mode) + (r.timeUp ? ', time is up' : '') + '</span></div>' +
     '<div class="score" style="margin:16px 0"><div class="stat"><b>SCORE</b><span class="big">' + sc + '</span> / ' + N + '</div><div class="stat"><b>PERCENT</b><span class="big">' + pct + '%</span></div><div class="stat"><b>TIME</b><span style="font-size:28px;font-family:Poppins;font-weight:800">' + mm(r.secs) + '</span></div></div>' +
     '<h3 style="margin:18px 0 6px">Topic by topic</h3>';
-  TOPICS.forEach(t => { const b = by[t.id]; if (!b) return; const p = b.ok / b.n; const lv = p >= 0.8 ? ['s', 'Strong'] : p >= 0.5 ? ['m', 'OK'] : ['w', 'Needs practice']; h += '<div class="trow"><b>' + esc(t.short) + '</b><div class="meter"><i style="width:' + Math.round(p * 100) + '%"></i></div><span>' + b.ok + ' / ' + b.n + ' <span class="lvl ' + lv[0] + '">' + lv[1] + '</span></span>' + (p < 0.8 ? '<button class="btn sm y" data-pt="' + t.id + '">Practice</button>' : '<span></span>') + '</div>'; });
+  TOPICS.forEach(t => { const b = by[t.id]; if (!b) return; const p = b.ok / b.n; const lv = p >= 0.8 ? ['s', 'Strong'] : p >= 0.5 ? ['m', 'OK'] : ['w', 'Needs practice']; h += '<div class="trow"><b>' + esc(t.short) + '</b><div class="meter"><i style="width:' + Math.round(p * 100) + '%"></i></div><span>' + b.ok + ' / ' + b.n + ' <span class="lvl ' + lv[0] + '">' + lv[1] + '</span></span>' + (p < 0.8 ? '<button class="btn sm y" data-pt="' + t.id + '">Practise</button>' : '<span></span>') + '</div>'; });
   h += '<div class="row" style="margin-top:18px"><button class="btn y" id="again">Try Mock Test ' + r.n + ' again (new numbers)</button>' + (ST.mist.length ? '<button class="btn p" id="fx">Fix my mistakes</button>' : '') + '<button class="btn" id="hm">Home</button></div></div>' +
     '<div class="row" style="margin:26px 0 12px;justify-content:space-between"><h2 style="font-size:26px">Review every question</h2><button class="btn sm" id="opn">Open all</button></div>';
   r.qs.forEach((q, k) => {

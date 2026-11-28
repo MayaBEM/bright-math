@@ -543,6 +543,108 @@ body.home-tank .tank-tools{display:none}
 .caption{white-space:normal;line-height:1.1;font-size:clamp(17px,1.9vw,28px);padding:4px 14px}
 @media (max-width:860px){.top{gap:4px;padding:0 6px}.step{padding:4px 6px;font-size:13px}.logo{height:38px}.tmbadge{max-width:74px;line-height:1.05;font-size:10px;padding:2px 4px;min-height:40px}.steps{gap:3px;margin-left:2px}.shells{padding:2px 6px}}
 
+/* ===================== v4: rewards, album, life, transitions ===================== */
+/* screens and dialogs glide in (calm, short) */
+.screen.on{animation:scrIn .32s cubic-bezier(.2,.7,.3,1)}
+@keyframes scrIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+body[data-screen=welcome] #scr-aquarium.on{animation:none}
+.overlay{animation:ovIn .18s ease-out}
+@keyframes ovIn{from{opacity:0}}
+.modal{animation:modalIn .26s cubic-bezier(.2,.8,.3,1.1)}
+@keyframes modalIn{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.screen.on,.overlay,.modal{animation:none}}
+/* confetti + flying shells + badge banner never block a tap */
+.confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:95}
+.flyshell{position:fixed;left:0;top:0;width:28px;height:28px;pointer-events:none;z-index:96;filter:drop-shadow(0 2px 0 rgba(14,58,74,.35))}
+.flyshell svg{width:28px;height:28px}
+#badge-pop{position:fixed;right:16px;bottom:16px;z-index:94;display:flex;align-items:center;gap:12px;background:var(--paper);border:2px solid var(--ink);box-shadow:5px 5px 0 var(--ink);padding:8px 18px 8px 10px;pointer-events:none;opacity:0;transform:translateY(24px);transition:opacity .3s,transform .35s cubic-bezier(.2,.8,.3,1.2);max-width:min(420px,calc(100% - 32px))}
+#badge-pop.on{opacity:1;transform:none}
+#badge-pop .bp-art svg{width:56px;height:72px}
+#badge-pop small{display:block;font:700 12px var(--head);color:var(--coral);text-transform:uppercase;letter-spacing:.8px}
+#badge-pop b{display:block;font:700 22px var(--head);line-height:1.1}
+#badge-pop .bp-t>span{display:block;font-size:14px;color:var(--ink2)}
+/* home: word of the day challenge + streak + album tile */
+.hw-play{min-height:40px;padding:4px 12px;font-size:16px;gap:5px}
+.hw-play .hw-sh svg{width:18px;height:18px}
+.hw-done{display:flex;align-items:center;gap:5px;font:700 14px var(--head);color:var(--ok);background:#E5F5EC;border:2px solid var(--ok);padding:4px 10px}
+.hw-done i svg{width:18px;height:18px}
+.hword.done .hw-pic{outline:3px solid var(--ok);outline-offset:-3px}
+.hstats .streak{display:flex;align-items:center;gap:5px;color:var(--ink)}
+.hstats .sun{display:inline-block;width:12px;height:12px;background:#F2A33A;border:2px solid #A8620A;transform:rotate(45deg)}
+.htiles{grid-template-columns:repeat(6,minmax(0,1fr))}
+.alb-tile{display:flex;justify-content:center;align-items:center;gap:4px;height:100%;padding:3px 0}
+.alb-tile svg{height:92%;width:auto}
+@media (max-width:860px){.htiles{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:600px){.htiles{grid-template-columns:repeat(2,1fr)}}
+/* word of the day dialog */
+.wotd-word{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.wotd-word small{display:block;width:100%;font:600 13px var(--head);text-transform:uppercase;letter-spacing:.6px;color:var(--ink2);margin-bottom:-8px}
+.wotd-word b{font:700 34px var(--head);line-height:1.1}
+.wotd-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.wotd-opt{position:relative;border:2px solid var(--ink);background:#fff;padding:4px;box-shadow:3px 3px 0 var(--ink);min-height:44px}
+.wotd-opt .pic{display:block;aspect-ratio:4/3;background:linear-gradient(#bfeaf5,#7bd0ea);overflow:hidden}
+.wotd-opt .pic svg{width:100%;height:100%}
+.wotd-opt b{position:absolute;top:-10px;left:-10px;width:28px;height:28px;display:grid;place-items:center;background:var(--paper);border:2px solid var(--ink);font:700 15px var(--head)}
+.wotd-opt.no{opacity:.45}.wotd-opt.shake{animation:shake .45s}
+.wotd-opt.yes{outline:4px solid var(--ok);outline-offset:-2px;background:#E5F5EC}
+.wotd-opt:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.wotd-msg{margin-top:12px;min-height:26px;font-weight:600}
+.wotd-msg>b{display:block;font:700 22px var(--head);color:var(--ok)}
+.wotd-msg .wsent{margin:6px 0;font-size:19px}.wotd-msg .wsent i{font-style:normal;font-weight:700;background:#fff;border:1.5px solid var(--ink);padding:1px 8px}
+.wotd-msg .reward{margin:8px 0}
+.wotd-msg small{display:block;color:var(--ink2);margin:6px 0}
+/* album */
+.albm .mb{display:flex;flex-direction:column;min-height:0;flex:1;padding-bottom:10px}
+.alb{display:flex;flex-direction:column;min-height:0;flex:1;gap:10px}
+.alb-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;flex:none}
+.alb-tab{display:flex;align-items:center;justify-content:center;gap:8px;border:2px solid var(--ink);background:#fff;font:600 17px var(--head);min-height:46px;box-shadow:0 2px 0 rgba(14,58,74,.4);padding:4px 8px}
+.alb-tab b{font-size:13px;background:var(--paper2);border:1.5px solid var(--ink);padding:0 6px;white-space:nowrap}
+.alb-tab.on{background:var(--butter);outline:3px solid var(--coral);outline-offset:-2px}
+.alb-body{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;padding:2px 4px 8px}
+.alb-lead{margin:0 0 10px;color:var(--ink2)}.alb-empty{font:600 19px var(--head);text-align:center;padding:40px 10px}
+.alb-fish{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.alb-f{display:flex;flex-direction:column;align-items:stretch;border:2px solid var(--ink);background:#fff;padding:0;box-shadow:3px 3px 0 var(--ink);text-align:left}
+.alb-f .af-pic{display:block;aspect-ratio:3/2;background:linear-gradient(#bfeaf5,#5fbfde);border-bottom:2px solid var(--ink)}
+.alb-f .af-pic svg{width:100%;height:100%}
+.alb-f b{font:700 17px var(--head);padding:4px 8px 0}.alb-f small{padding:0 8px 6px;color:var(--ink2);font-size:13px}
+.alb-f:active,.alb-c:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.alb-stamps{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;padding:6px}
+.stampc{position:relative;background:#fff;border:2px dashed var(--ink2);padding:8px 8px 10px;transform:rotate(var(--r));text-align:center;opacity:.6}
+.stampc.got{opacity:1;border:3px double var(--coral-d);background:#FFFBF1;box-shadow:3px 3px 0 rgba(168,64,44,.35)}
+.stampc .sp-pic{display:grid;place-items:center;aspect-ratio:2/1;background:#DCE6E8 center/cover no-repeat;border:1.5px solid var(--ink2);filter:sepia(.15)}
+.stampc .sp-pic i{font:700 34px var(--head);font-style:normal;color:#8A9AA0}
+.stampc b{display:block;font:700 17px var(--head);margin-top:6px;text-transform:uppercase;letter-spacing:.8px;color:var(--coral-d)}
+.stampc:not(.got) b{color:var(--ink2)}
+.stampc small{display:block;font-size:13px;color:var(--ink2)}
+.stampc.got::after{content:'VISITED';position:absolute;top:10px;right:6px;font:700 12px var(--head);letter-spacing:1px;color:var(--coral-d);border:2px solid var(--coral-d);padding:0 5px;transform:rotate(12deg);background:rgba(255,251,241,.85)}
+.alb-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+.alb-c{display:flex;flex-direction:column;align-items:center;border:2px solid var(--ink);background:#fff;padding:6px;box-shadow:3px 3px 0 var(--ink)}
+.alb-c .ac-pic{display:block;width:100%;aspect-ratio:4/3;background:linear-gradient(#bfeaf5,#7bd0ea)}
+.alb-c .ac-pic svg{width:100%;height:100%}
+.alb-c:not(.got) .ac-pic{filter:grayscale(1) brightness(.35);opacity:.5}
+.alb-c b{font:700 15px var(--head);margin-top:4px}.alb-c small{font-size:12px;color:var(--ink2)}
+.alb-badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.alb-b{display:flex;flex-direction:column;align-items:center;text-align:center;border:2px solid var(--ink);background:#fff;padding:8px 8px 10px;box-shadow:3px 3px 0 var(--ink)}
+.alb-b:not(.got){background:#F3F1EC;box-shadow:3px 3px 0 #9AA8AD;border-color:#9AA8AD}
+.alb-b .ab-art svg{width:64px;height:82px}
+.alb-b b{font:700 16px var(--head)}.alb-b small{font-size:13px;color:var(--ink2);line-height:1.25}
+.alb-page{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:center}
+.alb-page .ap-pic{aspect-ratio:3/2;background:linear-gradient(#bfeaf5,#5fbfde);border:2px solid var(--ink)}
+.alb-page .ap-pic svg{width:100%;height:100%}
+.alb-page h3{font:700 26px var(--head);margin:0 0 6px}.alb-page ul{margin:0 0 10px;padding-left:20px;font-size:18px}
+@media (max-width:700px){.alb-page{grid-template-columns:1fr}.alb-tab{font-size:14px}}
+
+/* ===================== touch lock (iPad: no zoom, no sideways slide, no bounce) ===================== */
+html,body{position:fixed;inset:0;width:100%;height:100%;overflow:hidden;overscroll-behavior:none;-webkit-text-size-adjust:100%;text-size-adjust:100%;-webkit-touch-callout:none;touch-action:manipulation}
+#app{width:100%;overflow:hidden;position:relative}
+canvas{touch-action:none}
+.confetti{touch-action:auto}
+.toolbody,.workpanel,.shoplist,.mb,.orders,.cards,.alb-body{-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y}
+input,textarea,select{font-size:max(16px,1em)}
+/* portrait tablets: keep the word of the day (it was hidden before), centred below the wall */
+@media (max-width:860px){.hword{display:flex;left:50%;transform:translateX(-50%);top:calc(var(--wallh) + 84px);white-space:nowrap}.hw-pic{width:64px;height:44px}}
+@media (max-width:520px){.hword .hw-pic{display:none}}
+
 </style>
 </head>
 <body>
@@ -579,6 +681,49 @@ body.home-tank .tank-tools{display:none}
   <div id="toast" role="status" aria-live="polite"></div>
 </div>
 <script>
+/* ---- 00-lock.js ---- */
+/* ===== Touch lock (Maya's rule for every web app): the page never zooms, slides sideways or bounces.
+   Only the real scroll areas (tool list, dialogs, shop list, orders, cards, album) can scroll.
+   OnePointer: one finger at a time on the tank and the paint stage, and a resting palm is ignored while an Apple Pencil is used. ===== */
+'use strict';
+(function () {
+  const meta = document.querySelector('meta[name=viewport]');
+  const LOCK = 'width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover';
+  if (meta) meta.setAttribute('content', LOCK);
+  const SCROLLERS = '.toolbody,.workpanel,.shoplist,.mb,.orders,.cards,.alb-body,textarea';
+  const inScroller = el => !!(el && el.closest && el.closest(SCROLLERS));
+  ['gesturestart', 'gesturechange', 'gestureend'].forEach(t => document.addEventListener(t, e => e.preventDefault(), { passive: false }));
+  document.addEventListener('touchmove', e => { if ((e.touches && e.touches.length > 1) || !inScroller(e.target)) e.preventDefault(); }, { passive: false });
+  document.addEventListener('contextmenu', e => { if (!(e.target.closest && e.target.closest('textarea,input'))) e.preventDefault(); });
+  const home = () => {
+    if (window.scrollX || window.scrollY) window.scrollTo(0, 0);
+    const se = document.scrollingElement; if (se) { se.scrollLeft = 0; se.scrollTop = 0; }
+    if (document.body) { document.body.scrollLeft = 0; document.body.scrollTop = 0; } const app = document.getElementById('app'); if (app) { app.scrollLeft = 0; app.scrollTop = 0; }
+  };
+  window.addEventListener('scroll', home, { passive: true });
+  window.addEventListener('orientationchange', () => setTimeout(home, 200));
+  document.addEventListener('focusout', () => setTimeout(home, 60));
+  const vv = window.visualViewport;
+  if (vv) { const fix = () => { if (vv.scale > 1.001 && meta) { meta.setAttribute('content', LOCK + ', shrink-to-fit=no'); meta.setAttribute('content', LOCK); } home(); }; vv.addEventListener('resize', fix); vv.addEventListener('scroll', fix); }
+  window.__touchLock = { home, LOCK };
+})();
+const OnePointer = (() => {
+  let active = null, since = 0, penAt = -1e9;
+  return {
+    /* true = this pointer may act; false = ignore it (second finger, or a palm while a pen is in use) */
+    take(e) {
+      const now = performance.now();
+      if (e.pointerType === 'pen') penAt = now;
+      else if (e.pointerType === 'touch' && now - penAt < 1500) return false;
+      if (active !== null && active !== e.pointerId && now - since < 8000) return false;
+      active = e.pointerId; since = now; return true;
+    },
+    owns: e => active === null || active === e.pointerId,
+    release(e) { if (!e || active === e.pointerId) active = null; },
+    _reset() { active = null; penAt = -1e9; }
+  };
+})();
+
 /* ---- 01-util.js ---- */
 /* ===== util: colour maths, tiny DOM helpers, seeded random ===== */
 'use strict';
@@ -1093,6 +1238,12 @@ const FishArt = (() => {
     out.push(pick('body', Bd), pick('neck', N), pick('mouth', M), pick('eyes', E), pick('head', H));
     return out.join('').replace(/stroke-width="([\d.]+)"/g, (m, v) => `stroke-width="${Math.max(1.1, +v * .55).toFixed(1)}"`);
   }
+  /* pectoral fin outline (shared by the picture and by look()) */
+  function pectOf(spec, b) {
+    const pf = { small: .8, big: 1.25, spiky: 1, flowing: 1.15 }[spec.fin] || 1, [px, py] = b.pect;
+    const pectD = spec.fin === 'spiky' ? `M${px},${py - 6}L${px - 40 * pf},${py - 8}L${px - 28 * pf},${py + 8}L${px - 46 * pf},${py + 24 * pf}L${px - 10},${py + 14}Z` : spec.fin === 'flowing' ? `M${px},${py - 8}C${px - 20},${py - 20} ${px - 52 * pf},${py - 8} ${px - 56 * pf},${py + 10}C${px - 44 * pf},${py + 6} ${px - 48 * pf},${py + 30 * pf} ${px - 34},${py + 34 * pf}C${px - 22},${py + 26} ${px - 8},${py + 22} ${px},${py + 8}Z` : `M${px},${py - 8}C${px - 22},${py - 20} ${px - 50 * pf},${py - 8} ${px - 52 * pf},${py + 14 * pf}C${px - 32},${py + 24 * pf} ${px - 8},${py + 18} ${px},${py + 8}Z`;
+    return { pf, px, py, d: pectD };
+  }
   /* spec -> svg string. o: {uid, anim, wag, view:'full'|'head'|'tail'|'fit', width} */
   function svg(spec, o) {
     spec = normSpec(spec); o = o || {};
@@ -1114,13 +1265,15 @@ const FishArt = (() => {
 <linearGradient id="gold${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE27A"/><stop offset="1" stop-color="#E0A425"/></linearGradient>
 <linearGradient id="rb${id}" x1="0" y1="0" x2="1" y2="0.3"><stop offset="0" stop-color="#ff5a6e"/><stop offset=".2" stop-color="#ffb23a"/><stop offset=".4" stop-color="#fff36a"/><stop offset=".6" stop-color="#5ee08a"/><stop offset=".8" stop-color="#4fb6ff"/><stop offset="1" stop-color="#b184ff"/></linearGradient>
 <linearGradient id="rbu${id}" gradientUnits="userSpaceOnUse" spreadMethod="repeat" x1="60" y1="0" x2="150" y2="0"><stop offset="0" stop-color="#ff5a6e"/><stop offset=".2" stop-color="#ffb23a"/><stop offset=".4" stop-color="#fff36a"/><stop offset=".6" stop-color="#5ee08a"/><stop offset=".8" stop-color="#4fb6ff"/><stop offset="1" stop-color="#b184ff"/></linearGradient>
+<radialGradient id="vol${id}" cx=".6" cy=".32" r=".78"><stop offset=".45" stop-color="#0b2233" stop-opacity="0"/><stop offset="1" stop-color="#0b2233" stop-opacity=".26"/></radialGradient>
+<linearGradient id="rim${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".18" stop-color="#fff" stop-opacity="0"/></linearGradient>
 <linearGradient id="sh${id}" x1="0" y1="0" x2="1" y2="1"><stop offset=".25" stop-color="#fff" stop-opacity="0"/><stop offset=".42" stop-color="#fff" stop-opacity=".6"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/></linearGradient>
 </defs>`;
     const paintHtml = paintAll(spec.paint, id), hasPaint = paintHtml.length > 0 || !!o.paintLive;
     const PL = (clip, pre, post) => hasPaint ? `${pre || ''}<g clip-path="url(#${clip}${id})"><g class="pl">${paintHtml}</g></g>${post || ''}` : '';
     /* a translucent fin: membrane + visible rays + thin edge */
     const edgeC = d => darken(d, .42);
-    const finGroup = (pathD, raysD, col, key, extra, gid) => `<g ${extra || ''}><clipPath id="${key}${id}"><path d="${pathD}"/></clipPath><path d="${pathD}" fill="url(#${gid}${id})" fill-opacity=".88"/><g clip-path="url(#${key}${id})"><path d="${raysD}" stroke="${edgeC(col)}" stroke-opacity=".5" stroke-width="1.15" fill="none" stroke-linecap="round"/></g><path d="${pathD}" fill="none" stroke="${edgeC(col)}" stroke-opacity=".7" stroke-width="1.3" stroke-linejoin="round"/></g>`;
+    const finGroup = (pathD, raysD, col, key, extra, gid) => `<g ${extra || ''}><clipPath id="${key}${id}"><path d="${pathD}"/></clipPath><path d="${pathD}" fill="url(#${gid}${id})" fill-opacity="${key === 'cp' ? .86 : .76}"/><g clip-path="url(#${key}${id})"><path d="${raysD}" stroke="${edgeC(col)}" stroke-opacity=".5" stroke-width="1.15" fill="none" stroke-linecap="round"/><path d="${raysD}" stroke="#fff" stroke-opacity=".22" stroke-width=".8" fill="none" stroke-linecap="round" transform="translate(1.2 -1)"/></g><path d="${pathD}" fill="none" stroke="${edgeC(col)}" stroke-opacity=".7" stroke-width="1.3" stroke-linejoin="round"/></g>`;
     const raysFan = (n, len, spread) => { let d = ''; for (let i = 0; i < n; i++) { const k = n === 1 ? 0 : (i / (n - 1) * 2 - 1); d += `M${x0 - 4},${y0 + k * 6}L${x0 - len},${y0 + k * spread}`; } return d; };
     const baseRays = (x1, x2, y, hh, dir) => { let d = ''; for (let i = 0; i <= 9; i++) { const t = i / 9, bx = x1 + (x2 - x1) * t; d += `M${bx.toFixed(1)},${y}L${(bx + (t - .15) * (x2 - x1) * .5).toFixed(1)},${(y + dir * hh * 1.4).toFixed(1)}`; } return d; };
     const tailRot = `rotate(${wag} ${x0} ${y0})`;
@@ -1132,8 +1285,7 @@ const FishArt = (() => {
     const analY = b.anal[2] - 8, analH = fh * (spec.body === 'betta' ? 1.1 : .72), aPath = finPath(spec.fin, b.anal[0], b.anal[1], analY, analH, 1);
     const anal = finGroup(aPath, baseRays(b.anal[0], b.anal[1], analY, analH, 1), fc, 'ca', `transform="translate(0 ${analY}) skewX(${-b.skew}) translate(0 ${-analY})"`, 'fg');
     const analPaint = PL('ca', `<g transform="translate(0 ${analY}) skewX(${-b.skew}) translate(0 ${-analY})">`, '</g>').replace('<g class="pl">', `<g class="pl" transform="translate(0 ${analY}) skewX(${b.skew}) translate(0 ${-analY})">`);
-    const pf = { small: .8, big: 1.25, spiky: 1, flowing: 1.15 }[spec.fin] || 1, [px, py] = b.pect;
-    const pectD = spec.fin === 'spiky' ? `M${px},${py - 6}L${px - 40 * pf},${py - 8}L${px - 28 * pf},${py + 8}L${px - 46 * pf},${py + 24 * pf}L${px - 10},${py + 14}Z` : spec.fin === 'flowing' ? `M${px},${py - 8}C${px - 20},${py - 20} ${px - 52 * pf},${py - 8} ${px - 56 * pf},${py + 10}C${px - 44 * pf},${py + 6} ${px - 48 * pf},${py + 30 * pf} ${px - 34},${py + 34 * pf}C${px - 22},${py + 26} ${px - 8},${py + 22} ${px},${py + 8}Z` : `M${px},${py - 8}C${px - 22},${py - 20} ${px - 50 * pf},${py - 8} ${px - 52 * pf},${py + 14 * pf}C${px - 32},${py + 24 * pf} ${px - 8},${py + 18} ${px},${py + 8}Z`;
+    const { pf, px, py, d: pectD } = pectOf(spec, b);
     let pr = ''; for (let i = 0; i < 7; i++) pr += `M${px - 3},${py + (i - 3) * 2.4}L${px - 54 * pf},${py + 14 * pf + (i - 3) * 5}`;
     const pect = finGroup(pectD, pr, fc, 'cp', '', 'fg').replace(/^<g /, '<g ').replace(/<\/g>$/, `${PL('cp')}${anim ? `<animateTransform attributeName="transform" type="rotate" values="0 ${px} ${py};-12 ${px} ${py};0 ${px} ${py}" dur="1.6s" begin="-${(ph % 1.6).toFixed(2)}s" repeatCount="indefinite"/>` : ''}</g>`);
     /* body + overlays */
@@ -1157,7 +1309,7 @@ const FishArt = (() => {
     over += `<path d="M${lx0},${lyy}Q${(lx0 + b.tx) / 2},${lyy - 12} ${b.tx + 10},${lyy + 4}" fill="none" stroke="${lowDark}" stroke-opacity=".32" stroke-width="1.4" stroke-dasharray="2.5 3.5" stroke-linecap="round"/>`;
     const sx = (b.pts[0][0] + b.eye[0]) / 2 + 8, sw2 = (b.eye[0] - b.pts[0][0]) * .5;
     over += `<ellipse cx="${sx}" cy="${b.head[1] + 30}" rx="${sw2}" ry="15" fill="url(#sheen${id})" transform="rotate(-4 ${sx} ${b.head[1] + 30})"/><ellipse cx="${sx - 26}" cy="${b.head[1] + 24}" rx="14" ry="4" fill="#fff" opacity=".45"/>`;
-    over += `<rect x="60" y="30" width="340" height="230" fill="url(#bgx${id})"/>`;
+    over += `<rect x="60" y="30" width="340" height="230" fill="url(#bgx${id})"/><rect x="40" y="20" width="380" height="250" fill="url(#vol${id})"/><path d="${bodyD}" fill="none" stroke="url(#rim${id})" stroke-width="7" transform="translate(0 3)"/>`;
     /* gill cover */
     const gc = `<path d="M${b.gill[0]},${b.gill[1]}Q${b.gill[0] - 30},${CY} ${b.gill[2]},${b.gill[3]}Q${b.gill[0] + 10},${CY} ${b.gill[0]},${b.gill[1]}Z" fill="${lowDark}" fill-opacity=".12"/><path d="M${b.gill[0]},${b.gill[1]}Q${b.gill[0] - 30},${CY} ${b.gill[2]},${b.gill[3]}" fill="none" stroke="${outline}" stroke-opacity=".55" stroke-width="1.8" stroke-linecap="round"/><path d="M${b.gill[0] + 4},${b.gill[1] + 8}Q${b.gill[0] - 22},${CY} ${b.gill[2] + 3},${b.gill[3] - 8}" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="1.4" stroke-linecap="round"/>`;
     let spikes = '';
@@ -1196,7 +1348,69 @@ const FishArt = (() => {
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${bx.join(' ')}" class="${o.cls || 'linesvg'}" role="img" aria-label="${esc(o.label || 'fish outline')}">${tail}${dorsal}${anal}${body}${pect}${eye}${mouth}${sticker}</svg>`;
   }
   const paintKey = s => { const p = (s && s.paint) || []; if (!p.length) return ''; let x = 2166136261; const j = JSON.stringify(p); for (let i = 0; i < j.length; i++) { x ^= j.charCodeAt(i); x = Math.imul(x, 16777619); } return p.length + '.' + (x >>> 0).toString(36); };
-  return { svg, paintKey, line: lineSvg, B, smooth, shapeSvg, paintItem, paintD, STAMP_KINDS, colRef };
+  /* ---- what colours can a child really SEE? Paint covers the base colour, so the questions must read the picture ----
+     For the body, the tail and the fins we draw the part as a mask, draw the paint on top in flat colours,
+     and count pixels. Returns { body|tail|fin: { n, base, sh:{colour: pixels} } } or null when there is no paint. */
+  function look(specIn) {
+    const spec = normSpec(specIn), paint = spec.paint || []; if (!paint.length || typeof document === 'undefined') return null;
+    const b = B[spec.body] || B.goldfish, T = TAIL[spec.tail] || TAIL.fan, x0 = b.tx + 14;
+    const fh = Math.min(76, (FIN_H[spec.fin] || 50) * b.boost), dB = b.dorsal[2] + 10, aY = b.anal[2] - 8, aH = fh * (spec.body === 'betta' ? 1.1 : .72);
+    const S = .5, W = 240, H = 170, OFF = 40;
+    const mk = () => { const c = document.createElement('canvas'); c.width = W; c.height = H; const g = c.getContext('2d', { willReadFrequently: true }); if (!g || !window.Path2D) return null; g.setTransform(S, 0, 0, S, OFF * S, OFF * S); return g; };
+    const P = mk(); if (!P) return null;
+    /* flat colours; rainbow gets the marker rgb(1,2,3); everything else is matched to the nearest named colour afterwards */
+    const flat = c => c === 'rainbow' ? 'rgb(1,2,3)' : hx(c) || '#888888';
+    paint.forEach(it => {
+      P.fillStyle = P.strokeStyle = flat(it.c);
+      if (it.k === 's') { P.beginPath(); P.arc(it.x, it.y, (it.z || 14) * .55, 0, Math.PI * 2); P.fill(); return; }
+      const p = it.p || []; if (p.length < 4) { P.beginPath(); P.arc(p[0], p[1], (it.w || 6) / 2, 0, Math.PI * 2); P.fill(); return; }
+      P.lineWidth = it.w || 6; P.lineCap = P.lineJoin = 'round'; P.stroke(new Path2D(paintD(p)));
+    });
+    const pix = P.getImageData(0, 0, W, H).data;
+    const named = COLORS.map(c => [c.id, hex2rgb(c.hex)]);
+    const nameOf = (r, g, bl) => { if (r === 1 && g === 2 && bl === 3) return 'rainbow'; let best = null, bd = 1e9; named.forEach(([id, v]) => { const d = (v[0] - r) ** 2 + (v[1] - g) ** 2 + (v[2] - bl) ** 2; if (d < bd) { bd = d; best = id; } }); return best; };
+    const parts = {
+      body: [{ d: smooth(b.pts, 1) }], tail: [{ d: T.d(x0, CY) }],
+      fin: [{ d: finPath(spec.fin, b.dorsal[0], b.dorsal[1], dB, fh, -1), sk: [dB, b.skew] }, { d: finPath(spec.fin, b.anal[0], b.anal[1], aY, aH, 1), sk: [aY, -b.skew] }, { d: pectOf(spec, b).d }]
+    };
+    const out = {};
+    Object.keys(parts).forEach(k => {
+      const M = mk(); M.fillStyle = '#000';
+      parts[k].forEach(q => { M.save(); if (q.sk) { M.translate(0, q.sk[0]); M.transform(1, 0, Math.tan(q.sk[1] * Math.PI / 180), 1, 0, 0); M.translate(0, -q.sk[0]); } M.fill(new Path2D(q.d)); M.restore(); });
+      const m = M.getImageData(0, 0, W, H).data, r = { n: 0, base: 0, sh: {} };
+      for (let i = 3; i < m.length; i += 4) {
+        if (m[i] < 200) continue; r.n++;
+        if (pix[i] < 200) { r.base++; continue; }
+        const c = nameOf(pix[i - 3], pix[i - 2], pix[i - 1]); r.sh[c] = (r.sh[c] || 0) + 1;
+      }
+      out[k] = r;
+    });
+    return out;
+  }
+  return { svg, paintKey, line: lineSvg, B, smooth, shapeSvg, paintItem, paintD, STAMP_KINDS, colRef, look };
+})();
+
+/* ---- the fish AS IT LOOKS: where paint covers a part, the colour the child sees replaces the base colour.
+   Used by the questions, the checker and the badges. spec._also = other colours that show clearly (>= 12%). ---- */
+const effSpec = (() => {
+  const cache = new Map();
+  return function effSpec(specIn) {
+    if (specIn && specIn._eff) return specIn;
+    const spec = normSpec(specIn); if (!spec.paint.length) return spec;
+    const key = [spec.body, spec.tail, spec.fin, spec.bodyColor, spec.tailColor, spec.finColor, FishArt.paintKey(spec)].join('|');
+    if (!cache.has(key)) {
+      let res = {}; try { res = FishArt.look(spec) || {}; } catch (e) { res = {}; }
+      const pick = {}, also = {};
+      [['body', 'bodyColor'], ['tail', 'tailColor'], ['fin', 'finColor']].forEach(([part, field]) => {
+        const r = res[part]; if (!r || !r.n) return;
+        const sh = Object.assign({}, r.sh); sh[spec[field]] = (sh[spec[field]] || 0) + r.base;
+        let best = spec[field], bv = -1; Object.keys(sh).forEach(c => { if (c !== 'rainbow' && sh[c] > bv) { bv = sh[c]; best = c; } });
+        pick[field] = best; Object.keys(sh).forEach(c => { if (c !== best && c !== 'rainbow' && sh[c] / r.n >= .12) also[c] = 1; });
+      });
+      cache.set(key, { pick, also: Object.keys(also) }); if (cache.size > 200) cache.delete(cache.keys().next().value);
+    }
+    const c = cache.get(key); return Object.assign({}, spec, c.pick, { _eff: true, _also: c.also.slice() });
+  };
 })();
 
 /* ---- 03b-animals.js ---- */
@@ -1327,7 +1541,7 @@ const Checker = (() => {
   const ucfirst = s => s.charAt(0).toUpperCase() + s.slice(1);
 
   /* ---- truth functions ---- */
-  function usedColors(spec) { const u = new Set([spec.bodyColor, spec.finColor, spec.tailColor, spec.eyeColor]); if (spec.pattern !== 'none') u.add(spec.patternColor); return u; }
+  function usedColors(spec) { const u = new Set([spec.bodyColor, spec.finColor, spec.tailColor, spec.eyeColor]); if (spec.pattern !== 'none') u.add(spec.patternColor); (spec._also || []).forEach(x => u.add(x)); return u; }
   function evalNoun(noun, mods, spec, nounWord, implicit) {
     const C = [], add = (kind, ok, hint, neutral) => C.push({ kind, ok: !!ok, hint: ok ? '' : hint, neutral: !!neutral });
     mods = mods.map(m => COLOR_ALIAS[m] || m);
@@ -1435,8 +1649,10 @@ const Checker = (() => {
     return C;
   }
 
+  /* the fish as it LOOKS (paint can cover the base colour); plain normSpec when there is no paint */
+  const EFF = s => typeof effSpec === "function" ? effSpec(s) : normSpec(s);
   function checkSentence(text, spec) {
-    spec = normSpec(spec);
+    spec = EFF(spec);
     const T = (normText(text).match(/[a-z]+/g) || []);
     const claims = [], seen = new Set();
     const isMod = w => MODS.has(w), isSkip = w => SKIP.has(w);
@@ -1485,7 +1701,7 @@ const Checker = (() => {
 
   /* ---- example true sentences for this fish (used for kind hints) ---- */
   function examples(spec) {
-    spec = normSpec(spec);
+    spec = EFF(spec);
     return [`My fish is ${spec.bodyColor}.`, `Its tail is ${spec.tail === 'fan' ? 'a fan' : spec.tail}.`.replace('a fan', 'big'), `It has ${spec.eye} eyes.`, `It has ${spec.fin} fins.`, `My fish is ${spec.size === 'medium' ? 'medium' : spec.size}.`]
       .concat(spec.pattern !== 'none' ? [`It has ${spec.patternColor} ${spec.pattern}.`] : []);
   }
@@ -1493,7 +1709,7 @@ const Checker = (() => {
   /* ---- level logic ---- */
   const MIN = { 1: { sent: 2, facts: 2 }, 2: { sent: 3, facts: 3 }, 3: { sent: 3, facts: 3 } };
   function checkAll(lines, spec, level) {
-    level = level || 1; spec = normSpec(spec);
+    level = level || 1; spec = EFF(spec);
     const sents = []; lines.forEach((l, idx) => { splitSentences(l.text != null ? l.text : l).forEach(s => sents.push({ text: s, line: idx })); });
     const seenText = new Set(), items = [];
     sents.forEach(s => { const key = normText(s.text).replace(/\s+/g, ' '); if (seenText.has(key)) { items.push({ text: s.text, line: s.line, claims: [], status: 'repeat', hints: [], facts: [] }); return; } seenText.add(key); const r = checkSentence(s.text, spec); r.line = s.line; items.push(r); });
@@ -1961,7 +2177,7 @@ const State = {
   owned: { sand: ['golden'], bg: ['day'], place: ['none'] }, muted: false,
   settings: { level: 'choose', voice: true, pin: '1234' },
   draft: DEFAULT_SPEC(), draftLevel: 0, draftDone: null, teacher: false, welcomed: false,
-  orders: {}, cards: [], quiz: {}, orderSpec: ORDER_START(), orderTab: 1,
+  orders: {}, cards: [], quiz: {}, orderSpec: ORDER_START(), orderTab: 1, prog: null,
   load() {
     try {
       const raw = localStorage.getItem(KEY); if (!raw) return;
@@ -1973,21 +2189,230 @@ const State = {
       if (!SANDS.some(x => x.id === State.sand)) State.sand = 'golden'; if (!BACKGROUNDS.some(x => x.id === State.bg)) State.bg = 'day'; if (!PLACES.some(x => x.id === State.place)) State.place = 'none';
       if (d.settings) Object.assign(State.settings, d.settings);
       if (d.draft) State.draft = normSpec(d.draft);
+      if (d.prog && typeof d.prog === 'object') State.prog = Object.assign(Progress.BLANK(), d.prog, { made: Array.isArray(d.prog.made) ? d.prog.made.filter(m => m && m.spec).map(m => Object.assign(m, { spec: normSpec(m.spec), sentences: m.sentences || [] })) : [], colors: Array.isArray(d.prog.colors) ? d.prog.colors : [], badges: Array.isArray(d.prog.badges) ? d.prog.badges : [] });
       if (d.orders && typeof d.orders === 'object') State.orders = d.orders; if (Array.isArray(d.cards)) State.cards = d.cards.filter(id => Animals.get(id)); if (d.quiz && typeof d.quiz === 'object') State.quiz = d.quiz; if (d.orderTab) State.orderTab = d.orderTab;
     } catch (e) { }
   },
   _t: 0,
   save() { clearTimeout(State._t); State._t = setTimeout(State.saveNow, 250); },
   saveNow() {
+    if (typeof Progress !== 'undefined' && State.prog) Progress.tick();
     try {
-      localStorage.setItem(KEY, JSON.stringify({ shells: State.shells, fish: State.fish, decor: State.decor, sand: State.sand, bg: State.bg, place: State.place, light: State.light, owned: State.owned, muted: State.muted, settings: State.settings, draft: State.draft, draftLevel: State.draftLevel, welcomed: State.welcomed, orders: State.orders, cards: State.cards, quiz: State.quiz, orderTab: State.orderTab }));
+      localStorage.setItem(KEY, JSON.stringify({ shells: State.shells, fish: State.fish, decor: State.decor, sand: State.sand, bg: State.bg, place: State.place, light: State.light, owned: State.owned, muted: State.muted, settings: State.settings, draft: State.draft, draftLevel: State.draftLevel, welcomed: State.welcomed, orders: State.orders, cards: State.cards, quiz: State.quiz, orderTab: State.orderTab, prog: State.prog }));
       return true;
     } catch (e) { return false; }
   },
   reset() { try { localStorage.removeItem(KEY); } catch (e) { } },
-  addShells(n) { State.shells += n; State.save(); UI.updateShells(true); },
+  addShells(n) { State.shells += n; State.save(); UI.updateShells(true); if (n > 0 && typeof Celebrate !== 'undefined') Celebrate.shells(n); },
   trySpend(n) { if (State.shells < n) return false; State.shells -= n; State.save(); UI.updateShells(); return true; }
 };
+
+/* ---- 06b-progress.js ---- */
+/* ===== Progress: word of the day challenge, play streak, badges, Fish Album (fish, passport stamps, fact cards, badges)
+   + Celebrate: paper confetti drawn in code and shells that fly to the shell counter. Everything stays calm and teaches words. ===== */
+const Celebrate = (() => {
+  const reduce = () => typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let lastPt = null;
+  window.addEventListener('pointerdown', e => { lastPt = { x: e.clientX, y: e.clientY, t: performance.now() }; }, true);
+  let cv = null, ctx = null, bits = [], raf = 0, lastT = 0;
+  const COLS = ['#F25C45', '#FFD25A', '#2AA9C9', '#1F9A6E', '#FF8FC0', '#FFF6E3', '#8E5BE0'];
+  function loop(now) {
+    const dt = Math.min(.05, (now - lastT) / 1000 || .016); lastT = now;
+    ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height); const d = Math.min(2, window.devicePixelRatio || 1); ctx.scale(d, d);
+    bits.forEach(b => {
+      b.vy += 340 * dt; b.vx *= (1 - dt * 1.4); b.vy *= (1 - dt * 1.1); b.x += (b.vx + Math.sin(b.ph + now / 260) * 26) * dt; b.y += b.vy * dt; b.rot += b.vr * dt; b.life -= dt;
+      ctx.save(); ctx.translate(b.x, b.y); ctx.rotate(b.rot); ctx.scale(1, Math.cos(b.ph + now / 140)); ctx.globalAlpha = Math.max(0, Math.min(1, b.life * 2));
+      ctx.fillStyle = b.c; ctx.fillRect(-b.w / 2, -b.h / 2, b.w, b.h); ctx.fillStyle = 'rgba(14,58,74,.18)'; ctx.fillRect(-b.w / 2, b.h / 2 - 1.2, b.w, 1.2); ctx.restore();
+    });
+    bits = bits.filter(b => b.life > 0 && b.y < innerHeight + 40);
+    if (bits.length) raf = requestAnimationFrame(loop); else { cv.remove(); cv = null; raf = 0; }
+  }
+  function confetti(n, at) {
+    if (reduce()) return; n = n || 70;
+    if (!cv) { cv = document.createElement('canvas'); cv.className = 'confetti'; cv.setAttribute('aria-hidden', 'true'); const d = Math.min(2, window.devicePixelRatio || 1); cv.width = innerWidth * d; cv.height = innerHeight * d; document.body.append(cv); ctx = cv.getContext('2d'); }
+    const ox = at ? at.x : innerWidth / 2, oy = at ? at.y : innerHeight * .42;
+    for (let i = 0; i < n && bits.length < 180; i++) { const a = -Math.PI / 2 + (Math.random() - .5) * 2.2, s = 260 + Math.random() * 420; bits.push({ x: ox + (Math.random() - .5) * 60, y: oy, vx: Math.cos(a) * s, vy: Math.sin(a) * s, w: 6 + Math.random() * 6, h: 9 + Math.random() * 7, rot: Math.random() * 6, vr: (Math.random() - .5) * 9, ph: Math.random() * 6, c: COLS[i % COLS.length], life: 1.6 + Math.random() * .9 }); }
+    if (!raf) { lastT = performance.now(); raf = requestAnimationFrame(loop); }
+  }
+  function target() { const hs = document.getElementById('shells'), visible = hs && hs.offsetParent !== null && hs.getBoundingClientRect().width > 0; return visible ? hs : document.querySelector('#hstats .sh'); }
+  function shells(n) {
+    const t = target(); if (!t || n <= 0) return; const tr = t.getBoundingClientRect(), tx = tr.left + Math.min(26, tr.width / 2), ty = tr.top + tr.height / 2;
+    const from = lastPt && performance.now() - lastPt.t < 4000 ? lastPt : { x: innerWidth / 2, y: innerHeight / 2 };
+    if (reduce() || typeof Element.prototype.animate !== 'function') return;
+    const k = Math.min(6, Math.max(2, n));
+    for (let i = 0; i < k; i++) {
+      const el = document.createElement('i'); el.className = 'flyshell'; el.innerHTML = IC.shell; el.setAttribute('aria-hidden', 'true'); document.body.append(el);
+      const sx = from.x + (Math.random() - .5) * 50, sy = from.y + (Math.random() - .5) * 30, mx = (sx + tx) / 2 + (Math.random() - .5) * 140, my = Math.min(sy, ty) - 60 - Math.random() * 80;
+      const an = el.animate([{ transform: `translate(${sx - 14}px,${sy - 14}px) scale(.4)`, opacity: 0 }, { transform: `translate(${mx - 14}px,${my - 14}px) scale(1.15)`, opacity: 1, offset: .45 }, { transform: `translate(${tx - 14}px,${ty - 14}px) scale(.7)`, opacity: .9 }], { duration: 760 + i * 90, delay: i * 70, easing: 'cubic-bezier(.35,.1,.3,1)', fill: 'both' });
+      an.onfinish = () => { el.remove(); if (i === k - 1) { t.classList.remove('bump'); void t.offsetWidth; t.classList.add('bump'); } };
+    }
+  }
+  return { confetti, shells, point: () => lastPt };
+})();
+
+const Progress = (() => {
+  const BLANK = () => ({ made: [], colors: [], badges: [], wotdDay: -1, wotdCount: 0, lastDay: -1, streak: 0, streakBest: 0, perfect: 0, seeded: false });
+  const today = () => { const d = new Date(); return Math.floor((d.getTime() - d.getTimezoneOffset() * 6e4) / 864e5); };
+  const WOTD_REWARD = 2;
+  /* ---- word of the day ---- */
+  const WORDS = [['tail', 'long'], ['tail', 'forked'], ['tail', 'fan'], ['fin', 'spiky'], ['fin', 'flowing'], ['eye', 'sleepy'], ['eye', 'surprised'], ['eye', 'sad'], ['eye', 'angry'], ['mouth', 'grin'], ['mouth', 'open'], ['pattern', 'stripes'], ['pattern', 'leopard'], ['pattern', 'plaid'], ['pattern', 'flames'], ['scales', 'rainbow'], ['scales', 'glitter'], ['sticker', 'crown'], ['sticker', 'bowtie'], ['sticker', 'headphones'], ['body', 'pufferfish'], ['body', 'angelfish']];
+  const LISTS = () => ({ tail: TAILS, fin: FINS, eye: EYES, mouth: MOUTHS, pattern: PATTERNS, scales: SCALES, sticker: STICKERS, body: BODIES });
+  function sentenceFor(kind, id, label) {
+    if (kind === 'body') return 'My fish is ' + (/^[aeiou]/.test(label) ? 'an ' : 'a ') + label + '.';
+    if (kind === 'pattern' && id === 'plaid') return 'My fish has a plaid pattern.';
+    const plural = /s$/.test(label);
+    return 'My fish has ' + (plural ? '' : /^[aeiou]/.test(label) ? 'an ' : 'a ') + label + '.';
+  }
+  function wordOfDay(day) {
+    const d = day == null ? today() : day, [k, id] = WORDS[((d % WORDS.length) + WORDS.length) % WORDS.length], it = LISTS()[k].find(x => x.id === id), label = (it && it.label) || id;
+    return { kind: k, id, label, sentence: sentenceFor(k, id, label), day: d };
+  }
+  function wotdOptions(wd) {
+    const R = rnd(wd.day * 7 + 3), pool = LISTS()[wd.kind].filter(x => x.id !== wd.id && x.id !== 'none' && x.id !== 'off' && (wd.kind !== 'sticker' || x.zone === 'head'));
+    return shuffle([wd.id].concat(shuffle(pool, R).slice(0, 2).map(x => x.id)), R);
+  }
+  const wotdDone = () => State.prog.wotdDay === today();
+  function playWord(onDone) {
+    const wd = wordOfDay(), opts = wotdOptions(wd), c = h('div', { class: 'wotd' });
+    const msg = h('div', { class: 'wotd-msg', role: 'status' }, 'Tap the picture that shows the word.');
+    const hear = Voice.ok() && State.settings.voice ? h('button', { class: 'btn small', id: 'btn-wotd-hear', onclick: () => Voice.say(wd.label) }, h('span', { html: IC.speaker }), 'Hear it') : null;
+    const grid = h('div', { class: 'wotd-opts' }, opts.map((id, i) => h('button', { class: 'wotd-opt', 'data-wotd': id, 'aria-label': 'Picture ' + 'ABC'[i], onclick: e => pickIt(id, e.currentTarget) }, h('span', { class: 'pic', html: Pics.opt(wd.kind, id) }), h('b', null, 'ABC'[i]))));
+    c.append(h('div', { class: 'wotd-word' }, h('small', null, 'Find this word'), h('b', null, wd.label), hear), grid, msg);
+    const w = UI.modal('Word of the day', c, { cls: 'small wotdm' });
+    function pickIt(id, btn) {
+      if (c.classList.contains('done')) return;
+      if (id !== wd.id) { Sfx.oops(); btn.classList.remove('shake'); void btn.offsetWidth; btn.classList.add('shake', 'no'); msg.textContent = 'Look again. Find: ' + wd.label + '.'; return; }
+      btn.classList.add('yes'); c.classList.add('done'); Sfx.success();
+      const first = !wotdDone(); if (first) { State.prog.wotdDay = today(); State.prog.wotdCount++; }
+      msg.innerHTML = ''; msg.append(h('b', null, 'Yes! This is ' + wd.label + '.'), h('p', { class: 'wsent' }, 'Read it: ', h('i', null, wd.sentence)),
+        first ? h('div', { class: 'reward' }, h('span', { html: IC.shell }), h('b', null, '+' + WOTD_REWARD + ' shells')) : h('small', null, 'You already won today\'s shells. Come back tomorrow for a new word!'),
+        h('div', { class: 'row' }, Voice.ok() && State.settings.voice ? h('button', { class: 'btn small', id: 'btn-wotd-sent', onclick: () => Voice.say(wd.sentence) }, h('span', { html: IC.speaker }), 'Hear it') : null, h('button', { class: 'btn primary', id: 'btn-wotd-ok', onclick: () => { UI.closeModal(w); onDone && onDone(); } }, 'Great!')));
+      const r = btn.getBoundingClientRect(); Celebrate.confetti(50, { x: r.left + r.width / 2, y: r.top + r.height / 2 });
+      if (first) State.addShells(WOTD_REWARD); State.save();
+    }
+    return w;
+  }
+  /* ---- streak: days played in a row (gentle: it only counts up, missing a day starts again at 1) ---- */
+  function visit() {
+    const p = State.prog, d = today(); if (p.lastDay === d) return;
+    p.streak = p.lastDay === d - 1 ? p.streak + 1 : 1; p.lastDay = d; p.streakBest = Math.max(p.streakBest, p.streak); State.save();
+  }
+  /* ---- fish album ---- */
+  function fishMade(rec, perfect) {
+    const p = State.prog; if (p.made.some(m => m.id === rec.id)) return;
+    p.made.unshift({ id: rec.id, name: rec.spec.name || 'My fish', spec: rec.spec, sentences: rec.sentences.slice(0, 8), day: today() }); p.made = p.made.slice(0, 40);
+    if (perfect) p.perfect++; noteColors(rec.spec); State.save();
+  }
+  function noteColors(s0) {
+    const s = effSpec(s0), p = State.prog, cs = [s.bodyColor, s.finColor, s.tailColor]; if (cs.every(c => c === 'white') && s.pattern === 'none') return;
+    if (s.pattern !== 'none') cs.push(s.patternColor); cs.forEach(c => { if (COLOR_HEX[c] && !p.colors.includes(c)) p.colors.push(c); });
+  }
+  /* ---- badges ---- */
+  const placesSeen = () => State.owned.place.filter(id => id !== 'none').length, ALL_PLACES = () => PLACES.length - 1;
+  const ordersDone = () => Object.values(State.orders).filter(o => o && o.done).length;
+  const BADGES = [
+    { id: 'first-fish', name: 'First Fish', how: 'Make and describe your first fish.', col: '#2AA9C9', g: 'fish', ok: p => p.made.length >= 1 },
+    { id: 'five-fish', name: 'Fish Friends', how: 'Make 5 fish.', col: '#1F9A6E', g: 'fish2', ok: p => p.made.length >= 5 },
+    { id: 'ten-fish', name: 'Big School', how: 'Make 10 fish.', col: '#0F6E8F', g: 'fish3', ok: p => p.made.length >= 10 },
+    { id: 'sharp-eyes', name: 'Sharp Eyes', how: 'Describe a fish with no mistakes.', col: '#8E5BE0', g: 'eye', ok: p => p.perfect >= 1 },
+    { id: 'colors-8', name: 'Color Mixer', how: 'Use 8 different colors on your fish.', col: '#F25C45', g: 'palette', ok: p => p.colors.length >= 8 },
+    { id: 'colors-all', name: 'Rainbow Artist', how: 'Use all 22 colors on your fish.', col: '#E0A425', g: 'rainbow', ok: p => p.colors.length >= COLORS.length },
+    { id: 'first-trip', name: 'First Trip', how: 'Take your tank to a new place.', col: '#D9573F', g: 'pin', ok: () => placesSeen() >= 1 },
+    { id: 'all-places', name: 'World Traveler', how: 'Visit every place.', col: '#14795A', g: 'globe', ok: () => placesSeen() >= ALL_PLACES() },
+    { id: 'quiz-star', name: 'Quiz Star', how: 'Get 3 of 3 in a fact card quiz.', col: '#E0A425', g: 'star', ok: () => Object.values(State.quiz).some(v => v === 3) },
+    { id: 'fact-finder', name: 'Fact Finder', how: 'Unlock 6 fact cards.', col: '#2D5E6E', g: 'book', ok: () => State.cards.length >= 6 },
+    { id: 'order-helper', name: 'Order Helper', how: 'Serve 5 orders.', col: '#B4531A', g: 'bag', ok: () => ordersDone() >= 5 },
+    { id: 'word-hunter', name: 'Word Hunter', how: 'Finish 3 word of the day challenges.', col: '#FF7A66', g: 'word', ok: p => p.wotdCount >= 3 },
+    { id: 'three-days', name: 'Three Days', how: 'Play 3 days in a row.', col: '#F2A33A', g: 'sun', ok: p => p.streakBest >= 3 }
+  ];
+  const GL = {
+    fish: '<path d="M4 16c4-7 13-8 18-2l5-4v13l-5-4c-5 6-14 5-18-3z" fill="#fff"/><circle cx="18" cy="14.5" r="1.6" fill="#0E3A4A"/>',
+    fish2: '<path d="M2 12c3-5 9-6 13-2l4-3v9l-4-3c-4 4-10 3-13-1z" fill="#fff"/><path d="M10 23c3-5 9-6 13-2l4-3v9l-4-3c-4 4-10 3-13-1z" fill="#fff" opacity=".8"/><circle cx="12" cy="11.5" r="1.2" fill="#0E3A4A"/><circle cx="20" cy="22.5" r="1.2" fill="#0E3A4A"/>',
+    fish3: '<path d="M3 9c2-3 6-4 9-1l3-2v6l-3-2c-3 3-7 2-9-1z" fill="#fff"/><path d="M13 16c2-3 6-4 9-1l3-2v6l-3-2c-3 3-7 2-9-1z" fill="#fff"/><path d="M3 23c2-3 6-4 9-1l3-2v6l-3-2c-3 3-7 2-9-1z" fill="#fff"/>',
+    eye: '<path d="M3 16c5-8 21-8 26 0-5 8-21 8-26 0z" fill="#fff"/><circle cx="16" cy="16" r="5" fill="#0E3A4A"/><circle cx="14.2" cy="14.2" r="1.6" fill="#fff"/>',
+    palette: '<path d="M16 4C9 4 4 9 4 15c0 6 5 9 9 9 2 0 2-2 1-3-1-2 0-4 2-4h3c4 0 7-2 7-6 0-4-4-7-10-7z" fill="#fff"/><circle cx="10" cy="13" r="2" fill="#F25C45"/><circle cx="15" cy="9" r="2" fill="#2AA9C9"/><circle cx="21" cy="11" r="2" fill="#1F9A6E"/>',
+    rainbow: '<path d="M4 23a12 12 0 0 1 24 0" stroke="#fff" stroke-width="3.2" fill="none"/><path d="M8 23a8 8 0 0 1 16 0" stroke="#FFE27A" stroke-width="3.2" fill="none"/><path d="M12 23a4 4 0 0 1 8 0" stroke="#8FD3FF" stroke-width="3.2" fill="none"/>',
+    pin: '<path d="M16 28s-8-8.5-8-14a8 8 0 0 1 16 0c0 5.5-8 14-8 14z" fill="#fff"/><circle cx="16" cy="14" r="3.2" fill="#0E3A4A"/>',
+    globe: '<circle cx="16" cy="16" r="11" fill="#fff"/><path d="M5 16h22M16 5c-5 5-5 17 0 22M16 5c5 5 5 17 0 22" stroke="#0E3A4A" stroke-width="1.6" fill="none"/>',
+    star: '<path d="M16 4l3.6 7.4 8.1 1.1-5.9 5.7 1.4 8.1L16 22.4l-7.2 3.9 1.4-8.1-5.9-5.7 8.1-1.1z" fill="#fff"/>',
+    book: '<path d="M4 8c4-1.5 8-1 12 2 4-3 8-3.5 12-2v16c-4-1.5-8-1-12 2-4-3-8-3.5-12-2z" fill="#fff"/><path d="M16 10v16" stroke="#0E3A4A" stroke-width="1.6"/>',
+    bag: '<path d="M7 11h18l-1.6 15H8.6z" fill="#fff"/><path d="M11 11c0-4 2-6 5-6s5 2 5 6" stroke="#fff" stroke-width="2.4" fill="none"/>',
+    word: '<path d="M5 6h22v15H14l-6 5v-5H5z" fill="#fff"/><path d="M12.5 18l3.5-9 3.5 9M13.8 15h4.4" stroke="#0E3A4A" stroke-width="1.8" fill="none" stroke-linejoin="round"/>',
+    sun: '<circle cx="16" cy="16" r="6" fill="#fff"/><path d="M16 3v4M16 25v4M3 16h4M25 16h4M6.8 6.8l2.8 2.8M22.4 22.4l2.8 2.8M25.2 6.8l-2.8 2.8M9.6 22.4l-2.8 2.8" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>'
+  };
+  /* an octagon medal with ribbon tails: square-cut like the rest of the app */
+  function badgeSvg(b, on) {
+    const c = on ? b.col : '#B9C4C8', dk = darken(c, .35), oct = 'M22,4H50L68,22V50L50,68H22L4,50V22Z';
+    return `<svg viewBox="0 0 72 92" class="bsvg" aria-hidden="true"><path d="M18,60L10,90L24,83L32,92L36,66Z" fill="${on ? darken(c, .15) : '#A3AEB3'}"/><path d="M54,60L62,90L48,83L40,92L36,66Z" fill="${on ? darken(c, .25) : '#97A2A7'}"/>`
+      + `<path d="${oct}" fill="${dk}" transform="translate(0 2)"/><path d="${oct}" fill="${c}" stroke="${dk}" stroke-width="2"/><path d="M24,10H48L62,24V48L48,62H24L10,48V24Z" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.6" stroke-dasharray="3 3"/>`
+      + `<path d="M22,4H50L58,12H14Z" fill="#fff" opacity=".22"/><g transform="translate(18 18) scale(1.125)" opacity="${on ? 1 : .75}">${GL[b.g] || GL.star}</g></svg>`;
+  }
+  let queue = [], showing = false;
+  function showNext() {
+    if (showing || !queue.length) return; showing = true; const b = queue.shift();
+    let el = document.getElementById('badge-pop'); if (!el) { el = h('div', { id: 'badge-pop', role: 'status', 'aria-live': 'polite' }); document.body.append(el); }
+    el.innerHTML = ''; el.append(h('span', { class: 'bp-art', html: badgeSvg(b, true) }), h('span', { class: 'bp-t' }, h('small', null, 'New badge!'), h('b', null, b.name), h('span', null, b.how)));
+    el.classList.remove('on'); void el.offsetWidth; el.classList.add('on'); Sfx.shell();
+    const r = el.getBoundingClientRect(); Celebrate.confetti(28, { x: r.left + 40, y: r.top + 20 });
+    setTimeout(() => { el.classList.remove('on'); setTimeout(() => { showing = false; showNext(); }, 400); }, 3600);
+  }
+  function check(silent) {
+    const p = State.prog; let got = [];
+    BADGES.forEach(b => { if (!p.badges.includes(b.id)) { let ok = false; try { ok = b.ok(p); } catch (e) { } if (ok) { p.badges.push(b.id); got.push(b); } } });
+    if (got.length && !silent) { queue = queue.concat(got); setTimeout(showNext, 700); }
+    return got;
+  }
+  /* called from State.saveNow: notes the colors on the fish being designed, then checks badges */
+  function tick() { try { if (!State.teacher) noteColors(State.draft); check(); } catch (e) { } }
+  function init() {
+    const p = State.prog;
+    if (!p.seeded) { State.fish.slice().reverse().forEach(f => { if (!p.made.some(m => m.id === f.id)) p.made.unshift({ id: f.id, name: f.spec.name || 'My fish', spec: f.spec, sentences: (f.sentences || []).slice(0, 8), day: today() }); noteColors(f.spec); }); p.seeded = true; }
+    visit(); check(true); State.save();
+  }
+
+  /* ---- the album (a big dialog with four tabs) ---- */
+  let albTab = 'fish';
+  function album(tab) {
+    if (tab) albTab = tab; check(); const p = State.prog, body = h('div', { class: 'alb' });
+    const counts = () => ({ fish: String(p.made.length), stamps: placesSeen() + ' / ' + ALL_PLACES(), cards: State.cards.length + ' / ' + Animals.list.length, badges: p.badges.length + ' / ' + BADGES.length });
+    const tabs = h('div', { class: 'alb-tabs', role: 'tablist' }, [['fish', 'My fish'], ['stamps', 'Passport'], ['cards', 'Fact cards'], ['badges', 'Badges']].map(([id, l]) => h('button', { class: 'alb-tab' + (albTab === id ? ' on' : ''), role: 'tab', 'aria-selected': albTab === id ? 'true' : 'false', 'data-alb': id, onclick: () => { albTab = id; Sfx.click(); paint(); } }, h('span', null, l), h('b', null, ''))));
+    const inner = h('div', { class: 'alb-body' });
+    function paint() {
+      const cn = counts(); $$('.alb-tab', tabs).forEach(t => { const on = t.dataset.alb === albTab; $('b', t).textContent = cn[t.dataset.alb]; t.classList.toggle('on', on); t.setAttribute('aria-selected', on ? 'true' : 'false'); });
+      inner.innerHTML = '';
+      if (albTab === 'fish') {
+        if (!p.made.length) { inner.append(h('p', { class: 'alb-empty' }, 'Your album is empty. Design a fish and describe it. It will be saved here!')); return; }
+        inner.append(h('p', { class: 'alb-lead' }, 'Every fish you made and the true sentences you chose. Tap a fish to read about it.'));
+        inner.append(h('div', { class: 'alb-fish' }, p.made.map((m, i) => { const inTank = State.fish.some(f => f.id === m.id);
+          return h('button', { class: 'alb-f', 'data-fish': m.id, onclick: () => fishPage(m) }, h('span', { class: 'af-pic', html: FishArt.svg(m.spec, { uid: 'al' + i, cls: 'fishsvg', label: m.name }) }), h('b', null, m.name), h('small', null, inTank ? 'In the tank' : 'In the album')); })));
+      }
+      if (albTab === 'stamps') {
+        inner.append(h('p', { class: 'alb-lead' }, 'Take your tank on a trip in the aquarium shop. Each new place gives you a passport stamp.'));
+        inner.append(h('div', { class: 'alb-stamps' }, PLACES.filter(pl => pl.id !== 'none').map((pl, i) => { const got = State.owned.place.includes(pl.id), th = got && Aquarium.placeThumb ? Aquarium.placeThumb(pl.id) : '';
+          return h('div', { class: 'stampc' + (got ? ' got' : ''), 'data-stamp': pl.id, style: '--r:' + ((i % 3) - 1) * 2 + 'deg' }, h('span', { class: 'sp-pic', style: th ? `background-image:url(${th})` : '' }, got ? null : h('i', null, '?')), h('b', null, pl.label), h('small', null, got ? pl.phrase : 'Not visited yet')); })));
+      }
+      if (albTab === 'cards') {
+        inner.append(h('p', { class: 'alb-lead' }, 'Serve orders to unlock real animal fact cards.'));
+        inner.append(h('div', { class: 'alb-cards' }, Animals.list.map(a => { const got = State.teacher || State.cards.includes(a.id);
+          return h('button', { class: 'alb-c' + (got ? ' got' : ''), 'data-acard': a.id, onclick: () => { if (got) Modes.openCard(a.id); else UI.toast('Finish an order from the ' + a.name.toLowerCase() + ' to unlock this card.'); } }, h('span', { class: 'ac-pic', html: Animals.art(a.id) }), h('b', null, got ? a.name : '? ? ?'), State.quiz[a.id] != null ? h('small', null, 'Quiz ' + State.quiz[a.id] + '/3') : null); })));
+      }
+      if (albTab === 'badges') {
+        inner.append(h('p', { class: 'alb-lead' }, 'Badges show what you can do. Read how to earn each one.'));
+        inner.append(h('div', { class: 'alb-badges' }, BADGES.map(b => { const got = p.badges.includes(b.id); return h('div', { class: 'alb-b' + (got ? ' got' : ''), 'data-badge': b.id }, h('span', { class: 'ab-art', html: badgeSvg(b, got) }), h('b', null, b.name), h('small', null, b.how)); })));
+      }
+    }
+    function fishPage(m) {
+      const c = h('div', { class: 'alb-page' }, h('div', { class: 'ap-pic', html: FishArt.svg(m.spec, { uid: 'alp', anim: true, cls: 'fishsvg', label: m.name }) }),
+        h('div', { class: 'ap-t' }, h('h3', null, m.name), h('ul', null, (m.sentences.length ? m.sentences : ['A lovely fish.']).map(s => h('li', null, s))),
+          h('div', { class: 'row left' }, Voice.ok() && State.settings.voice ? h('button', { class: 'btn small', id: 'btn-alb-hear', onclick: () => Voice.say(m.name + '. ' + m.sentences.join(' ')) }, h('span', { html: IC.speaker }), 'Hear it') : null,
+            h('button', { class: 'btn small', id: 'btn-alb-pdf', onclick: () => UI.pdfDialog('fish', { spec: m.spec, sentences: m.sentences, id: m.id }) }, h('span', { html: IC.down }), 'PDF'))));
+      UI.modal(m.name, c, { cls: 'small' });
+    }
+    body.append(tabs, inner); paint();
+    return UI.modal('My Fish Album', body, { cls: 'big albm' });
+  }
+  return { visit, wordOfDay, wotdOptions, wotdDone, playWord, fishMade, check, tick, init, album, BADGES, badgeSvg, today, sentenceFor, WORDS, BLANK };
+})();
 
 /* ---- 07-designer.js ---- */
 /* ===== Pictures used by the tool panel and the Word Bank (every picture is the real fish art) ===== */
@@ -2017,10 +2442,10 @@ const Pics = {
 const Designer = (() => {
   const TABS = [{ id: 'shape', label: 'Shape' }, { id: 'color', label: 'Colors' }, { id: 'tail', label: 'Tail' }, { id: 'fins', label: 'Fins' }, { id: 'eyes', label: 'Eyes' },
     { id: 'mouth', label: 'Mouth' }, { id: 'pattern', label: 'Pattern' }, { id: 'paint', label: 'Paint' }, { id: 'scales', label: 'Scales' }, { id: 'size', label: 'Size' }, { id: 'sticker', label: 'Stickers' }];
-  const PARTS = [{ id: 'bodyColor', label: 'Body', w: 'body' }, { id: 'finColor', label: 'Fins', w: 'fins' }, { id: 'tailColor', label: 'Tail', w: 'tail' }, { id: 'eyeColor', label: 'Eyes', w: 'eyes' }, { id: 'patternColor', label: 'Pattern', w: null }];
+  const PARTS = [{ id: 'all', label: 'Whole fish', w: 'fish' }, { id: 'bodyColor', label: 'Body', w: 'body' }, { id: 'finColor', label: 'Fins', w: 'fins' }, { id: 'tailColor', label: 'Tail', w: 'tail' }, { id: 'eyeColor', label: 'Eyes', w: 'eyes' }, { id: 'patternColor', label: 'Pattern', w: null }];
   let pt = { tool: 'brush', color: 'red', size: 'medium', stamp: 'star' }, cur = null;
   const BRUSH_W = { small: 4, medium: 9, large: 18 }, STAMP_Z = { small: 9, medium: 15, large: 24 }, MAX_PAINT = 300;
-  let tab = 'shape', part = 'bodyColor', caption = '', root, stage, tools, capEl, nameEl, omode = null, ordbar, namebar, ordactions;
+  let tab = 'shape', part = 'all', caption = '', root, stage, tools, capEl, nameEl, omode = null, ordbar, namebar, ordactions;
   const S = () => omode ? State.orderSpec : State.draft;
 
   function tabPic(id) {
@@ -2056,17 +2481,18 @@ const Designer = (() => {
         h('span', { class: 'pic', html: Pics.opt(it.id === 'none' ? 'stickernone' : 'sticker', it.id === 'none' ? z.id : it.id) }), h('span', { class: 'lbl' }, it.label), cur === it.id ? h('span', { class: 'tick', html: IC.check }) : null))));
   }
   function swatches(field, small) {
-    const cur = S()[field];
+    const cur = field === 'all' ? S().bodyColor : S()[field];
     return h('div', { class: 'swatches' + (small ? ' small' : '') }, COLORS.map(c => h('button', { class: 'sw' + (cur === c.id ? ' on' : ''), 'aria-pressed': cur === c.id ? 'true' : 'false', 'aria-label': c.id, 'data-color': c.id, title: c.id,
       onclick: () => pickColor(field, c.id) },
       h('span', { class: 'dot', style: `background:${c.hex}` }, cur === c.id ? h('i', { html: IC.check, style: `color:${c.id === 'white' || c.id === 'yellow' || c.id === 'pink' ? '#0E3A4A' : '#fff'}` }) : null), h('span', { class: 'lbl' }, c.id))));
   }
   function colorPhrase(field, c) {
     const s = S();
-    switch (field) { case 'bodyColor': return c + ' body'; case 'finColor': return c + ' fins'; case 'tailColor': return c + ' tail'; case 'eyeColor': return c + ' eyes'; default: return c + ' ' + (s.pattern === 'none' ? 'pattern' : s.pattern); }
+    switch (field) { case 'all': return c + ' fish'; case 'bodyColor': return c + ' body'; case 'finColor': return c + ' fins'; case 'tailColor': return c + ' tail'; case 'eyeColor': return c + ' eyes'; default: return c + ' ' + (s.pattern === 'none' ? 'pattern' : s.pattern); }
   }
   function pickColor(field, c) {
     if (field === 'patternColor' && S().pattern === 'none') { UI.toast('Choose a pattern first.'); Sfx.oops(); return; }
+    if (field === 'all') { const sp = S(); sp.bodyColor = sp.finColor = sp.tailColor = c; if (!omode) State.draftDone = null; State.save(); renderStage(true); renderTools(); setCaption(colorPhrase(field, c)); Sfx.pop(); return; }
     change(field, c, colorPhrase(field, c));
   }
 
@@ -2077,20 +2503,20 @@ const Designer = (() => {
   function paintPush(item) { if (paintCount() >= MAX_PAINT) { UI.toast('Your fish is full of paint! Undo or clear some.'); return false; } State.draft.paint = (State.draft.paint || []).concat([item]); State.draftDone = null; State.save(); return true; }
   function liveEls() { return $$('g.pl', stage); }
   function paintDown(e) {
-    if (tab !== 'paint' || omode) return; const q = localPt(e); if (!q) return; e.preventDefault(); try { stage.setPointerCapture(e.pointerId); } catch (x) { }
+    if (tab !== 'paint' || omode) return; if (!OnePointer.take(e)) return; const q = localPt(e); if (!q) { OnePointer.release(e); return; } e.preventDefault(); try { stage.setPointerCapture(e.pointerId); } catch (x) { }
     Sfx.unlock();
     if (pt.tool === 'eraser') { cur = { erase: true }; eraseAt(q); return; }
     if (pt.tool === 'stamp') { const it = { k: 's', s: pt.stamp, x: q[0], y: q[1], z: STAMP_Z[pt.size], r: Math.round((Math.random() - .5) * 30), c: pt.color }; if (paintPush(it)) { const html = FishArt.shapeSvg(it.s, it.x, it.y, it.z, it.r, FishArt.colRef(it.c, 'ds'), 'ds'); liveEls().forEach(l => l.insertAdjacentHTML('beforeend', html)); Sfx.pop(); updateCount(); } return; }
     cur = { k: 'p', c: pt.color, w: BRUSH_W[pt.size], p: [q[0], q[1]], els: liveEls().map(l => { const el = document.createElementNS(svgNS, 'path'); el.setAttribute('fill', 'none'); el.setAttribute('stroke', FishArt.colRef(pt.color, 'ds')); el.setAttribute('stroke-width', BRUSH_W[pt.size]); el.setAttribute('stroke-linecap', 'round'); el.setAttribute('stroke-linejoin', 'round'); el.setAttribute('d', `M${q[0]},${q[1]}L${q[0]},${q[1]}`); l.appendChild(el); return el; }) };
   }
   function paintMove(e) {
-    if (!cur) return; const q = localPt(e); if (!q) return;
+    if (!cur || !OnePointer.owns(e)) return; const q = localPt(e); if (!q) return;
     if (cur.erase) { eraseAt(q); return; }
     const p = cur.p, dx = q[0] - p[p.length - 2], dy = q[1] - p[p.length - 1]; if (dx * dx + dy * dy < 2.5) return;
     if (p.length > 1200) return; p.push(q[0], q[1]); const d = FishArt.paintD(p); cur.els.forEach(el => el.setAttribute('d', d));
   }
-  function paintUp() {
-    if (!cur) return; const c = cur; cur = null; if (c.erase) return;
+  function paintUp(e) {
+    if (e && !OnePointer.owns(e)) return; OnePointer.release(e); if (!cur) return; const c = cur; cur = null; if (c.erase) return;
     const ok = c.p.length < 4 ? paintPush({ k: 'p', c: c.c, w: c.w, p: [c.p[0], c.p[1]] }) : paintPush({ k: 'p', c: c.c, w: c.w, p: c.p.slice() });
     if (!ok) renderStage(); updateCount();
   }
@@ -2131,7 +2557,7 @@ const Designer = (() => {
     if (tab === 'color') {
       body.append(title('Choose a color', 'Pick a part, then a color.'),
         h('div', { class: 'partrow' }, PARTS.map(p => h('button', { class: 'pt' + (part === p.id ? ' on' : ''), 'aria-pressed': part === p.id ? 'true' : 'false', onclick: () => { part = p.id; Sfx.click(); renderTools(); } },
-          h('span', { class: 'mini', style: `background:${COLOR_HEX[s[p.id]]}` }), p.label))), swatches(part));
+          h('span', { class: 'mini', style: `background:${COLOR_HEX[s[p.id === 'all' ? 'bodyColor' : p.id]]}` }), p.label))), swatches(part));
     }
     if (tab === 'tail') body.append(title('Choose a tail', 'How does the tail look?'), optGrid('tail', TAILS, 'tail'));
     if (tab === 'fins') body.append(title('Choose fins', 'Fins help the fish swim.'), optGrid('fin', FINS, 'fin'));
@@ -2173,7 +2599,7 @@ const Designer = (() => {
     renderStage(); renderTools();
   }
   function setOrder(o) {
-    omode = o || null; root.firstChild.classList.toggle('ordermode', !!omode); ordbar.innerHTML = '';
+    omode = o || null; part = omode ? 'bodyColor' : 'all'; root.firstChild.classList.toggle('ordermode', !!omode); ordbar.innerHTML = '';
     if (omode) {
       State.orderSpec = ORDER_START(); const an = Animals.get(Animals.list[omode.animal].id);
       ordbar.append(h('div', { class: 'cust', html: Animals.art(an.id) }), h('div', { class: 'otext' }, h('small', null, 'Level ' + omode.level + ' · Order ' + omode.n + ' · from the ' + an.name.toLowerCase()), h('p', { id: 'order-text' }, omode.text)),
@@ -2242,11 +2668,12 @@ const MC = (() => {
   const mouthText = m => ({ smile: 'It has a smiling mouth.', open: 'It has an open mouth.', tiny: 'It has a tiny mouth.', lips: 'It has pink lips.', frown: 'It has a sad mouth.', grin: 'It has a big grin.', tongue: 'It has its tongue out.' })[m];
   const scaleText = x => ({ on: 'Its scales are plain.', shiny: 'Its scales are shiny.', rainbow: 'Its scales are rainbow.', glitter: 'Its scales are glittery.' })[x];
   const bodyLabel = id => labelOf(BODIES, id);
+  const EFS = s => typeof effSpec === 'function' ? effSpec(s) : normSpec(s);
   function build(specIn, rand) {
-    rand = rand || Math.random; const spec = normSpec(specIn), cols = COLORS.map(c => c.id), Q = [];
+    rand = rand || Math.random; const spec = EFS(specIn), also = new Set(spec._also || []), cols = COLORS.map(c => c.id), Q = [];
     const cdist = (a, b) => { const A = hex2rgb(COLOR_HEX[a]), B = hex2rgb(COLOR_HEX[b]); return Math.hypot(A[0] - B[0], A[1] - B[1], A[2] - B[2]); };
     /* colors that are easy to tell apart from the right answer (no teal next to turquoise) */
-    const other = (list, v) => list.filter(x => x !== v && (!COLOR_HEX[v] || !COLOR_HEX[x] || cdist(x, v) > 150));
+    const other = (list, v) => list.filter(x => x !== v && !also.has(x) && (!COLOR_HEX[v] || !COLOR_HEX[x] || cdist(x, v) > 150));
     const pickWrongColor = (v) => shuffle(other(cols, v), rand)[0];
     const trio = (type, same, diffA, diffB) => [].concat(type, same, diffA, diffB);
     /* 3 wrong options of the mixed kind: wrong A only, wrong B only, both wrong */
@@ -2282,7 +2709,7 @@ const MC = (() => {
   }
   /* true example sentences about this fish (shown as the answer when a written answer is wrong) */
   function answers(specIn, lv) {
-    const spec = normSpec(specIn), out = [`My fish is ${spec.bodyColor}.`];
+    const spec = EFS(specIn), out = [`My fish is ${spec.bodyColor}.`];
     if (lv === 1) { out.push(`It has ${spec.tail} tail.`, spec.pattern !== 'none' ? patternSentence(spec.pattern, spec.patternColor) : `It has ${spec.fin} fins.`); }
     else {
       out.push(`My fish is ${spec.size}.`, tailText(spec.tail, spec.tailColor), finText(spec.fin, spec.finColor), eyeText(spec.eye, spec.eyeColor));
@@ -2304,7 +2731,7 @@ const Describe = (() => {
   function resetWork() { slots = L1.map(f => Array(f.n).fill('')); active = [0, 0]; inputs = ['', '', '', '']; free = ''; attempts = 0; results = null; finalRec = null; sig = specSig(); mcQs = null; mcI = 0; mcMist = 0; mcAnswered = []; showAns = false; }
 
   function bank() {
-    const s = State.draft, r = rnd(hash(sig));
+    const s = effSpec(State.draft), r = rnd(hash(sig));
     const cols = [...new Set([s.bodyColor, s.tailColor, s.finColor, s.eyeColor].concat(s.pattern !== 'none' ? [s.patternColor] : []))];
     shuffle(COLORS.map(c => c.id).filter(c => !cols.includes(c)), r).forEach(c => { if (cols.length < 8) cols.push(c); });
     const adjOf = { on: 'plain', shiny: 'shiny', rainbow: 'rainbow', glitter: 'glitter' };
@@ -2429,8 +2856,8 @@ const Describe = (() => {
     const rec = { id: 'f' + Date.now().toString(36) + Math.floor(Math.random() * 1e4), spec: normSpec(State.draft), sentences, level: lv, born: Date.now() };
     const added = State.fish.length < MAX_FISH; if (added) State.fish.push(rec);
     const reward = REWARD[lv] + (attempts === 0 ? FIRST_TRY_BONUS : 0);
-    State.addShells(reward); State.draftDone = rec.id; State.save(); finalRec = { rec, reward, added, bonus: attempts === 0 };
-    Sfx.success(); setTimeout(Sfx.shell, 450); render();
+    Progress.fishMade(rec, attempts === 0); State.addShells(reward); State.draftDone = rec.id; State.save(); finalRec = { rec, reward, added, bonus: attempts === 0 };
+    Sfx.success(); setTimeout(Sfx.shell, 450); render(); Celebrate.confetti(80);
   }
 
   function finalView() {
@@ -2456,7 +2883,7 @@ const Describe = (() => {
     const spec = normSpec(State.draft); if (!spec.name.trim()) spec.name = 'Fish ' + (State.fish.length + 1);
     if (State.fish.length >= MAX_FISH) { UI.toast('The tank is full (' + MAX_FISH + ' fish). Take a fish out first.'); Sfx.oops(); return; }
     const rec = { id: 'f' + Date.now().toString(36) + Math.floor(Math.random() * 1e4), spec, sentences: [], level: 0, born: Date.now(), teacher: true };
-    State.fish.push(rec); State.draft = DEFAULT_SPEC(); State.draftDone = rec.id; State.save(); resetWork(); Designer.refresh(); Sfx.splash(); UI.toast(spec.name + ' is swimming in the aquarium!'); UI.go('aquarium');
+    State.fish.push(rec); Progress.fishMade(rec, false); State.draft = DEFAULT_SPEC(); State.draftDone = rec.id; State.save(); resetWork(); Designer.refresh(); Sfx.splash(); UI.toast(spec.name + ' is swimming in the aquarium!'); UI.go('aquarium');
   }
   return {
     addDirect, mcBuild: (spec) => MC.build(spec), mcState: () => ({ qs: mcQs, i: mcI, mist: mcMist }),
@@ -2479,6 +2906,7 @@ const Aquarium = (() => {
   let bgCv = null, bgKey = '', placeCv = null, placeKey = '', oldPlace = null, fadeT = 0;
   const sprites = new Map(), decorCv = new Map(), thumbs = new Map();
   let fishObjs = [], bubbles = [], food = [], rings = [], specks = [], sponge = null, dirt = 0.15, lightLv = 1, glow = [];
+  let hearts = [], snow = [], shrimp = [], causCv = null, fxCv = null, fxKey = '';
   let mode = 'look', selFish = null, selDecor = null, drag = null, shopTab = 'things', shopCat = 'all', tripT = 0;
   let ui = {}, perfMs = 0, frameCount = 0;
   const reduceMotion = typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -2541,6 +2969,13 @@ const Aquarium = (() => {
     c.fillStyle = sg; c.beginPath(); c.moveTo(0, H); c.lineTo(0, top + 6); for (let i = 0; i <= 24; i++) c.lineTo(W * i / 24, edge(i)); c.lineTo(W, H); c.fill();
     if (sd.kind === 'rainbow') { const cols = ['#FF9AB0', '#FFC98A', '#FFF09A', '#A8EBB6', '#9ADCF7', '#C3A9F2']; c.save(); c.clip(); const bh = (H - top) / cols.length; cols.forEach((cl, i) => { c.fillStyle = cl; c.globalAlpha = .55; c.fillRect(0, top + 4 + i * bh, W, bh + 1); }); c.restore(); c.globalAlpha = 1; }
     c.fillStyle = 'rgba(255,255,255,.28)'; c.beginPath(); c.moveTo(0, top + 6); for (let i = 0; i <= 24; i++) c.lineTo(W * i / 24, edge(i)); for (let i = 24; i >= 0; i--) c.lineTo(W * i / 24, top + 6 + Math.sin(i * 1.3) * 6 + Math.sin(i * .5) * 4); c.fill();
+    /* realistic sand: soft ripples, fine grain, darker where it meets the water at the back, lighter at the front */
+    c.save(); c.beginPath(); c.moveTo(0, H); c.lineTo(0, top + 6); for (let i = 0; i <= 24; i++) c.lineTo(W * i / 24, edge(i)); c.lineTo(W, H); c.closePath(); c.clip();
+    const sh = c.createLinearGradient(0, top - 4, 0, H); sh.addColorStop(0, 'rgba(20,70,90,.30)'); sh.addColorStop(.22, 'rgba(20,70,90,.06)'); sh.addColorStop(.7, 'rgba(255,255,255,0)'); sh.addColorStop(1, 'rgba(255,250,235,.16)'); c.fillStyle = sh; c.fillRect(0, top - 6, W, H - top + 6);
+    const RR = rnd(21);
+    for (let k = 0; k < 9; k++) { const yy = top + 12 + k * (H - top) / 9 + RR() * 6, amp = 2 + RR() * 2.5, fr = .012 + RR() * .01, ph = RR() * 6; c.beginPath(); for (let x = 0; x <= W; x += 12) { const y = yy + Math.sin(x * fr + ph) * amp + Math.sin(x * fr * 2.7 + ph) * amp * .35; x ? c.lineTo(x, y) : c.moveTo(x, y); } c.strokeStyle = 'rgba(0,0,0,.07)'; c.lineWidth = 2.2; c.stroke(); c.translate(0, -1.6); c.strokeStyle = 'rgba(255,255,255,.22)'; c.lineWidth = 1.2; c.stroke(); c.translate(0, 1.6); }
+    const gn = Math.min(2600, Math.round(W * (H - top) / 90)); for (let i = 0; i < gn; i++) { const px = RR() * W, py = top + RR() * (H - top), v = RR(); c.fillStyle = v > .55 ? 'rgba(255,255,255,.32)' : v > .2 ? 'rgba(70,45,20,.16)' : 'rgba(0,0,0,.2)'; c.fillRect(px, py, 1 + (py - top) / (H - top), 1 + (py - top) / (H - top)); }
+    c.restore();
     const R2 = rnd(5), area = H - top - 18, n = sd.kind ? 70 : 46;
     for (let i = 0; i < n; i++) {
       const px = R2() * W, py = top + 14 + R2() * area, r = 1.5 + R2() * 3.2;
@@ -2562,10 +2997,97 @@ const Aquarium = (() => {
     if (wt.coral) { [['#FF7FA6', .1], ['#FFB454', .3], ['#C58BFF', .55], ['#FF7FA6', .78], ['#FFB454', .92]].forEach(([cl, fx], i) => { c.fillStyle = cl; c.globalAlpha = .28; const bx = W * fx, bh = H * (.2 + (i % 3) * .06); c.beginPath(); c.moveTo(bx - 30, H * .86); c.quadraticCurveTo(bx - 34, H * .86 - bh, bx - 10, H * .86 - bh); c.quadraticCurveTo(bx, H * .86 - bh * .6, bx + 12, H * .86 - bh * .96); c.quadraticCurveTo(bx + 30, H * .86 - bh * .5, bx + 30, H * .86); c.fill(); }); c.globalAlpha = 1; }
     if (wt.sparkle) { const R3 = rnd(9); c.fillStyle = 'rgba(255,255,255,.8)'; for (let i = 0; i < 26; i++) { const sx = R3() * W, sy = LID + R3() * H * .7, s = 2 + R3() * 3; c.beginPath(); c.moveTo(sx, sy - s * 2); c.lineTo(sx + s * .5, sy - s * .5); c.lineTo(sx + s * 2, sy); c.lineTo(sx + s * .5, sy + s * .5); c.lineTo(sx, sy + s * 2); c.lineTo(sx - s * .5, sy + s * .5); c.lineTo(sx - s * 2, sy); c.lineTo(sx - s * .5, sy - s * .5); c.fill(); } }
     if (wt.bloom) { const rg = c.createRadialGradient(W * .5, 0, 10, W * .5, 0, W * .6); rg.addColorStop(0, 'rgba(255,255,255,.55)'); rg.addColorStop(1, 'rgba(255,255,255,0)'); c.fillStyle = rg; c.fillRect(0, 0, W, H); }
+    const R4 = rnd(17); c.strokeStyle = far; c.lineCap = 'round';
+    for (let i = 0; i < 26; i++) { const bx = R4() * W, bh = H * (.1 + R4() * .16), lean = (R4() - .5) * 40; c.lineWidth = 3 + R4() * 4; c.globalAlpha = .55 + R4() * .3; c.beginPath(); c.moveTo(bx, H * .87); c.quadraticCurveTo(bx + lean * .3, H * .87 - bh * .6, bx + lean, H * .87 - bh); c.stroke(); }
+    c.globalAlpha = 1;
+    const hz = c.createLinearGradient(0, H * .45, 0, H * .88); hz.addColorStop(0, 'rgba(255,255,255,0)'); hz.addColorStop(1, glowBg() ? 'rgba(40,90,140,.18)' : 'rgba(210,245,250,.22)'); c.fillStyle = hz; c.fillRect(0, H * .45, W, H * .43);
     drawSand(c, SANDS.find(s => s.id === State.sand) || SANDS[0], H * .86);
     c.fillStyle = 'rgba(255,255,255,.22)'; c.fillRect(0, LID, W, 7);
   }
   const glowBg = () => State.bg === 'night' || State.bg === 'deep';
+  /* caustics: the dancing light net on the sand. One tileable texture is made once; each frame draws it twice, moving. */
+  function makeCaustics() {
+    const S = 160, c = document.createElement('canvas'); c.width = S; c.height = S; const x = c.getContext('2d'), im = x.createImageData(S, S), d = im.data, P = Math.PI * 2 / S;
+    for (let j = 0; j < S; j++) for (let i = 0; i < S; i++) {
+      const u = i * P, v = j * P;
+      const a = Math.sin(u + 1.3 * Math.sin(2 * v + .7)) + Math.sin(v + 1.2 * Math.sin(3 * u + 1.1));
+      const b = Math.sin(2 * u - v + 1.4 * Math.sin(u + 2 * v)) + Math.sin(-u + 2 * v + 1.1 * Math.sin(2 * u + 3));
+      const I = Math.min(1, Math.pow(Math.max(0, 1 - Math.abs(a) * .5), 7) + .8 * Math.pow(Math.max(0, 1 - Math.abs(b) * .5), 7)), k = (j * S + i) * 4;
+      d[k] = 255; d[k + 1] = 255; d[k + 2] = 236; d[k + 3] = Math.round(I * 255);
+    }
+    x.putImageData(im, 0, 0); return c;
+  }
+  function drawCaustics() {
+    if (lightLv < .04) return; if (!causCv) causCv = makeCaustics();
+    const top = H * .86 - 4, tw = Math.max(170, W * .16), th = tw * .36, a = (glowBg() ? .1 : .26) * lightLv;
+    g.save(); g.beginPath(); g.rect(0, top, W, H - top); g.clip(); g.globalCompositeOperation = 'lighter';
+    [[14, 3, 1], [-9, 5, .75]].forEach(([vx, vy, k], L) => {
+      g.globalAlpha = a * k; const t = reduceMotion ? 0 : T, ox = ((t * vx) % tw + tw) % tw, oy = ((t * vy) % th + th) % th, sx = tw * (L ? 1.18 : 1), sy = th * (L ? 1.18 : 1);
+      for (let y = top - sy + oy; y < H; y += sy) for (let x = -sx + ox; x < W; x += sx) g.drawImage(causCv, x, y, sx, sy);
+    });
+    g.restore();
+  }
+  /* glass and depth: soft darker corners, a reflection band and bright glass edges (made once per size) */
+  function drawFx() {
+    const key = [W, H, dpr, State.bg].join('|'); if (key !== fxKey || !fxCv) {
+      fxKey = key; fxCv = document.createElement('canvas'); fxCv.width = Math.round(W * dpr); fxCv.height = Math.round(H * dpr); const c = fxCv.getContext('2d'); c.scale(dpr, dpr);
+      const vg = c.createRadialGradient(W * .5, H * .42, Math.min(W, H) * .35, W * .5, H * .5, Math.max(W, H) * .75); vg.addColorStop(0, 'rgba(0,20,40,0)'); vg.addColorStop(1, glowBg() ? 'rgba(0,5,20,.42)' : 'rgba(0,30,55,.26)'); c.fillStyle = vg; c.fillRect(0, 0, W, H);
+      const rb = c.createLinearGradient(W * .03, 0, W * .2, H); rb.addColorStop(0, 'rgba(255,255,255,0)'); rb.addColorStop(.45, 'rgba(255,255,255,.075)'); rb.addColorStop(.55, 'rgba(255,255,255,.02)'); rb.addColorStop(1, 'rgba(255,255,255,0)');
+      c.fillStyle = rb; c.beginPath(); c.moveTo(W * .05, LID); c.lineTo(W * .15, LID); c.lineTo(W * .07, H); c.lineTo(-W * .03, H); c.fill();
+      c.fillStyle = 'rgba(255,255,255,.05)'; c.beginPath(); c.moveTo(W * .82, LID); c.lineTo(W * .86, LID); c.lineTo(W * .8, H); c.lineTo(W * .76, H); c.fill();
+      const le = c.createLinearGradient(0, 0, 14, 0); le.addColorStop(0, 'rgba(255,255,255,.34)'); le.addColorStop(1, 'rgba(255,255,255,0)'); c.fillStyle = le; c.fillRect(0, LID, 14, H - LID);
+      const re = c.createLinearGradient(W - 16, 0, W, 0); re.addColorStop(0, 'rgba(0,20,40,0)'); re.addColorStop(1, 'rgba(0,20,40,.22)'); c.fillStyle = re; c.fillRect(W - 16, LID, 16, H - LID);
+      c.fillStyle = 'rgba(255,255,255,.4)'; c.fillRect(2, LID + 6, 1.5, H * .5);
+    }
+    g.drawImage(fxCv, 0, 0, W, H);
+  }
+  /* the water surface seen from below the lid: a moving bright line */
+  function drawSurface() {
+    const y0 = LID + 3, amp = 2.4, t = reduceMotion ? 0 : T; g.beginPath(); g.moveTo(0, LID);
+    for (let x = 0; x <= W + 20; x += 20) g.lineTo(x, y0 + 5 + Math.sin(x * .03 + t * 1.6) * amp + Math.sin(x * .071 - t * 2.3) * amp * .6);
+    g.lineTo(W, LID); g.closePath(); g.fillStyle = `rgba(255,255,255,${.12 + .1 * lightLv})`; g.fill();
+    g.beginPath(); for (let x = 0; x <= W + 20; x += 20) { const y = y0 + 5 + Math.sin(x * .03 + t * 1.6) * amp + Math.sin(x * .071 - t * 2.3) * amp * .6; x ? g.lineTo(x, y) : g.moveTo(x, y); }
+    g.strokeStyle = `rgba(255,255,255,${.3 + .35 * lightLv})`; g.lineWidth = 1.6; g.stroke();
+  }
+  /* small life: marine snow, tiny shrimp on the sand, hearts when a fish is tapped */
+  function drawSnow() { g.fillStyle = glowBg() ? 'rgba(200,240,255,.35)' : 'rgba(255,255,255,.42)'; snow.forEach(p => { const x = p.x * W + Math.sin(T * .4 + p.ph) * 8, y = LID + p.y * (H * .86 - LID); g.fillRect(x, y, p.r, p.r); }); }
+  function heartPath(x, y, s) { g.beginPath(); g.moveTo(x, y + s * .9); g.bezierCurveTo(x - s * 1.6, y - s * .2, x - s * .8, y - s * 1.3, x, y - s * .45); g.bezierCurveTo(x + s * .8, y - s * 1.3, x + s * 1.6, y - s * .2, x, y + s * .9); g.closePath(); }
+  function drawHearts() { hearts.forEach(p => { if (p.t < 0) return; g.globalAlpha = Math.max(0, Math.min(1, p.a)); const x = p.x + Math.sin(p.ph + p.t * 4) * 5, s = p.s * Math.min(1, p.t * 5 + .3); heartPath(x, p.y, s); g.fillStyle = '#FF6F91'; g.fill(); g.strokeStyle = '#A3304F'; g.lineWidth = 1.5; g.stroke(); g.fillStyle = 'rgba(255,255,255,.7)'; g.beginPath(); g.ellipse(x - s * .45, p.y - s * .35, s * .22, s * .14, -.6, 0, 7); g.fill(); }); g.globalAlpha = 1; }
+  function shrimpY(sp) { return H * (.905 + sp.lane * .045); }
+  function drawShrimp(sp) {
+    const s = Math.max(9, Math.min(17, H * .024)), x = sp.x * W, y = shrimpY(sp) - sp.hop * s * 1.6, t = T * 9 + sp.ph, walk = sp.pause > 0 ? 0 : 1;
+    g.save(); g.translate(x, y); g.scale(sp.dir, 1);
+    g.fillStyle = 'rgba(30,40,40,.14)'; g.beginPath(); g.ellipse(0, s * .55 + sp.hop * s * 1.6, s * 1.5, s * .22, 0, 0, 7); g.fill();
+    g.strokeStyle = 'rgba(150,60,50,.55)'; g.lineWidth = 1; for (let i = 0; i < 4; i++) { const lx = -s * .2 + i * s * .32, k = Math.sin(t + i * 1.3) * walk * s * .18; g.beginPath(); g.moveTo(lx, s * .1); g.lineTo(lx + k, s * .52); g.stroke(); }
+    const seg = [[-s * 1.25, -s * .05, s * .32], [-s * .8, -s * .22, s * .4], [-s * .3, -s * .28, s * .46], [s * .25, -s * .22, s * .52]];
+    g.fillStyle = 'rgba(255,150,120,.58)'; g.strokeStyle = 'rgba(170,70,55,.75)'; g.lineWidth = 1.1;
+    g.beginPath(); g.moveTo(-s * 1.45, -s * .05); g.lineTo(-s * 1.95, -s * .32); g.lineTo(-s * 1.85, s * .22); g.closePath(); g.fill(); g.stroke();
+    seg.forEach(([sx, sy, r]) => { g.beginPath(); g.ellipse(sx, sy, r * 1.05, r * .85, 0, 0, 7); g.fill(); g.stroke(); });
+    g.beginPath(); g.moveTo(s * .55, -s * .35); g.quadraticCurveTo(s * 1.1, -s * .4, s * 1.2, -s * .15); g.quadraticCurveTo(s * .9, s * .1, s * .5, s * .05); g.fill(); g.stroke();
+    g.fillStyle = 'rgba(255,255,255,.45)'; g.beginPath(); g.ellipse(-s * .3, -s * .48, s * .5, s * .1, 0, 0, 7); g.fill();
+    g.fillStyle = '#1b1f2a'; g.beginPath(); g.arc(s * .82, -s * .38, s * .1, 0, 7); g.fill();
+    const aw = Math.sin(T * 2.2 + sp.ph) * s * .25; g.strokeStyle = 'rgba(170,70,55,.6)'; g.lineWidth = .9;
+    g.beginPath(); g.moveTo(s * 1.05, -s * .3); g.quadraticCurveTo(s * 2, -s * 1.3 + aw, s * 3.2, -s * .9 - aw); g.moveTo(s * 1.05, -s * .25); g.quadraticCurveTo(s * 2.1, -s * .7 - aw, s * 3, -s * .1 + aw); g.stroke();
+    g.restore();
+  }
+  function updateLife(dt) {
+    hearts.forEach(p => { p.t += dt; p.y += p.vy * dt; p.a -= dt * .75; }); hearts = hearts.filter(p => p.a > 0);
+    if (!reduceMotion) snow.forEach(p => { p.y += p.v * dt; if (p.y > 1) { p.y = 0; p.x = Math.random(); } });
+    shrimp.forEach(sp => {
+      if (sp.hop > 0 || sp.hv) { sp.hv -= dt * 7; sp.hop = Math.max(0, sp.hop + sp.hv * dt); if (sp.hop === 0 && sp.hv < 0) sp.hv = 0; }
+      if (sp.flick > 0) { sp.flick -= dt; sp.x -= sp.dir * dt * .22; }
+      else if (sp.pause > 0) sp.pause -= dt;
+      else { sp.x += sp.dir * dt * .012 * (.6 + .4 * Math.sin(T * 3 + sp.ph)) * (.5 + .5 * lightLv); if (Math.random() < dt * .25) sp.pause = 1 + Math.random() * 3; }
+      if (sp.x > .95) { sp.x = .95; sp.dir = -1; } if (sp.x < .05) { sp.x = .05; sp.dir = 1; }
+    });
+  }
+  function addHearts(x, y, n) { for (let i = 0; i < n; i++) hearts.push({ x: x + (Math.random() - .5) * 26, y: y - i * 10, vy: -34 - Math.random() * 18, a: 1.4, t: -i * .12, s: 6 + Math.random() * 3.5, ph: Math.random() * 6 }); }
+  function shrimpAt(p) { const s = Math.max(9, Math.min(17, H * .024)); return shrimp.find(sp => Math.abs(p.x - sp.x * W) < s * 2.4 && Math.abs(p.y - shrimpY(sp) + s * .2) < s * 1.4); }
+  function drawShadows() {
+    const sandY = H * .885, a0 = (glowBg() ? .1 : .2) * (.35 + .65 * lightLv), w0 = dw();
+    fishObjs.forEach(o => { if (o.falling) return; const d = sandY - o.y; if (d < 0) return; const k = 1 - Math.min(1, d / (H * .78)), sz = { small: .7, medium: .94, big: 1.14 }[o.rec.spec.size] || .94, rx = w0 * .3 * sz * (1.3 - .5 * k);
+      g.fillStyle = `rgba(8,40,52,${(a0 * (.3 + .7 * k)).toFixed(3)})`; g.beginPath(); g.ellipse(o.x + (o.y - LID) * .05, sandY + 2, rx, rx * .16, 0, 0, 7); g.fill(); });
+  }
 
   /* ---------- place picture (around the tank) ---------- */
   function buildPlace() {
@@ -2608,7 +3130,7 @@ const Aquarium = (() => {
     ui.count && (ui.count.textContent = State.fish.length + ' / ' + MAX_FISH + ' fish');
     ui.empty && ui.empty.classList.toggle('on', State.fish.length === 0 && !homeMode);
   }
-  function newTarget(o) { const b = bounds(); o.tx = b.x0 + Math.random() * (b.x1 - b.x0); o.ty = b.y0 + Math.random() * (b.y1 - b.y0); if (Math.random() < .25) o.ty = b.y1 - Math.random() * H * .08; }
+  function newTarget(o) { const b = bounds(); o.tx = b.x0 + Math.random() * (b.x1 - b.x0); o.ty = b.y0 + Math.random() * (b.y1 - b.y0); if (Math.random() < .25) o.ty = b.y1 - Math.random() * H * .08; if (!State.light) o.ty = b.y1 - Math.random() * (b.y1 - b.y0) * .35; }
   function updateFish(o, dt) {
     const b = bounds(), sz = { small: 1.25, medium: 1, big: .8 }[o.rec.spec.size] || 1;
     if (o.falling) { o.vy += 260 * dt; o.y += o.vy * dt; if (o.y > LID + 30) { o.falling = false; o.vy = 60; splashAt(o.x, LID + 8); Sfx.splash(); } return; }
@@ -2617,7 +3139,7 @@ const Aquarium = (() => {
     if (hunting) { o.dir = hunting.x >= o.x ? 1 : -1; o.tx = hunting.x - o.dir * dw() * .3; o.ty = hunting.y - 2; o.pause = 0; }
     if (o.pause > 0) { o.pause -= dt; o.vx *= (1 - Math.min(1, dt * 2)); o.vy *= (1 - Math.min(1, dt * 2)); }
     else {
-      const dx = o.tx - o.x, dy = o.ty - o.y, d = Math.hypot(dx, dy) || 1, sp = o.speed * sz * (hunting ? 2.1 : 1) * (o.boost > 0 ? 3.2 : 1);
+      const dx = o.tx - o.x, dy = o.ty - o.y, d = Math.hypot(dx, dy) || 1, sp = o.speed * sz * (hunting ? 2.1 : 1) * (o.boost > 0 ? 3.2 : 1) * (.42 + .58 * lightLv);
       if (d < 24 && !hunting) { newTarget(o); if (Math.random() < .35) o.pause = .6 + Math.random() * 2.2; }
       const k = Math.min(1, dt * 1.7); o.vx += (dx / d * sp - o.vx) * k; o.vy += (dy / d * sp * .7 - o.vy) * k;
     }
@@ -2626,15 +3148,16 @@ const Aquarium = (() => {
     if (o.x < b.x0 - 20 || o.x > b.x1 + 20) { o.vx *= -.3; newTarget(o); } o.x = Math.max(b.x0 - 30, Math.min(b.x1 + 30, o.x)); o.y = Math.max(LID + 14, Math.min(homeMode ? H * .66 : H * .86 - 10, o.y));
     if (Math.abs(o.vx) > 9) o.dir = o.vx > 0 ? 1 : -1;
     o.flip += (o.dir - o.flip) * Math.min(1, dt * 7);
-    o.wagT += dt * (3 + Math.hypot(o.vx, o.vy) / 14); o.bob += dt * 1.6;
-    if (hunting) { const mx = o.x + o.dir * dw() * .3, my = o.y + 2; if (Math.hypot(hunting.x - mx, hunting.y - my) < 20 + dw() * .06) { food.splice(food.indexOf(hunting), 1); o.munch = .25; Sfx.pop(); addBubble(mx, my, 3 + Math.random() * 3); dirt = Math.max(0, dirt - .004); } }
+    o.excite = Math.max(0, (o.excite || 0) - dt); o.spin = Math.max(0, (o.spin || 0) - dt);
+    o.wagT += dt * (3 + Math.hypot(o.vx, o.vy) / 14 + o.excite * 7) * (.55 + .45 * lightLv); o.bob += dt * 1.6;
+    if (hunting) { const mx = o.x + o.dir * dw() * .3, my = o.y + 2; if (Math.hypot(hunting.x - mx, hunting.y - my) < 20 + dw() * .06) { food.splice(food.indexOf(hunting), 1); o.munch = .25; Sfx.pop(); addBubble(mx, my, 3 + Math.random() * 3); dirt = Math.max(0, dirt - .004); o.full = (o.full || 0) + 1; if (o.full % 3 === 0) addHearts(mx, my - 14, 1); } }
     o.munch = Math.max(0, o.munch - dt);
     o.bubbleT -= dt; if (o.bubbleT < 0) { o.bubbleT = 5 + Math.random() * 8; if (!reduceMotion) addBubble(o.x + o.dir * dw() * .34, o.y - 4, 2.5 + Math.random() * 3); }
   }
   function drawFish(o) {
     const s = sprites.get(specKey(o.rec.spec)); if (!s || !s.ready) return;
     const frame = s.frames[Math.floor(o.wagT) % s.frames.length] || s.frames[0], w = dw(), hh = w * 320 / 480, pitch = Math.max(-.35, Math.min(.35, Math.atan2(o.vy, Math.abs(o.vx) + 40) * .8));
-    g.save(); g.translate(o.x, o.y + Math.sin(o.bob) * 2.2); g.rotate(pitch * Math.sign(o.flip || 1)); const sq = o.munch > 0 ? 1 + Math.sin(o.munch * 30) * .05 : 1;
+    g.save(); g.translate(o.x, o.y + Math.sin(o.bob) * 2.2); const sp = o.spin > 0 ? 1 - o.spin / .7 : 0, spinA = sp ? (1 - Math.pow(1 - sp, 3)) * Math.PI * 2 * (o.dir || 1) : 0; g.rotate(pitch * Math.sign(o.flip || 1) + spinA); const sq = o.munch > 0 ? 1 + Math.sin(o.munch * 30) * .05 : 1;
     g.scale(o.flip * sq, sq); g.drawImage(frame, -w * .5 + 0, -hh * .5, w, hh);
     if (selFish === o.id) { g.restore(); g.save(); g.translate(o.x, o.y); g.strokeStyle = 'rgba(255,255,255,.9)'; g.lineWidth = 3; g.setLineDash([7, 6]); g.lineDashOffset = -T * 20; g.beginPath(); g.ellipse(0, 0, w * .36, hh * .3, 0, 0, 7); g.stroke(); }
     g.restore();
@@ -2662,6 +3185,7 @@ const Aquarium = (() => {
     });
     if (Math.random() < dt * .6 && !reduceMotion) addBubble(Math.random() * W, H * .84, 2 + Math.random() * 3.5);
     lightLv += ((State.light ? 1 : 0) - lightLv) * Math.min(1, dt * 4);
+    updateLife(dt);
   }
 
   /* ---------- decorations ---------- */
@@ -2673,6 +3197,7 @@ const Aquarium = (() => {
   }
   function drawDecor(d) {
     const def = defOf(d.type); if (!def) return; const dc = ensureDecor(d.type); if (!dc.cv) return; const b = decorBox(d), hh = b.h * (1 + 2 * DECOR_PAD), ww = hh * dc.ar;
+    if (!floaty(def)) { g.fillStyle = `rgba(10,40,45,${(.14 + .1 * lightLv).toFixed(3)})`; g.beginPath(); g.ellipse(b.cx, b.base - b.h * .02, b.w * .5, Math.max(3, b.w * .07), 0, 0, 7); g.fill(); }
     g.save(); g.translate(b.cx, b.base); const sw = reduceMotion ? 0 : (SWAY[d.type] ? Math.sin(T * .9 + d.x * 9) * SWAY[d.type] : 0);
     g.transform(1, 0, sw, 1, 0, 0);
     if (def.mover === 'crawl' || def.mover === 'swim') { if (d.v < 0) g.scale(-1, 1); if (d.type === 'crab') g.translate(0, -Math.abs(Math.sin(T * 6 + d.x * 40)) * 2); if (def.mover === 'swim') g.rotate(Math.sin(T * 1.2) * .05); }
@@ -2693,10 +3218,13 @@ const Aquarium = (() => {
     if (lightLv > .02) {
       g.save(); g.globalCompositeOperation = 'lighter'; const n = 5; for (let i = 0; i < n; i++) { const x0 = W * (.1 + i * .2) + Math.sin(T * .3 + i) * 30, wdt = 50 + 30 * Math.sin(T * .5 + i * 2), a = (glowBg() ? .05 : .085) * lightLv * (.75 + .25 * Math.sin(T * .8 + i)); const gr = g.createLinearGradient(x0, LID, x0 - 140, H * .9); gr.addColorStop(0, `rgba(255,255,230,${a * 1.6})`); gr.addColorStop(1, 'rgba(255,255,230,0)'); g.fillStyle = gr; g.beginPath(); g.moveTo(x0, LID); g.lineTo(x0 + wdt, LID); g.lineTo(x0 + wdt - 220, H * .9); g.lineTo(x0 - 160, H * .9); g.fill(); } g.restore();
     }
+    drawCaustics(); drawShadows(); drawSnow();
     State.decor.filter(d => d.y < .55 || floaty(defOf(d.type))).sort((a, b) => a.y - b.y).forEach(d => { if (!floaty(defOf(d.type))) drawDecor(d); });
     fishObjs.slice().sort((a, b) => a.y - b.y).forEach(drawFish);
     State.decor.filter(d => floaty(defOf(d.type))).forEach(drawDecor);
+    shrimp.forEach(drawShrimp);
     State.decor.filter(d => d.y >= .55 && !floaty(defOf(d.type))).sort((a, b) => a.y - b.y).forEach(drawDecor);
+    drawHearts();
     food.forEach(f => { g.fillStyle = f.c; g.globalAlpha = f.rest ? Math.min(1, f.rest / 2) : 1; g.beginPath(); g.ellipse(f.x, f.y, 4.4, 3, f.ph, 0, 7); g.fill(); g.fillStyle = 'rgba(255,255,255,.55)'; g.beginPath(); g.ellipse(f.x - 1, f.y - 1, 1.5, 1, 0, 0, 7); g.fill(); g.globalAlpha = 1; });
     bubbles.forEach(b => { g.globalAlpha = b.a; g.fillStyle = 'rgba(255,255,255,.14)'; g.strokeStyle = 'rgba(255,255,255,.85)'; g.lineWidth = 1.6; g.beginPath(); g.arc(b.x, b.y, b.r, 0, 7); g.fill(); g.stroke(); g.fillStyle = 'rgba(255,255,255,.9)'; g.beginPath(); g.arc(b.x - b.r * .35, b.y - b.r * .35, Math.max(1, b.r * .22), 0, 7); g.fill(); }); g.globalAlpha = 1;
     rings.forEach(r => { g.strokeStyle = `rgba(255,255,255,${Math.max(0, r.a)})`; g.lineWidth = 2; g.beginPath(); g.ellipse(r.x, r.y, r.r, r.r * .38, 0, 0, 7); g.stroke(); });
@@ -2704,6 +3232,7 @@ const Aquarium = (() => {
     if (lightLv < .98) { g.fillStyle = `rgba(4,18,44,${(1 - lightLv) * .42})`; g.fillRect(0, LID, W, H - LID); }
     if (glowBg()) { g.save(); g.globalCompositeOperation = 'lighter'; glow.forEach(o => { const x = o.x * W + Math.sin(T * .3 + o.ph) * 26, y = LID + 30 + o.y * H * .7 + Math.cos(T * .4 + o.ph) * 14, r = o.r * (1 + .15 * Math.sin(T * 1.5 + o.ph)); const gr = g.createRadialGradient(x, y, 0, x, y, r * 4); gr.addColorStop(0, o.c + 'cc'); gr.addColorStop(.35, o.c + '44'); gr.addColorStop(1, o.c + '00'); g.fillStyle = gr; g.beginPath(); g.arc(x, y, r * 4, 0, 7); g.fill(); }); g.restore(); }
     if (sponge) { g.save(); g.translate(sponge.x, H * .5 + Math.sin(sponge.t * 14) * 14); g.rotate(Math.sin(sponge.t * 10) * .08); g.fillStyle = '#FFD25A'; g.strokeStyle = '#8A5A0A'; g.lineWidth = 4; g.beginPath(); g.rect(-60, -34, 120, 68); g.fill(); g.stroke(); g.fillStyle = '#E8A92B'; [[-30, -8, 8], [10, 12, 9], [34, -12, 7], [-10, 16, 6]].forEach(p => { g.beginPath(); g.arc(p[0], p[1], p[2], 0, 7); g.fill(); }); g.fillStyle = 'rgba(255,255,255,.5)'; g.fillRect(-48, -26, 60, 6); g.restore(); }
+    drawSurface(); drawFx();
     g.fillStyle = '#17566B'; g.fillRect(0, 0, W, LID); g.fillStyle = '#0E3A4A'; g.fillRect(0, LID - 4, W, 4);
     const lamp = lightLv; g.fillStyle = lamp > .5 ? '#FFF3B8' : '#7F98A4'; g.fillRect(W * .3, 6, W * .4, 9);
     if (lamp > .05) { const gr = g.createLinearGradient(0, LID, 0, LID + 40); gr.addColorStop(0, `rgba(255,243,184,${.55 * lamp})`); gr.addColorStop(1, 'rgba(255,243,184,0)'); g.fillStyle = gr; g.fillRect(W * .26, LID, W * .48, 40); }
@@ -2731,9 +3260,9 @@ const Aquarium = (() => {
 
   /* ---------- actions ---------- */
   const actions = {
-    feed() { Sfx.plop(); const cols = ['#E8863A', '#C75A3A', '#7BC96F', '#F0C24A']; for (let i = 0; i < 14; i++) food.push({ x: W * (.15 + Math.random() * .7), y: LID + Math.random() * 40 - 20, vy: 24 + Math.random() * 18, ph: Math.random() * 6, c: cols[i % 4], depth: Math.random() * 10 }); UI.toast(State.fish.length ? 'Yum! The fish are eating.' : 'Add a fish first. Then feed it.'); },
+    feed() { Sfx.plop(); const cols = ['#E8863A', '#C75A3A', '#7BC96F', '#F0C24A']; fishObjs.forEach(o => { o.excite = 1.4; }); for (let i = 0; i < 14; i++) food.push({ x: W * (.15 + Math.random() * .7), y: LID + Math.random() * 40 - 20, vy: 24 + Math.random() * 18, ph: Math.random() * 6, c: cols[i % 4], depth: Math.random() * 10 }); UI.toast(State.fish.length ? 'Yum! The fish are eating.' : 'Add a fish first. Then feed it.'); },
     clean() { if (sponge) return; Sfx.clean(); sponge = { t: 0, x: -80, d0: dirt }; setTimeout(() => UI.toast('The tank is clean!'), 1700); },
-    light() { State.light = !State.light; State.save(); Sfx.light(); renderCare(); },
+    light() { State.light = !State.light; State.save(); Sfx.light(); renderCare(); fishObjs.forEach(o => { newTarget(o); if (State.light) { o.boost = .45; o.pause = 0; if (Math.random() < .5) addBubble(o.x, o.y - 6, 3); } }); UI.toast(State.light ? 'Good morning, fish! The light is on.' : 'Good night, fish. The fish are resting.'); },
     bubbles() { Sfx.bubbleStream(); for (let i = 0; i < 34; i++) setTimeout(() => addBubble(W * (.1 + Math.random() * .8), H * (.7 + Math.random() * .15), 3 + Math.random() * 6), i * 90); }
   };
   function renderCare() {
@@ -2755,7 +3284,7 @@ const Aquarium = (() => {
     const owned = State.teacher || State.owned[kind].includes(item.id), first = !State.owned[kind].includes(item.id);
     if (!owned) { if (!State.trySpend(item.price)) { UI.toast('You need ' + (item.price - State.shells) + ' more shells.'); Sfx.oops(); return; } }
     if (first) State.owned[kind].push(item.id); Sfx.shell();
-    if (kind === 'sand') State.sand = item.id; else if (kind === 'place') { State.place = item.id; resize(); tripBanner(item.id, first && item.id !== 'none'); } else State.bg = item.id;
+    if (kind === 'sand') State.sand = item.id; else if (kind === 'place') { State.place = item.id; resize(); tripBanner(item.id, first && item.id !== 'none'); if (first && item.id !== 'none') Celebrate.confetti(50); } else State.bg = item.id;
     State.save(); bgKey = ''; Sfx.place(); renderShop();
   }
   function tripBanner(id, stamp) { const p = placeOf(id); if (!ui.trip) return; ui.trip.innerHTML = ''; ui.trip.append(h('b', null, p.phrase), stamp ? h('small', null, 'Passport stamp: ' + p.label) : null); ui.trip.classList.remove('on'); void ui.trip.offsetWidth; ui.trip.classList.add('on'); clearTimeout(tripT); tripT = setTimeout(() => ui.trip.classList.remove('on'), 3800); if (stamp) Voice.ok(); }
@@ -2801,22 +3330,24 @@ const Aquarium = (() => {
   const inTank = p => p.x >= 0 && p.y >= 0 && p.x <= W && p.y <= H;
   function fishAt(p) { const w = dw(); let best = null, bd = 1e9; fishObjs.forEach(o => { const sc = { small: .7, medium: .94, big: 1.14 }[o.rec.spec.size] || .94, rx = w * .5 * sc * .8 + 8, ry = w * .32 * sc + 8, d = ((p.x - o.x) / rx) ** 2 + ((p.y - o.y) / ry) ** 2; if (d < 1 && d < bd) { bd = d; best = o; } }); return best; }
   function decorAt(p) { const arr = State.decor.slice().sort((a, b) => b.y - a.y); for (const d of arr) { const b = decorBox(d); if (p.x > b.left - 6 && p.x < b.left + b.w + 6 && p.y > b.top - 6 && p.y < b.base + 6) return d; } return null; }
+  function react(f) { f.spin = .7; f.excite = .8; addHearts(f.x, f.y - dw() * .2, 2); for (let i = 0; i < 6; i++) addBubble(f.x + (Math.random() - .5) * 30, f.y + (Math.random() - .5) * 20, 2 + Math.random() * 4); }
   function onDown(e) {
-    Sfx.unlock(); const p = pos(e); if (!inTank(p)) return;
+    if (!OnePointer.take(e)) return; Sfx.unlock(); const p = pos(e); if (!inTank(p)) return;
     if (mode === 'move' && !homeMode) {
       const d = decorAt(p); if (d) { selDecor = d.id; drag = { d, ox: p.x - d.x * W, oy: p.y, y0: d.y, moved: false }; cv.setPointerCapture && cv.setPointerCapture(e.pointerId); hideDecorPop(); } else { selDecor = null; hideDecorPop(); } return;
     }
+    const sp = shrimpAt(p); if (sp) { sp.flick = .35; sp.hv = 2.2; sp.hop = .01; sp.pause = 1.5; Sfx.bubble(); for (let i = 0; i < 4; i++) addBubble(sp.x * W, shrimpY(sp) - 6, 2 + Math.random() * 2); return; }
     const f = fishAt(p);
-    if (f && homeMode) { Sfx.bubble(); splashAt(f.x, f.y); for (let i = 0; i < 6; i++) addBubble(f.x + (Math.random() - .5) * 30, f.y + (Math.random() - .5) * 20, 2 + Math.random() * 4); f.boost = 1.3; f.pause = 0; f.tx = f.x + (f.x > W / 2 ? -1 : 1) * (80 + Math.random() * 120); f.ty = f.y + (Math.random() - .5) * 120; return; }
-    if (f) { Sfx.pop(); showInfo(f); f.pause = 3; f.vx *= .3; f.vy *= .3; return; }
+    if (f && homeMode) { Sfx.bubble(); react(f); for (let i = 0; i < 6; i++) addBubble(f.x + (Math.random() - .5) * 30, f.y + (Math.random() - .5) * 20, 2 + Math.random() * 4); f.boost = 1.3; f.pause = 0; f.tx = f.x + (f.x > W / 2 ? -1 : 1) * (80 + Math.random() * 120); f.ty = f.y + (Math.random() - .5) * 120; return; }
+    if (f) { Sfx.pop(); react(f); showInfo(f); f.pause = 3; f.vx *= .3; f.vy *= .3; return; }
     hideInfo(); rings.push({ x: p.x, y: p.y, r: 4, a: .9, k: 60 }); Sfx.bubble(); let near = null, nd = 1e9; fishObjs.forEach(o => { const d = Math.hypot(o.x - p.x, o.y - p.y); if (d < nd) { nd = d; near = o; } }); if (near && !near.falling) { near.tx = p.x; near.ty = p.y; near.pause = 0; }
   }
   function onMove(e) {
-    const p = pos(e);
+    if (!OnePointer.owns(e)) return; const p = pos(e);
     if (drag) { const floorTop = H * .86, band = H - floorTop - 10, def = defOf(drag.d.type), b = decorBox(drag.d); drag.d.x = Math.max(.04, Math.min(.96, (p.x - drag.ox) / W)); let yy; if (floaty(def)) yy = (p.y + b.h / 2 - LID - 16 - b.h) / Math.max(10, floorTop - LID - b.h - 30); else yy = def.cat === 'big' ? (p.y - (floorTop + 6)) / band + 0.5 : (p.y - (floorTop + 6)) / band; drag.d.y = Math.max(0, Math.min(1, yy)); drag.moved = true; return; }
     if (mode === 'look' || homeMode) { const f = inTank(p) ? fishAt(p) : null; fishObjs.forEach(o => o.hover = o === f); cv.style.cursor = f ? 'pointer' : 'default'; } else { cv.style.cursor = decorAt(p) ? 'grab' : 'default'; }
   }
-  function onUp() { if (drag) { State.save(); Sfx.place(); drag = null; showDecorPop(); } }
+  function onUp(e) { if (e && !OnePointer.owns(e)) return; OnePointer.release(e); if (drag) { State.save(); Sfx.place(); drag = null; showDecorPop(); } }
 
   /* ---------- picture of the tank (used by the PDF and PNG save) ---------- */
   function snapshot() { draw(); const c = document.createElement('canvas'); c.width = cv.width; c.height = cv.height; c.getContext('2d').drawImage(cv, 0, 0); return c; }
@@ -2827,6 +3358,8 @@ const Aquarium = (() => {
     const odpr = dpr; dpr = Math.min(window.devicePixelRatio || 1, 1.5); CW = Math.round(r.width); CH = Math.round(r.height); cv.width = Math.round(CW * dpr); cv.height = Math.round(CH * dpr); cv.style.width = CW + 'px'; cv.style.height = CH + 'px';
     const R = tankRect(placeOf(State.place), CW, CH); TX = R.x; TY = R.y; W = R.w; H = R.h; bgKey = '';
     specks = Array.from({ length: 26 }, () => ({ x: Math.random() * W, y: LID + Math.random() * H * .8, r: 1 + Math.random() * 2.2, v: 6 + Math.random() * 14, ph: Math.random() * 6 }));
+    snow = Array.from({ length: 34 }, () => ({ x: Math.random(), y: Math.random(), r: .8 + Math.random() * 1.6, v: .006 + Math.random() * .014, ph: Math.random() * 6 })); fxKey = '';
+    if (!shrimp.length) shrimp = [{ x: .22, dir: 1, lane: 0, pause: 0, hop: 0, hv: 0, flick: 0, ph: 1 }, { x: .71, dir: -1, lane: 1, pause: 2, hop: 0, hv: 0, flick: 0, ph: 4 }];
     glow = Array.from({ length: 16 }, (_, i) => ({ x: Math.random(), y: Math.random(), r: 3 + Math.random() * 3.5, ph: Math.random() * 6, c: ['#FFE27A', '#7DF3F0', '#FF9EC9', '#B6FF9E'][i % 4] }));
     if (odpr !== dpr) sprites.clear(); fishObjs.forEach(o => ensureSprite(o.rec.spec));
   }
@@ -2840,7 +3373,8 @@ const Aquarium = (() => {
     const savePic = h('button', { class: 'btn small', id: 'btn-save-tank', onclick: () => UI.pdfDialog('tank') }, h('span', { html: IC.down }), 'Save PDF');
     const addFish = h('button', { class: 'btn small', id: 'btn-new', onclick: () => UI.go('design') }, h('span', { html: IC.plus }), 'New fish');
     const shopBtn = h('button', { class: 'btn small shopbtn', id: 'btn-shop', onclick: () => { document.body.classList.toggle('shop-open'); Sfx.click(); } }, h('span', { html: IC.shell }), 'Shop');
-    ui.tools = h('div', { class: 'tank-tools' }, addFish, ui.modeBtn, savePic, shopBtn, ui.count);
+    const albBtn = h('button', { class: 'btn small', id: 'btn-album', onclick: () => { Sfx.click(); Progress.album(); } }, h('span', { html: IC.stamp }), 'Album');
+    ui.tools = h('div', { class: 'tank-tools' }, addFish, ui.modeBtn, savePic, albBtn, shopBtn, ui.count);
     ui.info = h('div', { class: 'fishinfo', role: 'dialog', 'aria-label': 'Fish card' });
     ui.pop = h('div', { class: 'decorpop' }, h('button', { class: 'btn small', id: 'btn-putaway', onclick: () => { const d = State.decor.find(x => x.id === selDecor); if (!d) return; const def = defOf(d.type); State.decor = State.decor.filter(x => x !== d); const back = d.paid != null ? d.paid : def.price; if (back) State.addShells(back); selDecor = null; hideDecorPop(); State.save(); Sfx.splash(); renderShop(); UI.toast('Put away. You got your shells back.'); } }, h('span', { html: IC.trash }), 'Put away'));
     ui.empty = h('div', { class: 'empty' }, h('div', { class: 'ebox' }, h('h3', null, 'Your tank is empty.'), h('p', null, 'Design a fish and describe it. Then it will swim here!'), h('button', { class: 'btn primary', id: 'btn-empty-go', onclick: () => UI.go('design') }, 'Design a fish', h('span', { html: IC.arrow }))));
@@ -2867,7 +3401,7 @@ const Aquarium = (() => {
     /* test + benchmark hooks */
     _bench(n) { const t0 = performance.now(); for (let i = 0; i < n; i++) { T += .016; step(.016); draw(); } return (performance.now() - t0) / n; },
     _info: () => ({ W, H, CW, CH, TX, TY, place: State.place, fish: fishObjs.length, sprites: [...sprites.values()].filter(s => s.done).length, bubbles: bubbles.length, food: food.length, dirt, light: lightLv, decor: State.decor.length }),
-    _fish: () => fishObjs.map(o => ({ id: o.id, x: o.x + TX, y: o.y + TY })), _actions: actions, syncFish, leaveInfo: hideInfo, stopped: () => !running
+    _fish: () => fishObjs.map(o => ({ id: o.id, x: o.x + TX, y: o.y + TY, spin: o.spin || 0 })), _life: () => ({ hearts: hearts.length, shrimp: shrimp.map(s => ({ x: s.x * W + TX, y: shrimpY(s) + TY, flick: s.flick })), snow: snow.length, light: lightLv }), _actions: actions, syncFish, leaveInfo: hideInfo, stopped: () => !running
   };
 })();
 
@@ -3866,7 +4400,7 @@ const UI = (() => {
     c.append(h('div', { class: 'sgroup' }, h('h3', null, 'Teacher mode'), h('p', { class: 'hint' }, 'Students must answer the describe questions before a fish goes in the aquarium. Teacher mode unlocks everything: add fish right away, free decorations, all fact cards.'), h('button', { class: 'btn' + (State.teacher ? '' : ' primary'), id: 'btn-teacher-mode', onclick: () => { setTeacher(!State.teacher); closeModals(); } }, State.teacher ? 'Turn teacher mode off' : 'Turn teacher mode on'), State.teacher ? h('button', { class: 'btn', id: 'btn-gift-settings', style: 'margin-left:8px', onclick: () => { closeModals(); giveShells(); } }, h('span', { html: IC.gift }), 'Give shells') : null),
       h('div', { class: 'sgroup' }, h('h3', null, 'Describe mode'), h('p', { class: 'hint' }, 'Pick answers: choose the true sentence. Level 1: word tiles. Level 2: sentence starters. Level 3: free writing.'), lv), h('div', { class: 'sgroup' }, h('h3', null, 'Voice'), vo),
       h('div', { class: 'sgroup' }, h('h3', null, 'PIN'), h('div', { class: 'row' }, pinIn, h('button', { class: 'btn small', id: 'btn-pin-save', onclick: () => { if (/^\d{4,8}$/.test(pinIn.value)) { s.pin = pinIn.value; State.save(); pinIn.value = ''; toast('PIN changed.'); } else toast('The PIN needs 4 to 8 digits.'); } }, 'Save PIN'))),
-      h('div', { class: 'sgroup danger' }, h('h3', null, 'Reset'), h('p', { class: 'hint' }, 'Deletes all fish, shells, and decorations on this device.'), h('button', { class: 'btn', id: 'btn-reset', onclick: () => confirm('Reset everything?', 'All fish, shells, and decorations will be deleted. This cannot be undone.', 'Yes, reset', () => { State.reset(); State.shells = START_SHELLS; State.fish = []; State.decor = []; State.sand = 'golden'; State.bg = 'day'; State.light = true; State.owned = { sand: ['golden'], bg: ['day'], place: ['none'] }; State.place = 'none'; State.draft = DEFAULT_SPEC(); State.draftDone = null; State.welcomed = false; State.orders = {}; State.cards = []; State.quiz = {}; State.draftLevel = 0; State.save(); closeModals(); updateShells(); Aquarium.syncFish(); Designer.refresh(); go('welcome'); toast('Everything was reset.'); }) }, h('span', { html: IC.refresh }), 'Reset all')));
+      h('div', { class: 'sgroup danger' }, h('h3', null, 'Reset'), h('p', { class: 'hint' }, 'Deletes all fish, shells, and decorations on this device.'), h('button', { class: 'btn', id: 'btn-reset', onclick: () => confirm('Reset everything?', 'All fish, shells, and decorations will be deleted. This cannot be undone.', 'Yes, reset', () => { State.reset(); State.shells = START_SHELLS; State.fish = []; State.decor = []; State.sand = 'golden'; State.bg = 'day'; State.light = true; State.owned = { sand: ['golden'], bg: ['day'], place: ['none'] }; State.place = 'none'; State.draft = DEFAULT_SPEC(); State.draftDone = null; State.welcomed = false; State.orders = {}; State.cards = []; State.quiz = {}; State.draftLevel = 0; State.prog = Progress.BLANK(); State.prog.seeded = true; Progress.visit(); State.save(); closeModals(); updateShells(); Aquarium.syncFish(); Designer.refresh(); go('welcome'); toast('Everything was reset.'); }) }, h('span', { html: IC.refresh }), 'Reset all')));
     modal('Teacher settings', c, { cls: 'small' });
   }
 
@@ -3884,17 +4418,13 @@ const UI = (() => {
     const w = modal('Give shells', out, { cls: 'small' });
   }
   function celebrate(n, reason) {
-    const w = modal(reason, h('div', { class: 'celebrate' }, h('div', { class: 'big-shell', html: IC.shell }), h('b', null, '+' + n + ' shells'), h('p', null, 'Well done! Use your shells in the aquarium shop.'), h('button', { class: 'btn primary', id: 'btn-celebrate-ok', onclick: () => closeModal(w) }, 'Yay!')), { cls: 'small' });
+    const w = modal(reason, h('div', { class: 'celebrate' }, h('div', { class: 'big-shell', html: IC.shell }), h('b', null, '+' + n + ' shells'), h('p', null, 'Well done! Use your shells in the aquarium shop.'), h('button', { class: 'btn primary', id: 'btn-celebrate-ok', onclick: () => closeModal(w) }, 'Yay!')), { cls: 'small' }); Celebrate.confetti(60);
   }
 
   /* ---- Home screen: a living aquarium with the menu on it ---- */
-  const WORDS = [['tail', 'long'], ['tail', 'forked'], ['tail', 'fan'], ['fin', 'spiky'], ['fin', 'flowing'], ['eye', 'sleepy'], ['eye', 'surprised'], ['eye', 'sad'], ['eye', 'angry'], ['mouth', 'grin'], ['mouth', 'open'], ['pattern', 'stripes'], ['pattern', 'leopard'], ['pattern', 'plaid'], ['pattern', 'flames'], ['scales', 'rainbow'], ['scales', 'glitter'], ['sticker', 'crown'], ['sticker', 'bowtie'], ['sticker', 'headphones'], ['body', 'pufferfish'], ['body', 'angelfish']];
-  const LISTS = { tail: TAILS, fin: FINS, eye: EYES, mouth: MOUTHS, pattern: PATTERNS, scales: SCALES, sticker: STICKERS, body: BODIES };
-  function wordOfDay() { const d = Math.floor(Date.now() / 864e5), [k, id] = WORDS[d % WORDS.length], it = LISTS[k].find(x => x.id === id); return { kind: k, id, label: (it && it.label) || id }; }
-
   /* ---- Welcome ---- */
   function welcome(el) {
-    const wd = wordOfDay(), demo = normSpec({ name: 'Sunny', bodyColor: 'blue', finColor: 'pink', tailColor: 'pink', pattern: 'stars', patternColor: 'white', tail: 'flowing', fin: 'flowing', eye: 'sparkly', scales: 'shiny', stHead: 'crown', body: 'angelfish' });
+    const wd = Progress.wordOfDay(), done = Progress.wotdDone(), streak = State.prog ? State.prog.streak : 1, demo = normSpec({ name: 'Sunny', bodyColor: 'blue', finColor: 'pink', tailColor: 'pink', pattern: 'stars', patternColor: 'white', tail: 'flowing', fin: 'flowing', eye: 'sparkly', scales: 'shiny', stHead: 'crown', body: 'angelfish' });
     const tile = (id, n, t, sub, art, go) => h('button', { class: 'htile', id: 'tile-' + id, onclick: () => { Sfx.unlock(); Sfx.pop(); go(); } }, h('span', { class: 'ta', html: art }), h('span', { class: 'htt' }, n ? h('b', null, n) : null, h('span', null, t)), h('small', null, sub));
     el.innerHTML = '';
     el.append(h('div', { class: 'home' },
@@ -3902,15 +4432,17 @@ const UI = (() => {
         h('div', { class: 'htitle' }, h('h1', null, 'Fish Designer ', h('span', null, 'Aquarium')), h('p', null, 'Design a fish. Describe it in English. Fill your aquarium.')),
         h('div', { class: 'hactions' }, h('button', { class: 'btn primary big', id: 'btn-start', onclick: () => { Sfx.unlock(); Sfx.pop(); State.welcomed = true; State.save(); go('design'); } }, 'Start', h('span', { html: IC.arrow })),
           State.fish.length ? h('button', { class: 'btn big', id: 'btn-start-aq', onclick: () => { Sfx.unlock(); go('aquarium'); } }, 'My aquarium') : null,
-          h('div', { class: 'hstats', id: 'hstats' }, h('span', null, State.fish.length + (State.fish.length === 1 ? ' fish' : ' fish')), h('span', { class: 'sh' }, h('i', { html: IC.shell }), State.shells + ' shells'))),
+          h('div', { class: 'hstats', id: 'hstats' }, h('span', null, State.fish.length + ' fish'), h('span', { class: 'sh' }, h('i', { html: IC.shell }), State.shells + ' shells'), h('span', { class: 'streak', id: 'streak', title: 'Days you played in a row' }, h('i', { class: 'sun' }), streak > 1 ? 'Day ' + streak + ' in a row' : 'Day 1. Welcome!'))),
         h('button', { class: 'icon-btn wgear', id: 'btn-teacher-w', 'aria-label': 'Teacher settings', onclick: () => teacher(), html: IC.gear })),
-      h('div', { class: 'hword', id: 'hword' }, h('div', { class: 'hw-pic', html: Pics.opt(wd.kind, wd.id) }), h('div', { class: 'hw-t' }, h('small', null, 'Word of the day'), h('b', null, wd.label)), Voice.ok() && State.settings.voice ? h('button', { class: 'icon-btn tiny', 'aria-label': 'Hear it', id: 'btn-word-hear', onclick: () => Voice.say(wd.label), html: IC.speaker }) : null),
+      h('div', { class: 'hword' + (done ? ' done' : ''), id: 'hword' }, h('div', { class: 'hw-pic', html: Pics.opt(wd.kind, wd.id) }), h('div', { class: 'hw-t' }, h('small', null, 'Word of the day'), h('b', null, wd.label)), Voice.ok() && State.settings.voice ? h('button', { class: 'icon-btn tiny', 'aria-label': 'Hear it', id: 'btn-word-hear', onclick: () => Voice.say(wd.label), html: IC.speaker }) : null,
+        done ? h('span', { class: 'hw-done', id: 'hw-done' }, h('i', { html: IC.check }), 'Done today') : h('button', { class: 'btn small primary hw-play', id: 'btn-word-play', onclick: () => { Sfx.unlock(); Sfx.pop(); Progress.playWord(() => welcome(el)); } }, 'Play', h('span', { class: 'hw-sh', html: IC.shell }), '+2')),
       h('div', { class: 'htiles' },
         tile('design', '1', 'Design', 'Make a fish', FishArt.svg(demo, { uid: 'ht1', cls: 'pic-svg', box: [60, 0, 340, 270] }), () => go('design')),
         tile('describe', '2', 'Describe', 'Pick the true sentence', '<div class="sent"><i>My fish is blue.</i><i>It has a crown.</i></div>', () => go('design')),
         tile('aquarium', '3', 'Aquarium', 'Decorate and visit places', DecorArt.svg('castle'), () => go('aquarium')),
         tile('orders', '', 'Orders', 'Read and make', Animals.art('clownfish'), () => go('orders')),
-        tile('cards', '', 'Fact cards', '12 real animals', Animals.art('octopus'), () => go('cards')))));
+        tile('cards', '', 'Fact cards', '12 real animals', Animals.art('octopus'), () => go('cards')),
+        tile('album', '', 'My album', (State.prog ? State.prog.badges.length : 0) + ' of ' + Progress.BADGES.length + ' badges', '<span class="alb-tile">' + Progress.badgeSvg(Progress.BADGES[0], !!(State.prog && State.prog.badges.includes('first-fish'))) + Progress.badgeSvg(Progress.BADGES[8], !!(State.prog && State.prog.badges.includes('quiz-star'))) + Progress.badgeSvg(Progress.BADGES[6], !!(State.prog && State.prog.badges.includes('first-trip'))) + '</span>', () => Progress.album()))));
   }
   const reduceMotionFlag = () => typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
   return { go, setTeacher, giveShells, toast, modal, closeModal, closeModals, confirm, wordBank, teacher, updateShells, welcome, cur: () => cur };
@@ -3959,7 +4491,7 @@ const Modes = (() => {
       newCard ? h('div', { class: 'newcard' }, h('span', { class: 'nc-pic', html: Animals.art(animal.id) }), h('div', null, h('b', null, 'New fact card!'), h('p', null, animal.name))) : null,
       h('div', { class: 'row' }, newCard ? h('button', { class: 'btn', id: 'btn-view-card', onclick: () => { UI.closeModals(); UI.go('cards'); openCard(animal.id); } }, 'Read the card') : null, h('button', { class: 'btn', id: 'btn-all-orders', onclick: () => { UI.closeModals(); UI.go('orders'); } }, 'All orders'),
         next ? h('button', { class: 'btn primary', id: 'btn-next-order', onclick: () => { UI.closeModals(); start(next); } }, 'Next order', h('span', { html: IC.arrow })) : null));
-    UI.modal('Order served!', body, { cls: 'small' });
+    UI.modal('Order served!', body, { cls: 'small' }); Celebrate.confetti(first ? 70 : 30);
   }
   function ladder() {
     const row = (title, list, kind) => h('div', { class: 'ladder' }, h('h3', null, title), h('div', { class: 'lrow' }, list.map((it, i) => h('div', { class: 'lstep' }, h('span', { class: 'pic', html: Pics.opt(kind, it.id) }), h('b', null, it.id), i < list.length - 1 ? h('i', null, '<') : null))));
@@ -3975,7 +4507,7 @@ const Modes = (() => {
         h('span', { class: 'cpic', html: Animals.art(a.id) }), open ? null : h('span', { class: 'lock', html: IC.lock }), h('b', null, open ? a.name : '? ? ?'),
         open ? h('small', null, State.quiz[a.id] != null ? 'Quiz: ' + State.quiz[a.id] + '/3' : 'Tap to read') : h('small', null, 'Level ' + fo.level + ', order ' + fo.n));
     }));
-    cardsEl.append(h('div', { class: 'cards' }, h('div', { class: 'ohead' }, h('div', null, h('h2', null, 'Real fish fact cards'), h('p', null, 'Finish an order to unlock a card. Read the facts. Then take the quiz!')), h('div', { class: 'ohr' }, h('div', { class: 'prog', id: 'card-prog' }, State.cards.length + ' of 12 unlocked'), h('button', { class: 'btn small', id: 'btn-to-orders', onclick: () => UI.go('orders') }, 'Go to orders', h('span', { html: IC.arrow })))), grid));
+    cardsEl.append(h('div', { class: 'cards' }, h('div', { class: 'ohead' }, h('div', null, h('h2', null, 'Real fish fact cards'), h('p', null, 'Finish an order to unlock a card. Read the facts. Then take the quiz!')), h('div', { class: 'ohr' }, h('div', { class: 'prog', id: 'card-prog' }, State.cards.length + ' of 12 unlocked'), h('button', { class: 'btn small', id: 'btn-album-c', onclick: () => Progress.album('cards') }, h('span', { html: IC.stamp }), 'Album'), h('button', { class: 'btn small', id: 'btn-to-orders', onclick: () => UI.go('orders') }, 'Go to orders', h('span', { html: IC.arrow })))), grid));
   }
   function openCard(id) {
     const a = Animals.get(id); const w = UI.modal(a.name, '', { cls: 'cardmodal' }), mb = $('.mb', w);
@@ -4003,7 +4535,7 @@ const Modes = (() => {
       if (!Voice.ok() || !State.settings.voice) $$('.hearq', mb).forEach(b => b.style.display = 'none');
     };
     const done = () => {
-      const first = State.quiz[a.id] == null, best = Math.max(State.quiz[a.id] == null ? 0 : State.quiz[a.id], score); const perfectFirst = score === 3 && !(State.quiz[a.id] === 3); State.quiz[a.id] = best; State.save(); const bonus = perfectFirst ? 3 : 0; if (bonus) State.addShells(bonus); Sfx.success();
+      const first = State.quiz[a.id] == null, best = Math.max(State.quiz[a.id] == null ? 0 : State.quiz[a.id], score); const perfectFirst = score === 3 && !(State.quiz[a.id] === 3); State.quiz[a.id] = best; State.save(); const bonus = perfectFirst ? 3 : 0; if (bonus) State.addShells(bonus); Sfx.success(); if (score === 3) Celebrate.confetti(60);
       mb.innerHTML = ''; mb.append(h('div', { class: 'quiz result' }, h('h3', null, 'Your score: ' + score + ' of 3'), h('p', null, score === 3 ? 'Perfect! You know the ' + a.name.toLowerCase() + '!' : score >= 2 ? 'Great job! Read the facts again for a perfect score.' : 'Good try! Read the facts again and try the quiz once more.'),
         bonus ? h('div', { class: 'reward' }, h('span', { html: IC.shell }), h('b', null, '+' + bonus + ' shells')) : null,
         h('div', { class: 'row' }, h('button', { class: 'btn', id: 'btn-qback', onclick: back }, 'Back to the card'), h('button', { class: 'btn primary', id: 'btn-qagain', onclick: () => { i = 0; score = 0; ask(); } }, 'Try again'))));
@@ -4019,7 +4551,7 @@ const Modes = (() => {
 /* ---- 11-main.js ---- */
 /* ===== start-up ===== */
 (function init() {
-  State.load(); Sfx.setMuted(State.muted);
+  State.load(); if (!State.prog) State.prog = Progress.BLANK(); Progress.init(); Sfx.setMuted(State.muted);
   $('#shell-ic').innerHTML = IC.shell;
   const mute = $('#btn-mute'), setMute = () => { mute.innerHTML = State.muted ? IC.mute : IC.speaker; mute.setAttribute('aria-pressed', State.muted ? 'true' : 'false'); mute.title = State.muted ? 'Sound is off' : 'Sound is on'; };
   setMute(); mute.addEventListener('click', () => { State.muted = !State.muted; Sfx.setMuted(State.muted); State.save(); setMute(); if (!State.muted) { Sfx.unlock(); Sfx.pop(); } });
@@ -4031,7 +4563,7 @@ const Modes = (() => {
   UI.updateShells();
   window.addEventListener('beforeunload', State.saveNow);
   UI.go('welcome');
-  window.FDA = { Modes, Orders, Animals, State, Checker, FishArt, Aquarium, Designer, Describe, UI, Sfx };
+  window.FDA = { Progress, Celebrate, OnePointer, Modes, Orders, Animals, State, Checker, FishArt, Aquarium, Designer, Describe, UI, Sfx };
 })();
 
 /* ---- 12-pdf.js ---- */
@@ -4103,7 +4635,7 @@ const PDF = (() => {
     const fw = Math.round(pw * .92), fh = Math.round(fw * 320 / 480), im = await svgImg(FishArt.svg(rec.spec, { uid: 'pw', width: fw, height: fh, cls: 'x' }), fw, fh); if (im) { g.save(); g.beginPath(); g.rect(MARGIN, py, pw, ph); g.clip(); g.drawImage(im, MARGIN + (pw - fw) / 2, py + (ph - fh) / 2, fw, fh); g.restore(); }
     const bx = MARGIN + pw + 40, bw = w - MARGIN - bx; g.fillStyle = SEA; g.font = '700 38px Poppins, sans-serif'; g.textAlign = 'left'; g.fillText('Sentence starters', bx, py + 50); g.fillStyle = INK; g.font = '400 34px Lexend, sans-serif';
     ['My fish is ...', 'My fish has ...', 'Its tail is ...', 'Its eyes are ...', 'I like my fish because ...'].forEach((s, i) => g.fillText(s, bx, py + 112 + i * 56));
-    const ws = [...new Set([rec.spec.bodyColor, rec.spec.tailColor, rec.spec.finColor, rec.spec.eyeColor, rec.spec.size, rec.spec.tail, rec.spec.fin, rec.spec.eye, rec.spec.pattern !== 'none' ? rec.spec.pattern : null, rec.spec.pattern !== 'none' ? rec.spec.patternColor : null].filter(Boolean))].concat(['tail', 'fins', 'eyes', 'body']);
+    const es = effSpec(rec.spec), ws = [...new Set([es.bodyColor, es.tailColor, es.finColor, es.eyeColor, es.size, es.tail, es.fin, es.eye, es.pattern !== 'none' ? es.pattern : null, es.pattern !== 'none' ? es.patternColor : null].filter(Boolean))].concat(['tail', 'fins', 'eyes', 'body']);
     let y = py + ph + 80; g.fillStyle = SEA; g.font = '700 38px Poppins, sans-serif'; g.fillText('Help words', MARGIN, y); y += 20; let x = MARGIN; g.font = '600 32px Poppins, sans-serif';
     ws.slice(0, 16).forEach(t => { const tw = g.measureText(t).width + 40; if (x + tw > w - MARGIN) { x = MARGIN; y += 64; } rect(g, x, y + 8, tw, 50, '#FFF4D2', INK, 3); g.fillStyle = INK; g.fillText(t, x + 20, y + 44); x += tw + 14; });
     y += 120; g.strokeStyle = INK2; g.lineWidth = 2; for (; y < h - 140; y += 84) { g.beginPath(); g.moveTo(MARGIN, y); g.lineTo(w - MARGIN, y); g.stroke(); }

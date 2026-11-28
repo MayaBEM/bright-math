@@ -76,9 +76,14 @@ img{-webkit-user-drag:none}
 
 /* MENU */
 .menu-wrap{position:absolute;inset:0;padding:1.4rem 3.5% 14vh;display:flex;flex-direction:column;gap:1rem;z-index:5}
-.menu-head{display:flex;align-items:center;gap:1rem;color:#fff}
+.menu-head{display:flex;align-items:center;gap:1rem;color:#fff;flex-wrap:wrap}
 .menu-head h2{font:700 2.1rem var(--head);flex:1}
-.level-chip{font:600 1rem var(--head);background:#ffd35c;color:var(--ink);padding:.4em .9em}
+.level-pick{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;justify-content:flex-end}
+.level-pick .lp-lab{font:600 1rem var(--head);color:#ffd98a;margin-right:.2rem}
+.level-pick button{display:flex;flex-direction:column;align-items:center;line-height:1.05;min-width:6.4rem;min-height:52px;padding:.3em .8em;background:var(--paper);border:2px solid var(--line2);border-bottom-width:5px;color:var(--ink)}
+.level-pick button b{font:700 1.15rem var(--head)}.level-pick button span{font-size:.72rem;color:var(--ink2)}
+.level-pick button.on{background:#ffd35c;border-color:var(--gold-d)}
+.level-pick .lp-words{flex-basis:100%;text-align:right;font-size:.95rem;color:#eef1ff;margin-top:.1rem}
 .mode-grid{flex:1;min-height:0;display:grid;grid-template-columns:repeat(2,1fr);grid-auto-rows:1fr;gap:1rem}
 .mode-card{background:var(--cream);border:3px solid var(--ink);box-shadow:6px 6px 0 rgba(10,16,48,.45);padding:1rem 1.1rem;display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto minmax(0,1fr) auto;column-gap:1rem;row-gap:.3rem;text-align:left;position:relative;min-height:0;overflow:hidden}
 .mode-card .num{grid-row:1/4;grid-column:1;font:700 3.2rem/1 var(--head);color:var(--red);width:1.1em}
@@ -164,8 +169,14 @@ img{-webkit-user-drag:none}
 .oppline{position:absolute;pointer-events:none}.oppline svg{width:100%;height:100%;overflow:visible}
 .name-tag{position:absolute;transform:translate(-50%,-100%);background:var(--paper);color:var(--ink);font:700 44px var(--head);padding:4px 22px 8px;border:5px solid var(--ink);z-index:90;white-space:nowrap;animation:tagin .22s both;pointer-events:none}
 .name-tag.out{opacity:0;transition:opacity .35s}
-.spot{position:absolute;width:54px;height:54px;margin:-52px 0 0 -27px;z-index:75;background:rgba(255,211,92,.92);border:5px solid #fff;box-shadow:0 0 0 3px var(--ink);transform:rotate(45deg) scale(.62);cursor:pointer;animation:spotin .3s both}
-.spot.near,.spot:hover{background:var(--red);transform:rotate(45deg) scale(.9)}
+/* hiding places while hiding: small quiet marks (a big tap area), never on top of a reindeer */
+.spot{position:absolute;width:64px;height:64px;margin:-50px 0 0 -32px;z-index:75;cursor:pointer;animation:spotin .3s both}
+.spot::after{content:'';position:absolute;left:50%;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;background:#fff;border:3px solid var(--ink);transform:rotate(45deg);opacity:.7;transition:transform .2s,opacity .2s,background .2s}
+.spot:hover::after,#rooms.dragging .spot::after{opacity:.95;background:#ffd35c;transform:rotate(45deg) scale(1.2)}
+.spot.near::after,.spot.taken{opacity:0;visibility:hidden}
+.hider.preview{opacity:.62;filter:drop-shadow(0 0 6px #fff) drop-shadow(0 0 3px #ffd35c)}
+.spot-label{position:absolute;transform:translate(-50%,-100%);background:#fff;color:var(--ink);font:700 38px var(--head);padding:2px 18px 6px;border:4px solid var(--ink);z-index:95;white-space:nowrap;pointer-events:none;animation:tagin .18s both}
+.drag-ghost.over{opacity:.3}
 .fx{position:absolute;pointer-events:none}
 .fx-cat img{width:100%;height:100%;animation:catjump 2.2s cubic-bezier(.3,1.3,.5,1) both}
 .fx-snow i{position:absolute;background:#fff;border-radius:50%;box-shadow:0 2px 0 #d5e1fb;animation:snowdrop 1.2s cubic-bezier(.5,0,.9,.6) both}
@@ -295,7 +306,7 @@ img{-webkit-user-drag:none}
 @keyframes wobble{0%,100%{transform:rotate(0)}20%{transform:rotate(-4deg) translateY(-8px)}45%{transform:rotate(4deg)}70%{transform:rotate(-2deg)}}
 @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-10px)}40%{transform:translateX(9px)}60%{transform:translateX(-6px)}80%{transform:translateX(4px)}}
 @keyframes tagin{from{opacity:0;transform:translate(-50%,-80%) scale(.7)}to{opacity:1;transform:translate(-50%,-100%) scale(1)}}
-@keyframes spotin{from{opacity:0;transform:rotate(45deg) scale(.1)}}
+@keyframes spotin{from{opacity:0;transform:scale(.1)}}
 @keyframes pickpulse{50%{box-shadow:0 0 0 14px #6b3b20,0 0 0 44px rgba(255,211,92,.55)}}
 @keyframes catjump{0%{transform:translateY(70%) scale(.7);opacity:0}18%{transform:translateY(-34%) scale(1.05);opacity:1}30%{transform:translateY(-22%)}78%{transform:translateY(-22%);opacity:1}100%{transform:translateY(70%) scale(.8);opacity:0}}
 @keyframes snowdrop{0%{transform:translateY(0);opacity:1}100%{transform:translateY(240px);opacity:0}}
@@ -433,6 +444,14 @@ input,textarea,select{font-size:16px}
   .mode-card .pic{height:3.6rem}.mode-card h3,.mode-card p{padding-right:3.8rem}.mode-card p{font-size:.98rem}
   .menu-wrap{padding-bottom:8vh}.logo-menu{height:6vh}
 }
+@media (orientation:portrait) and (max-width:560px){
+  .mode-card h3{font-size:1.3rem}.mode-card p{font-size:.9rem;line-height:1.3}.mode-card{row-gap:.15rem;padding:.55rem .75rem .65rem}
+  .mode-card .row .btn-go{font-size:1.15rem;min-height:44px;padding:.3em 1.2em}.mode-card .row .btn-sm{min-height:44px}
+  .level-pick button{min-width:5.4rem}.menu-wrap{gap:.6rem}
+}
+/* the answer bubble sits high on the stage so it never covers a reindeer standing on the floor */
+#bubble{bottom:auto;top:3.3rem}
+@media (max-height:480px),(orientation:portrait) and (max-width:560px){#bubble{font-size:1.5rem;top:2.6rem;padding:.15em .7em .2em;border-width:3px}#bubble.hint{font-size:1.05rem}}
 
 </style>
 <style>
@@ -458,6 +477,10 @@ input,textarea,select{font-size:16px}
 .obj.lifted{transform-origin:90% 100%;transform:translateY(-46px) rotate(8deg)}
 .obj.flapped{transform-origin:6% 70%;transform:rotate(-13deg)}
 
+
+.hider.shadow::before{content:'';position:absolute;left:8%;right:8%;bottom:-10px;height:22px;background:radial-gradient(ellipse at center,rgba(70,40,20,.34),rgba(70,40,20,0) 70%);z-index:-1}
+.floor-shadow{position:absolute;pointer-events:none;background:radial-gradient(closest-side,rgba(55,30,12,.55),rgba(55,30,12,.3) 50%,rgba(55,30,12,0))}
+.wall-hook{position:absolute;pointer-events:none;background:radial-gradient(circle at 35% 35%,#fff3c4,#d9a53a 55%,#8a5a14);border-radius:50%;box-shadow:0 2px 2px rgba(0,0,0,.3)}
 
 </style>
 </head>
@@ -494,7 +517,7 @@ input,textarea,select{font-size:16px}
       <div class="menu-head">
         <button class="btn btn-plain btn-sm" id="btn-menu-back">Back</button>
         <h2>Choose a game</h2>
-        <div class="level-chip" id="level-chip"></div>
+        <div class="level-pick" id="level-pick" role="group" aria-label="Level"></div>
       </div>
       <div class="mode-grid" id="mode-grid"></div>
     </div>
@@ -643,9 +666,9 @@ input,textarea,select{font-size:16px}
   var PREP_ORDER = ['in', 'on', 'under', 'behind', 'front', 'next', 'between', 'above', 'below', 'opposite'];
 
   var LEVELS = {
-    1: { label: 'Level 1', grades: 'K3 to Grade 1', preps: ['in', 'on', 'under'], wholeHouse: false },
-    2: { label: 'Level 2', grades: 'Grades 2 to 3', preps: ['in', 'on', 'under', 'behind', 'front', 'next'], wholeHouse: false },
-    3: { label: 'Level 3', grades: 'Grades 4 to 6', preps: PREP_ORDER.slice(), wholeHouse: true }
+    1: { label: 'Easy', grades: 'K to Grade 1', preps: ['in', 'on', 'under'], wholeHouse: false },
+    2: { label: 'Medium', grades: 'Grades 2 to 3', preps: ['in', 'on', 'under', 'behind', 'front', 'between'], wholeHouse: false },
+    3: { label: 'Hard', grades: 'Grades 4 to 6', preps: PREP_ORDER.slice(), wholeHouse: true }
   };
 
   var ITEMS = {
@@ -669,7 +692,7 @@ input,textarea,select{font-size:16px}
       name: 'living room', bg: 'room-living.jpg', B: 640, F: 750,
       objects: [
         { id: 'window', name: 'window', img: 'window-arch', row: 'wall', x: 692, top: 112, w: 524, no: 'io', snowIn: [0.25, 0.18, 0.75, 0.74] },
-        { id: 'stocking', name: 'stocking', img: 'stocking', row: 'wall', x: 1125, top: 300, w: 86, caps: 'i', in: 'lip', rim: [0.19, 0.21], inScale: 0.56, show: 0.6, inDx: 0.1, no: 'o' },
+        { id: 'stocking', name: 'stocking', img: 'stocking', row: 'wall', x: 1125, top: 300, w: 86, hook: [0.87, 0.075], caps: 'i', in: 'lip', rim: [0.19, 0.21], inScale: 0.56, show: 0.6, inDx: 0.1, no: 'o' },
         { id: 'armchair', name: 'armchair', img: 'armchair', row: 'back', x: 121, w: 175, caps: 'oba', onY: 0.5, inIsOn: true, opp: { on: 'tv' } },
         { id: 'lamp', name: 'lamp', img: 'lamp', row: 'back', x: 247, w: 66, caps: 'f', no: 'io', glow: [0.5, 0.17, 70, '255,226,150'] },
         { id: 'tree', name: 'Christmas tree', img: 'christmas-tree', row: 'back', x: 372, w: 175, caps: 'uba', under: 'tree', behind: 'peekside', no: 'o', twinkle: [0.5, 0.12, 0.42, 0.86] },
@@ -679,7 +702,7 @@ input,textarea,select{font-size:16px}
         { id: 'tv', name: 'TV', img: 'tv', row: 'back', x: 1248, w: 185, caps: 'bfa', no: 'i' },
         { id: 'rug', name: 'rug', img: 'rug', row: 'front', x: 674, w: 300, base: 758, z: 3, caps: 'ou', onY: 0.62, under: 'flap', underDx: 0.2, no: 'ib', inFront: 'sofa',
           hints: { b: 'Hmm, a rug is flat on the floor. Can {noun} hide BEHIND it?', i: 'Hmm, a rug is flat. Can {noun} be IN a rug?' } },
-        { id: 'table', name: 'table', img: 'table', row: 'front', x: 121, w: 150, caps: 'ou', onY: 0.22, onDx: 0.24, inFront: 'armchair', no: 'i' }
+        { id: 'table', name: 'table', img: 'table', row: 'front', x: 121, w: 166, caps: 'ou', under: 'legs', clear: 0.55, onY: 0.3, onDx: 0.24, inFront: 'armchair', no: 'i' }
       ]
     },
     kitchen: {
@@ -691,9 +714,9 @@ input,textarea,select{font-size:16px}
           hints: { i: 'Oh no! The oven is too hot.' } },
         { id: 'sink', name: 'sink', img: 'kitchen-sink', row: 'back', x: 607, w: 195, caps: 'ifa', in: 'lip', rim: [0.35, 0.37], inScale: 0.74, inDx: -0.13, no: '' },
         { id: 'cupboard', name: 'cupboard', img: 'cupboard', row: 'back', x: 857, w: 180, caps: 'io', in: 'door', door: [0.13, 0.08, 0.87, 0.47], hinge: 'both', doorColor: '#dc9c4c', inScale: 0.8, onY: 0.04, no: 'u' },
-        { id: 'table', name: 'table', img: 'kitchen-table', row: 'back', x: 1114, w: 210, caps: 'ouf', onY: 0.3, onDx: 0.27, no: 'i',
+        { id: 'table', name: 'table', img: 'kitchen-table', row: 'back', x: 1114, w: 210, caps: 'ouf', under: 'legs', clear: 0.62, onY: 0.3, onDx: 0.27, no: 'i',
           alias: { on: [['next', 'cookiejar']] } },
-        { id: 'chair', name: 'chair', img: 'kitchen-chair', row: 'back', x: 1286, w: 118, caps: 'oufa', onY: 0.56, no: 'i', opp: { on: 'fridge' } },
+        { id: 'chair', name: 'chair', img: 'kitchen-chair', row: 'back', x: 1286, w: 118, caps: 'oufa', under: 'legs', clear: 0.68, onY: 0.56, no: 'i', opp: { on: 'fridge' } },
         { id: 'cookiejar', name: 'cookie jar', img: 'cookie-jar', row: 'top', sitOn: 'table', dx: -0.28, w: 66, caps: 'b', behind: 'cover', bScale: 0.62, no: 'iou',
           alias: { behind: [['on', 'table']] },
           hints: { i: 'Hmm, the cookie jar is very small. Can {noun} be IN it?', o: 'Hmm, the cookie jar is very small. Can {noun} be ON it?' } },
@@ -707,7 +730,7 @@ input,textarea,select{font-size:16px}
         { id: 'curtain', name: 'curtain', img: 'curtain', row: 'wall', x: 688, top: 72, w: 476, caps: 'b', behind: 'curtain', noUnder: true, no: 'io' },
         { id: 'shelf', name: 'shelf', img: 'shelf', row: 'wall', x: 393, top: 186, w: 190, caps: 'o', onY: 0.7, onDx: -0.05, no: 'i' },
         { id: 'wardrobe', name: 'wardrobe', img: 'wardrobe', row: 'back', x: 114, w: 190, caps: 'io', in: 'door', door: [0.1, 0.12, 0.9, 0.8], hinge: 'both', doorColor: '#cf9145', rail: true, inScale: 1, onY: 0.03, no: 'u' },
-        { id: 'desk', name: 'desk', img: 'desk', row: 'back', x: 393, w: 245, caps: 'ouf', onY: 0.3, onDx: -0.18, underDx: 0.2, no: 'i' },
+        { id: 'desk', name: 'desk', img: 'desk', row: 'back', x: 393, w: 245, caps: 'ouf', under: 'legs', clear: 0.6, onY: 0.3, onDx: -0.18, underDx: 0.21, no: 'i' },
         { id: 'toybox', name: 'toy box', img: 'toy-box', row: 'back', x: 668, w: 180, caps: 'if', in: 'lip', rim: [0.6, 0.6], inY: 0.84, inScale: 0.85, inDx: -0.12, no: 'u' },
         { id: 'teddy', name: 'teddy bear', img: 'teddy-bear', row: 'back', x: 882, w: 125, caps: 'bf', no: 'iou' },
         { id: 'bed', name: 'bed', img: 'bed', row: 'back', x: 1182, w: 350, caps: 'oufa', onY: 0.52, under: 'lift', underDx: -0.2, opp: { on: 'wardrobe' } },
@@ -719,8 +742,8 @@ input,textarea,select{font-size:16px}
       objects: [
         { id: 'mirror', name: 'mirror', img: 'mirror', row: 'wall', x: 471, top: 232, w: 140, no: 'io',
           hints: { i: 'Hmm, a mirror is flat. Can {noun} be IN a mirror?' } },
-        { id: 'towel', name: 'towel', img: 'towel', row: 'wall', x: 1036, top: 300, w: 150, no: 'io' },
-        { id: 'bath', name: 'bath', img: 'bath', row: 'back', x: 171, w: 295, caps: 'iufa', in: 'lip', rim: [0.41, 0.44], inY: 0.58, inScale: 0.82, inDx: 0.14, bubbles: true, under: 'lift', underDx: -0.15, opp: { in: 'laundry' } },
+        { id: 'towel', name: 'towel', img: 'towel', row: 'wall', x: 318, top: 318, w: 140, no: 'io' },
+        { id: 'bath', name: 'bath', img: 'bath', row: 'back', x: 196, w: 290, base: 668, z: 12, caps: 'iufa', in: 'lip', rim: [0.41, 0.44], inY: 0.58, inScale: 0.82, inDx: 0.14, bubbles: true, under: 'lift', underDx: -0.15, opp: { in: 'laundry' } },
         { id: 'sink', name: 'sink', img: 'bathroom-sink', row: 'back', x: 471, w: 180, caps: 'if', in: 'lip', rim: [0.44, 0.48], inScale: 0.72, inDx: -0.14, no: '' },
         { id: 'toilet', name: 'toilet', img: 'toilet', row: 'back', x: 690, w: 135, caps: 'obf', onY: 0.5, no: 'iu',
           hints: { i: 'Yuck! Not in the toilet.' } },
@@ -732,18 +755,18 @@ input,textarea,select{font-size:16px}
       name: 'attic', bg: 'svg:attic', B: 644, F: 748,
       objects: [
         { id: 'window', name: 'window', img: 'window-round', row: 'wall', x: 795, top: 150, w: 260, no: 'io', snowIn: [0.3, 0.2, 0.7, 0.78] },
-        { id: 'ladder', name: 'ladder', img: 'ladder', row: 'back', x: 90, w: 140, caps: 'ouf', onY: 0.58, no: 'i' },
+        { id: 'ladder', name: 'ladder', img: 'ladder', row: 'back', x: 90, w: 140, caps: 'of', onY: 0.58, no: 'i' },
         { id: 'trunk', name: 'old trunk', img: 'trunk', row: 'back', x: 362, w: 280, caps: 'iobfa', in: 'lid', lid: 0.42, inY: 0.62, inScale: 0.82, onY: 0.06 },
         { id: 'boxes', name: 'boxes', img: 'boxes', row: 'back', x: 664, w: 200, caps: 'iobf', in: 'lip', rim: [0.1, 0.1], inScale: 0.7, flaps: [0.24, 0.76, 0.03], onY: 0.03, surprise: 'cat', no: 'u' },
-        { id: 'horse', name: 'rocking horse', img: 'rocking-horse', row: 'back', x: 944, w: 235, caps: 'oufa', onY: 0.47, onDx: -0.04, no: 'i' },
-        { id: 'chair', name: 'old chair', img: 'old-chair', row: 'back', x: 1193, w: 140, caps: 'ouf', onY: 0.55, side: 'right', no: 'i', opp: { on: 'ladder' } }
+        { id: 'horse', name: 'rocking horse', img: 'rocking-horse', row: 'back', x: 944, w: 235, caps: 'oufa', under: 'legs', clear: 0.6, floor: 0.88, underDx: -0.05, onY: 0.47, onDx: -0.04, no: 'i' },
+        { id: 'chair', name: 'old chair', img: 'old-chair', row: 'back', x: 1193, w: 140, caps: 'ouf', under: 'legs', clear: 0.62, floor: 0.97, onY: 0.55, side: 'right', no: 'i', opp: { on: 'ladder' } }
       ]
     },
     garden: {
       name: 'garden', bg: 'svg:garden', B: 644, F: 752, outdoors: true,
       decor: [{ kind: 'mound', x: 718, y: 650, w: 290, h: 52, z: 11 }],
       objects: [
-        { id: 'bench', name: 'bench', img: 'bench', row: 'back', x: 154, w: 280, caps: 'oua', onY: 0.47, no: 'i', opp: { on: 'mailbox' } },
+        { id: 'bench', name: 'bench', img: 'bench', row: 'back', x: 154, w: 280, caps: 'oa', onY: 0.47, no: 'i', opp: { on: 'mailbox' } },
         { id: 'snowman', name: 'snowman', img: 'snowman', row: 'back', x: 441, w: 170, caps: 'ba', behind: 'right', no: 'iou' },
         { id: 'tree', name: 'tree', img: 'garden-tree', row: 'back', x: 718, w: 260, caps: 'iub', in: 'lip', rim: [0.5, 0.47], inScale: 0.72, show: 0.62, inDx: 0.02, under: 'tree', behind: 'peekside', surprise: 'snow', no: 'o' },
         { id: 'doghouse', name: 'doghouse', img: 'doghouse', row: 'back', x: 1017, w: 215, caps: 'iob', in: 'hole', hole: [0.335, 0.5, 0.665, 0.935], inY: 0.95, inScale: 0.72, onY: 0.2, onDx: 0.16, no: 'u' },
@@ -846,6 +869,10 @@ input,textarea,select{font-size:16px}
       if (caps.indexOf('u') >= 0) {
         m = o.under || 'open';
         if (m === 'tree') { s = add('under', o.id, { x: b.x, y: b.base + 10, z: b.z + 1, scale: 0.72 }); claim(s, 'front', o.id); }
+        else if (m === 'legs') {            // between the legs, head below the top, drawn in front so you can see it is under
+          var fl = b.top + (o.floor || 0.98) * b.h, room2 = fl - (b.top + o.clear * b.h);
+          s = add('under', o.id, { x: b.x + (o.underDx || 0) * b.w, y: Math.round(Math.min(fl, b.base - 2)), z: zf + 1, scale: Math.min(0.78, room2 * 0.93 / IH), flags: { legs: true } });
+        }
         else if (m === 'flap') s = add('under', o.id, { x: b.x + (o.underDx || 0) * b.w, y: b.base - 8, z: b.z - 1, scale: 0.7, flags: { flap: true } });
         else s = add('under', o.id, { x: b.x + (o.underDx || 0) * b.w, y: b.base - 3, z: m === 'lift' ? zf - 1 : b.z - 1, scale: 0.78, flags: m === 'lift' ? { lift: true } : {} });
         claim(s, 'under', o.id);
@@ -860,7 +887,7 @@ input,textarea,select{font-size:16px}
         claim(s, 'behind', o.id);
       }
       if (caps.indexOf('f') >= 0 && !partner[o.id]) {
-        s = add('front', o.id, { x: b.x + (o.fDx || 0) * b.w, y: b.base + 34, z: b.row === 'front' ? b.z + 2 : 20 });
+        s = add('front', o.id, { x: b.x + (o.fDx || 0) * b.w, y: Math.min(b.base + 72, room.F - 30), z: b.row === 'front' ? b.z + 2 : 20, scale: 1.02, flags: { shadow: true } });   // nearer to us: lower on the floor and a little bigger
         claim(s, 'front', o.id);
       }
       if (caps.indexOf('a') >= 0) {
@@ -887,7 +914,7 @@ input,textarea,select{font-size:16px}
     for (var i = 0; i + 1 < rowB.length; i++) {
       var a = rowB[i], c = rowB[i + 1], gap = c.left - a.right;
       if (gap < 58) continue;
-      var g = add('gap', a.id, { obj2: c.id, x: (a.right + c.left) / 2, y: room.B, z: a.z + 1 });
+      var g = add('gap', a.id, { obj2: c.id, x: (a.right + c.left) / 2, y: room.B, z: a.z + 1, scale: Math.min(1, (gap - 2) / IW) });   // small enough to fit in the gap, so it does not cover either side
       claim(g, 'next', a.id); claim(g, 'next', c.id); claim(g, 'between', a.id, c.id);
       (neighbours[a.id] = neighbours[a.id] || []).push(c.id); (neighbours[c.id] = neighbours[c.id] || []).push(a.id);
     }
@@ -1224,10 +1251,15 @@ input,textarea,select{font-size:16px}
     });
     room.objects.forEach(function (o) {
       var b = m.boxes[o.id], e = el('div', 'obj obj-' + o.row);
+      if ((o.row === 'back' || o.row === 'front') && !o.sitOn && o.shadow !== false) {   // a soft shadow where it stands, so nothing looks like it floats
+        var sw = b.w * (o.shadowW || 0.92), sh = Math.max(22, Math.min(40, b.w * 0.12));
+        r.appendChild(box(el('div', 'floor-shadow'), b.x + (o.shadowDx || 0) * b.w - sw / 2, b.base - (o.shadowUp == null ? 10 : o.shadowUp) - sh / 2, sw, sh, b.z));
+      }
       e.dataset.obj = o.id; e.dataset.name = o.name;
       e.style.cssText = 'left:' + b.left.toFixed(1) + 'px;top:' + b.top.toFixed(1) + 'px;width:' + b.w.toFixed(1) + 'px;height:' + b.h.toFixed(1) + 'px;z-index:' + b.z;
       var i = el('img'); i.src = src(o.img); i.alt = o.name; i.draggable = false; e.appendChild(i);
       r.appendChild(e);
+      if (o.hook) r.appendChild(box(el('div', 'wall-hook'), b.left + o.hook[0] * b.w - 7, b.top + o.hook[1] * b.h - 7, 14, 14, b.z + 1));   // a little hook on the wall, so it really hangs
     });
     if (!opts.still) room.objects.forEach(function (o) {      // little signs of life: fire glow, lamp light, tree lights, snow behind the glass
       var b = m.boxes[o.id];
@@ -1266,7 +1298,7 @@ input,textarea,select{font-size:16px}
     var item = D.ITEMS[itemKey], m = L.build(spot.room), b0 = m.boxes[spot.obj], f = spot.flags, h = D.ITEM_H * spot.scale * (item.h || 1);
     var w = h * root.SPRITE_AR[item.img], add = function (e) { roomEl.appendChild(e); hd._extra.push(e); return e; };
     var anim = f.anim || (f.curtain ? 'pop' : ANIM[spot.type]) || 'pop';
-    var hd = el('div', 'hider' + (f.float ? ' floaty' : '') + (opts.cls ? ' ' + opts.cls : ''));
+    var hd = el('div', 'hider' + (f.float ? ' floaty' : '') + (f.shadow ? ' shadow' : '') + (opts.cls ? ' ' + opts.cls : ''));
     hd.dataset.spot = spot.id; hd.dataset.item = itemKey; hd.dataset.anim = anim;
     hd.style.cssText = 'left:' + spot.x + 'px;top:' + spot.y + 'px;z-index:' + spot.z + ';width:' + w.toFixed(1) + 'px;height:' + h.toFixed(1) + 'px';
     var inner = el('div', 'hider-in'), img = el('img'); img.src = src(item.img); img.alt = item.name; img.draggable = false;
@@ -1630,6 +1662,7 @@ input,textarea,select{font-size:16px}
     var sp = spotById(spotId); if (!sp || !G || G.phase !== 'hide') return;
     if (G.hider) S.remove(G.hider);
     G.pending = sp; G.hider = S.place(roomEls[sp.room], sp, cur().item, { cls: 'show', line: G.level === 3 });
+    document.querySelectorAll('#rooms .spot').forEach(function (e) { e.classList.toggle('taken', e.dataset.spot === sp.id); });   // no marker on top of the reindeer
     A.play('pop'); renderPanel();
   }
   function hideIt() {
@@ -1803,7 +1836,7 @@ input,textarea,select{font-size:16px}
     if (G.phase === 'hide') {
       if (!G.zoom) h += '<p class="note"><b>Tap a room</b> to hide ' + esc(name) + ' there.</p>';
       else {
-        h += '<div class="tray"><img class="token" id="token" src="' + asset(D.ITEMS[t.item].img) + '" alt="' + esc(name) + '" draggable="false"><p><b>Drag ' + esc(name) + '</b> to a yellow diamond, or tap a diamond.</p></div>';
+        h += '<div class="tray"><img class="token" id="token" src="' + asset(D.ITEMS[t.item].img) + '" alt="' + esc(name) + '" draggable="false"><p><b>Drag ' + esc(name) + '</b> into the room. You will see where it hides. Or tap a small diamond.</p></div>';
         if (G.pending) h += sayCard('<span>' + esc(L.statement(L.canonical(G.pending, G.level))) + '</span>', '', 'Only the hider reads this!');
         h += '<div class="actions"><button class="btn btn-go btn-wide" data-act="hideit"' + (G.pending ? '' : ' disabled') + '>Hide it!</button></div>';
       }
@@ -1890,14 +1923,34 @@ input,textarea,select{font-size:16px}
   });
   $('btn-house').addEventListener('click', function () { if (!G) return; A.play('tap'); if (G.phase === 'hide') { if (G.hider) S.remove(G.hider); G.hider = null; G.pending = null; banner('Tap a room to hide ' + itemName(cur().item) + '.'); } zoom(null); });
 
-  /* dragging the reindeer to a hiding place (one finger at a time) */
+  /* dragging the reindeer to a hiding place (one finger at a time).
+     Near a place, a see-through reindeer shows how it would hide there, with the words ("in the bath"). */
   document.addEventListener('pointerdown', function (e) {
     var tk = e.target.closest && e.target.closest('#token'); if (!tk || drag || !G || G.phase !== 'hide') return;
     e.preventDefault();
     var g = tk.cloneNode(); g.id = ''; g.className = 'drag-ghost'; document.body.appendChild(g);
-    drag = { id: e.pointerId, ghost: g, near: null, t: setTimeout(endDrag, 8000) };
+    drag = { id: e.pointerId, ghost: g, near: null, prev: null, tag: null, t: setTimeout(endDrag, 8000) };
+    $('rooms').classList.add('dragging');
     moveDrag(e);
   });
+  function clearPreview() {
+    if (!drag) return;
+    if (drag.prev) S.remove(drag.prev); if (drag.tag) drag.tag.remove();
+    drag.prev = drag.tag = null;
+    if (G && G.hider) G.hider.style.visibility = '';
+  }
+  function showPreview(spotEl) {
+    clearPreview();
+    var sp = spotById(spotEl.dataset.spot); if (!sp) return; var roomEl = roomEls[sp.room];
+    if (G.hider) G.hider.style.visibility = 'hidden';
+    drag.prev = S.place(roomEl, sp, cur().item, { cls: 'preview', still: true, line: false });
+    var q = L.canonical(sp, G.level), hgt = D.ITEM_H * sp.scale;
+    if (q) {
+      drag.tag = S.el('div', 'spot-label', L.phrase(q));
+      drag.tag.style.left = Math.min(1376 - 170, Math.max(170, sp.x)) + 'px'; drag.tag.style.top = Math.max(70, sp.y - hgt - 18) + 'px';
+      roomEl.appendChild(drag.tag);
+    }
+  }
   function moveDrag(e) {
     if (!drag || e.pointerId !== drag.id) return;
     drag.ghost.style.left = e.clientX + 'px'; drag.ghost.style.top = e.clientY + 'px';
@@ -1906,11 +1959,16 @@ input,textarea,select{font-size:16px}
       var r = s.getBoundingClientRect(), d = Math.hypot(r.left + r.width / 2 - e.clientX, r.top + r.height / 2 - (e.clientY - 20));
       s.classList.remove('near'); if (d < bd) { bd = d; best = s; }
     });
-    if (best) best.classList.add('near'); drag.near = best;
+    if (best) best.classList.add('near');
+    if (best !== drag.near) { if (best) showPreview(best); else clearPreview(); }
+    drag.ghost.classList.toggle('over', !!best);
+    drag.near = best;
   }
   function endDrag(e) {
     if (!drag || (e && e.pointerId !== drag.id)) return;
-    clearTimeout(drag.t); drag.ghost.remove(); var n = drag.near; drag = null;
+    clearTimeout(drag.t); clearPreview(); drag.ghost.remove(); $('rooms').classList.remove('dragging');
+    document.querySelectorAll('#rooms .spot.near').forEach(function (s) { s.classList.remove('near'); });
+    var n = drag.near; drag = null;
     if (n) placePending(n.dataset.spot);
   }
   document.addEventListener('pointermove', moveDrag);
@@ -1946,9 +2004,15 @@ input,textarea,select{font-size:16px}
 
   /* ---------- menu ---------- */
   var MODE_PIC = { computer: 'reindeer-dasher', teacher: 'present', child: 'reindeer-comet', describe: 'reindeer-prancer' };
+  function levelPick() {
+    var lv = D.LEVELS[settings.level];
+    var lp = '<span class="lp-lab">Level</span>';
+    [1, 2, 3].forEach(function (l) { lp += '<button data-level="' + l + '" class="' + (settings.level === l ? 'on' : '') + '" aria-pressed="' + (settings.level === l) + '"><b>' + D.LEVELS[l].label + '</b><span>' + D.LEVELS[l].grades + '</span></button>'; });
+    $('level-pick').innerHTML = lp + '<p class="lp-words">' + D.LEVELS[settings.level].preps.map(function (p) { return D.PREPS[p].word; }).join(', ') + (lv.wholeHouse ? ', and the whole house' : '') + '</p>';
+  }
   function menu() {
     var lv = D.LEVELS[settings.level], h = '', n = 0;
-    $('level-chip').textContent = lv.label + ' · ' + lv.grades;
+    levelPick();
     D.MODE_ORDER.forEach(function (m) {
       if (!settings.modes[m]) return; n++;
       var md = D.MODES[m];
@@ -1959,6 +2023,10 @@ input,textarea,select{font-size:16px}
     $('mode-grid').innerHTML = h || '<p class="note">All games are turned off. Open Teacher mode to turn one on.</p>';
     show('menu');
   }
+  $('level-pick').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-level]'); if (!b) return;
+    settings.level = +b.dataset.level; save(); A.play('tap'); levelPick();
+  });
   $('mode-grid').addEventListener('click', function (e) {
     var t = e.target.closest('[data-tip]'), s = e.target.closest('[data-start]');
     if (t) { t.closest('.mode-card').classList.toggle('tip-on'); A.play('tap'); }
@@ -1977,7 +2045,7 @@ input,textarea,select{font-size:16px}
     if (bankTab === 'preps') {
       [1, 2, 3].forEach(function (lv) {
         var prev = lv > 1 ? D.LEVELS[lv - 1].preps : [];
-        h += '<p class="wgroup">' + D.LEVELS[lv].label + '</p><div class="wgrid">';
+        h += '<p class="wgroup">' + D.LEVELS[lv].label + (lv > 1 ? ': new words' : '') + '</p><div class="wgrid">';
         D.LEVELS[lv].preps.forEach(function (p) { if (prev.indexOf(p) < 0) h += '<div class="wcard">' + ART.prepIcon(p) + '<b>' + D.PREPS[p].word + '</b><span>' + PREP_EX[p] + '</span></div>'; });
         h += '</div>';
       });
